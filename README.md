@@ -1,6 +1,6 @@
 # CareerK - Modern Job Platform
 
-A modern job platform built with Next.js 14+ and Feature-Sliced Design architecture, connecting job seekers with their dream careers and helping companies find top talent.
+A modern job platform built with Next.js 16+ and Feature-Sliced Design architecture, connecting job seekers with their dream careers and helping companies find top talent.
 
 ## 🚀 Features
 
