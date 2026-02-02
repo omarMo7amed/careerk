@@ -9,3 +9,4 @@ export { ConfirmationModal } from "./ui/ConfirmationModal";
 // Shared Utilities
 export { useUserRole, useHasRole, getUserRole } from "./lib/useUserRole";
 export type { UserRole } from "./lib/useUserRole";
+export { cn } from "./lib/cn";
