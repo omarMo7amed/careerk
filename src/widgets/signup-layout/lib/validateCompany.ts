@@ -1,4 +1,4 @@
-import { CompanyData, CompanyErrors } from "../types/formType";
+import { CompanyData, CompanyErrors } from "../types/SignupFormType";
 
 export function validateCompany(
   data: CompanyData,

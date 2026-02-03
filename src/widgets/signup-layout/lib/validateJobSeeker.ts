@@ -1,4 +1,4 @@
-import { JobSeekerData, JobSeekerErrors } from "../types/formType";
+import { JobSeekerData, JobSeekerErrors } from "../types/SignupFormType";
 
 export function validateJobSeeker(
   data: JobSeekerData,

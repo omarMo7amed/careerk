@@ -24,3 +24,13 @@ export type CompanyErrors = {
   password: string;
   industry: string;
 };
+
+export type PrepItemProps = { emoji: string; label: string; example: string };
+
+export type ApplicantItemProps = {
+  initials: string;
+  title: string;
+  details: string;
+  score: string;
+  color: "green" | "blue";
+};

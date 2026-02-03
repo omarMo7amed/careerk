@@ -1,4 +1,4 @@
-import { Errors, FormData } from "../types/formTypes";
+import { Errors, FormData } from "../types/loginFormTypes";
 
 export function validateForm(
   formData: FormData,
