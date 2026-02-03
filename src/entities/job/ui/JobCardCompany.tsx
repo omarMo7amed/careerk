@@ -1,17 +1,4 @@
-/**
- * JobCardCompany Component
- *
- * A card component displaying job information from the company's perspective.
- * Used for showing job listings with management actions.
- */
-
-interface JobCardCompanyProps {
-  title: string;
-  location: string;
-  type: string;
-  applicants?: number;
-  postedDate?: string;
-}
+import { JobCardCompanyProps } from "../types/jobCardCompany";
 
 export function JobCardCompany({
   title,
