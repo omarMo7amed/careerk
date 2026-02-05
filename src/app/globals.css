@@ -59,6 +59,10 @@
   .dark {
     /* Dark Mode Variables */
     --primary: #4186f6;
+<<<<<<< HEAD
+    --primary-hover: #3a75e0;
+=======
+>>>>>>> origin/main
     --foreground: #f9fafb;
     --text-secondary: #9ca3af;
     --text-muted: #6b7280;

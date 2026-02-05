@@ -2,18 +2,27 @@ import React from "react";
 
 interface BadgeProps {
   variant?: "default" | "success" | "warning" | "error" | "info";
+  size?: "sm" | "md" | "lg" | "default";
   children: React.ReactNode;
   className?: string;
+  animate?: boolean; // ADDED: Option to enable shimmer animation
 }
 
 export function Badge({
   variant = "default",
   children,
   className = "",
+  size = "default",
+  animate = false, // ADDED: Default to false
 }: BadgeProps) {
   const baseStyles =
-    "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium";
-
+    "min-w-[80px] w-fit inline-flex items-center gap-3 border border-primary/20 rounded-full text-sm font-bold shadow-lg text-center";
+  const sizes = {
+    default: "px-2 py-1 text-sm",
+    sm: "px-3 py-1 text-xs",
+    md: "px-4 py-2 text-sm",
+    lg: "px-6 py-3 text-base",
+  };
   const variantStyles = {
     default: "bg-gray-100 text-gray-800",
     success: "bg-green-100 text-green-800",
@@ -23,7 +32,11 @@ export function Badge({
   };
 
   return (
-    <span className={`${baseStyles} ${variantStyles[variant]} ${className}`}>
+    <span
+      className={`${baseStyles} ${variantStyles[variant]} ${sizes[size]} ${
+        animate ? "pill-badge" : ""
+      } ${className}`}
+    >
       {children}
     </span>
   );
