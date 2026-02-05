@@ -1,30 +1,41 @@
-interface JobCardJobseekerProps {
-  title: string;
-  company: string;
-  location: string;
-  type: string;
-  salary?: string;
-  postedDate?: string;
-}
+"use client";
 
-export function JobCardJobseeker({
-  title,
-  company,
-  location,
-  type,
-  salary,
-  postedDate,
-}: JobCardJobseekerProps) {
+import { motion } from "framer-motion";
+import { JobCardProps } from "../types/jobCardJobseeker";
+import {
+  SourceBadge,
+  CompanyLogo,
+  CompanyInfo,
+  JobTitle,
+  JobDetails,
+  JobFooter,
+  ViewJobOverlay,
+} from "../components";
+
+export function JobCardJobseeker({ job }: JobCardProps) {
   return (
-    <div className="job-card-jobseeker">
-      <h3>{title}</h3>
-      <p className="company">{company}</p>
-      <div className="job-details">
-        <span>{location}</span>
-        <span>{type}</span>
-        {salary && <span>{salary}</span>}
-      </div>
-      {postedDate && <span className="posted-date">{postedDate}</span>}
-    </div>
+    <motion.div className="group relative rounded-2xl p-6 transition-all duration-300 hover:scale-[1.02] cursor-pointer h-full bg-bg-surface border border-border hover:shadow-lg">
+      <SourceBadge source={job.source} />
+
+      <CompanyLogo logo={job.company.logo} companyName={job.company.name} />
+
+      <CompanyInfo companyName={job.company.name} category={job.category} />
+
+      <JobTitle title={job.title} />
+
+      <JobDetails
+        salary={job.salary}
+        employmentType={job.employmentType}
+        location={job.location}
+      />
+
+      <JobFooter
+        postedDate={job.postedDate}
+        applicants={job.applicants}
+        applicationsCount={job.applicationsCount}
+      />
+
+      <ViewJobOverlay />
+    </motion.div>
   );
 }
