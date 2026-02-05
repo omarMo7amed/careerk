@@ -1,5 +1,5 @@
-import HeroContent from "./HeroContent";
-import HeroVisual from "./HeroVisual";
+import HeroContent from "../../../hero-section/ui/HeroContent";
+import HeroVisual from "../../../hero-section/ui/HeroVisual";
 
 export function HeroSection() {
   return (

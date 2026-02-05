@@ -44,7 +44,6 @@
   :root {
     /* Light Mode Variables */
     --primary: #0353a4;
-    --primary-hover: #024e9b;
     --foreground: #111827;
     --text-secondary: #6b7280;
     --text-muted: #9ca3af;
@@ -60,7 +59,10 @@
   .dark {
     /* Dark Mode Variables */
     --primary: #4186f6;
+<<<<<<< HEAD
     --primary-hover: #3a75e0;
+=======
+>>>>>>> origin/main
     --foreground: #f9fafb;
     --text-secondary: #9ca3af;
     --text-muted: #6b7280;
