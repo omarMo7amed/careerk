@@ -28,8 +28,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${InterFont.className} antialiased flex flex-col`}>
         <Header />
-        <div className="flex-1 px-4 py-4 sm:px-6 sm:py-8 md:px-8 lg:py-12 grid overflow-hidden">
-          <main className="max-w-7xl mx-auto w-full">{children}</main>
+        <div className="flex-1 pt-4 sm:pt-8 lg:pt-12">
+          <main>{children}</main>
         </div>
       </body>
     </html>

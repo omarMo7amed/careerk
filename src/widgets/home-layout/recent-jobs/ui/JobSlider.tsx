@@ -13,7 +13,7 @@ export function JobSlider({ jobs, isInView, delay = 0.4 }: JobSliderProps) {
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.8, delay }}
-      className="relative overflow-hidden w-full"
+      className="relative overflow-hidden"
     >
       <div className="pl-6">
         <Swiper
