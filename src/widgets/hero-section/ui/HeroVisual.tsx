@@ -1,5 +1,4 @@
-import { spaceGrotesk } from "@/app/layout";
-import { Badge } from "@/shared";
+import { Badge, spaceGrotesk } from "@/shared";
 import { FileText } from "lucide-react";
 
 function HeroVisual() {
@@ -82,6 +81,13 @@ function HeroVisual() {
             animate={true}
           >
             Bayt
+          </Badge>
+          <Badge
+            className="bg-linear-to-r from-blue-300 to-blue-500 text-blue-800 mb-6"
+            size="md"
+            animate={true}
+          >
+            Wuzzuf
           </Badge>
         </div>
       </div>

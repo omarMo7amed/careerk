@@ -18,11 +18,9 @@ export function AboutSectionLayout({
   zIndex = "z-10",
 }: AboutSectionLayoutProps) {
   const imageOrderClass =
-    imagePosition === "left"
-      ? "md:order-2 md:order-1"
-      : "md:order-1 md:order-2";
+    imagePosition === "left" ? "order-1 md:order-1" : "order-1 md:order-2";
   const contentOrderClass =
-    imagePosition === "left" ? "md:order-1 md:order-2" : "order-2 md:order-1";
+    imagePosition === "left" ? "order-2 md:order-2" : "order-2 md:order-1";
 
   return (
     <section id={id} className={cn("md:sticky bg-background md:top-0", zIndex)}>

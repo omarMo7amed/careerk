@@ -33,7 +33,7 @@ export default function RecentJobsSection() {
       </div>
 
       {/* Job Slider - Full Width */}
-      <div className="w-full">
+      <div>
         <JobSlider jobs={sliderJobs} isInView={isJobsInView} delay={0.4} />
       </div>
 

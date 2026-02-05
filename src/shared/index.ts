@@ -10,3 +10,6 @@ export { ConfirmationModal } from "./ui/ConfirmationModal";
 export { useUserRole, useHasRole, getUserRole } from "./lib/useUserRole";
 export type { UserRole } from "./lib/useUserRole";
 export { cn } from "./lib/cn";
+
+// Fonts
+export { InterFont, spaceGrotesk } from "./lib/fonts";

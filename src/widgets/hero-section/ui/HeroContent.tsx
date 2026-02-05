@@ -1,5 +1,4 @@
-import { spaceGrotesk } from "@/app/layout";
-import { Badge, Button } from "@/shared";
+import { Badge, Button, spaceGrotesk } from "@/shared";
 import { ArrowRight } from "lucide-react";
 
 function HeroContent() {
