@@ -1,4 +1,4 @@
-import { JobSeekerData, JobSeekerErrors } from "../types/SignupFormType";
+import { JobSeekerData, JobSeekerErrors } from "../types/RegisterFormType";
 
 export function validateJobSeeker(
   data: JobSeekerData,
@@ -7,14 +7,21 @@ export function validateJobSeeker(
   let isValid = true;
 
   const newErrors: JobSeekerErrors = {
-    fullName: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   };
 
-  // Full name
-  if (!data.fullName.trim()) {
-    newErrors.fullName = "Full name is required";
+  // First name
+  if (!data.firstName.trim()) {
+    newErrors.firstName = "First name is required";
+    isValid = false;
+  }
+
+  // Last name
+  if (!data.lastName.trim()) {
+    newErrors.lastName = "Last name is required";
     isValid = false;
   }
 

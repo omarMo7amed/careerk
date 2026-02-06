@@ -1,11 +1,13 @@
 export type JobSeekerData = {
-  fullName: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
 };
 
 export type JobSeekerErrors = {
-  fullName: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
 };
@@ -16,6 +18,7 @@ export type CompanyData = {
   password: string;
   industry: string;
   size: string;
+  type: string;
 };
 
 export type CompanyErrors = {

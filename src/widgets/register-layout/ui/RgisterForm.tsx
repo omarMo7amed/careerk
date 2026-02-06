@@ -10,10 +10,10 @@ import JobSeekerForm from "./JobSeekerForm";
 import CompanyForm from "./CompanyForm";
 
 export function SignupForm() {
-  const tabs = ["jobseekers", "companies"];
+  const tabs = ["jobseeker", "company"];
   type UserType = (typeof tabs)[number];
 
-  const [activeTab, setActiveTab] = useState<UserType>("jobseekers");
+  const [activeTab, setActiveTab] = useState<UserType>("jobseeker");
 
   function handleGoogleSignUp() {
     console.log("Google signup");
@@ -34,10 +34,10 @@ export function SignupForm() {
         <Tabs tabs={tabs} activeTab={activeTab} onChange={setActiveTab} />
 
         {/* Job Seekers Form */}
-        {activeTab === "jobseekers" && <JobSeekerForm />}
+        {activeTab === "jobseeker" && <JobSeekerForm />}
 
         {/* Companies Form */}
-        {activeTab === "companies" && <CompanyForm />}
+        {activeTab === "company" && <CompanyForm />}
 
         {/* Divider */}
         <Divider name="Or continue with" />

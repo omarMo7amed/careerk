@@ -1,4 +1,4 @@
-import { PrepItemProps } from "../types/SignupFormType";
+import { PrepItemProps } from "../types/RegisterFormType";
 
 export function InterviewPrepCard() {
   return (

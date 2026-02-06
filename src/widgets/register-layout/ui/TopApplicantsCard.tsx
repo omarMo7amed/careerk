@@ -1,4 +1,4 @@
-import { ApplicantItemProps } from "../types/SignupFormType";
+import { ApplicantItemProps } from "../types/RegisterFormType";
 
 export function TopApplicantsCard() {
   return (

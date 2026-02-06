@@ -1,5 +1,5 @@
-import { SignupLayout } from "@/widgets/signup-layout";
+import { RegisterLayout } from "@/widgets/register-layout";
 
 export default function RegisterPage() {
-  return <SignupLayout />;
+  return <RegisterLayout />;
 }

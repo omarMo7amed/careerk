@@ -9,10 +9,10 @@ import { Divider } from "@/shared/ui/Divider";
 import Tabs from "@/shared/ui/Tabs";
 
 export function LoginForm() {
-  const tabs = ["jobseekers", "companies"];
+  const tabs = ["jobseeker", "company"];
   type UserType = (typeof tabs)[number];
 
-  const [activeTab, setActiveTab] = useState<UserType>("jobseekers");
+  const [activeTab, setActiveTab] = useState<UserType>("jobseeker");
 
   const [formData, setFormData] = useState({
     email: "",
@@ -36,7 +36,7 @@ export function LoginForm() {
 
     const finalFormData = {
       ...formData,
-      type: activeTab,
+      role: activeTab,
     };
 
     if (!validateForm(finalFormData, setErrors)) return;

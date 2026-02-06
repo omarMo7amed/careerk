@@ -3,7 +3,50 @@
 import { Button, Input } from "@/shared";
 import { FormEvent, useState } from "react";
 import { validateCompany } from "../lib/validateCompany";
-import { CompanyData } from "../types/SignupFormType";
+import { CompanyData } from "../types/RegisterFormType";
+import Select from "@/shared/ui/Select";
+
+const sizeOptions = [
+  {
+    label: "1-50",
+    value: "SIZE_1_50",
+  },
+  {
+    label: "51-200",
+    value: "SIZE_51_200",
+  },
+  {
+    label: "201-1000",
+    value: "SIZE_201_1000",
+  },
+  {
+    label: "1000+",
+    value: "SIZE_1000_PLUS",
+  },
+];
+
+const typeOptions = [
+  {
+    label: "Start-up",
+    value: "STARTUP",
+  },
+  {
+    label: "Scale-up",
+    value: "SCALE_UP",
+  },
+  {
+    label: "Enterprise",
+    value: "ENTERPRISE",
+  },
+  {
+    label: "Non-profit",
+    value: "NON_PROFIT",
+  },
+  {
+    label: "Government",
+    value: "GOVERNMENT",
+  },
+];
 
 function CompanyForm() {
   const [formData, setFormData] = useState<CompanyData>({
@@ -11,7 +54,8 @@ function CompanyForm() {
     email: "",
     password: "",
     industry: "",
-    size: "1–10",
+    size: sizeOptions[0].label,
+    type: typeOptions[0].label,
   });
 
   const [formErrors, setFormErrors] = useState({
@@ -26,7 +70,7 @@ function CompanyForm() {
 
     const finalData = {
       ...formData,
-      type: "companies",
+      role: "company",
     };
 
     if (!validateCompany(formData, setFormErrors)) return;
@@ -39,6 +83,7 @@ function CompanyForm() {
       password: "",
       industry: "",
       size: "1–10",
+      type: "STARTUP",
     });
     setFormErrors({ companyName: "", email: "", password: "", industry: "" });
   }
@@ -81,23 +126,19 @@ function CompanyForm() {
         onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
       />
 
-      <div>
-        <label className="block text-sm font-medium text-foreground mb-1">
-          Company Size
-        </label>
-        <select
-          name="companySize"
-          className="w-full h-12 px-4 bg-bg-surface border border-border rounded-lg text-text-secondary focus:ring-primary focus:border-transparent"
-          value={formData.size}
-          onChange={(e) => setFormData({ ...formData, size: e.target.value })}
-        >
-          <option>1–10</option>
-          <option>11–50</option>
-          <option>51–100</option>
-          <option>101–500</option>
-          <option>500+</option>
-        </select>
-      </div>
+      <Select
+        label="Company Size"
+        value={formData.size}
+        onChange={(e) => setFormData({ ...formData, size: e.target.value })}
+        options={sizeOptions}
+      />
+
+      <Select
+        label="Company Type"
+        value={formData.type}
+        onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+        options={typeOptions}
+      />
 
       <Button variant="primary" size="md" type="submit" className="w-full">
         Sign Up

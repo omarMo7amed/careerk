@@ -3,17 +3,19 @@
 import { Button, Input } from "@/shared";
 import { FormEvent, useState } from "react";
 import { validateJobSeeker } from "../lib/validateJobSeeker";
-import { JobSeekerData } from "../types/SignupFormType";
+import { JobSeekerData } from "../types/RegisterFormType";
 
 function JobSeekerForm() {
   const [formData, setFormData] = useState<JobSeekerData>({
-    fullName: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   });
 
   const [formErrors, setFormErrors] = useState({
-    fullName: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   });
@@ -23,7 +25,7 @@ function JobSeekerForm() {
 
     const finalData = {
       ...formData,
-      type: "jobseekers",
+      role: "jobseeker",
     };
 
     if (!validateJobSeeker(formData, setFormErrors)) return;
@@ -31,12 +33,14 @@ function JobSeekerForm() {
     console.log("signed up:", finalData);
 
     setFormData({
-      fullName: "",
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
     });
     setFormErrors({
-      fullName: "",
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
     });
@@ -45,14 +49,27 @@ function JobSeekerForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <Input
-        name="fullName"
-        label="Full Name"
-        error={formErrors.fullName}
-        value={formData.fullName}
+        name="firstName"
+        label="First Name"
+        error={formErrors.firstName}
+        value={formData.firstName}
         onChange={(e) =>
           setFormData({
             ...formData,
-            fullName: e.target.value,
+            firstName: e.target.value,
+          })
+        }
+      />
+
+      <Input
+        name="lastName"
+        label="Last Name"
+        error={formErrors.lastName}
+        value={formData.lastName}
+        onChange={(e) =>
+          setFormData({
+            ...formData,
+            lastName: e.target.value,
           })
         }
       />
