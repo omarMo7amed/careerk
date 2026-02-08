@@ -2,9 +2,12 @@
 export { Button } from "./ui/Button";
 export { Badge } from "./ui/Badge";
 export { IconX } from "./ui/IconX";
-export { SearchBar } from "./ui/SearchBar";
+export { ComposedSearchBar } from "./ui/ComposedSearchBar";
 export { Input } from "./ui/Input";
 export { ConfirmationModal } from "./ui/ConfirmationModal";
+
+// Shared Types
+export type { ComposedSearchBarProps } from "./types/ComposedSearchBar";
 
 // Shared Utilities
 export { useUserRole, useHasRole, getUserRole } from "./lib/useUserRole";

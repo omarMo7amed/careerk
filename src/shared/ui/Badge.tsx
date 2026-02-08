@@ -1,4 +1,5 @@
 import React from "react";
+import { cn } from "@/shared/lib/cn";
 
 interface BadgeProps {
   variant?: "default" | "success" | "warning" | "error" | "info";
@@ -33,9 +34,13 @@ export function Badge({
 
   return (
     <span
-      className={`${baseStyles} ${variantStyles[variant]} ${sizes[size]} ${
-        animate ? "pill-badge" : ""
-      } ${className}`}
+      className={cn(
+        baseStyles,
+        variantStyles[variant],
+        sizes[size],
+        animate && "pill-badge",
+        className,
+      )}
     >
       {children}
     </span>

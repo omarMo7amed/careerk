@@ -1,5 +1,6 @@
 import { Badge, Button, spaceGrotesk } from "@/shared";
 import { ArrowRight } from "lucide-react";
+import { cn } from "@/shared/lib/cn";
 
 function HeroContent() {
   return (
@@ -7,12 +8,15 @@ function HeroContent() {
       <Badge className="bg-white text-primary mb-6 md:mb-10" size="lg">
         <span className="w-2.5 h-2.5 bg-green-500 rounded-full"></span>
         <span className="text-primary text-xs md:text-sm">
-          50+ Platforms · AI Powered
+          4+ Platforms · AI Powered
         </span>
       </Badge>
 
       <h1
-        className={` ${spaceGrotesk.className} text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 mb-6 md:mb-8 leading-[1.1]`}
+        className={cn(
+          spaceGrotesk.className,
+          "text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 mb-6 md:mb-8 leading-[1.1]",
+        )}
       >
         Your Dream Job
         <span className="block text-primary mt-2">Awaits Here</span>

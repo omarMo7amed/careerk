@@ -1,5 +1,6 @@
 import { Badge, spaceGrotesk } from "@/shared";
 import { FileText } from "lucide-react";
+import { cn } from "@/shared/lib/cn";
 
 function HeroVisual() {
   return (
@@ -9,7 +10,7 @@ function HeroVisual() {
           <div className="w-14 h-14 md:w-20 md:h-20 bg-linear-to-br from-primary to-primary-hover rounded-2xl md:rounded-3xl flex items-center justify-center shadow-xl transform hover:rotate-12 transition-transform">
             <FileText className="text-white w-7 h-7 md:w-10 md:h-10" />
           </div>
-          <div className={` ${spaceGrotesk.className} `}>
+          <div className={cn(spaceGrotesk.className)}>
             <h4 className="font-black text-lg md:text-xl">CV Analysis</h4>
             <p className="text-xs md:text-sm text-gray-500 font-medium">
               AI matching in progress...
@@ -45,7 +46,7 @@ function HeroVisual() {
       <div className="rounded-2xl bg-white backdrop-blur-lg shadow-2xl p-6 md:p-10 border border-white/60 hover-tilt">
         <div className="flex justify-between items-center">
           <h4
-            className={` ${spaceGrotesk.className} text-base md:text-xl mb-6`}
+            className={cn(spaceGrotesk.className, "text-base md:text-xl mb-6")}
           >
             Connected Platforms
           </h4>

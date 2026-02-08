@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { NavigationItems } from "./NavigationItems";
 import NavButtons from "./NavButtons";
 import { Menu, X } from "lucide-react";
@@ -12,11 +13,14 @@ export function Header() {
     <header className="bg-white shadow-sm min-h-[70px] md:h-[90px] relative">
       <div className="container mx-auto px-4 py-4 h-full">
         <div className="flex items-center justify-between h-full">
-          <Link
-            href="/"
-            className="text-2xl md:text-3xl font-bold text-primary"
-          >
-            Careerk
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/logo-light.svg"
+              alt="Careerk Logo"
+              width={160}
+              height={40}
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}
