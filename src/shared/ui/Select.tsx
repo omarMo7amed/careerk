@@ -10,14 +10,14 @@ interface SelectProps extends React.InputHTMLAttributes<HTMLSelectElement> {
   options?: Option[];
 }
 
-function Select({ label, value, onChange, options }: SelectProps) {
+function Select({ name, label, value, onChange, options }: SelectProps) {
   return (
     <div>
       <label className="block text-sm font-medium text-foreground mb-1">
         {label}
       </label>
       <select
-        name="companySize"
+        name={name}
         className="w-full h-12 px-4 bg-bg-surface border border-border rounded-lg text-text-secondary focus:ring-primary focus:border-transparent"
         value={value}
         onChange={onChange}

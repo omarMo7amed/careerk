@@ -1,11 +1,24 @@
 "use client";
 
 import { Button, Input } from "@/shared";
-import { FormEvent, useState } from "react";
-import { validateJobSeeker } from "../lib/validateJobSeeker";
-import { JobSeekerData } from "../types/RegisterFormType";
+import { useActionState, useState } from "react";
+import { JobSeekerData, RegisterState } from "../types/RegisterFormType";
+import { registerJobSeeker } from "../lib/actions";
+import { useFormStatus } from "react-dom";
+
+const initialState: RegisterState = {
+  errors: {},
+  success: false,
+};
 
 function JobSeekerForm() {
+  const [state, registerAction] = useActionState(
+    registerJobSeeker,
+    initialState,
+  );
+  const { pending } = useFormStatus();
+
+  //
   const [formData, setFormData] = useState<JobSeekerData>({
     firstName: "",
     lastName: "",
@@ -13,45 +26,17 @@ function JobSeekerForm() {
     password: "",
   });
 
-  const [formErrors, setFormErrors] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-  });
-
-  function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-
-    const finalData = {
-      ...formData,
-      role: "jobseeker",
-    };
-
-    if (!validateJobSeeker(formData, setFormErrors)) return;
-
-    console.log("signed up:", finalData);
-
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-    });
-    setFormErrors({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-    });
-  }
-
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form
+      action={registerAction}
+      key={state?.success ? "success" : "idle"}
+      className="space-y-4"
+    >
       <Input
         name="firstName"
         label="First Name"
-        error={formErrors.firstName}
+        // required
+        error={state?.errors.firstName?.[0]}
         value={formData.firstName}
         onChange={(e) =>
           setFormData({
@@ -64,7 +49,8 @@ function JobSeekerForm() {
       <Input
         name="lastName"
         label="Last Name"
-        error={formErrors.lastName}
+        // required
+        error={state?.errors.lastName?.[0]}
         value={formData.lastName}
         onChange={(e) =>
           setFormData({
@@ -77,7 +63,8 @@ function JobSeekerForm() {
       <Input
         name="email"
         label="Email"
-        error={formErrors.email}
+        // required
+        error={state?.errors.email?.[0]}
         type="email"
         value={formData.email}
         onChange={(e) =>
@@ -91,7 +78,8 @@ function JobSeekerForm() {
       <Input
         name="password"
         label="Password"
-        error={formErrors.password}
+        // required
+        error={state?.errors.password?.[0]}
         type="password"
         value={formData.password}
         onChange={(e) =>
@@ -102,7 +90,13 @@ function JobSeekerForm() {
         }
       />
 
-      <Button variant="primary" size="md" type="submit" className="w-full">
+      <Button
+        disabled={pending}
+        variant="primary"
+        size="md"
+        type="submit"
+        className="w-full"
+      >
         Sign Up
       </Button>
     </form>
