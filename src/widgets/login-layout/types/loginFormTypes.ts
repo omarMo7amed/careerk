@@ -4,14 +4,17 @@ export type FormData = {
   remember: boolean;
 };
 
-export type Errors = {
-  email: string;
-  password: string;
-};
-
 export type MatchItemProps = {
   emoji: string;
   title: string;
   company: string;
   score: string;
+};
+
+export type LoginState = {
+  errors: {
+    email?: string[];
+    password?: string[];
+  };
+  success: boolean;
 };

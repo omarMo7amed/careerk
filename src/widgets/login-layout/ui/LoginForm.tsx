@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { validateForm } from "../lib/validationLogin";
 import GoogleIcon from "@/shared/ui/GoogleIcon";
-import { Button, Input } from "@/shared";
+import { Button } from "@/shared";
 import { Divider } from "@/shared/ui/Divider";
 import Tabs from "@/shared/ui/Tabs";
+import { LoginFormContent } from "./LoginFormContent";
 
 export function LoginForm() {
   const tabs = ["jobseeker", "company"];
@@ -14,41 +14,8 @@ export function LoginForm() {
 
   const [activeTab, setActiveTab] = useState<UserType>("jobseeker");
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    remember: false,
-  });
-
-  const [errors, setErrors] = useState({
-    email: "",
-    password: "",
-  });
-
   function handleTabChange(tab: UserType) {
     setActiveTab(tab);
-    setFormData({ email: "", password: "", remember: false });
-    setErrors({ email: "", password: "" });
-  }
-
-  function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-
-    const finalFormData = {
-      ...formData,
-      role: activeTab,
-    };
-
-    if (!validateForm(finalFormData, setErrors)) return;
-
-    console.log("Form submitted:", finalFormData);
-
-    setFormData({
-      email: "",
-      password: "",
-      remember: false,
-    });
-    setErrors({ email: "", password: "" });
   }
 
   function handleGoogleSignIn() {
@@ -68,66 +35,7 @@ export function LoginForm() {
         <Tabs tabs={tabs} activeTab={activeTab} onChange={handleTabChange} />
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Email */}
-
-          <Input
-            name="email"
-            label="Email"
-            error={errors.email}
-            type="email"
-            value={formData.email}
-            onChange={(e) =>
-              setFormData({ ...formData, email: e.target.value })
-            }
-          />
-
-          {/* Password */}
-          <Input
-            name="password"
-            label="Password"
-            error={errors.password}
-            type="password"
-            value={formData.password}
-            onChange={(e) =>
-              setFormData({ ...formData, password: e.target.value })
-            }
-          />
-
-          {/* Remember + Forgot */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                name="rememder"
-                id="remember"
-                type="checkbox"
-                checked={formData.remember}
-                onChange={(e) =>
-                  setFormData({ ...formData, remember: e.target.checked })
-                }
-                className="w-4 h-4 rounded-lgl border-border  text-primary focus:ring-primary accent-primary"
-              />
-              <label
-                htmlFor="remember"
-                className="ml-2 text-sm text-foreground"
-              >
-                Remember me
-              </label>
-            </div>
-
-            <Link
-              href="/forgot-password"
-              className="text-sm text-text-secondary hover:text-primary underline"
-            >
-              Forgot password?
-            </Link>
-          </div>
-
-          {/* Submit */}
-          <Button variant="primary" size="md" type="submit" className="w-full">
-            Sign In
-          </Button>
-        </form>
+        <LoginFormContent key={activeTab} />
 
         {/* Divider */}
         <Divider name="Or continue with" />
