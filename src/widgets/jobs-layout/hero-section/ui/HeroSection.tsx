@@ -1,9 +1,9 @@
-import { JobSearch } from "@/features/job-search";
+import { SearchBar } from "@/features/search";
 
 export function HeroSection() {
   return (
     <section
-      className="relative border-b border-border py-12 overflow-hidden"
+      className="relative border-b border-border py-12 "
       style={{
         backgroundImage: "url(/jobs-hero.webp)",
         backgroundSize: "cover",
@@ -22,7 +22,7 @@ export function HeroSection() {
         </p>
       </div>
 
-      <JobSearch />
+      <SearchBar type="job" />
     </section>
   );
 }

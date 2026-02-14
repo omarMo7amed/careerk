@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/widgets/header";
 import "./animations.css";
-import { InterFont } from "@/shared";
+import { InterFont, QueryProvider } from "@/shared";
 import { FooterUI } from "@/widgets/footer";
 import { cn } from "@/shared/lib/cn";
 
@@ -22,7 +22,9 @@ export default function RootLayout({
       <body className={cn(InterFont.className, "antialiased")}>
         <Header />
 
-        <main>{children}</main>
+        <main>
+          <QueryProvider>{children}</QueryProvider>
+        </main>
         <FooterUI />
       </body>
     </html>
