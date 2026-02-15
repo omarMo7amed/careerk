@@ -3,7 +3,7 @@
 import { Button, Input } from "@/shared";
 import { useActionState, useState } from "react";
 import { JobSeekerData, RegisterState } from "../types/RegisterFormType";
-import { registerJobSeeker } from "../lib/actions";
+import { registerJobSeeker } from "../lib/registerValidation";
 import { useFormStatus } from "react-dom";
 
 const initialState: RegisterState = {
@@ -32,6 +32,8 @@ function JobSeekerForm() {
       key={state?.success ? "success" : "idle"}
       className="space-y-4"
     >
+      <Input type="hidden" name="role" value="jobseeker" />
+
       <Input
         name="firstName"
         label="First Name"

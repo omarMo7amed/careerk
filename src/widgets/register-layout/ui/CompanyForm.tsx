@@ -5,7 +5,7 @@ import { useActionState, useState } from "react";
 import { CompanyData, RegisterState } from "../types/RegisterFormType";
 import Select from "@/shared/ui/Select";
 import { useFormStatus } from "react-dom";
-import { registerCompany } from "../lib/actions";
+import { registerCompany } from "../lib/registerValidation";
 
 const sizeOptions = [
   {
@@ -73,6 +73,8 @@ function CompanyForm() {
       key={state?.success ? "success" : "idle"}
       className="space-y-4"
     >
+      <Input type="hidden" name="role" value="company" />
+
       <Input
         name="companyName"
         label="Company Name"

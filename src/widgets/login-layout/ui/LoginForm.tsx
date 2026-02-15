@@ -35,7 +35,7 @@ export function LoginForm() {
         <Tabs tabs={tabs} activeTab={activeTab} onChange={handleTabChange} />
 
         {/* Form */}
-        <LoginFormContent key={activeTab} />
+        <LoginFormContent key={activeTab} role={activeTab} />
 
         {/* Divider */}
         <Divider name="Or continue with" />

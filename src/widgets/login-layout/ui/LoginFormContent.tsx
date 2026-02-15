@@ -3,7 +3,7 @@
 import { Button, Input } from "@/shared";
 import { useActionState, useState } from "react";
 import { useFormStatus } from "react-dom";
-import { login } from "../lib/actions";
+import { login } from "../lib/loginValidation";
 import { LoginState } from "../types/loginFormTypes";
 import Link from "next/link";
 
@@ -12,7 +12,7 @@ const initialState: LoginState = {
   success: false,
 };
 
-export function LoginFormContent() {
+export function LoginFormContent({ role }: { role: string }) {
   const [state, loginAction] = useActionState(login, initialState);
   const { pending } = useFormStatus();
 
@@ -24,6 +24,8 @@ export function LoginFormContent() {
 
   return (
     <form action={loginAction} className="space-y-4">
+      <Input type="hidden" name="role" value={role} />
+
       <Input
         name="email"
         label="Email"
