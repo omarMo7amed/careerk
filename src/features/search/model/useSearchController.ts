@@ -49,7 +49,7 @@ export function useSearchController({
     (open || !!(query || location)) &&
     !!(limited.length || isLoading || (error && query));
 
-  const doSelect = (item: Job) => {
+  const doSelect = (item: Job | Company | Candidate) => {
     setOpen(false);
     setHighlighted(-1);
     //we will implement it

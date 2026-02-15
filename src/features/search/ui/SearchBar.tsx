@@ -36,7 +36,7 @@ export function SearchBar({
     setHighlighted,
     onKeyDown,
     onSelect: handleSelect,
-    searchNow,
+    searchNow, // may be i will remove it
     clear,
   } = controller;
 

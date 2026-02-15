@@ -9,3 +9,5 @@ export { JobTitle } from "./components/JobTitle";
 export { JobDetails } from "./components/JobDetails";
 export { JobFooter } from "./components/JobFooter";
 export { ViewJobOverlay } from "./components/ViewJobOverlay";
+
+export { useJobsQuery } from "./model/useJobsQuery";

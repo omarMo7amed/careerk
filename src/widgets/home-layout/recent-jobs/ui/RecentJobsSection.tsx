@@ -2,9 +2,9 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { jobListings } from "../model/constants";
 import { JobSlider } from "./JobSlider";
 import ViewAllButton from "./ViewAllButton";
+import { useJobsQuery } from "@/entities/job";
 
 export default function RecentJobsSection() {
   const jobsSectionRef = useRef<HTMLDivElement>(null);
@@ -13,7 +13,8 @@ export default function RecentJobsSection() {
     margin: "-100px",
   });
 
-  const sliderJobs = jobListings.slice(8, 16);
+  const { jobs } = useJobsQuery({ enabled: isJobsInView });
+  const sliderJobs = (jobs ?? []).slice(8, 16);
 
   return (
     <section className="py-24 relative overflow-hidden bg-background">
@@ -38,7 +39,7 @@ export default function RecentJobsSection() {
       </div>
 
       <ViewAllButton
-        jobsLength={jobListings.length}
+        jobsLength={(jobs ?? []).length}
         isJobsInView={isJobsInView}
       />
     </section>

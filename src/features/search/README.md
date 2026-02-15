@@ -19,7 +19,7 @@ This document explains every function in the `model/` layer for the `search` fea
 Signature
 
 ```ts
-export function useDebouncedValue<T>(value: T, delay = 300): T
+export function useDebouncedValue<T>(value: T, delay = 300): T;
 ```
 
 Purpose
@@ -81,7 +81,7 @@ Behavior / Implementation details
 
 - Uses `useDebouncedValue` for `query` and `location`.
 - `useQuery` key: `['search', type, debouncedQuery, debouncedLocation]`.
-- `getJResult(...)` is the fetcher — it accepts an `AbortSignal` and pagination params.
+- `getResult(...)` is the fetcher — it accepts an `AbortSignal` and pagination params.
 - Query `enabled` when either debounced query or location is present.
 - `searchNow()` performs an immediate `queryClient.fetchQuery(...)` for Enter/button clicks.
 - `clear()` resets local state and removes matching cached queries from the client.
@@ -92,12 +92,14 @@ Important behaviors to remember
 - Caching & stale policy are governed by the QueryClient defaults (see `QueryProvider`).
 - Debounce prevents calling the remote backend on every single keystroke.
 - `searchNow()` is useful for immediate results (bypasses debounce window).
-- `getJResult` will throw on non-2xx — `useSearchQuery` surfaces that in `error`.
+- `getResult` will throw on non-2xx — `useSearchQuery` surfaces that in `error`.
 
 Typical usage
 
 ```tsx
-const { query, setQuery, results, isLoading, searchNow } = useSearchQuery({ type: 'job' });
+const { query, setQuery, results, isLoading, searchNow } = useSearchQuery({
+  type: "job",
+});
 
 // bind `query` & `setQuery` to inputs; call `searchNow()` for immediate fetch
 ```
@@ -178,8 +180,8 @@ Testing recommendations
 
 ## API contract & dependencies
 
-- Fetcher: `src/features/search/api/getJResult.ts`
-  - Signature: `getJResult(searchValue, locationValue, type, options?)`
+- Fetcher: `src/features/search/api/getResult.ts`
+  - Signature: `getResult(searchValue, locationValue, type, options?)`
   - Uses `NEXT_PUBLIC_BASE_API_URL` (set in `.env` / deployment environment).
   - Supports `AbortSignal`, pagination params, and returns parsed JSON.
 
@@ -215,8 +217,4 @@ Testing recommendations
 
 - Model hooks: `src/features/search/model/`
 - UI components: `src/features/search/ui/`
-- Fetcher / API: `src/features/search/api/getJResult.ts`
-
----
-
-If you want, I can add unit tests for each hook now (I recommend starting with `useSearchQuery` and `useSearchController`).
+- Fetcher / API: `src/features/search/api/getResult.ts`
