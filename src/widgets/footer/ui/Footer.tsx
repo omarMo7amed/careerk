@@ -7,7 +7,7 @@ import { FooterBottom } from "./FooterBottom";
 export default function Footer() {
   return (
     <footer className="bg-[#111827] text-[#f9fafb] pt-[60px] shadow-[0_10px_40px_rgba(0,0,0,0.1)]">
-      <div className="max-w-[1200px] mx-auto px-10">
+      <div className="max-w-[1200px] mx-auto px-4">
         {/* Logo */}
         <div className="mb-[50px]">
           <Image

@@ -5,14 +5,14 @@ export function HeroSection() {
     <section
       className="relative border-b border-border py-12 "
       style={{
-        backgroundImage: "url(/jobs-hero.webp)",
+        backgroundImage: "url(/jobs-page/jobs-hero.webp)",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
       <div className="absolute inset-0 bg-black/65" />
 
-      <div className="relative z-10 max-w-7xl mx-auto text-center">
+      <div className="relative z-10 max-w-7xl mx-auto p-4 text-center">
         <h1 className="text-4xl font-bold text-white mb-4">
           Find Your Dream Job
         </h1>

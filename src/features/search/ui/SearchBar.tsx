@@ -41,7 +41,7 @@ export function SearchBar({
   } = controller;
 
   return (
-    <div ref={containerRef} className="relative w-full">
+    <div ref={containerRef} className="relative w-full px-4">
       <ComposedSearchBar
         searchValue={query}
         onSearchValueChange={(v) => {

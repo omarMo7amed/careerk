@@ -1,11 +1,13 @@
+import { CTA } from "@/widgets/jobs-layout/CTA";
 import { HeroSection } from "@/widgets/jobs-layout/hero-section";
-import { JobsSection } from "@/widgets/jobs-layout/jobs-section";
+import { JobsList } from "@/widgets/jobs-layout/jobs-list";
 
 export default function Page() {
   return (
     <div className="min-h-screen ">
       <HeroSection />
-      <JobsSection />
+      <JobsList />
+      <CTA />
     </div>
   );
 }
