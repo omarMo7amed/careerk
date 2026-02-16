@@ -79,3 +79,44 @@
 .pill-badge:hover::before {
   left: 100%;
 }
+
+/* Animations for floating company logos in the hero section */
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+}
+
+@keyframes float-medium {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(-3deg);
+  }
+}
+
+@keyframes float-fast {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(-8deg);
+  }
+}
+
+.float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+.float-medium {
+  animation: float-medium 6s ease-in-out infinite;
+}
+.float-fast {
+  animation: float-fast 4s ease-in-out infinite;
+}
