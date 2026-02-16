@@ -5,7 +5,6 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="dashboard-layout">
-      {/* Add unified dashboard sidebar/navigation here */}
       <main>{children}</main>
     </div>
   );

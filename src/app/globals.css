@@ -114,9 +114,9 @@
   }
 
   /* Focus Visible */
-  *:focus-visible {
+  /* *:focus-visible {
     @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
-  }
+  } */
 
   /* Selection */
   ::selection {
@@ -152,12 +152,16 @@
     @apply hover:bg-bg-muted hover:text-foreground;
   }
 
-  .input {
+  /* .input {
     @apply flex h-10 w-full rounded-md border border-border bg-bg-surface px-3 py-2 text-sm text-foreground;
     @apply placeholder:text-text-muted;
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
     @apply disabled:cursor-not-allowed disabled:opacity-50;
-  }
+  } */
+
+  /* input {
+    outline: none;
+  } */
 
   .badge {
     @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold;

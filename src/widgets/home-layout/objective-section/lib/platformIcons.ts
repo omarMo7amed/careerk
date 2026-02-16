@@ -1,0 +1,68 @@
+import type { PlatformIcon } from "../model/types";
+
+export const icons: PlatformIcon[] = [
+  {
+    id: "linkedin-1",
+    type: "svg",
+    left: "15%",
+    top: "20%",
+    z: 1,
+    svg: "/objectives/LinkedIn_Logo.svg",
+  },
+  {
+    id: "linkedin-2",
+    type: "svg",
+    left: "75%",
+    top: "70%",
+    z: 1,
+    svg: "/objectives/LinkedIn_Logo.svg",
+  },
+  {
+    id: "indeed-1",
+    type: "svg",
+    left: "25%",
+    top: "35%",
+    z: 0.9,
+    svg: "/objectives/Indeed_Logo.svg",
+  },
+  {
+    id: "indeed-2",
+    type: "svg",
+    left: "60%",
+    top: "80%",
+    z: 1.1,
+    svg: "/objectives/Indeed_Logo.svg",
+  },
+  {
+    id: "glassdoor",
+    type: "svg",
+    left: "10%",
+    top: "60%",
+    z: 1.1,
+    svg: "/objectives/Glassdoor_Logo.svg",
+  },
+  {
+    id: "glassdoor",
+    type: "svg",
+    left: "80%",
+    top: "25%",
+    z: 0.8,
+    svg: "/objectives/Glassdoor_Logo.svg",
+  },
+  {
+    id: "wuzzuf",
+    type: "text",
+    left: "45%",
+    top: "45%",
+    z: 1,
+    text: "W",
+  },
+  {
+    id: "wuzzuf",
+    type: "text",
+    left: "30%",
+    top: "85%",
+    z: 0.7,
+    text: "W",
+  },
+];

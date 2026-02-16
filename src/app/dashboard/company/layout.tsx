@@ -1,12 +1,20 @@
+import type { Metadata } from "next";
+import { SideBarLayout } from "@/widgets/side-bar";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "Your company dashboard",
+};
+
 export default function CompanyDashboardLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <div className="company-dashboard">
-      {/* Company Sidebar would go here */}
-      <main>{children}</main>
+    <div className="min-h-screen bg-background transition-colors duration-300 flex">
+      <SideBarLayout role="company" />
+      <main className="flex-1 px-8 py-8">{children}</main>
     </div>
   );
 }

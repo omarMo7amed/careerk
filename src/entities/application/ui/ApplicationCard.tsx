@@ -5,6 +5,8 @@
  * Used in both company and jobseeker dashboards.
  */
 
+import { cn } from "@/shared/lib/cn";
+
 interface ApplicationCardProps {
   jobTitle: string;
   candidateName?: string;
@@ -26,7 +28,7 @@ export function ApplicationCard({
       {candidateName && <p className="candidate">{candidateName}</p>}
       {companyName && <p className="company">{companyName}</p>}
       <div className="application-meta">
-        <span className={`status status-${status}`}>{status}</span>
+        <span className={cn("status", `status-${status}`)}>{status}</span>
         <span className="date">Applied: {appliedDate}</span>
       </div>
     </div>
