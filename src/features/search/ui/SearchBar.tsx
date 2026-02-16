@@ -12,6 +12,7 @@ export function SearchBar({
   initialQuery,
   initialLocation,
   onSelect,
+  searchPlaceholder,
 }: SearchBarProps) {
   const controller = useSearchController({
     type,
@@ -43,6 +44,7 @@ export function SearchBar({
   return (
     <div ref={containerRef} className="relative w-full px-4">
       <ComposedSearchBar
+        searchPlaceholder={searchPlaceholder}
         searchValue={query}
         onSearchValueChange={(v) => {
           setQuery(v);

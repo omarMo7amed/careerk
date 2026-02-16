@@ -5,12 +5,12 @@ export { IconX } from "./ui/IconX";
 export { Input } from "./ui/Input";
 export { ConfirmationModal } from "./ui/ConfirmationModal";
 
-// Shared Types
-
 // Shared Utilities
 export { useUserRole, useHasRole, getUserRole } from "./lib/useUserRole";
 export type { UserRole } from "./lib/useUserRole";
 export { cn } from "./lib/cn";
+export { getProfileColor } from "./lib/getProfileColor";
+export { getInitialsFromFullName } from "./lib/getInitialsFromFullName";
 
 // Hooks
 export { useClickOutside } from "./lib/useClickOutside";

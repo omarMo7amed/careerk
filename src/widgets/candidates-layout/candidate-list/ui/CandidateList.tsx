@@ -1,10 +1,14 @@
 "use client";
-import { Job, JobCardJobseeker, useJobsQuery } from "@/entities/job";
+import {
+  CandidateCard,
+  Candidate,
+  useCandidatesQuery,
+} from "@/entities/candidate";
 import { TableOfOperation } from "@/features/filter";
 import { List } from "@/widgets/List";
 
 export function CandidateList() {
-  const { jobs } = useJobsQuery();
+  const { candidates } = useCandidatesQuery();
   return (
     <div className="max-w-screen-2xl mx-auto flex flex-col sm:flex-row gap-4 px-4 py-6">
       <div className="sm:w-1/3 lg:w-1/4 flex flex-row sm:flex-col flex-wrap  gap-4 ">
@@ -22,8 +26,10 @@ export function CandidateList() {
         />
       </div>
       <List
-        items={jobs as Job[]}
-        renderItem={(job) => <JobCardJobseeker job={job} key={job.id} />}
+        items={candidates as Candidate[]}
+        renderItem={(candidate) => (
+          <CandidateCard candidate={candidate} key={candidate.id} />
+        )}
       />
     </div>
   );
