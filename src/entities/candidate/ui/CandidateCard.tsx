@@ -1,6 +1,11 @@
-import Image from "next/image";
+import { CandidateSocialLinks } from "../components/CandidateSocialLinks";
+import { CandidateMetaItem } from "../components/CandidateMetaItem";
+import { CandidateHeader } from "../components/CandidateHeader";
+import { ContactButton } from "../components/ContactButton";
+import { ViewProfile } from "../components/ViewProfile";
 import { Candidate } from "../types/candidate";
-import { getProfileColor, getInitialsFromFullName } from "@/shared";
+
+import { DollarSign, BriefcaseBusiness, MapPin } from "lucide-react";
 
 export function CandidateCard({ candidate }: { candidate: Candidate }) {
   const {
@@ -10,67 +15,64 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
     location,
     summary,
     availability_status,
-    skills,
     avatarUrl,
+    work_preference,
+    expected_salary,
+    linkedin_url,
+    portfolio_url,
+    github_url,
+    email,
+    cv_score,
+    cv_match_percentage,
   } = candidate;
 
-  const initials = getInitialsFromFullName(name);
-
-  const bg = getProfileColor(id);
-
   return (
-    <div className="bg-foreground">
-      <div className="flex items-start justify-between">
-        <div className="flex">
-          <div className="flex-1">
-            {avatarUrl ? (
-              <Image
-                src={avatarUrl}
-                alt={name}
-                className="avatar rounded-full"
-                width={64}
-                height={64}
-              />
-            ) : (
-              <div
-                className="avatar rounded-full w-16 h-16 flex items-center justify-center text-white font-semibold"
-                style={{ backgroundColor: bg }}
-                aria-hidden={true}
-              >
-                {initials}
-              </div>
-            )}
-          </div>
-          <div className="ml-4 shrink">
-            <h4 className="text-text-primary text-lg">{name}</h4>
-            <p className="text-text-secondary text-sm">{title}</p>
-            <span
-              className="rounded-lg inline-flex items-center gap-2 text-white px-2 py-1 text-xs mt-1"
-              style={{
-                backgroundColor: bg,
-              }}
-            >
-              <span className="rounded-full w-2 h-2 bg-white" />
-
-              {availability_status}
-            </span>
-          </div>
-        </div>
-        <div className="bg-amber-300 rounded-full w-8 h-8 flex items-center justify-center  text-sm">
-          10
-        </div>
+    <div className="bg-bg-surface rounded-lg p-4 shadow-sm flex flex-col gap-2 border border-border">
+      <div className="flex items-start justify-between gap-6">
+        <CandidateHeader
+          id={id}
+          name={name}
+          title={title}
+          avatarUrl={avatarUrl}
+          availability_status={availability_status}
+          rank={cv_match_percentage || cv_score}
+        />
       </div>
 
-      <p className="text-text-secondary text-sm">{summary}</p>
-      {skills.length > 0 && (
-        <div className="skills">
-          {skills.map((skill, index) => (
-            <span key={index} className="skill-tag">
-              {skill}
-            </span>
-          ))}
+      <p
+        className="text-text-secondary text-sm line-clamp-2 my-3"
+        title={summary}
+      >
+        {summary}
+      </p>
+
+      <CandidateMetaItem
+        icon={<MapPin className="w-4 h-4 text-text-secondary" />}
+        label={location}
+      />
+      <CandidateMetaItem
+        icon={<BriefcaseBusiness className="w-4 h-4 text-text-secondary" />}
+        label={work_preference}
+      />
+      <CandidateMetaItem
+        icon={<DollarSign className="w-4 h-4 text-text-secondary" />}
+        label={expected_salary}
+      />
+
+      <CandidateSocialLinks
+        linkedin_url={linkedin_url}
+        portfolio_url={portfolio_url}
+        github_url={github_url}
+      />
+
+      <div className="w-full flex justify-between gap-2 mt-2">
+        <div className="flex-1 px-3 py-1.5 rounded-md bg-primary text-white hover:opacity-90 ">
+          <ViewProfile id={id} />
         </div>
-      )}
+        <div className="flex-1 px-3 py-1.5 rounded-md bg-transparent border border-border text-white hover:opacity-90">
+          <ContactButton email={email} />
+        </div>
+      </div>
     </div>
   );
 }

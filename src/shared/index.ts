@@ -4,6 +4,9 @@ export { Badge } from "./ui/Badge";
 export { IconX } from "./ui/IconX";
 export { Input } from "./ui/Input";
 export { ConfirmationModal } from "./ui/ConfirmationModal";
+export { UserAvatar } from "./ui/UserAvatar";
+export { AvailabilityBadge } from "./ui/AvailabilityBadge";
+export { RankingBadge } from "./ui/RankingBadge";
 
 // Shared Utilities
 export { useUserRole, useHasRole, getUserRole } from "./lib/useUserRole";

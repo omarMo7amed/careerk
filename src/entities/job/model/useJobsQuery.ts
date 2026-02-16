@@ -4,6 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import getJobs from "../api/getJobs";
 import { jobListings } from "../mock-data/jobs";
 import { Job } from "../types/job";
+import { searchJobs } from "../api/search";
 
 type UseJobsQueryOptions = {
   page?: number;
@@ -14,14 +15,14 @@ type UseJobsQueryOptions = {
 export function useJobsQuery({
   page = 1,
   pageSize = 20,
-  enabled = false,
+  enabled = true,
 }: UseJobsQueryOptions = {}) {
   const queryClient = useQueryClient();
   const queryKey = ["jobs", page, pageSize] as const;
 
   const { data, isLoading, isFetching, error } = useQuery<Job[], Error>({
     queryKey,
-    queryFn: ({ signal }) => getJobs({ signal, page, pageSize }),
+    queryFn: ({ signal }) => searchJobs(signal, ""),
     enabled,
     staleTime: 1000 * 60 * 5, // 5 minutes
     placeholderData: jobListings,
@@ -31,7 +32,7 @@ export function useJobsQuery({
     try {
       return await queryClient.fetchQuery<Job[]>({
         queryKey,
-        queryFn: ({ signal }) => getJobs({ signal, page, pageSize }),
+        queryFn: ({ signal }) => searchJobs(signal, ""),
       });
     } catch {
       return null;

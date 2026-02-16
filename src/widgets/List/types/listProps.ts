@@ -5,4 +5,5 @@ type RenderFn<T> = (item: T, index: number) => ReactNode;
 export type CatalogListProps<T = unknown> = {
   items?: T[];
   renderItem: RenderFn<T>;
+  columns?: number;
 };
