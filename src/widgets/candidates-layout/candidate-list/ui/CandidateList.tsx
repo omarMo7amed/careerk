@@ -25,7 +25,8 @@ export function CandidateList() {
           options={["0-1 years", "1-3 years", "3-5 years", "5+ years"]}
         />
       </div>
-      <div className="flex-1 pr-4 py-4 max-h-screen overflow-scroll">
+
+      <div className="flex-1 px-4 sm:pl-0 sm:pr-4 py-4 max-h-screen overflow-scroll">
         <List
           items={candidates as Candidate[]}
           renderItem={(candidate) => (

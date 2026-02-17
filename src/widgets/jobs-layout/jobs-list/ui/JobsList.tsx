@@ -16,11 +16,13 @@ export function JobsList() {
           options={["Entry Level", "Mid Level", "Senior Level", "Other"]}
         />
       </div>
-      <div className="flex-1 pr-4 py-4 max-h-screen overflow-scroll">
+      <div className="flex-1 px-4 sm:pl-0 sm:pr-4 py-4 max-h-screen overflow-scroll">
         <List
           items={jobs as Job[]}
           renderItem={(job) => <JobCardJobseeker job={job} key={job.id} />}
           columnsInLarge={3}
+          columnsInMedium={2}
+          columnsInSmall={1}
         />
       </div>
     </div>
