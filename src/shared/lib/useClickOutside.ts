@@ -2,9 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-export function useClickOutside<T extends HTMLElement = HTMLElement>(
-  fn: () => void,
-) {
+export function useClickOutside<T extends HTMLElement>(fn: () => void) {
   const ref = useRef<T>(null);
   useEffect(() => {
     function handleClick(event: MouseEvent) {
@@ -12,6 +10,7 @@ export function useClickOutside<T extends HTMLElement = HTMLElement>(
         fn();
       }
     }
+
     document.addEventListener("click", handleClick);
     return () => document.removeEventListener("click", handleClick);
   }, [fn]);

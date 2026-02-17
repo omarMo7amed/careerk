@@ -9,12 +9,12 @@ export function RankingBadge({ rank }: RankingProps) {
   return (
     <div
       className={cn(
-        "w-12 h-12 p-1 flex flex-col items-center justify-center rounded-lg text-sm font-semibold text-text-primary border-2  ",
+        "w-16 h-16 p-1 flex flex-col items-center justify-center rounded-lg text-lg font-semibold text-text-primary border-2  ",
         color.border,
         color.shadow,
       )}
     >
-      <Star className={cn("w-4 h-4", color.text)} />
+      <Star className={cn("w-5 h-5", color.text)} />
       <p>{rank}</p>
     </div>
   );
