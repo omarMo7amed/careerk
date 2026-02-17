@@ -59,7 +59,7 @@ export function SideBarLayout({ role }: SideBarLayoutProps) {
   const navItems = role === "company" ? companyNavItems : jobseekerNavItems;
 
   return (
-    <aside className="w-64 border-r border-border bg-card/30 min-h-screen sticky top-0 flex flex-col">
+    <aside className="w-64 border-r border-border bg-card/30 h-screen sticky top-0 flex flex-col">
       <div className="p-4 flex-1">
         {/* Logo */}
         <div className="flex items-center gap-2 mb-6 pb-6 border-b border-border">
