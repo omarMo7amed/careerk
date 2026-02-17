@@ -8,7 +8,7 @@ export function CompaniesHero() {
     <section className="relative overflow-hidden">
       <div className="container relative mx-auto px-6 pb-20 sm:px-8 lg:px-12 pt-20 sm:pt-30 lg:pt-40">
         {/*company logos*/}
-        <div className="pointer-events-none absolute inset-0">
+        <div className="pointer-events-none absolute inset-0 hidden md:block">
           {floatingCompanies.map((company) => (
             <CompanyIcon
               key={company.alt}

@@ -221,4 +221,59 @@ export const CompaniesListing: CompanyCard[] = [
       "Ghost kitchen and food delivery platform revolutionizing restaurant operations and customer experience.",
     founded_year: 2017,
   },
+  {
+    id: "21",
+    name: "FoodTech Delivery",
+    website: "https://foodtech-delivery.com",
+    size: "600+ employees",
+    industry: "FoodTech",
+    location: "New York, NY",
+    description:
+      "Ghost kitchen and food delivery platform revolutionizing restaurant operations and customer experience.",
+    founded_year: 2017,
+  },
+  {
+    id: "22",
+    name: "FoodTech Delivery",
+    website: "https://foodtech-delivery.com",
+    size: "600+ employees",
+    industry: "FoodTech",
+    location: "New York, NY",
+    description:
+      "Ghost kitchen and food delivery platform revolutionizing restaurant operations and customer experience.",
+    founded_year: 2017,
+  },
+  {
+    id: "23",
+    name: "FoodTech Delivery",
+    website: "https://foodtech-delivery.com",
+    size: "600+ employees",
+    industry: "FoodTech",
+    location: "New York, NY",
+    description:
+      "Ghost kitchen and food delivery platform revolutionizing restaurant operations and customer experience.",
+    founded_year: 2017,
+  },
+  {
+    id: "24",
+    name: "FoodTech Delivery",
+    website: "https://foodtech-delivery.com",
+    size: "600+ employees",
+    industry: "FoodTech",
+    location: "New York, NY",
+    description:
+      "Ghost kitchen and food delivery platform revolutionizing restaurant operations and customer experience.",
+    founded_year: 2017,
+  },
+  {
+    id: "25",
+    name: "FoodTech Delivery",
+    website: "https://foodtech-delivery.com",
+    size: "600+ employees",
+    industry: "FoodTech",
+    location: "New York, NY",
+    description:
+      "Ghost kitchen and food delivery platform revolutionizing restaurant operations and customer experience.",
+    founded_year: 2017,
+  },
 ];

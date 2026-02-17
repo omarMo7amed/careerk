@@ -13,7 +13,7 @@ type UseJobsQueryOptions = {
 
 export function useJobsQuery({
   page = 1,
-  pageSize = 20,
+  pageSize = 12,
   enabled = false,
 }: UseJobsQueryOptions = {}) {
   const queryClient = useQueryClient();
