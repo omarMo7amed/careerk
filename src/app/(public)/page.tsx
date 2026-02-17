@@ -5,11 +5,11 @@ import { HeroSection } from "@/widgets/home-layout/hero-section";
 
 export default function Home() {
   return (
-    <div>
+    <>
       <HeroSection />
       <AboutSectionUI />
       <ObjectiveSectionUI />
       <RecentJobsSection />
-    </div>
+    </>
   );
 }

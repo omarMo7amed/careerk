@@ -10,7 +10,7 @@ export function List<T = unknown>({
   return (
     <div>
       <ul
-        className={`grid grid-cols-${columnsInSmall} md:grid-cols-${columnsInMedium} lg:grid-cols-${columnsInLarge} xl:grid-cols-${columnsInSmall} gap-4`}
+        className={`grid grid-cols-${columnsInSmall} md:grid-cols-${columnsInMedium} lg:grid-cols-${columnsInLarge} gap-4`}
       >
         {items?.map((it, i) => renderItem(it, i))}
       </ul>

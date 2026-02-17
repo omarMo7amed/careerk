@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 
 import "./globals.css";
-import { Header } from "@/widgets/header";
 import "./animations.css";
-import { InterFont, QueryProvider } from "@/shared";
-import { FooterUI } from "@/widgets/footer";
-import { cn } from "@/shared/lib/cn";
+import { InterFont, QueryProvider, cn } from "@/shared";
 
 export const metadata: Metadata = {
   title: "Careerk",
@@ -20,12 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(InterFont.className, "antialiased")}>
-        <Header />
-
-        <main>
-          <QueryProvider>{children}</QueryProvider>
-        </main>
-        <FooterUI />
+        <QueryProvider>
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );

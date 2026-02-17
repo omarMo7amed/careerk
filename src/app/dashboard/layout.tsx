@@ -1,12 +1,11 @@
-export default function DashboardLayout({
+export default function Layout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <div className="dashboard-layout">
-      {/* Add unified dashboard sidebar/navigation here */}
-      <main>{children}</main>
+    <div className="min-h-screen bg-background transition-colors duration-300 flex">
+      {children}
     </div>
   );
 }
