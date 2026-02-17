@@ -12,9 +12,6 @@ export function FilterList({
     <ul
       className={`flex flex-col gap-2 overflow-auto pr-2 ${maxHeightClass} ${className}`}
     >
-      {options.length === 0 && (
-        <li className="text-sm text-foreground/60">No options</li>
-      )}
       {options.map((opt) => (
         <FilterItem
           key={opt.value}
