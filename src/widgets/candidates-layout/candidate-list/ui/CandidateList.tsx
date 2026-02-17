@@ -5,6 +5,7 @@ import {
   useCandidatesQuery,
 } from "@/entities/candidate";
 import { TableOfOperation } from "@/features/filter";
+import { Pagination } from "@/shared";
 import { List } from "@/widgets/List";
 
 export function CandidateList() {
@@ -35,6 +36,11 @@ export function CandidateList() {
           columnsInLarge={2}
           columnsInMedium={2}
           columnsInSmall={1}
+        />
+        <Pagination
+          page={1}
+          totalPages={10}
+          onPageChange={(page) => console.log(page)}
         />
       </div>
     </div>

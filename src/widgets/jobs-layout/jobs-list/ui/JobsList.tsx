@@ -1,6 +1,7 @@
 "use client";
 import { Job, JobCardJobseeker, useJobsQuery } from "@/entities/job";
 import { TableOfOperation } from "@/features/filter";
+import { Pagination } from "@/shared";
 import { List } from "@/widgets/List";
 export function JobsList() {
   const { jobs } = useJobsQuery();
@@ -23,6 +24,12 @@ export function JobsList() {
           columnsInLarge={3}
           columnsInMedium={2}
           columnsInSmall={1}
+        />
+
+        <Pagination
+          page={1}
+          totalPages={10}
+          onPageChange={(page) => console.log(page)}
         />
       </div>
     </div>

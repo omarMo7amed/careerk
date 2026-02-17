@@ -1,7 +1,11 @@
+import { CompaniesHero } from "@/widgets/companies-layout/companies-hero/ui/CompaniesHero";
+import { CompaniesList } from "@/widgets/companies-layout/companies-list";
+
 export default function Page() {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <h1 className="text-4xl font-bold">Companies Page</h1>
+    <div className="min-h-screen">
+      <CompaniesHero />
+      <CompaniesList />
     </div>
   );
 }

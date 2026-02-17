@@ -1,7 +1,6 @@
 "use client";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import getJobs from "../api/getJobs";
 import { jobListings } from "../mock-data/jobs";
 import { Job } from "../types/job";
 import { searchJobs } from "../api/search";
@@ -14,8 +13,8 @@ type UseJobsQueryOptions = {
 
 export function useJobsQuery({
   page = 1,
-  pageSize = 20,
-  enabled = true,
+  pageSize = 12,
+  enabled = false,
 }: UseJobsQueryOptions = {}) {
   const queryClient = useQueryClient();
   const queryKey = ["jobs", page, pageSize] as const;

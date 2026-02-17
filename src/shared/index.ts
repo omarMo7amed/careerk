@@ -7,7 +7,7 @@ export { ConfirmationModal } from "./ui/ConfirmationModal";
 export { UserAvatar } from "./ui/UserAvatar";
 export { AvailabilityBadge } from "./ui/AvailabilityBadge";
 export { RankingBadge } from "./ui/RankingBadge";
-
+export { Pagination } from "./ui/Pagination";
 // Shared Utilities
 export { useUserRole, useHasRole, getUserRole } from "./lib/useUserRole";
 export type { UserRole } from "./lib/useUserRole";
