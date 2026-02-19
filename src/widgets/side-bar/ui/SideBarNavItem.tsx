@@ -17,8 +17,7 @@ export function SideBarNavItem({
   children,
 }: SideBarNavItemProps) {
   const pathname = usePathname();
-  const isActive = pathname === href;
-
+  const isActive = pathname === href || pathname.startsWith(`${href}/`);
   const baseStyles =
     "w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary";
   const primaryStyle = `hover:text-white hover:bg-primary ${isActive && "text-white bg-primary"}`;
