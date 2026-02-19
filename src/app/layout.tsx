@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 import "./animations.css";
-import { InterFont, QueryProvider } from "@/shared";
-import { cn } from "@/shared/lib/cn";
+import { InterFont, QueryProvider, cn } from "@/shared";
 
 export const metadata: Metadata = {
   title: "Careerk",
@@ -18,7 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(InterFont.className, "antialiased")}>
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );

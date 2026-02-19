@@ -7,6 +7,7 @@ export type SearchType = "candidate" | "job" | "company";
 export interface SearchBarProps {
   type?: SearchType;
   maxSuggestions?: number;
+  searchPlaceholder: string;
   debounceMs?: number;
   initialQuery?: string;
   initialLocation?: string;

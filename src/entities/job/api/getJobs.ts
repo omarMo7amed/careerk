@@ -1,14 +1,14 @@
 import { jobListings } from "../mock-data/jobs";
 
-export type GetJobsOptions = {
-  signal?: AbortSignal;
-  page?: number;
-  pageSize?: number;
-  q?: string;
-  location?: string;
-};
+// export type GetJobsOptions = {
+//   signal?: AbortSignal;
+//   page?: number;
+//   pageSize?: number;
+//   q?: string;
+//   location?: string;
+// };
 
-export default async function getJobs(options?: GetJobsOptions) {
+export default async function getJobs() {
   // const base = process.env.NEXT_PUBLIC_BASE_API_URL;
   // if (base) {
   //   const params = new URLSearchParams();

@@ -7,3 +7,7 @@ export interface Company {
   industry: string;
   location: string;
 }
+export interface CompanyCard extends Company {
+  description: string;
+  founded_year: number;
+}

@@ -19,7 +19,7 @@ export function HeroSection() {
         </p>
       </div>
 
-      <SearchBar type="candidate" />
+      <SearchBar searchPlaceholder="Job Title" type="candidate" />
     </section>
   );
 }

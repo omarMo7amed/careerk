@@ -4,7 +4,7 @@ import { ComposedSearchBarProps } from "../types/composedSearchBar";
 import { MapPin, Search, X } from "lucide-react";
 
 export function ComposedSearchBar({
-  searchPlaceholder = "Job title",
+  searchPlaceholder,
   searchValue,
   onSearchValueChange,
   locationPlaceholder = "Location",

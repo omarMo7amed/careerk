@@ -10,8 +10,8 @@ import { TableOfOperationProps } from "../types/tableOfOperation";
 import { ControlPanel } from "../components/ControlPanel";
 
 export function TableOfOperation({
-  title = "Filters",
-  options = [],
+  title,
+  options,
   selected: controlledSelected,
   onChange,
 }: TableOfOperationProps) {

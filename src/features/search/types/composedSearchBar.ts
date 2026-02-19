@@ -1,6 +1,6 @@
 export interface ComposedSearchBarProps {
   // Main search field props
-  searchPlaceholder?: string;
+  searchPlaceholder: string;
   searchValue?: string;
   onSearchValueChange?: (value: string) => void;
 
