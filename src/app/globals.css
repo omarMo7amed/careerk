@@ -44,6 +44,7 @@
   :root {
     /* Light Mode Variables */
     --primary: #0353a4;
+    --primary-hover: #1957bc;
     --foreground: #111827;
     --text-secondary: #6b7280;
     --text-muted: #9ca3af;

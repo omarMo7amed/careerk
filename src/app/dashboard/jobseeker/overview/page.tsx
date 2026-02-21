@@ -1,8 +1,15 @@
-export default function JobseekerOverviewPage() {
+import {
+  StatCards,
+  WelcomeBanner,
+} from "@/widgets/jobseeker-overview/welcome-section";
+
+function JobseekerOverview() {
   return (
-    <div>
-      <h1>Jobseeker Overview</h1>
-      <p>Jobseeker dashboard overview page</p>
+    <div className="space-y-8">
+      <WelcomeBanner />
+      <StatCards />
     </div>
   );
 }
+
+export default JobseekerOverview;
