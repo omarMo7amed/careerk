@@ -1,3 +1,5 @@
+import { Skill } from "@/entities/skill";
+
 export interface Candidate {
   id: string;
   user_id: string;
@@ -24,6 +26,7 @@ export interface Candidate {
    * This is the percentage of how much the candidate CV matches with the job requirements
    */
   cv_match_percentage: number;
+  cv_url: string;
 
   /**
    * I will tell amr about it because i think it will be better if we use it as this instead of

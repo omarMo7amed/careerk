@@ -17,7 +17,7 @@ export function Badge({
   animate = false, // ADDED: Default to false
 }: BadgeProps) {
   const baseStyles =
-    "min-w-[80px] w-fit inline-flex items-center gap-3 border border-primary/20 rounded-full text-sm font-bold shadow-lg text-center";
+    "min-w-[80px] w-fit inline-flex items-center justify-center gap-3 border border-primary/20 rounded-full text-sm font-bold shadow-lg";
   const sizes = {
     default: "px-2 py-1 text-sm",
     sm: "px-3 py-1 text-xs",
