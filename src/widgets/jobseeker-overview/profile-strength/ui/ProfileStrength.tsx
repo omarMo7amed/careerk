@@ -8,7 +8,7 @@ import { ArrowRight } from "lucide-react";
 function ProfileStrength() {
   const percentage = calculateProfileProgress(ProfileTasks);
   return (
-    <section className="bg-white rounded-lg p-4">
+    <section className="bg-bg-surface rounded-lg p-4 md:p-8">
       <div>
         <h2 className="text-lg font-semibold mb-2">Profile Strength</h2>
         <p className="text-text-secondary text-sm mb-4">

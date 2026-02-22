@@ -5,14 +5,14 @@ function CircularProgress({ percentage }: { percentage: number }) {
         <div
           className="w-full h-full rounded-full"
           style={{
-            background: `conic-gradient(var(--primary) ${percentage * 3.6}deg, #e5e7eb 0deg)`,
+            background: `conic-gradient(var(--primary) ${percentage * 3.6}deg, var(--bg-muted) 0deg)`,
           }}
         >
-          <div className="absolute inset-3 bg-white rounded-full flex flex-col items-center justify-center">
+          <div className="absolute inset-3 bg-bg-surface rounded-full flex flex-col items-center justify-center">
             <span className="text-3xl font-bold text-primary">
               {percentage}%
             </span>
-            <span className="text-xs text-gray-500">Complete</span>
+            <span className="text-xs text-text-secondary">Complete</span>
           </div>
         </div>
       </div>
