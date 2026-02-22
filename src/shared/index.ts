@@ -22,3 +22,10 @@ export { useClickOutside } from "./lib/useClickOutside";
 export { InterFont, spaceGrotesk } from "./lib/fonts";
 // Providers
 export { QueryProvider } from "./providers/QueryProvider";
+
+// Nav constants
+export type { NavItem } from "./constant/dashboardNavItems";
+export {
+  companyNavItems,
+  jobseekerNavItems,
+} from "./constant/dashboardNavItems";

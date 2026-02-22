@@ -4,7 +4,7 @@ interface JobTitleProps {
 
 export function JobTitle({ title }: JobTitleProps) {
   return (
-    <h4 className="font-semibold text-base mb-4 line-clamp-2 min-h-12 text-foreground">
+    <h4 className="font-semibold text-base line-clamp-2 text-foreground">
       {title}
     </h4>
   );

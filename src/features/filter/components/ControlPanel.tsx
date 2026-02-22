@@ -1,3 +1,4 @@
+import { cn } from "@/shared";
 import { ControlPanelProps } from "../types/ControlPanelProps";
 import ClearButton from "./ClearButton";
 import ModalButton from "./ModalButton";
@@ -9,6 +10,7 @@ export function ControlPanel({
   selectAll,
   isOpen,
   setIsOpen,
+  asDropdown = true,
 }: ControlPanelProps) {
   return (
     <div className="flex items-center justify-between gap-4 mb-4">
@@ -17,14 +19,14 @@ export function ControlPanel({
       </h5>
 
       <div className="flex items-center gap-2">
-        <div className="hidden md:inline">
+        <div className={cn("md:inline", asDropdown && "hidden")}>
           <ClearButton onClear={clearAll} />
         </div>
-        <div className="hidden md:inline">
+        <div className={cn("md:inline", asDropdown && "hidden")}>
           <SelectAllButton onSelectAll={selectAll} />
         </div>
-        <div className="md:hidden inline">
-          <ModalButton isOpen={isOpen} setIsOpen={setIsOpen} />
+        <div className={cn("inline", !asDropdown && "md:hidden")}>
+          {asDropdown && <ModalButton isOpen={isOpen} setIsOpen={setIsOpen} />}
         </div>
       </div>
     </div>

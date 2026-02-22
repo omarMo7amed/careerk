@@ -1,65 +1,17 @@
-import {
-  Briefcase,
-  Users,
-  LogOut,
-  LayoutDashboard,
-  BarChart3,
-  Building2,
-} from "lucide-react";
+import { LogOut } from "lucide-react";
 
 import Image from "next/image";
 import Link from "next/link";
 import { SideBarNavItem } from "./SideBarNavItem";
+import type { NavItem } from "@/shared";
 
-const companyNavItems = [
-  {
-    name: "Overview",
-    icon: LayoutDashboard,
-    href: "/dashboard/company/overview",
-  },
-  {
-    name: "Job Listings",
-    icon: Briefcase,
-    href: "/dashboard/company/job-listings",
-  },
-  { name: "Candidates", icon: Users, href: "/dashboard/company/candidates" },
-  {
-    name: "Analytics",
-    icon: BarChart3,
-    href: "/dashboard/company/analytics",
-  },
-  { name: "Profile", icon: Building2, href: "/dashboard/company/profile" },
-  { name: "Settings", icon: Building2, href: "/dashboard/company/settings" },
-];
-// jobseeker icons will change
-const jobseekerNavItems = [
-  {
-    name: "Overview",
-    icon: LayoutDashboard,
-    href: "/dashboard/jobseeker/overview",
-  },
-  {
-    name: "Recommended Jobs",
-    icon: Briefcase,
-    href: "/dashboard/jobseeker/recommended-jobs",
-  },
-  { name: "Find Jobs", icon: Users, href: "/dashboard/jobseeker/find-jobs" },
-  {
-    name: "Applications",
-    icon: BarChart3,
-    href: "/dashboard/jobseeker/applications",
-  },
-  { name: "Profile", icon: Building2, href: "/dashboard/jobseeker/profile" },
-  { name: "Settings", icon: Building2, href: "/dashboard/jobseeker/settings" },
-];
 type SideBarLayoutProps = {
-  role: "company" | "jobseeker";
+  navItems: NavItem[];
 };
-export function SideBarLayout({ role }: SideBarLayoutProps) {
-  const navItems = role === "company" ? companyNavItems : jobseekerNavItems;
 
+export function SideBarLayout({ navItems }: SideBarLayoutProps) {
   return (
-    <aside className="w-64 border-r border-border bg-card/30 min-h-screen sticky top-0 flex flex-col">
+    <aside className="bg-bg-surface w-64 border-r border-border bg-card/30 min-h-screen sticky top-0 flex flex-col">
       <div className="p-4 flex-1">
         {/* Logo */}
         <div className="flex items-center gap-2 mb-6 pb-6 border-b border-border">
@@ -72,14 +24,6 @@ export function SideBarLayout({ role }: SideBarLayoutProps) {
               priority
             />
           </Link>
-        </div>
-
-        {/* Welcome Section in Sidebar */}
-        <div className="mb-6 pb-6 border-b border-border">
-          <h3 className="font-semibold text-foreground mb-1">TechCorp Inc.</h3>
-          <p className="text-xs text-text-secondary">
-            Technology • 100-500 employees
-          </p>
         </div>
 
         {/* Navigation Items */}

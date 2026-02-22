@@ -8,12 +8,14 @@ import { MobileModal } from "../components/MobileModal";
 import { TableOfOperationProps } from "../types/tableOfOperation";
 
 import { ControlPanel } from "../components/ControlPanel";
+import { cn } from "@/shared";
 
 export function TableOfOperation({
   title,
   options,
   selected: controlledSelected,
   onChange,
+  asDropdown = true,
 }: TableOfOperationProps) {
   const { normalized, selected, toggle, clearAll, selectAll } =
     useTableOfOperation({
@@ -33,10 +35,11 @@ export function TableOfOperation({
           selectAll={selectAll}
           isOpen={isOpen}
           setIsOpen={setIsOpen}
+          asDropdown={asDropdown}
         />
 
         {/* desktop list */}
-        <div className="hidden md:block">
+        <div className={cn("md:block", asDropdown && "hidden")}>
           <FilterList
             options={normalized}
             selected={selected}
@@ -45,7 +48,7 @@ export function TableOfOperation({
         </div>
 
         {/* mobile modal */}
-        {isOpen && (
+        {asDropdown && isOpen && (
           <MobileModal
             title={title}
             options={normalized}

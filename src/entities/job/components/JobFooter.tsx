@@ -1,18 +1,15 @@
-import { Clock } from "lucide-react";
+import { Bookmark, Clock } from "lucide-react";
+import { ApplyNow } from "./ApplyNow";
 
 interface JobFooterProps {
   postedDate?: string;
-  applicants?: number;
-  applicationsCount?: number;
+  isAuthenticated?: boolean;
 }
 
 export function JobFooter({
   postedDate,
-  applicants,
-  applicationsCount,
+  isAuthenticated = true,
 }: JobFooterProps) {
-  const totalApplicants = applicants || applicationsCount;
-
   return (
     <div className="pt-4 border-t border-border flex items-center justify-between">
       {postedDate && (
@@ -21,8 +18,13 @@ export function JobFooter({
           <span>{postedDate}</span>
         </div>
       )}
-      <div className="text-xs font-medium text-text-secondary">
-        {totalApplicants} applicant{totalApplicants !== 1 ? "s" : ""}
+
+      <div className="flex items-center gap-4">
+        <Bookmark
+          className="text-primary hover:bg-primary/10 p-2 rounded-lg"
+          size={40}
+        />
+        {isAuthenticated && <ApplyNow />}
       </div>
     </div>
   );

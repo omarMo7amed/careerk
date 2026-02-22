@@ -1,5 +1,5 @@
 import { Company } from "@/entities/company";
-import { Skill } from "@/entities/skill/types/skill";
+import { Skill } from "@/entities/skill";
 
 export interface Job {
   id: string;
@@ -21,6 +21,7 @@ export interface Job {
   status: "published" | "draft" | "closed";
   isFeatured: boolean;
   url?: string | null;
+  job_matched_score?: number; // For job matching algorithm
 
   // For display purposes (legacy support)
   category?: string;

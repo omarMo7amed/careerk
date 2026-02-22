@@ -5,7 +5,7 @@ function NavButtons() {
   return (
     <div className="flex items-center gap-5">
       <a
-        href="/auth"
+        href="/dashboard/jobseeker/overview"
         className="text-gray-700 hover:text-primary font-semibold transition-colors"
       >
         Login
