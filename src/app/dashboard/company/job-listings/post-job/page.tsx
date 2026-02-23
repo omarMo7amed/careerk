@@ -1,5 +1,11 @@
+import {JobPostLayout } from "@/widgets/company-post-job";
+
 function PostJobPage() {
-  return <div>post job</div>;
+  return (
+    <div>
+      <JobPostLayout />
+    </div>
+  );
 }
 
 export default PostJobPage;

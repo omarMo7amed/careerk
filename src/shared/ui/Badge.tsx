@@ -9,7 +9,8 @@ interface BadgeProps {
     | "error"
     | "info"
     | "active"
-    | "pause";
+    | "pause"
+    | "skill";
   size?: "sm" | "md" | "lg" | "default";
   children: React.ReactNode;
   className?: string;
@@ -39,6 +40,7 @@ export function Badge({
     info: "bg-blue-100 text-blue-800",
     active: "bg-success/10 text-success border-success/20",
     pause: "bg-bg-muted text-text-secondary",
+    skill: "bg-primary/10 text-primary border-primary/20",
   };
 
   return (

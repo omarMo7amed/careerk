@@ -59,7 +59,7 @@ export function SideBarLayout({ role }: SideBarLayoutProps) {
   const navItems = role === "company" ? companyNavItems : jobseekerNavItems;
 
   return (
-    <aside className="w-64 border-r border-border bg-card/30 h-screen sticky top-0 flex flex-col">
+    <aside className="w-64 border-r border-border bg-card/30 h-screen flex flex-col bg-bg-surface overflow-y-auto">
       <div className="p-4 flex-1">
         {/* Logo */}
         <div className="flex items-center gap-2 mb-6 pb-6 border-b border-border">
@@ -72,14 +72,6 @@ export function SideBarLayout({ role }: SideBarLayoutProps) {
               priority
             />
           </Link>
-        </div>
-
-        {/* Welcome Section in Sidebar */}
-        <div className="mb-6 pb-6 border-b border-border">
-          <h3 className="font-semibold text-foreground mb-1">TechCorp Inc.</h3>
-          <p className="text-xs text-text-secondary">
-            Technology • 100-500 employees
-          </p>
         </div>
 
         {/* Navigation Items */}
