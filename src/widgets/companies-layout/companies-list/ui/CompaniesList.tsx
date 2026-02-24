@@ -24,8 +24,6 @@ export function CompaniesList() {
 
   const totalPages = Math.ceil(CompaniesListing.length / 12);
 
-  console.log(totalPages);
-
   function handlePageChange(newPage: number) {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", newPage.toString());

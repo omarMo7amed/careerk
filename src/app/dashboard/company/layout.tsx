@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SideBarLayout } from "@/widgets/side-bar";
+import { companyNavItems } from "@/shared";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -13,7 +14,7 @@ export default function CompanyDashboardLayout({
 }>) {
   return (
     <div className="min-h-screen bg-background transition-colors duration-300 flex">
-      <SideBarLayout role="company" />
+      <SideBarLayout navItems={companyNavItems} />
       <main className="flex-1 px-8 py-8">{children}</main>
     </div>
   );
