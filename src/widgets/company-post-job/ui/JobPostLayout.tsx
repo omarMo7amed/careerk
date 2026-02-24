@@ -15,7 +15,7 @@ export function JobPostLayout() {
         <Button
           onClick={() => router.back()}
           variant="ghost"
-          className="group flex items-center gap-2 text-foreground text-sm font-semibold"
+          className="cursor-pointer group flex items-center gap-2 text-foreground text-sm font-semibold"
         >
           <MoveLeft className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1" />
           Back to Jobs

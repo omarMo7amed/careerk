@@ -22,7 +22,7 @@ export function CompanyJoblistings() {
           </p>
         </div>
 
-        <Link href="./job-listings/post-job">
+        <Link href="./job-listings/post-new-job">
           <Button className="gap-2">
             <Plus className="w-4 h-4" />
             Post New Job
