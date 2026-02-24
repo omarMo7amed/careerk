@@ -16,7 +16,7 @@ type JobPostCardProps = {
 
 function JobPostCard({ job }: JobPostCardProps) {
   return (
-    <Card>
+    <Card className="cursor-pointer">
       <div className="space-y-4">
         <div>
           <div className="flex items-center gap-3 mb-2">

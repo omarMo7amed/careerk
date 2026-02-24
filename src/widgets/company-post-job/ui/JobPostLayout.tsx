@@ -10,7 +10,7 @@ import { JobPostForm } from "@/features/post-job-form";
 export function JobPostLayout() {
   const router = useRouter();
   return (
-    <div className="animate-fade-in max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto">
       <div className="mb-8 ">
         <Button
           onClick={() => router.back()}
