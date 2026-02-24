@@ -8,7 +8,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const jobPost = mockJobs[Number(id)];
+  const jobPost = mockJobs[Number(id) - 1];
 
   // const jobPost = await getPost(id);
 
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 async function page({ params }: Props) {
   const { id } = await params;
-  const jobPost = mockJobs[Number(id)];
+  const jobPost = mockJobs[Number(id) - 1];
 
   //   const jobPost = await getPost(id);
 

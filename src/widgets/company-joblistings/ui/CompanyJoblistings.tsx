@@ -3,37 +3,10 @@ import { Button } from "@/shared";
 import { Briefcase, Plus } from "lucide-react";
 import JobPostCard from "./JobPostCard";
 import Link from "next/link";
+import { mockJobs } from "@/entities/company-job/mock-jobs/mockJobs";
 
 export function CompanyJoblistings() {
-  const jobs = [
-    {
-      title: "Senior React Developer",
-      department: "Engineering",
-      location: "San Francisco, CA",
-      type: "Full-time",
-      status: "Active",
-      applicants: 47,
-      skills: ["React", "JavaScript", "TypeScript"],
-    },
-    {
-      title: "Product Manager",
-      department: "Product",
-      location: "Remote",
-      type: "Full-time",
-      status: "Active",
-      applicants: 23,
-      skills: ["Product Strategy", "Agile", "Analytics"],
-    },
-    {
-      title: "DevOps Engineer",
-      department: "Engineering",
-      location: "San Francisco, CA",
-      type: "Full-time",
-      status: "Paused",
-      applicants: 31,
-      skills: ["AWS", "Docker", "Kubernetes"],
-    },
-  ];
+  const jobs = mockJobs;
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
@@ -44,8 +17,8 @@ export function CompanyJoblistings() {
           </div>
           <p className="text-sm text-text-secondary">
             Showing all {jobs.length} jobs (
-            {jobs.filter((j) => j.status === "Active").length} active,{" "}
-            {jobs.filter((j) => j.status === "Paused").length} paused)
+            {jobs.filter((j) => j.status === "published").length} active,{" "}
+            {jobs.filter((j) => j.status === "paused").length} paused)
           </p>
         </div>
 
@@ -59,7 +32,7 @@ export function CompanyJoblistings() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {jobs.map((job) => (
-          <JobPostCard key={job.title} job={job} />
+          <JobPostCard key={job.id} job={job} />
         ))}
       </div>
     </div>
