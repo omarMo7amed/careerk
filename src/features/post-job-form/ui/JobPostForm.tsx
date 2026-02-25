@@ -9,8 +9,25 @@ import { workArrangements } from "../mock-data/workArrangements";
 import { experienceLevels } from "../mock-data/experienceLevels";
 import { FieldError } from "@/shared/ui/FieldError";
 import { JobPostFormData, jobPostSchema } from "../lib/jobPostSchema";
+import {
+  CompanyJob,
+  EmploymentType,
+  ExperienceLevel,
+  WorkArrangement,
+} from "@/entities/company-job/types/companyJob";
 
-export function JobPostForm() {
+type JobPostFormProps = {
+  initialData?: CompanyJob;
+  onSubmit?: (data: JobPostFormData) => void;
+  onCancel?: () => void; // ← add this
+};
+
+export function JobPostForm({
+  initialData,
+  onSubmit: onSubmitProp,
+}: JobPostFormProps) {
+  const isEditMode = !!initialData;
+
   const {
     register,
     handleSubmit,
@@ -20,12 +37,26 @@ export function JobPostForm() {
     formState: { errors, isSubmitting },
   } = useForm<JobPostFormData>({
     resolver: zodResolver(jobPostSchema),
-    defaultValues: {
-      employmentType: "full-time",
-      workArrangement: "remote",
-      experienceLevel: "entry",
-      skills: ["JavaScript", "React"],
-    },
+    defaultValues: initialData
+      ? {
+          title: initialData.title,
+          description: initialData.description,
+          requirements: initialData.requirements,
+          employmentType: initialData.employmentType,
+          workArrangement: initialData.workArrangement,
+          experienceLevel: initialData.experienceLevel,
+          minSalary: initialData.minSalary?.toString() ?? "",
+          maxSalary: initialData.maxSalary?.toString() ?? "",
+          location: initialData.location,
+          applicationDeadline: initialData.applicationDeadline,
+          skills: initialData.skills.map((s) => s.name),
+        }
+      : {
+          employmentType: "full-time",
+          workArrangement: "remote",
+          experienceLevel: "entry",
+          skills: [],
+        },
   });
 
   const skills = watch("skills") ?? [];
@@ -50,36 +81,73 @@ export function JobPostForm() {
     );
   }
 
-  function onSubmit(data: JobPostFormData) {
-    console.log("Form submitted:", data);
+  // addJob
+  function handlePostSubmit(data: JobPostFormData) {
+    const newJob: CompanyJob = {
+      id: crypto.randomUUID(),
+      companyId: "1",
+      title: data.title,
+      description: data.description,
+      requirements: data.requirements,
+      employmentType: data.employmentType as EmploymentType,
+      workArrangement: data.workArrangement as WorkArrangement,
+      experienceLevel: data.experienceLevel as ExperienceLevel,
+      responsibilities: "",
+      location: data.location,
+      applicationDeadline: data.applicationDeadline,
+      minSalary: data.minSalary ? Number(data.minSalary) : null,
+      maxSalary: data.maxSalary ? Number(data.maxSalary) : null,
+      skills: data.skills.map((name, i) => ({
+        id: String(i),
+        name,
+        category: "Other",
+      })),
+      status: "published",
+      applicationsCount: 0,
+      viewsCount: 0,
+      is_featured: false,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      published_at: new Date().toISOString(),
+    };
+    // addJob(newJob);
+    console.log("Job posted:", newJob);
     reset();
+  }
+
+  function onSubmit(data: JobPostFormData) {
+    if (onSubmitProp) {
+      onSubmitProp(data); // edit mode — parent handles it
+    } else {
+      handlePostSubmit(data);
+    }
   }
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
       {/* Job Title */}
       <div>
-        <Label htmlFor="jobTitle" label="Job Title" />
+        <Label htmlFor="title" label="Job Title" />
         <Input
-          id="jobTitle"
+          id="title"
           placeholder="e.g., Senior Frontend Developer"
           className="bg-background"
-          {...register("jobTitle")}
+          {...register("title")}
         />
-        <FieldError message={errors.jobTitle?.message} />
+        <FieldError message={errors.title?.message} />
       </div>
 
       {/* Job Description */}
       <div>
-        <Label htmlFor="jobDescription" label="Job Description" />
+        <Label htmlFor="description" label="Job Description" />
         <textarea
-          id="jobDescription"
+          id="description"
           placeholder="Describe the role, responsibilities, and company culture..."
           rows={3}
           className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-background resize-none"
-          {...register("jobDescription")}
+          {...register("description")}
         />
-        <FieldError message={errors.jobDescription?.message} />
+        <FieldError message={errors.description?.message} />
       </div>
 
       {/* Requirements */}
@@ -148,17 +216,17 @@ export function JobPostForm() {
             <Input
               placeholder="Minimum"
               className="bg-background"
-              {...register("salaryMin")}
+              {...register("minSalary")}
             />
             <span className="text-text-secondary">-</span>
             <Input
               placeholder="Maximum"
               className="bg-background"
-              {...register("salaryMax")}
+              {...register("maxSalary")}
             />
           </div>
-          <FieldError message={errors.salaryMin?.message} />
-          <FieldError message={errors.salaryMax?.message} />
+          <FieldError message={errors.minSalary?.message} />
+          <FieldError message={errors.maxSalary?.message} />
         </div>
 
         <div>
@@ -181,9 +249,9 @@ export function JobPostForm() {
             id="deadline"
             type="date"
             className="bg-background"
-            {...register("deadline")}
+            {...register("applicationDeadline")}
           />
-          <FieldError message={errors.deadline?.message} />
+          <FieldError message={errors.applicationDeadline?.message} />
         </div>
 
         <div>
@@ -221,7 +289,13 @@ export function JobPostForm() {
           Cancel
         </Button>
         <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Publishing..." : "Publish Job"}
+          {isSubmitting
+            ? isEditMode
+              ? "Saving..."
+              : "Publishing..."
+            : isEditMode
+              ? "Save Changes"
+              : "Publish Job"}
         </Button>
       </div>
     </form>

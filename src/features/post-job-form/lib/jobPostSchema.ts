@@ -1,3 +1,4 @@
+// features/post-job-form/lib/jobPostSchema.ts
 import z from "zod";
 
 const salaryField = z
@@ -10,34 +11,31 @@ const salaryField = z
 
 export const jobPostSchema = z
   .object({
-    jobTitle: z
+    title: z
       .string()
       .min(3, "Job title must be at least 3 characters")
-      .max(100, "Job title must be under 100 characters"),
+      .max(100),
 
-    jobDescription: z
+    description: z
       .string()
       .min(50, "Description must be at least 50 characters")
-      .max(5000, "Description must be under 5000 characters"),
+      .max(5000),
 
     requirements: z
       .string()
       .min(20, "Requirements must be at least 20 characters")
-      .max(5000, "Requirements must be under 5000 characters"),
+      .max(5000),
 
     employmentType: z.string(),
     workArrangement: z.string(),
     experienceLevel: z.string(),
 
-    salaryMin: salaryField,
-    salaryMax: salaryField,
+    minSalary: salaryField,
+    maxSalary: salaryField,
 
-    location: z
-      .string()
-      .min(2, "Location must be at least 2 characters")
-      .max(100, "Location must be under 100 characters"),
+    location: z.string().min(2).max(100),
 
-    deadline: z
+    applicationDeadline: z
       .string()
       .min(1, "Please select a deadline")
       .refine(
@@ -45,23 +43,16 @@ export const jobPostSchema = z
         "Deadline must be in the future",
       ),
 
-    skills: z
-      .array(z.string())
-      .min(1, "Please add at least one skill")
-      .max(20, "Maximum 20 skills allowed"),
+    skills: z.array(z.string()).min(1, "Please add at least one skill").max(20),
   })
   .refine(
     (data) => {
-      const min = data.salaryMin?.trim();
-      const max = data.salaryMax?.trim();
-
-      // Only compare when both fields have actual values
-      if (min && max) {
-        return Number(min) <= Number(max);
-      }
+      const min = data.minSalary?.trim();
+      const max = data.maxSalary?.trim();
+      if (min && max) return Number(min) <= Number(max);
       return true;
     },
-    { message: "Minimum salary cannot exceed maximum", path: ["salaryMax"] },
+    { message: "Minimum salary cannot exceed maximum", path: ["maxSalary"] },
   );
 
 export type JobPostFormData = z.input<typeof jobPostSchema>;

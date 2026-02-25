@@ -9,8 +9,8 @@ export function JobDetailsGrid({
   applicationDeadline,
 }: {
   location: string;
-  minSalary: number;
-  maxSalary: number;
+  minSalary: number | null;
+  maxSalary: number | null;
   experienceLevel: string;
   applicationDeadline: string;
 }) {

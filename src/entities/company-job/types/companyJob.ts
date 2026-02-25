@@ -34,8 +34,8 @@ export interface CompanyJob {
   workArrangement: WorkArrangement;
   skills: Skill[];
   location: string;
-  minSalary: number;
-  maxSalary: number;
+  minSalary: number | null;
+  maxSalary: number | null;
   experienceLevel: ExperienceLevel;
   applicationDeadline: string;
   status: JobStatus;
