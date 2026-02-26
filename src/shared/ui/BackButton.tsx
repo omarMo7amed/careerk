@@ -3,7 +3,7 @@ import { MoveLeft } from "lucide-react";
 import { Button } from "./Button";
 import { useRouter } from "next/navigation";
 
-function BackButton() {
+export function BackButton() {
   const router = useRouter();
   return (
     <Button
@@ -16,5 +16,3 @@ function BackButton() {
     </Button>
   );
 }
-
-export default BackButton;

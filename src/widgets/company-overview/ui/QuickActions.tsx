@@ -1,6 +1,5 @@
 import { Badge } from "@/shared";
-import Card from "@/shared/ui/Card";
-import { CardHeader } from "@/shared/ui/CardHeader";
+import { Card } from "@/shared";
 import { Plus, BarChart3, Search, Sparkles, MessageSquare } from "lucide-react";
 import Link from "next/link";
 

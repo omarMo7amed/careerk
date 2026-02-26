@@ -1,5 +1,4 @@
-import Card from "@/shared/ui/Card";
-import { CardHeader } from "@/shared/ui/CardHeader";
+import { Card } from "@/shared";
 import { TrendingUp } from "lucide-react";
 
 const jobs = [

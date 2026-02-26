@@ -2,7 +2,7 @@ import { cn } from "../lib/cn";
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
 }
-function DeleteButton({ children, className, ...props }: ButtonProps) {
+export function DeleteButton({ children, className, ...props }: ButtonProps) {
   return (
     <button
       className={cn(
@@ -15,5 +15,3 @@ function DeleteButton({ children, className, ...props }: ButtonProps) {
     </button>
   );
 }
-
-export default DeleteButton;

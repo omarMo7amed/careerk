@@ -1,9 +1,9 @@
 "use client";
 import { Button } from "@/shared";
 import { Briefcase, Plus } from "lucide-react";
-import JobPostCard from "./JobPostCard";
+import { JobPostCard } from "./JobPostCard";
 import Link from "next/link";
-import { mockJobs } from "@/entities/company-job/mock-jobs/mockJobs";
+import { mockJobs } from "@/entities/company-job";
 import { useState } from "react";
 
 export function CompanyJoblistings() {

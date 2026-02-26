@@ -1,7 +1,7 @@
-import Card from "@/shared/ui/Card";
-import { CardHeader } from "@/shared/ui/CardHeader";
+import { Card } from "@/shared";
+import { CardHeader } from "@/shared";
 import { JobPostForm } from "@/features/post-job-form";
-import BackButton from "@/shared/ui/BackButton";
+import { BackButton } from "@/shared";
 
 export function JobPostLayout() {
   return (

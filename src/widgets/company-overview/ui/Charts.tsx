@@ -1,13 +1,9 @@
 "use client";
-import Card from "@/shared/ui/Card";
-import { CardHeader } from "@/shared/ui/CardHeader";
+import { Card } from "@/shared";
+import { CardHeader } from "@/shared";
 import {
   BarChart,
   Bar,
-  LineChart,
-  Line,
-  AreaChart,
-  Area,
   PieChart,
   Pie,
   Cell,

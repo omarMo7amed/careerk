@@ -12,7 +12,7 @@ interface SelectProps extends React.InputHTMLAttributes<HTMLSelectElement> {
   options?: Option[];
 }
 
-function Select({
+export function Select({
   name,
   label,
   value,
@@ -43,5 +43,3 @@ function Select({
     </div>
   );
 }
-
-export default Select;

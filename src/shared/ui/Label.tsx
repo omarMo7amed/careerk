@@ -1,4 +1,4 @@
-function Label({ htmlFor, label }: { htmlFor?: string; label: string }) {
+export function Label({ htmlFor, label }: { htmlFor?: string; label: string }) {
   return (
     <label
       htmlFor={htmlFor}
@@ -8,5 +8,3 @@ function Label({ htmlFor, label }: { htmlFor?: string; label: string }) {
     </label>
   );
 }
-
-export default Label;

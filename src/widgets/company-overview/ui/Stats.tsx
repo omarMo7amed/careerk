@@ -1,5 +1,5 @@
 import { Badge } from "@/shared";
-import Card from "@/shared/ui/Card";
+import { Card } from "@/shared";
 import {
   Briefcase,
   TrendingUp,

@@ -2,8 +2,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Badge, Button, Input } from "@/shared";
-import Label from "@/shared/ui/Label";
-import Select from "@/shared/ui/Select";
+import { Label } from "@/shared";
+import { Select } from "@/shared";
 import { employmentTypes } from "../mock-data/employmentTypes";
 import { workArrangements } from "../mock-data/workArrangements";
 import { experienceLevels } from "../mock-data/experienceLevels";

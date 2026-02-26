@@ -1,10 +1,10 @@
 "use client";
-import { deleteJob } from "@/entities/company-job/api/deleteJob";
-import { toggleJobStatus } from "@/entities/company-job/api/toggleJobStatus";
-import { CompanyJob } from "@/entities/company-job/types/companyJob";
+import { deleteJob } from "@/entities/company-job";
+import { toggleJobStatus } from "@/entities/company-job";
+import { CompanyJob } from "@/entities/company-job";
 import { Badge, Button, ConfirmationModal } from "@/shared";
-import { capitalizeFirstLetter } from "@/shared/lib/capitalizeFirstLetter";
-import Card from "@/shared/ui/Card";
+import { capitalizeFirstLetter } from "@/shared";
+import { Card } from "@/shared";
 import { Pause, PlayIcon, Trash2, Users } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -14,7 +14,7 @@ type JobPostCardProps = {
   onDelete?: (id: string) => void;
 };
 
-function JobPostCard({ job, onDelete }: JobPostCardProps) {
+export function JobPostCard({ job, onDelete }: JobPostCardProps) {
   const [cardStatus, setCardStatus] = useState(job.status);
 
   function handleToggleStatus() {
@@ -136,5 +136,3 @@ function JobPostCard({ job, onDelete }: JobPostCardProps) {
     </>
   );
 }
-
-export default JobPostCard;

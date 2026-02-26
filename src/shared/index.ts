@@ -1,8 +1,17 @@
 // Shared UI Components
 export { Button } from "./ui/Button";
+export { BackButton } from "./ui/BackButton";
+export { DeleteButton } from "./ui/DeleteButton";
 export { Badge } from "./ui/Badge";
-export { IconX } from "./ui/IconX";
+export { Card } from "./ui/Card";
+export { CardHeader } from "./ui/CardHeader";
+export { Divider } from "./ui/Divider";
+export { FieldError } from "./ui/FieldError";
+export { Label } from "./ui/Label";
 export { Input } from "./ui/Input";
+export { Select } from "./ui/Select";
+export { Tabs } from "./ui/Tabs";
+export { IconX } from "./ui/IconX";
 export { ConfirmationModal } from "./ui/ConfirmationModal";
 export { UserAvatar } from "./ui/UserAvatar";
 export { AvailabilityBadge } from "./ui/AvailabilityBadge";
@@ -14,6 +23,7 @@ export type { UserRole } from "./lib/useUserRole";
 export { cn } from "./lib/cn";
 export { getProfileColor } from "./lib/getProfileColor";
 export { getInitialsFromFullName } from "./lib/getInitialsFromFullName";
+export { capitalizeFirstLetter } from "./lib/capitalizeFirstLetter";
 
 // Hooks
 export { useClickOutside } from "./lib/useClickOutside";

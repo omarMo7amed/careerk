@@ -4,20 +4,20 @@ import {
   EmploymentType,
   ExperienceLevel,
   WorkArrangement,
-} from "@/entities/company-job/types/companyJob";
+} from "@/entities/company-job";
 import { Badge, ConfirmationModal } from "@/shared";
-import Card from "@/shared/ui/Card";
+import { Card } from "@/shared";
 import { useState } from "react";
 import { JobSidebar } from "./JobSidebar";
 import { JobStatistics } from "./JobStatistics";
 import { JobDetailsGrid } from "./DetailsGrid";
 import { JobSection } from "./JobSection";
 import { JobHeader } from "./JobHeader";
+import { JobPostFormData } from "@/features/post-job-form";
+import { updateJob } from "@/entities/company-job";
+import { BackButton } from "@/shared/ui/BackButton";
+import { deleteJob } from "@/entities/company-job";
 import { JobPostForm } from "@/features/post-job-form";
-import { JobPostFormData } from "@/features/post-job-form/lib/jobPostSchema";
-import { updateJob } from "@/entities/company-job/api/updataJob";
-import BackButton from "@/shared/ui/BackButton";
-import { deleteJob } from "@/entities/company-job/api/deleteJob";
 
 interface ViewJobPostLayoutProps {
   jobPost: CompanyJob;
