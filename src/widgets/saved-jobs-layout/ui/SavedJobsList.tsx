@@ -1,9 +1,7 @@
 "use client";
 import { SavedJobCard, jobsToJobCards, useSavedJobs } from "@/entities/job";
-import { Error, Pagination } from "@/shared";
+import { Empty, Error, Loader, Pagination } from "@/shared";
 import { List } from "@/widgets/List";
-import { Loader2 } from "lucide-react";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export function SavedJobsList() {
@@ -35,11 +33,7 @@ export function SavedJobsList() {
         </p>
       </div>
 
-      {isLoading && (
-        <div className="flex items-center justify-center py-20">
-          <Loader2 className="w-8 h-8 animate-spin text-primary" />
-        </div>
-      )}
+      {isLoading && <Loader />}
 
       {error && <Error />}
 
@@ -58,20 +52,11 @@ export function SavedJobsList() {
         </>
       )}
       {!isLoading && !error && jobCards.length === 0 && (
-        <div className="text-center py-20">
-          <div className="mb-6">
-            <h2 className="text-xl font-bold mb-2">No saved jobs yet</h2>
-            <p className="text-text-secondary mb-6">
-              Start bookmarking jobs you are interested in to find them here
-            </p>
-          </div>
-          <Link
-            href="/jobs"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-hover transition-colors"
-          >
-            Browse Jobs
-          </Link>
-        </div>
+        <Empty
+          message="No saved jobs yet"
+          linkText="Browse jobs"
+          linkHref="/dashboard/jobseeker/find-jobs"
+        />
       )}
     </div>
   );

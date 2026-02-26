@@ -1,4 +1,4 @@
-import { colorMap, iconMap } from "../config/CardConfig";
+import { colorMap, iconMap } from "@/shared";
 import { StatsCard } from "../types/stats";
 
 interface StatCardProps {

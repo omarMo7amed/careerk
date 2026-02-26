@@ -2,12 +2,12 @@
 import { useSavedJobs } from "@/entities/job";
 import { SavedJobCard } from "../../../../entities/job/ui/SavedJobCard";
 
-import { ArrowRight, Loader2 } from "lucide-react";
+import { jobsToJobCards } from "@/entities/job/lib/transformers";
+import { Empty, Error, Loader } from "@/shared";
+import { List } from "@/widgets/List";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { SavedJobCardType } from "../../../../entities/job/types/savedJobCard";
-import { List } from "@/widgets/List";
-import { jobsToJobCards } from "@/entities/job/lib/transformers";
-import { Error } from "@/shared";
 
 export function SavedJobsSection() {
   const { jobs, isLoading, error } = useSavedJobs({
@@ -30,11 +30,7 @@ export function SavedJobsSection() {
         </Link>
       </div>
 
-      {isLoading && (
-        <div className="flex items-center justify-center py-12">
-          <Loader2 className="w-6 h-6 animate-spin text-primary" />
-        </div>
-      )}
+      {isLoading && <Loader />}
 
       {error && <Error />}
 
@@ -46,16 +42,11 @@ export function SavedJobsSection() {
       )}
 
       {!isLoading && !error && savedJobCards.length === 0 && (
-        <div className="text-center py-12">
-          <p className="text-text-secondary mb-4">No saved jobs yet</p>
-          <Link
-            href="/dashboard/jobseeker/find-jobs"
-            className="inline-flex items-center gap-2 text-primary font-semibold hover:underline"
-          >
-            <span>Browse jobs</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
+        <Empty
+          message="No saved jobs yet"
+          linkText="Browse jobs"
+          linkHref="/dashboard/jobseeker/find-jobs"
+        />
       )}
     </div>
   );
