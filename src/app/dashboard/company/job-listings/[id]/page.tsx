@@ -1,4 +1,4 @@
-import { mockJobs } from "@/entities/company-job/mock-jobs/mockJobs";
+import { getJob } from "@/entities/company-job/api/getJob";
 import { ViewJobPostLayout } from "@/widgets/view-job-post";
 import type { Metadata } from "next";
 
@@ -8,9 +8,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const jobPost = mockJobs[Number(id) - 1];
-
-  // const jobPost = await getPost(id);
+  const jobPost = await getJob(id);
 
   const jobTitle = jobPost.title;
 
@@ -21,9 +19,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 async function page({ params }: Props) {
   const { id } = await params;
-  const jobPost = mockJobs[Number(id) - 1];
 
-  //   const jobPost = await getPost(id);
+  const jobPost = await getJob(id);
 
   return (
     <div>

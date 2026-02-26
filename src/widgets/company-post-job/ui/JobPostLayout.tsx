@@ -1,25 +1,13 @@
-"use client";
 import Card from "@/shared/ui/Card";
 import { CardHeader } from "@/shared/ui/CardHeader";
-import { MoveLeft } from "lucide-react";
-
-import { Button } from "@/shared";
-import { useRouter } from "next/navigation";
 import { JobPostForm } from "@/features/post-job-form";
+import BackButton from "@/shared/ui/BackButton";
 
 export function JobPostLayout() {
-  const router = useRouter();
   return (
     <div className="max-w-4xl mx-auto">
       <div className="mb-8 ">
-        <Button
-          onClick={() => router.back()}
-          variant="ghost"
-          className="cursor-pointer group flex items-center gap-2 text-foreground text-sm font-semibold"
-        >
-          <MoveLeft className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1" />
-          Back to Jobs
-        </Button>
+        <BackButton />
       </div>
       <Card>
         <CardHeader

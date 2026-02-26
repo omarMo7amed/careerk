@@ -1,4 +1,3 @@
-// features/post-job-form/lib/jobPostSchema.ts
 import z from "zod";
 
 const salaryField = z

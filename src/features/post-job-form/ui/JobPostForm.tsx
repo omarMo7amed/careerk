@@ -19,7 +19,7 @@ import {
 type JobPostFormProps = {
   initialData?: CompanyJob;
   onSubmit?: (data: JobPostFormData) => void;
-  onCancel?: () => void; // ← add this
+  onCancel?: () => void;
 };
 
 export function JobPostForm({
@@ -27,7 +27,26 @@ export function JobPostForm({
   onSubmit: onSubmitProp,
 }: JobPostFormProps) {
   const isEditMode = !!initialData;
-
+  const defaultValuesData = initialData
+    ? {
+        title: initialData.title,
+        description: initialData.description,
+        requirements: initialData.requirements,
+        employmentType: initialData.employmentType,
+        workArrangement: initialData.workArrangement,
+        experienceLevel: initialData.experienceLevel,
+        minSalary: initialData.minSalary?.toString() ?? "",
+        maxSalary: initialData.maxSalary?.toString() ?? "",
+        location: initialData.location,
+        applicationDeadline: initialData.applicationDeadline,
+        skills: initialData.skills.map((s) => s.name),
+      }
+    : {
+        employmentType: "full-time",
+        workArrangement: "remote",
+        experienceLevel: "entry",
+        skills: [],
+      };
   const {
     register,
     handleSubmit,
@@ -37,26 +56,7 @@ export function JobPostForm({
     formState: { errors, isSubmitting },
   } = useForm<JobPostFormData>({
     resolver: zodResolver(jobPostSchema),
-    defaultValues: initialData
-      ? {
-          title: initialData.title,
-          description: initialData.description,
-          requirements: initialData.requirements,
-          employmentType: initialData.employmentType,
-          workArrangement: initialData.workArrangement,
-          experienceLevel: initialData.experienceLevel,
-          minSalary: initialData.minSalary?.toString() ?? "",
-          maxSalary: initialData.maxSalary?.toString() ?? "",
-          location: initialData.location,
-          applicationDeadline: initialData.applicationDeadline,
-          skills: initialData.skills.map((s) => s.name),
-        }
-      : {
-          employmentType: "full-time",
-          workArrangement: "remote",
-          experienceLevel: "entry",
-          skills: [],
-        },
+    defaultValues: defaultValuesData,
   });
 
   const skills = watch("skills") ?? [];
