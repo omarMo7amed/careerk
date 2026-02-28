@@ -1,6 +1,6 @@
 import { Button } from "@/shared";
-import Card from "@/shared/ui/Card";
-import DeleteButton from "@/shared/ui/DeleteButton";
+import { Card } from "@/shared";
+import { DeleteButton } from "@/shared";
 
 type JobSidebarProps = {
   isEditingJob: boolean;

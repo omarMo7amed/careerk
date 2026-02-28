@@ -1,3 +1,4 @@
+"use client";
 import {
   Briefcase,
   Users,
@@ -5,11 +6,13 @@ import {
   LayoutDashboard,
   BarChart3,
   Building2,
+  ChevronLeft,
 } from "lucide-react";
-
 import Image from "next/image";
 import Link from "next/link";
 import { SideBarNavItem } from "./SideBarNavItem";
+import { useState } from "react";
+import { Button } from "@/shared";
 
 const companyNavItems = [
   {
@@ -56,22 +59,48 @@ type SideBarLayoutProps = {
   role: "company" | "jobseeker";
 };
 export function SideBarLayout({ role }: SideBarLayoutProps) {
+  const [collapsed, setCollapsed] = useState(false);
   const navItems = role === "company" ? companyNavItems : jobseekerNavItems;
 
   return (
-    <aside className="w-64 border-r border-border bg-card/30 h-screen flex flex-col bg-bg-surface overflow-y-auto">
+    <aside
+      style={{
+        width: collapsed ? "80px" : "256px",
+        transition: "width 300ms cubic-bezier(0.4, 0, 0.2, 1)",
+      }}
+      className="border-r border-border h-screen flex flex-col bg-bg-surface overfl,ow-y-auto"
+    >
       <div className="p-4 flex-1">
         {/* Logo */}
-        <div className="flex items-center gap-2 mb-6 pb-6 border-b border-border">
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/logo-light.svg"
-              alt="Careerk Logo"
-              width={160}
-              height={40}
-              priority
+        <div
+          style={{ justifyContent: collapsed ? "center" : "space-between" }}
+          className="flex items-center mb-6 py-5 border-b ,border-border"
+        >
+          {!collapsed && (
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/logo-light.svg"
+                alt="Careerk Logo"
+                width={160}
+                height={40}
+                priority
+              />
+            </Link>
+          )}
+
+          {/* Collapse toggle */}
+          <Button
+            onClick={() => setCollapsed((prev) => !prev)}
+            variant="ghost"
+            className="cursor-pointer"
+          >
+            <ChevronLeft
+              className="w-4 h-4 transition-transform duration-300 text-text-secondary"
+              style={{
+                transform: collapsed ? "rotate(180deg)" : "rotate(0deg)",
+              }}
             />
-          </Link>
+          </Button>
         </div>
 
         {/* Navigation Items */}
@@ -85,18 +114,24 @@ export function SideBarLayout({ role }: SideBarLayoutProps) {
                 variant="primary"
               >
                 <Icon className="w-4 h-4" />
-                {item.name}
+                <span
+                  className={`${collapsed ? "hidden" : "flex items-center"} `}
+                >
+                  {item.name}
+                </span>
               </SideBarNavItem>
             );
           })}
         </nav>
       </div>
 
-      {/* Logout Button at Bottom of Sidebar */}
+      {/* Logout Button */}
       <div className="p-4 border-t border-border ">
         <SideBarNavItem href="/" variant="ghost">
           <LogOut className="w-4 h-4" />
-          Logout
+          <span className={`${collapsed ? "hidden" : "flex items-center"} `}>
+            Logout
+          </span>
         </SideBarNavItem>
       </div>
     </aside>
