@@ -28,7 +28,7 @@ export function Select({
       <select
         name={name}
         className={cn(
-          "w-full h-12 px-4 bg-bg-surface border border-border rounded-lg text-text-secondary focus:ring-primary",
+          "w-full h-12 px-4 bg-bg-surface border border-border rounded-lg text-text-secondary focus:ring-primary cursor-pointer",
           className,
         )}
         value={value}

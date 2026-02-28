@@ -7,3 +7,4 @@ export { CandidateMetaItem } from "./components/CandidateMetaItem";
 export { CandidateSocialLinks } from "./components/CandidateSocialLinks";
 export { ViewProfile } from "./components/ViewProfile";
 export { ContactButton } from "./components/ContactButton";
+export { candidates } from "./mock-data/candidates";

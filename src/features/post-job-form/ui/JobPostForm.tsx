@@ -4,9 +4,9 @@ import { useForm } from "react-hook-form";
 import { Badge, Button, Input } from "@/shared";
 import { Label } from "@/shared";
 import { Select } from "@/shared";
-import { employmentTypes } from "../mock-data/employmentTypes";
-import { workArrangements } from "../mock-data/workArrangements";
-import { experienceLevels } from "../mock-data/experienceLevels";
+import { employmentTypes } from "../model/employmentTypes";
+import { workArrangements } from "../model/workArrangements";
+import { experienceLevels } from "../model/experienceLevels";
 import { FieldError } from "@/shared/ui/FieldError";
 import { JobPostFormData, jobPostSchema } from "../lib/jobPostSchema";
 import {

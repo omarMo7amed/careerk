@@ -5,6 +5,7 @@ export { DeleteButton } from "./ui/DeleteButton";
 export { Badge } from "./ui/Badge";
 export { Card } from "./ui/Card";
 export { CardHeader } from "./ui/CardHeader";
+export { DashboardHeader } from "./ui/DashboardHeader";
 export { Divider } from "./ui/Divider";
 export { FieldError } from "./ui/FieldError";
 export { Label } from "./ui/Label";
