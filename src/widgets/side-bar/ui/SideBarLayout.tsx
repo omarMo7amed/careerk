@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Briefcase,
   Users,
@@ -12,7 +13,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { SideBarNavItem } from "./SideBarNavItem";
 import { useState } from "react";
-import { Button } from "@/shared";
+import { Button, cn } from "@/shared";
 
 const companyNavItems = [
   {
@@ -26,15 +27,11 @@ const companyNavItems = [
     href: "/dashboard/company/job-listings",
   },
   { name: "Candidates", icon: Users, href: "/dashboard/company/candidates" },
-  {
-    name: "Analytics",
-    icon: BarChart3,
-    href: "/dashboard/company/analytics",
-  },
+  { name: "Analytics", icon: BarChart3, href: "/dashboard/company/analytics" },
   { name: "Profile", icon: Building2, href: "/dashboard/company/profile" },
   { name: "Settings", icon: Building2, href: "/dashboard/company/settings" },
 ];
-// jobseeker icons will change
+
 const jobseekerNavItems = [
   {
     name: "Overview",
@@ -55,29 +52,46 @@ const jobseekerNavItems = [
   { name: "Profile", icon: Building2, href: "/dashboard/jobseeker/profile" },
   { name: "Settings", icon: Building2, href: "/dashboard/jobseeker/settings" },
 ];
+
 type SideBarLayoutProps = {
   role: "company" | "jobseeker";
 };
+
 export function SideBarLayout({ role }: SideBarLayoutProps) {
-  const [collapsed, setCollapsed] = useState(false);
+  const [open, setOpen] = useState(false);
   const navItems = role === "company" ? companyNavItems : jobseekerNavItems;
 
   return (
-    <aside
-      style={{
-        width: collapsed ? "80px" : "256px",
-        transition: "width 300ms cubic-bezier(0.4, 0, 0.2, 1)",
-      }}
-      className="border-r border-border h-screen flex flex-col bg-bg-surface overfl,ow-y-auto"
-    >
-      <div className="p-4 flex-1">
-        {/* Logo */}
+    <>
+      {/* Backdrop — only on md and below, only when open */}
+      {open && (
         <div
-          style={{ justifyContent: collapsed ? "center" : "space-between" }}
-          className="flex items-center mb-6 py-5 border-b ,border-border"
-        >
-          {!collapsed && (
-            <Link href="/" className="flex items-center">
+          onClick={() => setOpen(false)}
+          className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden"
+        />
+      )}
+
+      <aside
+        className={cn(
+          "h-screen flex flex-col bg-bg-surface border-r border-border overflow-hidden",
+          "transition-[width] duration-300 ease-in-out]",
+
+          // Desktop (lg+): always full width
+          "lg:relative lg:w-64",
+
+          // Below lg: fixed overlay, icon rail by default, full width when open
+          "fixed inset-y-0 left-0 z-50",
+          open ? "w-full sm:w-64 shadow-2xl" : "w-16",
+        )}
+      >
+        <div className="p-2 lg:p-4 flex-1 overflow-y-auto overflow-x-hidden">
+          <div
+            className={`flex items-center justify-between lg:justify-start mb-6 px-2 py-5 border-b border-border`}
+          >
+            <Link
+              href="/"
+              className={`flex items-center overflow-hidden  ${open && "w-auto"}`}
+            >
               <Image
                 src="/logo-light.svg"
                 alt="Careerk Logo"
@@ -86,54 +100,75 @@ export function SideBarLayout({ role }: SideBarLayoutProps) {
                 priority
               />
             </Link>
-          )}
 
-          {/* Collapse toggle */}
-          <Button
-            onClick={() => setCollapsed((prev) => !prev)}
-            variant="ghost"
-            className="cursor-pointer"
-          >
-            <ChevronLeft
-              className="w-4 h-4 transition-transform duration-300 text-text-secondary"
-              style={{
-                transform: collapsed ? "rotate(180deg)" : "rotate(0deg)",
-              }}
-            />
-          </Button>
+            {/* Toggle — only below lg */}
+            <div className="cursor-pointer lg:hidden">
+              <Button onClick={() => setOpen((prev) => !prev)} variant="ghost">
+                <ChevronLeft
+                  className="w-4 h-4 text-text-secondary transition-transform duration-300"
+                  style={{
+                    transform: open ? "rotate(0deg)" : "rotate(180deg)",
+                  }}
+                />
+              </Button>
+            </div>
+          </div>
+
+          {/* Navigation */}
+          <nav className="space-y-1">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <SideBarNavItem
+                  key={item.name}
+                  href={item.href}
+                  variant="primary"
+                  onClick={() => setOpen(false)}
+                >
+                  <Icon className="w-4 h-4 shrink-0" />
+                  {/* Always show label on lg; show only when open on smaller */}
+                  <span className="hidden lg:inline-block whitespace-nowrap">
+                    {item.name}
+                  </span>
+                  <span
+                    className="lg:hidden whitespace-nowrap overflow-hidden"
+                    style={{
+                      opacity: open ? 1 : 0,
+                      width: open ? "auto" : 0,
+                      transition: "opacity 150ms ease, width 300ms ease",
+                    }}
+                  >
+                    {item.name}
+                  </span>
+                </SideBarNavItem>
+              );
+            })}
+          </nav>
         </div>
 
-        {/* Navigation Items */}
-        <nav className="space-y-1">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <SideBarNavItem
-                key={item.name}
-                href={item.href}
-                variant="primary"
-              >
-                <Icon className="w-4 h-4" />
-                <span
-                  className={`${collapsed ? "hidden" : "flex items-center"} `}
-                >
-                  {item.name}
-                </span>
-              </SideBarNavItem>
-            );
-          })}
-        </nav>
-      </div>
+        {/* Logout */}
+        <div className="p-4 border-t border-border">
+          <SideBarNavItem href="/" variant="ghost">
+            <LogOut className="w-4 h-4 shrink-0" />
+            <span className="hidden lg:inline-block whitespace-nowrap">
+              Logout
+            </span>
+            <span
+              className="lg:hidden whitespace-nowrap overflow-hidden"
+              style={{
+                opacity: open ? 1 : 0,
+                width: open ? "auto" : 0,
+                transition: "opacity 150ms ease, width 300ms ease",
+              }}
+            >
+              Logout
+            </span>
+          </SideBarNavItem>
+        </div>
+      </aside>
 
-      {/* Logout Button */}
-      <div className="p-4 border-t border-border ">
-        <SideBarNavItem href="/" variant="ghost">
-          <LogOut className="w-4 h-4" />
-          <span className={`${collapsed ? "hidden" : "flex items-center"} `}>
-            Logout
-          </span>
-        </SideBarNavItem>
-      </div>
-    </aside>
+      {/* In-flow spacer on md and below so content doesn't go under the fixed sidebar */}
+      <div className="w-16 shrink-0 lg:hidden" />
+    </>
   );
 }

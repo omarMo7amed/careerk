@@ -8,11 +8,13 @@ interface SideBarNavItemProps {
   variant?: "primary" | "ghost";
   href?: string;
   children: React.ReactNode;
+  onClick?: () => void;
 }
 
 export function SideBarNavItem({
   variant = "primary",
   href = "/",
+  onClick,
   children,
 }: SideBarNavItemProps) {
   const pathname = usePathname();
@@ -26,6 +28,7 @@ export function SideBarNavItem({
   return (
     <Link
       href={href}
+      onClick={onClick}
       className={cn(
         baseStyles,
         variant == "primary" ? primaryStyle : ghostStyle,
