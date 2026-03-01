@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Job, JobCardJobseeker, useJobsQuery } from "@/entities/job";
 import { Button, Pagination } from "@/shared";
-import { List } from "@/widgets/List";
+import { List } from "@/widgets/list";
 import { FilterSideModal } from "@/widgets/filter-sidebar";
 
 export function JobsList() {

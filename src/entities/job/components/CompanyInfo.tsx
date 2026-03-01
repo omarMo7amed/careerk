@@ -25,7 +25,7 @@ export function CompanyInfo({
       {category && (
         <p
           className={cn(
-            " text-text-secondary",
+            "text-text-secondary",
             size === "sm" && "text-xs",
             size === "md" && "text-xs",
             size === "lg" && "text-sm",

@@ -5,7 +5,7 @@ import {
   CompaniesListing,
 } from "@/entities/company";
 import { Pagination } from "@/shared";
-import { List } from "@/widgets/List";
+import { List } from "@/widgets/list";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 

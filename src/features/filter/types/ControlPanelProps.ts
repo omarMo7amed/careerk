@@ -4,4 +4,5 @@ export interface ControlPanelProps {
   selectAll: () => void;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  asDropdown?: boolean;
 }

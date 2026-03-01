@@ -8,12 +8,14 @@ export { UserAvatar } from "./ui/UserAvatar";
 export { AvailabilityBadge } from "./ui/AvailabilityBadge";
 export { RankingBadge } from "./ui/RankingBadge";
 export { Pagination } from "./ui/Pagination";
-// Shared Utilities
+export { Banner } from "./ui/Banner";
+// Shared lib functions
 export { useUserRole, useHasRole, getUserRole } from "./lib/useUserRole";
 export type { UserRole } from "./lib/useUserRole";
 export { cn } from "./lib/cn";
 export { getProfileColor } from "./lib/getProfileColor";
 export { getInitialsFromFullName } from "./lib/getInitialsFromFullName";
+export { getDuration, formatDate, formatYear } from "./lib/date";
 
 // Hooks
 export { useClickOutside } from "./lib/useClickOutside";
@@ -23,9 +25,8 @@ export { InterFont, spaceGrotesk } from "./lib/fonts";
 // Providers
 export { QueryProvider } from "./providers/QueryProvider";
 
-// Nav constants
-export type { NavItem } from "./constant/dashboardNavItems";
-export {
-  companyNavItems,
-  jobseekerNavItems,
-} from "./constant/dashboardNavItems";
+// Constants (all grouped by domain — add new files to constant/index.ts)
+export * from "./constant";
+
+// Types
+export type { AvailabilityStatus } from "./types/availabilityBadgeProps";
