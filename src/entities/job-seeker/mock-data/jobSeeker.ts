@@ -4,7 +4,6 @@ export const mockJobSeeker: JobSeeker = {
   firstName: "Alex",
   lastName: "Johnson",
   avatarUrl: null,
-
   profile: {
     jobSeekerId: "js-001",
     title: "Senior Frontend Developer",

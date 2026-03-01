@@ -37,7 +37,7 @@ export interface JobSeekerProfile {
   phone: string | null;
   expectedSalary: number | null;
   summary: string | null;
-  /** CV quality score calculated by the backend when the job seeker uploads their CV */
+  /** CV quality score calculated when the job seeker uploads their CV */
   cvScore: number | null;
   /** Percentage match between this CV and a specific job requirement */
   cvMatchPercentage: number | null;
