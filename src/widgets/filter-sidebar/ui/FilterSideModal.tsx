@@ -1,6 +1,5 @@
 "use client";
 
-import { TableOfOperation } from "@/features/filter";
 import { Button } from "@/shared";
 import { X } from "lucide-react";
 

@@ -1,6 +1,7 @@
 import { cn } from "@/shared";
 import { CatalogListProps } from "../types/listProps";
 import { gridColsMap, lgGridColsMap, mdGridColsMap } from "../lib/constant";
+// solve
 
 export function List<T = unknown>({
   items,
