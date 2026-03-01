@@ -1,3 +1,5 @@
+import { cn } from "../lib/cn";
+
 type Option = {
   label: string;
   value: string;
@@ -6,11 +8,18 @@ type Option = {
 interface SelectProps extends React.InputHTMLAttributes<HTMLSelectElement> {
   label?: string;
   value?: string;
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   options?: Option[];
 }
 
-function Select({ name, label, value, onChange, options }: SelectProps) {
+export function Select({
+  name,
+  label,
+  value,
+  onChange,
+  options,
+  className,
+}: SelectProps) {
   return (
     <div>
       <label className="block text-sm font-medium text-foreground mb-1">
@@ -18,7 +27,10 @@ function Select({ name, label, value, onChange, options }: SelectProps) {
       </label>
       <select
         name={name}
-        className="w-full h-12 px-4 bg-bg-surface border border-border rounded-lg text-text-secondary focus:ring-primary focus:border-transparent"
+        className={cn(
+          "w-full h-12 px-4 bg-bg-surface border border-border rounded-lg text-text-secondary focus:ring-primary cursor-pointer",
+          className,
+        )}
         value={value}
         onChange={onChange}
       >
@@ -31,5 +43,3 @@ function Select({ name, label, value, onChange, options }: SelectProps) {
     </div>
   );
 }
-
-export default Select;

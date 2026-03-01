@@ -1,5 +1,5 @@
 import { SideBarLayout } from "@/widgets/side-bar";
-import { jobseekerNavItems } from "@/shared";
+// import { jobseekerNavItems } from "@/shared";
 
 export default function JobseekerDashboardLayout({
   children,
@@ -7,9 +7,9 @@ export default function JobseekerDashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex">
-      <SideBarLayout navItems={jobseekerNavItems} />
-      <main className="flex-1 min-w-0">{children}</main>
+    <div className="h-screen flex">
+      <SideBarLayout role="jobseeker" />
+      <main className="flex-1 overflow-y-auto">{children}</main>
     </div>
   );
 }

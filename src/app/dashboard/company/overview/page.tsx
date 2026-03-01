@@ -1,8 +1,16 @@
+import { CompanyOverview } from "@/widgets/company-overview";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Dashboard Overview",
+  description:
+    "Access your dashboard overview to monitor job posts, applications, and account activity in one place.",
+};
+
 export default function CompanyOverviewPage() {
   return (
     <div>
-      <h1>Company Overview</h1>
-      <p>Company dashboard overview page</p>
+      <CompanyOverview />
     </div>
   );
 }

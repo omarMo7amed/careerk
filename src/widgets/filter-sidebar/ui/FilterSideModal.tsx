@@ -7,14 +7,19 @@ import { X } from "lucide-react";
 interface FilterSideModalProps {
   isOpen: boolean;
   onClose: () => void;
+  children: React.ReactNode;
 }
 
-export function FilterSideModal({ isOpen, onClose }: FilterSideModalProps) {
+export function FilterSideModal({
+  isOpen,
+  onClose,
+  children,
+}: FilterSideModalProps) {
   return (
     <>
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/40"
+          className="fixed inset-0 z-60 bg-black/40"
           onClick={onClose}
           aria-hidden
         />
@@ -24,7 +29,7 @@ export function FilterSideModal({ isOpen, onClose }: FilterSideModalProps) {
         role="dialog"
         aria-modal="true"
         aria-label="Filters"
-        className={`fixed top-0 right-0 z-50 h-full w-80 max-w-full bg-bg-surface border-l border-border shadow-xl flex flex-col
+        className={`fixed top-0 right-0 z-70 h-full w-80 max-w-full bg-bg-surface border-l border-border shadow-xl flex flex-col
           transition-transform duration-300 ease-in-out
           ${isOpen ? "translate-x-0" : "translate-x-full"}`}
       >
@@ -43,21 +48,7 @@ export function FilterSideModal({ isOpen, onClose }: FilterSideModalProps) {
 
         {/* Filter panels */}
         <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
-          <TableOfOperation
-            title="Job Type"
-            options={["Full-time", "Part-time", "Contract"]}
-            asDropdown={false}
-          />
-          <TableOfOperation
-            title="Experience Level"
-            options={["Entry Level", "Mid Level", "Senior Level"]}
-            asDropdown={false}
-          />
-          <TableOfOperation
-            title="Location"
-            options={["Remote", "On-site", "Hybrid"]}
-            asDropdown={false}
-          />
+          {children}
         </div>
 
         {/* Footer */}

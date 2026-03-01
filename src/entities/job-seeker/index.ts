@@ -38,3 +38,6 @@ export { ViewProfile } from "./components/ViewProfile";
 export { ContactButton } from "./components/ContactButton";
 export { DownloadButton } from "./components/DownloadButton";
 export { default as CandidateSkills } from "./components/Skills";
+
+//  Mock data (for development/testing)
+export { allJobSeekers } from "./mock-data/allJobSeekers";
