@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { Candidate } from "@/entities/job-seeker";
 import { Select } from "@/shared";
-import { sortOptions } from "../model/sortOptions";
-import { sortCandidates } from "../lib/sortCandidates";
+import { sortOptions } from "../constant/sortOptions";
+// import { sortCandidates } from "../lib/sortCandidates";
 
 type SortSelectProps = {
   candidates: Candidate[];
@@ -17,7 +17,7 @@ export function SortSelect({ candidates, onSort }: SortSelectProps) {
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const value = e.target.value;
     setSortBy(value);
-    onSort(sortCandidates(candidates, value));
+    // onSort(sortCandidates(candidates, value));
   }
 
   return (

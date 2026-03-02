@@ -1,12 +1,24 @@
 "use client";
-import { CandidateCard, allJobSeekers } from "@/entities/job-seeker";
-import { DashboardHeader } from "@/shared";
+import { Candidate, CandidateCard, allJobSeekers } from "@/entities/job-seeker";
+import { DashboardHeader, Pagination } from "@/shared";
 import { Briefcase } from "lucide-react";
 import { SortSelect } from "./SortSelect";
 import { useState } from "react";
+import { List } from "@/widgets/list";
+
+const PAGE_SIZE = 9;
 
 export function CandidatesLayout() {
   const [displayedCandidates, setDisplayedCandidates] = useState(allJobSeekers);
+  const [page, setPage] = useState(1);
+
+  const totalPages = Math.ceil(displayedCandidates.length / PAGE_SIZE);
+  const start = (page - 1) * PAGE_SIZE;
+  const paginatedCandidates = displayedCandidates.slice(
+    start,
+    start + PAGE_SIZE,
+  );
+
   return (
     <div>
       {/* Header */}
@@ -22,11 +34,15 @@ export function CandidatesLayout() {
       {/* Sort */}
       <SortSelect candidates={allJobSeekers} onSort={setDisplayedCandidates} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {displayedCandidates.map((candidate, index) => (
-          <CandidateCard key={index} candidate={candidate} />
-        ))}
-      </div>
+      <List
+        items={paginatedCandidates as Candidate[]}
+        renderItem={(c) => <CandidateCard key={c.jobSeekerId} candidate={c} />}
+        columnsInLarge={3}
+        columnsInMedium={2}
+        columnsInSmall={1}
+      />
+
+      <Pagination totalPages={totalPages} page={page} onPageChange={setPage} />
     </div>
   );
 }
