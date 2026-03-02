@@ -86,7 +86,7 @@ export function SideBarLayout({ role }: SideBarLayoutProps) {
       >
         <div className="p-2 lg:p-4 flex-1 overflow-y-auto overflow-x-hidden">
           <div
-            className={`flex items-center justify-between lg:justify-start mb-6 px-2 py-5 border-b border-border`}
+            className={`flex items-center justify-between sm:justify-center lg:justify-start mb-6 px-2 py-5 border-b border-border`}
           >
             <Link
               href="/"
