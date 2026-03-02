@@ -13,7 +13,7 @@ export function SourceBadge({ source }: SourceBadgeProps) {
   const isCarrerk = checkJobSource(source);
 
   return (
-    <div className="absolute top-4 right-4 flex items-center gap-2">
+    <div className="flex items-center gap-2">
       <div
         className={cn(
           "px-3 py-1 rounded-full text-xs font-semibold text-white",

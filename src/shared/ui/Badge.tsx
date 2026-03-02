@@ -22,7 +22,7 @@ export function Badge({
   children,
   className = "",
   size = "default",
-  animate = false, // ADDED: Default to false
+  animate = false,
 }: BadgeProps) {
   const baseStyles =
     "min-w-[80px] w-fit inline-flex items-center justify-center gap-3 border border-primary/20 rounded-full text-sm font-bold shadow-lg text-center";

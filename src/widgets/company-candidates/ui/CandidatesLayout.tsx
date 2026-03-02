@@ -1,12 +1,12 @@
 "use client";
-import { CandidateCard, candidates } from "@/entities/candidate";
+import { CandidateCard, allJobSeekers } from "@/entities/job-seeker";
 import { DashboardHeader } from "@/shared";
 import { Briefcase } from "lucide-react";
 import { SortSelect } from "./SortSelect";
 import { useState } from "react";
 
 export function CandidatesLayout() {
-  const [displayedCandidates, setDisplayedCandidates] = useState(candidates);
+  const [displayedCandidates, setDisplayedCandidates] = useState(allJobSeekers);
   return (
     <div>
       {/* Header */}
@@ -20,7 +20,7 @@ export function CandidatesLayout() {
       <div className="p-6 shadow-sm border-border/50 bg-bg-surface rounded-lg mb-6"></div>
 
       {/* Sort */}
-      <SortSelect candidates={candidates} onSort={setDisplayedCandidates} />
+      <SortSelect candidates={allJobSeekers} onSort={setDisplayedCandidates} />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {displayedCandidates.map((candidate, index) => (

@@ -3,10 +3,15 @@ import {
   CandidateCard,
   Candidate,
   useCandidatesQuery,
-} from "@/entities/candidate";
+} from "@/entities/job-seeker";
 import { TableOfOperation } from "@/features/filter";
-import { Pagination } from "@/shared";
-import { List } from "@/widgets/List";
+import {
+  Pagination,
+  AVAILABILITY_OPTIONS,
+  WORK_PREFERENCE_OPTIONS,
+  EXPERIENCE_OPTIONS,
+} from "@/shared";
+import { List } from "@/widgets/list";
 
 export function CandidateList() {
   const { candidates } = useCandidatesQuery();
@@ -15,15 +20,15 @@ export function CandidateList() {
       <div className="sm:w-1/3 lg:w-1/4 flex flex-row sm:flex-col flex-wrap pl-4 py-4 gap-4 ">
         <TableOfOperation
           title="Availability"
-          options={["Available", "Not Available", "Open to offers"]}
+          options={[...AVAILABILITY_OPTIONS]}
         />
         <TableOfOperation
           title="Work Preference"
-          options={["Remote", "On-site", "Hybrid"]}
+          options={[...WORK_PREFERENCE_OPTIONS]}
         />
         <TableOfOperation
           title="Years of Experience"
-          options={["0-1 years", "1-3 years", "3-5 years", "5+ years"]}
+          options={[...EXPERIENCE_OPTIONS]}
         />
       </div>
 
@@ -31,7 +36,7 @@ export function CandidateList() {
         <List
           items={candidates as Candidate[]}
           renderItem={(candidate) => (
-            <CandidateCard candidate={candidate} key={candidate.id} />
+            <CandidateCard candidate={candidate} key={candidate.jobSeekerId} />
           )}
           columnsInLarge={2}
           columnsInMedium={2}

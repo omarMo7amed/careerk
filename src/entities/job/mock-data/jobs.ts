@@ -1,4 +1,4 @@
-import { Job } from "@/entities/job";
+import { Job } from "../types/job";
 
 export const jobListings: Job[] = [
   {

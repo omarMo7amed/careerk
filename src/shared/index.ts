@@ -18,12 +18,14 @@ export { UserAvatar } from "./ui/UserAvatar";
 export { AvailabilityBadge } from "./ui/AvailabilityBadge";
 export { RankingBadge } from "./ui/RankingBadge";
 export { Pagination } from "./ui/Pagination";
-// Shared Utilities
+export { Banner } from "./ui/Banner";
+// Shared lib functions
 export { useUserRole, useHasRole, getUserRole } from "./lib/useUserRole";
 export type { UserRole } from "./lib/useUserRole";
 export { cn } from "./lib/cn";
 export { getProfileColor } from "./lib/getProfileColor";
 export { getInitialsFromFullName } from "./lib/getInitialsFromFullName";
+export { getDuration, formatDate, formatYear } from "./lib/date";
 export { capitalizeFirstLetter } from "./lib/capitalizeFirstLetter";
 
 // Hooks
@@ -33,3 +35,22 @@ export { useClickOutside } from "./lib/useClickOutside";
 export { InterFont, spaceGrotesk } from "./lib/fonts";
 // Providers
 export { QueryProvider } from "./providers/QueryProvider";
+
+// Constants (all grouped by domain — add new files to constant/index.ts)
+export * from "./constant";
+
+// Types
+export type { AvailabilityStatus } from "./types/availabilityBadgeProps";
+// Nav constants
+export type { NavItem } from "./constant/dashboardNavItems";
+export {
+  companyNavItems,
+  jobseekerNavItems,
+} from "./constant/dashboardNavItems";
+
+export { Error } from "./ui/Error";
+
+export { iconMap, colorMap } from "./config/CardConfig";
+export { Loader } from "./ui/Loader";
+export { Empty } from "./ui/Empty";
+export { AnimatedSidebar } from "./ui/AnimatedSidebar";

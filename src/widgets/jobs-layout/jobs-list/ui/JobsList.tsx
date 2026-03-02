@@ -2,7 +2,7 @@
 import { Job, JobCardJobseeker, useJobsQuery } from "@/entities/job";
 import { TableOfOperation } from "@/features/filter";
 import { Pagination } from "@/shared";
-import { List } from "@/widgets/List";
+import { List } from "@/widgets/list";
 export function JobsList() {
   const { jobs } = useJobsQuery();
   return (

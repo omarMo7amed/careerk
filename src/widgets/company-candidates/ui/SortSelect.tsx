@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Candidate } from "@/entities/candidate";
+import { Candidate } from "@/entities/job-seeker";
 import { Select } from "@/shared";
 import { sortOptions } from "../model/sortOptions";
 import { sortCandidates } from "../lib/sortCandidates";

@@ -5,7 +5,7 @@ import {
   CompaniesListing,
 } from "@/entities/company";
 import { Pagination } from "@/shared";
-import { List } from "@/widgets/List";
+import { List } from "@/widgets/list";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 
@@ -23,8 +23,6 @@ export function CompaniesList() {
   });
 
   const totalPages = Math.ceil(CompaniesListing.length / 12);
-
-  console.log(totalPages);
 
   function handlePageChange(newPage: number) {
     const params = new URLSearchParams(searchParams.toString());

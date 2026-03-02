@@ -39,6 +39,11 @@ const jobseekerNavItems = [
     href: "/dashboard/jobseeker/overview",
   },
   {
+    name: "CV Management",
+    icon: LayoutDashboard,
+    href: "/dashboard/jobseeker/cv-management",
+  },
+  {
     name: "Recommended Jobs",
     icon: Briefcase,
     href: "/dashboard/jobseeker/recommended-jobs",
@@ -86,7 +91,7 @@ export function SideBarLayout({ role }: SideBarLayoutProps) {
       >
         <div className="p-2 lg:p-4 flex-1 overflow-y-auto overflow-x-hidden">
           <div
-            className={`flex items-center justify-between sm:justify-center lg:justify-start mb-6 px-2 py-5 border-b border-border`}
+            className={`flex items-center ${open ? "justify-between" : "justify-center"} lg:justify-start mb-6 px-2 py-5 border-b border-border`}
           >
             <Link
               href="/"
@@ -102,7 +107,7 @@ export function SideBarLayout({ role }: SideBarLayoutProps) {
             </Link>
 
             {/* Toggle — only below lg */}
-            <div className="cursor-pointer lg:hidden">
+            <div className="cursor-pointer  lg:hidden">
               <Button onClick={() => setOpen((prev) => !prev)} variant="ghost">
                 <ChevronLeft
                   className="w-4 h-4 text-text-secondary transition-transform duration-300"
