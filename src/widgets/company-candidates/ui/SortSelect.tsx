@@ -21,18 +21,13 @@ export function SortSelect({ candidates, onSort }: SortSelectProps) {
   }
 
   return (
-    <div className="flex items-center justify-between mb-6">
-      <p className="text-sm font-semibold">
-        {candidates.length} Candidates Found
-      </p>
-      <div className="flex items-center gap-2">
-        <Select
-          options={sortOptions}
-          value={sortBy}
-          onChange={handleChange}
-          className="text-sm font-medium"
-        />
-      </div>
+    <div className="flex items-center gap-2">
+      <Select
+        options={sortOptions}
+        value={sortBy}
+        onChange={handleChange}
+        className="text-sm font-medium"
+      />
     </div>
   );
 }
