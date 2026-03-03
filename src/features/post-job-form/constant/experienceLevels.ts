@@ -1,7 +1,8 @@
 export const experienceLevels = [
-  { label: "Entry Level", value: "entry" },
-  { label: "Mid Level", value: "mid" },
-  { label: "Senior Level", value: "senior" },
-  { label: "Lead", value: "lead" },
+  { label: "Entry-level", value: "ENTRY" },
+  { label: "Junior", value: "JUNIOR" },
+  { label: "Mid-level", value: "MID" },
+  { label: "Senior", value: "SENIOR" },
+  { label: "Lead", value: "LEAD" },
+  { label: "Manager", value: "MANAGER" },
 ];
-

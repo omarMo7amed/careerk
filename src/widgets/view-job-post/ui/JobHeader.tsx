@@ -2,22 +2,22 @@ import { Badge } from "@/shared";
 
 export function JobHeader({
   title,
-  workArrangement,
-  employmentType,
+  workPreference,
+  jobType,
 }: {
   title: string;
-  workArrangement: string;
-  employmentType: string;
+  workPreference: string;
+  jobType: string;
 }) {
   return (
     <>
       <h1 className="text-2xl font-bold mb-4">{title}</h1>
       <div className="flex flex-wrap gap-2 pb-6 border-b border-border/50">
         <Badge variant="info" className="rounded-lg shadow-none">
-          {workArrangement}
+          {workPreference}
         </Badge>
         <Badge variant="info" className="rounded-lg shadow-none">
-          {employmentType}
+          {jobType}
         </Badge>
       </div>
     </>

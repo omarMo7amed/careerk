@@ -1,37 +1,47 @@
 import {
   CompanyJob,
-  EmploymentType,
+  JobType,
   ExperienceLevel,
-  WorkArrangement,
-} from "@/entities/company-job/types/companyJob";
+  WorkPreference,
+  Company,
+} from "@/entities/company-job";
+
 import { JobPostFormData } from "../lib/jobPostSchema";
 
-export function buildNewJob(data: JobPostFormData): CompanyJob {
+export function buildNewJob(
+  data: JobPostFormData,
+  company: Company,
+): CompanyJob {
+  const now = new Date().toISOString();
+
   return {
     id: crypto.randomUUID(),
-    companyId: "1",
+
+    company,
+
     title: data.title,
     description: data.description,
-    requirements: data.requirements,
-    employmentType: data.employmentType as EmploymentType,
-    workArrangement: data.workArrangement as WorkArrangement,
+
+    requirements: data.requirements ?? null,
+    responsibilities: null,
+
+    location: data.location ?? null,
+
+    salaryMin: data.salaryMin ? Number(data.salaryMin) : null,
+    salaryMax: data.salaryMax ? Number(data.salaryMax) : null,
+
+    jobType: data.jobType as JobType,
+    workPreference: data.workPreference as WorkPreference,
     experienceLevel: data.experienceLevel as ExperienceLevel,
-    responsibilities: "",
-    location: data.location,
-    applicationDeadline: data.applicationDeadline,
-    minSalary: data.minSalary ? Number(data.minSalary) : null,
-    maxSalary: data.maxSalary ? Number(data.maxSalary) : null,
-    skills: data.skills.map((name, i) => ({
-      id: String(i),
+
+    status: "PUBLISHED",
+
+    deadline: data.deadline ?? null,
+    publishedAt: now,
+
+    skills: data.skills.map((name) => ({
+      skillId: crypto.randomUUID(),
       name,
-      category: "Other",
     })),
-    status: "published",
-    applicationsCount: 0,
-    viewsCount: 0,
-    is_featured: false,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-    published_at: new Date().toISOString(),
   };
 }

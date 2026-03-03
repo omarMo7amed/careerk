@@ -1,9 +1,12 @@
 "use client";
 import {
   CompanyJob,
-  EmploymentType,
+  JobType,
   ExperienceLevel,
-  WorkArrangement,
+  WorkPreference,
+  experienceLevelLabels,
+  workPreferenceLabels,
+  jobTypeLabels,
 } from "@/entities/company-job";
 import { Badge, ConfirmationModal } from "@/shared";
 import { Card } from "@/shared";
@@ -31,14 +34,14 @@ export function ViewJobPostLayout({ jobPost }: ViewJobPostLayoutProps) {
     responsibilities,
     skills,
     location,
-    minSalary,
-    maxSalary,
-    applicationDeadline,
-    workArrangement,
-    employmentType,
+    salaryMin,
+    salaryMax,
+    deadline,
+    workPreference,
+    jobType,
     experienceLevel,
     status,
-    applicationsCount,
+    // applicationsCount,
   } = jobPost;
   const [isEditingJob, setIsEditingJob] = useState(false);
 
@@ -48,17 +51,16 @@ export function ViewJobPostLayout({ jobPost }: ViewJobPostLayoutProps) {
     const updated: CompanyJob = {
       ...jobPost,
       ...data,
-      employmentType: data.employmentType as EmploymentType,
-      workArrangement: data.workArrangement as WorkArrangement,
+      jobType: data.jobType as JobType,
+      workPreference: data.workPreference as WorkPreference,
       experienceLevel: data.experienceLevel as ExperienceLevel,
-      minSalary: data.minSalary ? Number(data.minSalary) : null,
-      maxSalary: data.maxSalary ? Number(data.maxSalary) : null,
+      salaryMin: data.salaryMin ? Number(data.salaryMin) : null,
+      salaryMax: data.salaryMax ? Number(data.salaryMax) : null,
       skills: data.skills.map((name, i) => ({
-        id: String(i),
+        skillId: String(i),
         name,
-        category: "Other",
       })),
-      updated_at: new Date().toISOString(),
+      publishedAt: new Date().toISOString(),
     };
     updateJob(jobPost.id, updated);
     setIsEditingJob(false);
@@ -88,8 +90,8 @@ export function ViewJobPostLayout({ jobPost }: ViewJobPostLayoutProps) {
               <>
                 <JobHeader
                   title={title}
-                  workArrangement={workArrangement}
-                  employmentType={employmentType}
+                  workPreference={workPreferenceLabels[workPreference]}
+                  jobType={jobTypeLabels[jobType]}
                 />
                 <JobSection title="About the Job">
                   <p className="text-text-secondary">{description}</p>
@@ -103,7 +105,7 @@ export function ViewJobPostLayout({ jobPost }: ViewJobPostLayoutProps) {
                 <JobSection title="Required Skills">
                   <div className="flex gap-2">
                     {skills.map((skill) => (
-                      <Badge key={skill.id} variant="skill">
+                      <Badge key={skill.skillId} variant="skill">
                         {skill.name}
                       </Badge>
                     ))}
@@ -111,10 +113,10 @@ export function ViewJobPostLayout({ jobPost }: ViewJobPostLayoutProps) {
                 </JobSection>
                 <JobDetailsGrid
                   location={location}
-                  minSalary={minSalary}
-                  maxSalary={maxSalary}
-                  experienceLevel={experienceLevel}
-                  applicationDeadline={applicationDeadline}
+                  minSalary={salaryMin}
+                  maxSalary={salaryMax}
+                  experienceLevel={experienceLevelLabels[experienceLevel]}
+                  deadline={deadline}
                 />{" "}
               </>
             )}
@@ -123,13 +125,13 @@ export function ViewJobPostLayout({ jobPost }: ViewJobPostLayoutProps) {
             <JobSidebar
               isEditingJob={isEditingJob}
               setIsEditingJob={setIsEditingJob}
-              applicationDeadline={applicationDeadline}
+              deadline={deadline}
               onDeleteClick={() => setShowDeleteModal(true)}
             />
 
             <JobStatistics
               status={status}
-              applicationsCount={applicationsCount}
+              // applicationsCount={applicationsCount}
             />
           </div>
         </div>

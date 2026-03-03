@@ -6,8 +6,8 @@ import {
 } from "react-hook-form";
 import { Input, Label, Select } from "@/shared";
 import { FieldError } from "@/shared/ui/FieldError";
-import { employmentTypes } from "../constant/employmentTypes";
-import { workArrangements } from "../constant/workArrangements";
+import { jobTypes } from "../constant/jobTypes";
+import { workPreferences } from "../constant/workPreferences";
 import { experienceLevels } from "../constant/experienceLevels";
 import { JobPostFormData } from "../lib/jobPostSchema";
 
@@ -57,24 +57,24 @@ export function FormFields({ register, control, errors }: FormFieldsProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Controller
-          name="employmentType"
+          name="jobType"
           control={control}
           render={({ field }) => (
             <Select
-              label="Employment Type"
-              options={employmentTypes}
+              label="Job Type"
+              options={jobTypes}
               className="bg-background border-border"
               {...field}
             />
           )}
         />
         <Controller
-          name="workArrangement"
+          name="workPreference"
           control={control}
           render={({ field }) => (
             <Select
-              label="Work Arrangement"
-              options={workArrangements}
+              label="Work Preference"
+              options={workPreferences}
               className="bg-background border-border"
               {...field}
             />
@@ -101,17 +101,17 @@ export function FormFields({ register, control, errors }: FormFieldsProps) {
             <Input
               placeholder="Minimum"
               className="bg-background"
-              {...register("minSalary")}
+              {...register("salaryMin")}
             />
             <span className="text-text-secondary">-</span>
             <Input
               placeholder="Maximum"
               className="bg-background"
-              {...register("maxSalary")}
+              {...register("salaryMax")}
             />
           </div>
-          <FieldError message={errors.minSalary?.message} />
-          <FieldError message={errors.maxSalary?.message} />
+          <FieldError message={errors.salaryMin?.message} />
+          <FieldError message={errors.salaryMax?.message} />
         </div>
         <div>
           <Label htmlFor="location" label="Location" />

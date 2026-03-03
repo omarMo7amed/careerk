@@ -6,7 +6,13 @@ export { toggleJobStatus } from "./api/toggleJobStatus";
 export { mockJobs } from "./mock-jobs/mockJobs";
 export type {
   CompanyJob,
-  EmploymentType,
+  JobType,
   ExperienceLevel,
-  WorkArrangement,
+  WorkPreference,
 } from "./types/companyJob";
+export type { Company } from "./types/companyJob";
+export {
+  experienceLevelLabels,
+  workPreferenceLabels,
+  jobTypeLabels,
+} from "./lib/labelMap";

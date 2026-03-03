@@ -7,7 +7,7 @@ export function DetailItem({
 }: {
   icon: React.ReactNode;
   label: string;
-  value: string;
+  value: string | null;
 }) {
   return (
     <div className="flex items-start gap-3">
@@ -19,7 +19,9 @@ export function DetailItem({
       </Badge>
       <div>
         <p className="text-sm text-text-secondary mb-1">{label}</p>
-        <p className="font-medium">{value}</p>
+        <p className="font-medium">
+          {value ?? <span className="italic">Not specified</span>}
+        </p>
       </div>
     </div>
   );

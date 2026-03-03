@@ -36,20 +36,20 @@ export function JobPostForm({
       ? {
           title: initialData.title,
           description: initialData.description,
-          requirements: initialData.requirements,
-          employmentType: initialData.employmentType,
-          workArrangement: initialData.workArrangement,
+          requirements: initialData.requirements ?? "",
+          jobType: initialData.jobType,
+          workPreference: initialData.workPreference,
           experienceLevel: initialData.experienceLevel,
-          minSalary: initialData.minSalary?.toString() ?? "",
-          maxSalary: initialData.maxSalary?.toString() ?? "",
-          location: initialData.location,
-          applicationDeadline: initialData.applicationDeadline,
+          salaryMin: initialData.salaryMin?.toString() ?? "",
+          salaryMax: initialData.salaryMax?.toString() ?? "",
+          location: initialData.location ?? "",
+          deadline: initialData.deadline ?? "",
           skills: initialData.skills.map((s) => s.name),
         }
       : {
-          employmentType: "full-time",
-          workArrangement: "remote",
-          experienceLevel: "entry",
+          jobType: "FULL_TIME",
+          workPreference: "REMOTE",
+          experienceLevel: "ENTRY",
           skills: [],
         },
   });
@@ -60,7 +60,10 @@ export function JobPostForm({
     if (onSubmitProp) {
       onSubmitProp(data);
     } else {
-      console.log("Job posted:", buildNewJob(data));
+      console.log(
+        "Job posted:",
+        buildNewJob(data, { id: "2", logoUrl: "/", name: "ss" }),
+      );
       reset();
     }
   }
@@ -71,14 +74,14 @@ export function JobPostForm({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <Label label="Application Deadline" htmlFor="deadline" />
+          <Label label="Deadline" htmlFor="deadline" />
           <Input
             id="deadline"
             type="date"
             className="bg-background"
-            {...register("applicationDeadline")}
+            {...register("deadline")}
           />
-          <FieldError message={errors.applicationDeadline?.message} />
+          <FieldError message={errors.deadline?.message} />
         </div>
 
         <SkillsInput
