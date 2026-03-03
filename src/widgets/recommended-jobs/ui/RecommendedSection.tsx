@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { JobCardJobseeker, useJobsQuery } from "@/entities/job";
-import { List } from "@/widgets/List";
+import { List } from "@/widgets/list";
 import { LocalFilterBar } from "./LocalFilterBar";
 import { matchesTab } from "../lib/matchesTab";
 import { buildTabs } from "../lib/buildTabs";

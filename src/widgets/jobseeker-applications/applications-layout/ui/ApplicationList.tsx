@@ -3,7 +3,7 @@
 import { useApplications } from "@/entities/application";
 import { Empty, Error, Loader } from "@/shared";
 import { ApplicationCard } from "./ApplicationCard";
-import { List } from "@/widgets/List";
+import { List } from "@/widgets/list";
 
 interface ApplicationsListProps {
   onViewDetails: (applicationId: string) => void;

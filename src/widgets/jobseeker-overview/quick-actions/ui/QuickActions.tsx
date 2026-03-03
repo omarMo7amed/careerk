@@ -1,6 +1,6 @@
 // widgets/jobseeker-overview/quick-actions/ui/QuickActions.tsx
 
-import { List } from "@/widgets/List";
+import { List } from "@/widgets/list";
 import { quickActions } from "../config/actionsConfig";
 import { ActionCard } from "./ActionCard";
 

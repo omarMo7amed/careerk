@@ -1,5 +1,5 @@
 import { Company } from "@/entities/company";
-import { Skill } from "@/entities/skill";
+import { SkillType } from "@/entities/skill";
 
 export interface Job {
   id: string;
@@ -13,7 +13,7 @@ export interface Job {
   experienceLevel: "entry" | "mid" | "senior" | "lead";
   salaryMin?: number;
   salaryMax?: number;
-  skills: Skill[];
+  skills: SkillType[];
   publishedAt: string;
   applicationDeadline?: string | null;
   viewsCount: number;

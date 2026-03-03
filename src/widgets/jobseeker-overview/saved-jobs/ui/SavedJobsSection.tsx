@@ -1,13 +1,15 @@
 "use client";
-import { useSavedJobs } from "@/entities/job";
-import { SavedJobCard } from "../../../../entities/job/ui/SavedJobCard";
+import {
+  useSavedJobs,
+  SavedJobCard,
+  SavedJobCardType,
+  jobsToJobCards,
+} from "@/entities/job";
 
-import { jobsToJobCards } from "@/entities/job/lib/transformers";
 import { Empty, Error, Loader } from "@/shared";
-import { List } from "@/widgets/List";
+import { List } from "@/widgets/list";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { SavedJobCardType } from "../../../../entities/job/types/savedJobCard";
 
 export function SavedJobsSection() {
   const { jobs, isLoading, error } = useSavedJobs({

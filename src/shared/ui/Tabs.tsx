@@ -6,7 +6,11 @@ type TabsProps<T extends string> = {
   onChange: (tab: T) => void;
 };
 
-function Tabs<T extends string>({ tabs, activeTab, onChange }: TabsProps<T>) {
+export function Tabs<T extends string>({
+  tabs,
+  activeTab,
+  onChange,
+}: TabsProps<T>) {
   return (
     <div className="mb-6">
       <div className="flex border-b border-border">
@@ -30,5 +34,3 @@ function Tabs<T extends string>({ tabs, activeTab, onChange }: TabsProps<T>) {
     </div>
   );
 }
-
-export default Tabs;

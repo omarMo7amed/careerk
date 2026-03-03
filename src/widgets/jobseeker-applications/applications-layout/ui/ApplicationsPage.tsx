@@ -18,10 +18,10 @@ export function ApplicationsPage() {
   const stats = calculateApplicationStatus(applications);
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-4 md:p-8">
+    <div className="w-full mx-auto p-4 md:p-8">
       <div className="space-y-6">
         <ApplicationsHeader stats={stats} />
-        <SearchBar />
+        <SearchBar searchPlaceholder="Search Applications" />
         <ApplicationsList onViewDetails={setSelectedApplicationId} />
       </div>
 

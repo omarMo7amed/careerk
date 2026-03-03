@@ -2,8 +2,9 @@
 import { useState } from "react";
 import { Job, JobCardJobseeker, useJobsQuery } from "@/entities/job";
 import { Button, Pagination } from "@/shared";
-import { List } from "@/widgets/List";
+import { List } from "@/widgets/list";
 import { FilterSideModal } from "@/widgets/filter-sidebar";
+import { TableOfOperation } from "@/features/filter/ui/TableOfOperation";
 
 export function JobsList() {
   const { jobs } = useJobsQuery();
@@ -31,10 +32,23 @@ export function JobsList() {
 
       <Pagination totalPages={10} page={1} onPageChange={() => {}} />
 
-      <FilterSideModal
-        isOpen={filterOpen}
-        onClose={() => setFilterOpen(false)}
-      />
+      <FilterSideModal isOpen={filterOpen} onClose={() => setFilterOpen(false)}>
+        <TableOfOperation
+          title="Job Type"
+          options={["Full-time", "Part-time", "Contract"]}
+          asDropdown={false}
+        />
+        <TableOfOperation
+          title="Experience Level"
+          options={["Entry Level", "Mid Level", "Senior Level"]}
+          asDropdown={false}
+        />
+        <TableOfOperation
+          title="Location"
+          options={["Remote", "On-site", "Hybrid"]}
+          asDropdown={false}
+        />
+      </FilterSideModal>
     </div>
   );
 }

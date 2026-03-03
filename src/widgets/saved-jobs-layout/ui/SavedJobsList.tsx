@@ -1,7 +1,7 @@
 "use client";
 import { SavedJobCard, jobsToJobCards, useSavedJobs } from "@/entities/job";
 import { Empty, Error, Loader, Pagination } from "@/shared";
-import { List } from "@/widgets/List";
+import { List } from "@/widgets/list";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export function SavedJobsList() {

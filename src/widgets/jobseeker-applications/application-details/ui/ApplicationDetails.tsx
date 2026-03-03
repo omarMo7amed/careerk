@@ -32,14 +32,17 @@ export function ApplicationDetails({
   const application = details.data;
 
   return (
-    <div className="p-6 space-y-6">
-      <ApplicationHeader job={application.directJob} />
-      <StatusBadge status={application.status} />
-      <MatchScore />
-      <AppliedDate date={application.appliedAt} />
-      <ApplicationCardInfo application={application} />
-      <JobDescription description={application.directJob.description} />
-      <SkillsList skills={application.directJob.skills} />
+    <div className="p-6 h-full flex flex-col justify-between">
+      <div className="space-y-6 ">
+        <ApplicationHeader job={application.directJob} />
+        <StatusBadge status={application.status} />
+        <MatchScore />
+        <AppliedDate date={application.appliedAt} />
+        <ApplicationCardInfo application={application} />
+        <JobDescription description={application.directJob.description} />
+        <SkillsList skills={application.directJob.skills} />
+      </div>
+
       <DetailsActions
         jobId={application.directJob.id}
         applicationId={application.id}
