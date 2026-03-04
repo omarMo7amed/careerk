@@ -12,7 +12,6 @@ export { Label } from "./ui/Label";
 export { Input } from "./ui/Input";
 export { Select } from "./ui/Select";
 export { Tabs } from "./ui/Tabs";
-export { IconX } from "./ui/IconX";
 export { ConfirmationModal } from "./ui/ConfirmationModal";
 export { UserAvatar } from "./ui/UserAvatar";
 export { AvailabilityBadge } from "./ui/AvailabilityBadge";
