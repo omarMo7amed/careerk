@@ -1,4 +1,5 @@
 import { getJob } from "@/entities/company-job/api/getJob";
+import { DirectJobLayout } from "@/widgets/direct-job-layout";
 import { ViewJobPostLayout } from "@/widgets/view-job-post";
 import type { Metadata } from "next";
 
@@ -25,6 +26,7 @@ async function page({ params }: Props) {
   return (
     <div>
       <ViewJobPostLayout jobPost={jobPost} />
+      {/* <DirectJobLayout job={jobPost} /> */}
     </div>
   );
 }

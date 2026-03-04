@@ -39,9 +39,7 @@ export interface CompanyJob {
   workPreference: WorkPreference;
   experienceLevel: ExperienceLevel;
   status: JobStatus;
-
   deadline: string | null;
-
   publishedAt: string | null;
   company: Company;
   skills: JobSkill[];

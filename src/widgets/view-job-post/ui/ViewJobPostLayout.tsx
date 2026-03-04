@@ -4,23 +4,21 @@ import {
   JobType,
   ExperienceLevel,
   WorkPreference,
-  experienceLevelLabels,
-  workPreferenceLabels,
-  jobTypeLabels,
 } from "@/entities/company-job";
-import { Badge, ConfirmationModal } from "@/shared";
+import { ConfirmationModal } from "@/shared";
 import { Card } from "@/shared";
 import { useState } from "react";
-import { JobSidebar } from "./JobSidebar";
-import { JobStatistics } from "./JobStatistics";
-import { JobDetailsGrid } from "./DetailsGrid";
-import { JobSection } from "./JobSection";
-import { JobHeader } from "./JobHeader";
+import { JobSidebar } from "../../direct-job-content/ui/JobSidebar";
+
 import { JobPostFormData } from "@/features/post-job-form";
 import { updateJob } from "@/entities/company-job";
 import { BackButton } from "@/shared/ui/BackButton";
 import { deleteJob } from "@/entities/company-job";
 import { JobPostForm } from "@/features/post-job-form";
+import {
+  DirectJobContentCard,
+  JobStatistics,
+} from "@/widgets/direct-job-content";
 
 interface ViewJobPostLayoutProps {
   jobPost: CompanyJob;
@@ -29,17 +27,7 @@ interface ViewJobPostLayoutProps {
 export function ViewJobPostLayout({ jobPost }: ViewJobPostLayoutProps) {
   const {
     title,
-    description,
-    requirements,
-    responsibilities,
-    skills,
-    location,
-    salaryMin,
-    salaryMax,
     deadline,
-    workPreference,
-    jobType,
-    experienceLevel,
     status,
     // applicationsCount,
   } = jobPost;
@@ -79,48 +67,17 @@ export function ViewJobPostLayout({ jobPost }: ViewJobPostLayoutProps) {
           <BackButton />
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-          <Card className="lg:col-span-2 space-y-8">
-            {isEditingJob ? (
+          {isEditingJob ? (
+            <Card className="lg:col-span-2 space-y-8">
               <JobPostForm
                 initialData={jobPost}
                 onSubmit={handleEditSubmit}
                 onCancel={() => setIsEditingJob(false)}
               />
-            ) : (
-              <>
-                <JobHeader
-                  title={title}
-                  workPreference={workPreferenceLabels[workPreference]}
-                  jobType={jobTypeLabels[jobType]}
-                />
-                <JobSection title="About the Job">
-                  <p className="text-text-secondary">{description}</p>
-                </JobSection>
-                <JobSection title="Responsibilities">
-                  <p className="text-text-secondary">{responsibilities}</p>
-                </JobSection>
-                <JobSection title="Requirements">
-                  <p className="text-text-secondary">{requirements}</p>
-                </JobSection>
-                <JobSection title="Required Skills">
-                  <div className="flex gap-2">
-                    {skills.map((skill) => (
-                      <Badge key={skill.skillId} variant="skill">
-                        {skill.name}
-                      </Badge>
-                    ))}
-                  </div>
-                </JobSection>
-                <JobDetailsGrid
-                  location={location}
-                  minSalary={salaryMin}
-                  maxSalary={salaryMax}
-                  experienceLevel={experienceLevelLabels[experienceLevel]}
-                  deadline={deadline}
-                />{" "}
-              </>
-            )}
-          </Card>
+            </Card>
+          ) : (
+            <DirectJobContentCard job={jobPost} />
+          )}
           <div className="space-y-6">
             <JobSidebar
               isEditingJob={isEditingJob}
@@ -129,10 +86,7 @@ export function ViewJobPostLayout({ jobPost }: ViewJobPostLayoutProps) {
               onDeleteClick={() => setShowDeleteModal(true)}
             />
 
-            <JobStatistics
-              status={status}
-              // applicationsCount={applicationsCount}
-            />
+            <JobStatistics status={status} />
           </div>
         </div>
       </div>
