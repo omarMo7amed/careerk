@@ -1,8 +1,5 @@
+import { SettingsSection } from "@/widgets/settings-layout";
+
 export default function CompanySettingsPage() {
-  return (
-    <div>
-      <h1>Settings</h1>
-      <p>Manage company settings and preferences</p>
-    </div>
-  );
+  return <SettingsSection role="company" />;
 }
