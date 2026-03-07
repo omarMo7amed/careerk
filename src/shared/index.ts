@@ -35,6 +35,11 @@ export { useClickOutside } from "./lib/useClickOutside";
 export { InterFont, spaceGrotesk } from "./lib/fonts";
 // Providers
 export { QueryProvider } from "./providers/QueryProvider";
+export {
+  ThemeProvider,
+  ThemeScript,
+  useTheme,
+} from "./providers/ThemeProvider";
 
 // Constants (all grouped by domain — add new files to constant/index.ts)
 export * from "./constant";
