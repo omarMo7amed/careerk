@@ -1,5 +1,4 @@
 import { formatDistanceToNow, isValid } from "date-fns";
-import { useCVDropZoneContext } from "../model/useCVDropZoneContext";
 import { StoredCV } from "../types/cvLocalStorage";
 
 export function StatusRow({ pendingCV }: { pendingCV: StoredCV }) {

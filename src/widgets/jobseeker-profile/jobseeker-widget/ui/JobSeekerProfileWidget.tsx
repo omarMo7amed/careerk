@@ -1,16 +1,18 @@
 "use client";
 import { useJobSeekerQuery, type JobSeeker } from "@/entities/job-seeker";
 import { ProfileHeader } from "../../profile-header";
-import { Summary } from "../../summary";
+import { Summary } from "../../../jobseeker-summary";
 import { ContactInfo } from "../../contact-info";
-import { ExperienceSection } from "../../experience-section";
-import { EducationSection } from "../../education-section";
 import { LinksPortfolio } from "../../links-portfolio";
+
+import { ExperienceSection } from "@/widgets/experience-section";
+import { EducationSection } from "@/widgets/education-section";
+import { SkillsSection } from "@/widgets/skills-section";
+
 import {
   ProfileStatus,
   EditingState,
 } from "@/widgets/jobseeker-profile/profile-status";
-import { SkillsSection } from "../../skills-section";
 
 interface JobSeekerProfileWidgetProps {
   jobSeeker?: JobSeeker;

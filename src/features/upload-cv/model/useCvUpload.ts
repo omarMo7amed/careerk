@@ -8,10 +8,10 @@ import {
   getCVFromLocalStorage,
   storedCVToFile,
 } from "../lib/cvLocalStorage";
-import { uploadCVToServer } from "../api/upload-cv";
 import { cvUploadReducer } from "../lib/uploadCVReducer";
 import type { CVUploadState } from "../types/uploadCVReducer";
 import { initialCVUploadState } from "../config/config";
+import { uploadCVToServer } from "@/entities/cv";
 
 export function useCVUpload() {
   const [state, dispatch] = useReducer(cvUploadReducer, initialCVUploadState);
@@ -67,8 +67,6 @@ export function useCVUpload() {
       payload: { pendingCV: getCVFromLocalStorage() },
     });
   }
-
-  // ── Pending CV ─────────────────────────────────────────────────────────────
 
   function discard() {
     clearCVFromLocalStorage();
