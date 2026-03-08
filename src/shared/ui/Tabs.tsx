@@ -4,12 +4,14 @@ type TabsProps<T extends string> = {
   tabs: readonly T[];
   activeTab: T;
   onChange: (tab: T) => void;
+  labels?: Record<string, string>;
 };
 
 export function Tabs<T extends string>({
   tabs,
   activeTab,
   onChange,
+  labels,
 }: TabsProps<T>) {
   return (
     <div className="mb-6">
@@ -27,7 +29,7 @@ export function Tabs<T extends string>({
                 : "hover:text-primary"
             }`}
           >
-            {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            {labels?.[tab] ?? tab.charAt(0).toUpperCase() + tab.slice(1)}
           </button>
         ))}
       </div>

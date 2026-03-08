@@ -1,4 +1,4 @@
-import { PostJob } from "@/features/post-job";
+import { Button } from "@/shared";
 
 export function CTA() {
   return (
@@ -11,7 +11,10 @@ export function CTA() {
           Post a job and let the best candidates come to you.
         </p>
         <div className="flex gap-2">
-          <PostJob variant="primary" />
+          {/* <JobPostForm /> */}
+          <Button variant="outline" className="text-white">
+            Post a Job
+          </Button>
           {/* we will replace this button */}
           <button className="bg-transparent border border-border text-white px-4 py-2 rounded-md">
             Sign up

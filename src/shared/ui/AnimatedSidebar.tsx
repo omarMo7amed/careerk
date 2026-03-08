@@ -1,14 +1,12 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/shared";
 import { X } from "lucide-react";
-import { ReactNode, useEffect } from "react";
-import { Button } from "./Button";
 
-interface SidebarProps {
+interface FilterSideModalProps {
   isOpen: boolean;
   onClose: () => void;
-  children: ReactNode;
+  children: React.ReactNode;
   title?: string;
 }
 
@@ -17,68 +15,41 @@ export function AnimatedSidebar({
   onClose,
   children,
   title,
-}: SidebarProps) {
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
-        onClose();
-      }
-    };
-    document.addEventListener("keydown", handleEscape);
-    return () => document.removeEventListener("keydown", handleEscape);
-  }, [isOpen, onClose]);
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [isOpen]);
-
+}: FilterSideModalProps) {
   return (
-    <AnimatePresence>
+    <>
       {isOpen && (
-        <>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            onClick={onClose}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
-          />
-
-          <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{
-              type: "spring",
-              damping: 30,
-              stiffness: 300,
-            }}
-            className="fixed right-0 top-0 h-full w-full sm:max-w-md bg-bg-surface shadow-2xl z-50 flex flex-col"
-          >
-            <div className="flex items-center justify-between p-4 border-b border-gray-200">
-              {title && <h2 className="text-xl font-bold ">{title}</h2>}
-              <Button
-                variant="ghost"
-                onClick={onClose}
-                className="ml-auto p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                aria-label="Close sidebar"
-              >
-                <X className="w-5 h-5 text-text-secondary" />
-              </Button>
-            </div>
-
-            <div className="flex-1 overflow-y-auto">{children}</div>
-          </motion.div>
-        </>
+        <div
+          className="fixed inset-0 z-60 bg-black/40"
+          onClick={onClose}
+          aria-hidden
+        />
       )}
-    </AnimatePresence>
+
+      <aside
+        role="dialog"
+        aria-modal="true"
+        aria-label={title ? `Filters for ${title}` : "Filters"}
+        className={`fixed top-0 right-0 z-70 h-full w-md max-w-full bg-bg-surface border-l border-border shadow-xl flex flex-col
+          transition-transform duration-300 ease-in-out
+          ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between p-4 border-b border-border">
+          <h2 className="text-lg font-bold text-foreground">{title}</h2>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label={"Close " + (title || "filters")}
+            className="p-1.5 rounded-md hover:bg-muted transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Filter panels */}
+        {children}
+      </aside>
+    </>
   );
 }

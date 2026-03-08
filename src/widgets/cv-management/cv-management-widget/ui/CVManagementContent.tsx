@@ -6,7 +6,7 @@ import { RecommendationInsights } from "../../recommendation-insights";
 export function CVManagementContent() {
   return (
     <section className="space-y-10 p-6">
-      <CTA confirmed={false} />
+      <CTA confirmed={true} />
       <ExtractedCVInfo cvInfo={mockCVInfo} />
       <RecommendationInsights />
     </section>

@@ -12,7 +12,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { SideBarNavItem } from "./SideBarNavItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, cn } from "@/shared";
 
 const companyNavItems = [
@@ -65,6 +65,18 @@ type SideBarLayoutProps = {
 export function SideBarLayout({ role }: SideBarLayoutProps) {
   const [open, setOpen] = useState(false);
   const navItems = role === "company" ? companyNavItems : jobseekerNavItems;
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("theme") || "light";
+    function applyTheme(theme: string) {
+      if (theme === "dark") {
+        setTheme(storedTheme);
+      }
+    }
+
+    applyTheme(storedTheme);
+  }, []);
 
   return (
     <>
@@ -98,7 +110,7 @@ export function SideBarLayout({ role }: SideBarLayoutProps) {
               className={`flex items-center overflow-hidden  ${open && "w-auto"}`}
             >
               <Image
-                src="/logo-light.svg"
+                src={theme === "dark" ? "/logo-dark.svg" : "/logo-light.svg"}
                 alt="Careerk Logo"
                 width={160}
                 height={40}

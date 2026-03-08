@@ -1,10 +1,9 @@
 "use client";
 import { useState } from "react";
 import { Job, JobCardJobseeker, useJobsQuery } from "@/entities/job";
-import { Button, Pagination } from "@/shared";
+import { AnimatedSidebar, Button, Pagination } from "@/shared";
 import { List } from "@/widgets/list";
-import { FilterSideModal } from "@/widgets/filter-sidebar";
-import { TableOfOperation } from "@/features/filter/ui/TableOfOperation";
+import { TableOfOperation } from "@/features/filter";
 
 export function JobsList() {
   const { jobs } = useJobsQuery();
@@ -32,23 +31,47 @@ export function JobsList() {
 
       <Pagination totalPages={10} page={1} onPageChange={() => {}} />
 
-      <FilterSideModal isOpen={filterOpen} onClose={() => setFilterOpen(false)}>
-        <TableOfOperation
-          title="Job Type"
-          options={["Full-time", "Part-time", "Contract"]}
-          asDropdown={false}
-        />
-        <TableOfOperation
-          title="Experience Level"
-          options={["Entry Level", "Mid Level", "Senior Level"]}
-          asDropdown={false}
-        />
-        <TableOfOperation
-          title="Location"
-          options={["Remote", "On-site", "Hybrid"]}
-          asDropdown={false}
-        />
-      </FilterSideModal>
+      <AnimatedSidebar
+        title="Filter"
+        isOpen={filterOpen}
+        onClose={() => setFilterOpen(false)}
+      >
+        <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
+          <TableOfOperation
+            title="Job Type"
+            options={["Full-time", "Part-time", "Contract"]}
+            asDropdown={false}
+          />
+          <TableOfOperation
+            title="Experience Level"
+            options={["Entry Level", "Mid Level", "Senior Level"]}
+            asDropdown={false}
+          />
+          <TableOfOperation
+            title="Location"
+            options={["Remote", "On-site", "Hybrid"]}
+            asDropdown={false}
+          />
+        </div>
+
+        {/* Footer */}
+        <div className="p-4 border-t border-border flex gap-2 justify-end">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setFilterOpen(false)}
+          >
+            Close
+          </Button>
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => setFilterOpen(false)}
+          >
+            Apply
+          </Button>
+        </div>
+      </AnimatedSidebar>
     </div>
   );
 }

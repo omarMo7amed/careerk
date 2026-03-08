@@ -13,7 +13,7 @@ export function NavigationItems() {
         <Link
           key={item.href}
           href={item.href}
-          className="nav-link text-gray-700 hover:text-primary font-semibold relative"
+          className="nav-link text-text-secondary hover:text-primary font-semibold relative"
         >
           {item.label}
           <span className="absolute -bottom-1 left-1/2 w-0 h-[3px] bg-primary transition-all duration-300 ease-in-out group-hover:w-full -translate-x-1/2 rounded-sm"></span>

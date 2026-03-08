@@ -4,6 +4,7 @@
 import { DashboardHeader } from "@/widgets/dashboard-header";
 
 import { CVManagementContent } from "@/widgets/cv-management";
+import { CVDropZone } from "@/features/upload-cv";
 
 export default function CvManagementPage() {
   return (

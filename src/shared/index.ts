@@ -53,3 +53,5 @@ export { iconMap, colorMap } from "./config/CardConfig";
 export { Loader } from "./ui/Loader";
 export { Empty } from "./ui/Empty";
 export { AnimatedSidebar } from "./ui/AnimatedSidebar";
+export { Toggle } from "./ui/Toggle";
+export { Modal } from "./ui/Modal";

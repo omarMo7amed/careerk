@@ -1,21 +1,38 @@
 "use client";
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { NavigationItems } from "./NavigationItems";
 import NavButtons from "./NavButtons";
 import { Menu, X } from "lucide-react";
+import { cn } from "@/shared";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("theme") || "light";
+    function applyTheme(theme: string) {
+      if (theme === "dark") {
+        setTheme(storedTheme);
+      }
+    }
+
+    applyTheme(storedTheme);
+  }, []);
 
   return (
-    <header className="bg-white shadow-sm min-h-[70px] md:h-[90px] relative">
+    <header
+      className={cn(
+        "bg-bg-surface shadow-sm min-h-[70px] md:h-[90px] relative",
+      )}
+    >
       <div className="container mx-auto px-4 py-4 h-full">
         <div className="flex items-center justify-between h-full">
           <Link href="/" className="flex items-center">
             <Image
-              src="/logo-light.svg"
+              src={theme === "dark" ? "/logo-dark.svg" : "/logo-light.svg"}
               alt="Careerk Logo"
               width={160}
               height={40}
