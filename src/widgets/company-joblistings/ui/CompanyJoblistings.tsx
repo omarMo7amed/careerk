@@ -22,8 +22,8 @@ export function CompanyJoblistings() {
           </div>
           <p className="text-sm text-text-secondary">
             Showing all {jobs.length} jobs (
-            {jobs.filter((j) => j.status === "published").length} active,{" "}
-            {jobs.filter((j) => j.status === "paused").length} paused)
+            {jobs.filter((j) => j.status === "PUBLISHED").length} active,{" "}
+            {jobs.filter((j) => j.status === "PAUSED").length} paused)
           </p>
         </div>
 
@@ -35,7 +35,7 @@ export function CompanyJoblistings() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2  gap-4">
         {jobs.map((job) => (
           <JobPostCard key={job.id} job={job} onDelete={handleDelete} />
         ))}

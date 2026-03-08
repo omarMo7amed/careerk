@@ -1,48 +1,46 @@
-export type Skill = {
+export interface JobSkill {
+  skillId: string;
+  name: string;
+}
+export type Company = {
   id: string;
   name: string;
-  category: string;
+  logoUrl: string | null;
 };
 
-export type EmploymentType =
-  | "full_time"
-  | "part_time"
-  | "contract"
-  | "temporary"
-  | "internship";
+export type JobType =
+  | "FULL_TIME"
+  | "PART_TIME"
+  | "CONTRACT"
+  | "FREELANCE"
+  | "INTERNSHIP";
 
-export type WorkArrangement = "remote" | "hybrid" | "onsite";
+export type WorkPreference = "ONSITE" | "REMOTE" | "HYBRID" | "ANY";
 
 export type ExperienceLevel =
-  | "entry"
-  | "junior"
-  | "mid"
-  | "senior"
-  | "lead"
-  | "executive";
+  | "ENTRY"
+  | "JUNIOR"
+  | "MID"
+  | "SENIOR"
+  | "LEAD"
+  | "MANAGER";
 
-export type JobStatus = "draft" | "published" | "paused" | "closed" | "filled";
-
+export type JobStatus = "DRAFT" | "PUBLISHED" | "PAUSED" | "CLOSED";
 export interface CompanyJob {
   id: string;
-  companyId: string;
   title: string;
   description: string;
-  requirements: string;
-  responsibilities: string;
-  employmentType: EmploymentType;
-  workArrangement: WorkArrangement;
-  skills: Skill[];
-  location: string;
-  minSalary: number | null;
-  maxSalary: number | null;
+  requirements: string | null;
+  responsibilities: string | null;
+  location: string | null;
+  salaryMin: number | null;
+  salaryMax: number | null;
+  jobType: JobType;
+  workPreference: WorkPreference;
   experienceLevel: ExperienceLevel;
-  applicationDeadline: string;
   status: JobStatus;
-  applicationsCount: number;
-  viewsCount: number;
-  is_featured: boolean | null;
-  created_at: string | null;
-  updated_at: string | null;
-  published_at: string | null;
+  deadline: string | null;
+  publishedAt: string | null;
+  company: Company;
+  skills: JobSkill[];
 }

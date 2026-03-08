@@ -1,7 +1,12 @@
 "use client";
-import { deleteJob } from "@/entities/company-job";
+import {
+  deleteJob,
+  jobTypeLabels,
+  workPreferenceLabels,
+} from "@/entities/company-job";
 import { toggleJobStatus } from "@/entities/company-job";
 import { CompanyJob } from "@/entities/company-job";
+import { JobStatusLabels } from "@/entities/company-job/lib/labelMap";
 import { Badge, Button, ConfirmationModal } from "@/shared";
 import { capitalizeFirstLetter } from "@/shared";
 import { Card } from "@/shared";
@@ -11,6 +16,7 @@ import { useState } from "react";
 
 type JobPostCardProps = {
   job: CompanyJob;
+
   onDelete?: (id: string) => void;
 };
 
@@ -28,10 +34,10 @@ export function JobPostCard({ job, onDelete }: JobPostCardProps) {
     title,
     skills,
     location,
-    workArrangement,
-    employmentType,
+    workPreference,
+    jobType,
     status,
-    applicationsCount,
+    // applicationsCount,
   } = job;
 
   function handleConfirmDelete() {
@@ -53,28 +59,28 @@ export function JobPostCard({ job, onDelete }: JobPostCardProps) {
                 <h4 className="text-lg font-semibold">{title}</h4>
 
                 <Badge
-                  variant={status === "published" ? "active" : "pause"}
+                  variant={status === "PUBLISHED" ? "active" : "pause"}
                   className="rounded-lg shadow-xs"
                 >
-                  {capitalizeFirstLetter(status)}
+                  {JobStatusLabels[job.status]}
                 </Badge>
               </div>
 
               <p className="text-sm text-text-secondary mb-3">
-                {capitalizeFirstLetter(workArrangement)} •{" "}
-                {capitalizeFirstLetter(location)} •{" "}
-                {capitalizeFirstLetter(employmentType)}
+                {workPreferenceLabels[workPreference]} •{" "}
+                {location && `${capitalizeFirstLetter(location)} • `}
+                {jobTypeLabels[jobType]}
               </p>
 
-              <div className="flex items-center gap-1 text-sm text-text-secondary mb-3">
+              {/* <div className="flex items-center gap-1 text-sm text-text-secondary mb-3">
                 <Users className="w-4 h-4" />
                 <span>{applicationsCount} applicants</span>
-              </div>
+              </div> */}
 
               <div className="flex flex-wrap gap-2">
                 {skills.map((skill) => (
                   <Badge
-                    key={skill.id}
+                    key={skill.skillId}
                     className="text-xs font-normal border-none rounded-lg shadow-xs"
                   >
                     {capitalizeFirstLetter(skill.name)}
@@ -85,12 +91,18 @@ export function JobPostCard({ job, onDelete }: JobPostCardProps) {
           </Link>
 
           <div className="flex flex-wrap gap-2 pt-2 border-t border-border/50">
-            <Button size="sm" variant="ghost" className="gap-2">
-              <Users className="w-4 h-4" />
-              View Applications
-            </Button>
+            <Link href={`./job-listings/applications?jobId=${id}`}>
+              <Button
+                size="sm"
+                variant="ghost"
+                className="text-foreground gap-2"
+              >
+                <Users className="w-4 h-4" />
+                View Applications
+              </Button>
+            </Link>
 
-            {cardStatus === "published" ? (
+            {cardStatus === "PUBLISHED" ? (
               <Button
                 size="sm"
                 variant="ghost"

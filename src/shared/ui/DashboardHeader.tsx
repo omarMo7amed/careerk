@@ -3,7 +3,7 @@ import { LucideIcon } from "lucide-react";
 type DashboardHeaderProps = {
   Icon: LucideIcon;
   header: string;
-  description: string;
+  description?: string;
 };
 
 export function DashboardHeader({

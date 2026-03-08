@@ -25,33 +25,27 @@ export const jobPostSchema = z
       .min(20, "Requirements must be at least 20 characters")
       .max(5000),
 
-    employmentType: z.string(),
-    workArrangement: z.string(),
+    jobType: z.string(),
+    workPreference: z.string(),
     experienceLevel: z.string(),
 
-    minSalary: salaryField,
-    maxSalary: salaryField,
+    salaryMin: salaryField,
+    salaryMax: salaryField,
 
-    location: z.string().min(2).max(100),
+    location: z.string().optional(),
 
-    applicationDeadline: z
-      .string()
-      .min(1, "Please select a deadline")
-      .refine(
-        (val) => new Date(val) > new Date(),
-        "Deadline must be in the future",
-      ),
+    deadline: z.string().optional(),
 
     skills: z.array(z.string()).min(1, "Please add at least one skill").max(20),
   })
   .refine(
     (data) => {
-      const min = data.minSalary?.trim();
-      const max = data.maxSalary?.trim();
+      const min = data.salaryMin?.trim();
+      const max = data.salaryMax?.trim();
       if (min && max) return Number(min) <= Number(max);
       return true;
     },
-    { message: "Minimum salary cannot exceed maximum", path: ["maxSalary"] },
+    { message: "Minimum salary cannot exceed maximum", path: ["salaryMax"] },
   );
 
 export type JobPostFormData = z.input<typeof jobPostSchema>;

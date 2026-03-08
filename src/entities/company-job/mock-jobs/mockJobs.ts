@@ -2,129 +2,99 @@ import { CompanyJob } from "../types/companyJob";
 
 export const mockJobs: CompanyJob[] = [
   {
-    id: "1",
-    companyId: "1",
-    title: "Senior Frontend Engineer",
+    id: "job_001",
+
+    title: "Senior Frontend Developer",
+
     description:
-      "We are looking for a Senior Frontend Engineer to lead the development of scalable web applications.",
+      "We are looking for a skilled Senior Frontend Developer to join our team and build scalable web applications using modern technologies.",
+
     requirements:
-      "5+ years of experience with React, strong TypeScript skills, and experience with modern frontend tooling.",
+      "5+ years of experience with React, TypeScript, and modern frontend tooling. Strong understanding of state management and performance optimization.",
+
     responsibilities:
-      "Build reusable components, mentor junior developers, and collaborate with product teams.",
-    employmentType: "full_time",
-    workArrangement: "hybrid",
-    skills: [
-      {
-        id: "1",
-        name: "React",
-        category: "Frontend",
-      },
-      {
-        id: "2",
-        name: "TypeScript",
-        category: "Programming Language",
-      },
-      {
-        id: "3",
-        name: "Tailwind CSS",
-        category: "Styling",
-      },
-    ],
+      "Develop and maintain UI components, collaborate with backend teams, review code, and mentor junior developers.",
+
     location: "Cairo, Egypt",
-    minSalary: 25000,
-    maxSalary: 35000,
-    experienceLevel: "senior",
-    applicationDeadline: "2026-03-30",
-    status: "published",
-    applicationsCount: 14,
-    viewsCount: 230,
-    is_featured: true,
-    created_at: "2026-02-01T09:00:00.000Z",
-    updated_at: "2026-02-10T12:00:00.000Z",
-    published_at: "2026-02-02T08:00:00.000Z",
+
+    salaryMin: 25000,
+    salaryMax: 35000,
+
+    jobType: "FULL_TIME",
+    workPreference: "HYBRID",
+    experienceLevel: "SENIOR",
+    status: "PUBLISHED",
+
+    deadline: "2026-06-30",
+    publishedAt: "2026-03-01T10:00:00.000Z",
+
+    company: {
+      id: "company_001",
+      name: "Careerk",
+      logoUrl: null,
+    },
+
+    skills: [
+      { skillId: "skill_001", name: "React" },
+      { skillId: "skill_002", name: "TypeScript" },
+      { skillId: "skill_003", name: "Tailwind CSS" },
+      { skillId: "skill_004", name: "Next.js" },
+    ],
   },
   {
-    id: "2",
-    companyId: "2",
-    title: "Backend Developer (Node.js)",
-    description:
-      "Join our backend team to build scalable APIs and optimize system performance.",
+    id: "job_002",
+    title: "Backend Node.js Developer",
+    description: "Build scalable REST APIs and work with cloud infrastructure.",
     requirements:
-      "3+ years experience with Node.js, PostgreSQL, and REST API design.",
+      "3+ years Node.js experience, PostgreSQL, authentication systems.",
     responsibilities:
-      "Design APIs, improve database performance, and maintain system reliability.",
-    employmentType: "contract",
-    workArrangement: "remote",
+      "Design APIs, manage database schemas, optimize performance.",
+    location: "Toukh, Egypt",
+    salaryMin: 20000,
+    salaryMax: 30000,
+    jobType: "FULL_TIME",
+    workPreference: "REMOTE",
+    experienceLevel: "MID",
+    status: "PUBLISHED",
+    deadline: "2026-07-15",
+    publishedAt: "2026-02-20T10:00:00.000Z",
+    company: {
+      id: "company_001",
+      name: "Careerk",
+      logoUrl: null,
+    },
     skills: [
-      {
-        id: "1",
-        name: "React",
-        category: "Frontend",
-      },
-      {
-        id: "2",
-        name: "TypeScript",
-        category: "Programming Language",
-      },
-      {
-        id: "3",
-        name: "Tailwind CSS",
-        category: "Styling",
-      },
+      { skillId: "skill_005", name: "Node.js" },
+      { skillId: "skill_006", name: "PostgreSQL" },
+      { skillId: "skill_007", name: "Docker" },
     ],
-    location: "Cairo, Egypt",
-    minSalary: 25000,
-    maxSalary: 35000,
-    experienceLevel: "senior",
-    applicationDeadline: "2026-03-30",
-    status: "draft",
-    applicationsCount: 0,
-    viewsCount: 45,
-    is_featured: false,
-    created_at: "2026-02-15T10:30:00.000Z",
-    updated_at: "2026-02-15T10:30:00.000Z",
-    published_at: null,
   },
   {
-    id: "3",
-    companyId: "3",
-    title: "Junior UI/UX Designer",
-    description:
-      "We are hiring a Junior UI/UX Designer to support product design and user research.",
+    id: "job_003",
+    title: "Backend Node.js Developer",
+    description: "Build scalable REST APIs and work with cloud infrastructure.",
     requirements:
-      "1+ year experience with Figma and strong understanding of user-centered design.",
+      "3+ years Node.js experience, PostgreSQL, authentication systems.",
     responsibilities:
-      "Create wireframes, prototypes, and assist in usability testing.",
-    employmentType: "full_time",
-    workArrangement: "onsite",
+      "Design APIs, manage database schemas, optimize performance.",
+    location: null,
+    salaryMin: null,
+    salaryMax: null,
+    jobType: "FULL_TIME",
+    workPreference: "REMOTE",
+    experienceLevel: "MID",
+    status: "PUBLISHED",
+    deadline: null,
+    publishedAt: "2026-02-20T10:00:00.000Z",
+    company: {
+      id: "company_001",
+      name: "Careerk",
+      logoUrl: null,
+    },
     skills: [
-      {
-        id: "1",
-        name: "React",
-        category: "Frontend",
-      },
-      {
-        id: "2",
-        name: "TypeScript",
-        category: "Programming Language",
-      },
-      {
-        id: "3",
-        name: "Tailwind CSS",
-        category: "Styling",
-      },
+      { skillId: "skill_005", name: "Node.js" },
+      { skillId: "skill_006", name: "PostgreSQL" },
+      { skillId: "skill_007", name: "Docker" },
     ],
-    location: "Alexandria, Egypt",
-    minSalary: 12000,
-    maxSalary: 16000,
-    experienceLevel: "junior",
-    applicationDeadline: "2026-04-15",
-    status: "paused",
-    applicationsCount: 7,
-    viewsCount: 98,
-    is_featured: false,
-    created_at: "2026-01-20T11:00:00.000Z",
-    updated_at: "2026-02-05T09:30:00.000Z",
-    published_at: "2026-01-21T08:00:00.000Z",
   },
 ];
