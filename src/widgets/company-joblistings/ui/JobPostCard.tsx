@@ -16,6 +16,7 @@ import { useState } from "react";
 
 type JobPostCardProps = {
   job: CompanyJob;
+
   onDelete?: (id: string) => void;
 };
 
@@ -90,10 +91,16 @@ export function JobPostCard({ job, onDelete }: JobPostCardProps) {
           </Link>
 
           <div className="flex flex-wrap gap-2 pt-2 border-t border-border/50">
-            <Button size="sm" variant="ghost" className="gap-2">
-              <Users className="w-4 h-4" />
-              View Applications
-            </Button>
+            <Link href={`./job-listings/applications?jobId=${id}`}>
+              <Button
+                size="sm"
+                variant="ghost"
+                className="text-foreground gap-2"
+              >
+                <Users className="w-4 h-4" />
+                View Applications
+              </Button>
+            </Link>
 
             {cardStatus === "PUBLISHED" ? (
               <Button
