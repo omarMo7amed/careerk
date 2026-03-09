@@ -22,6 +22,7 @@ import {
 import { MapPin, Sparkles } from "lucide-react";
 import { useCandidatesQuery } from "@/entities/job-seeker";
 import { getScoreColor } from "../lib/getScoreColor";
+import { JobStatus } from "@/entities/company-job/types/companyJob";
 
 interface ViewJobPostLayoutProps {
   jobPost: CompanyJob;
@@ -39,6 +40,7 @@ export function ViewJobPostLayout({ jobPost }: ViewJobPostLayoutProps) {
       jobType: data.jobType as JobType,
       workPreference: data.workPreference as WorkPreference,
       experienceLevel: data.experienceLevel as ExperienceLevel,
+      status: data.status as JobStatus,
       salaryMin: data.salaryMin ? Number(data.salaryMin) : null,
       salaryMax: data.salaryMax ? Number(data.salaryMax) : null,
       skills: data.skills.map((name, i) => ({
@@ -47,6 +49,7 @@ export function ViewJobPostLayout({ jobPost }: ViewJobPostLayoutProps) {
       })),
       publishedAt: new Date().toISOString(),
     };
+    console.log("edit", updated);
     updateJob(jobPost.id, updated);
     setIsEditingJob(false);
   }

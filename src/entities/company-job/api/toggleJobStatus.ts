@@ -4,7 +4,7 @@ export function toggleJobStatus(id: string) {
   let job = getJob(id);
   const newStatus = job.status === "PUBLISHED" ? "PAUSED" : "PUBLISHED";
   job = { ...job, status: newStatus };
-  console.log(job.status);
+  console.log(newStatus);
 
   return newStatus;
 }
