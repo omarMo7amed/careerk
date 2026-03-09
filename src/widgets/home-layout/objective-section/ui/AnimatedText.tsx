@@ -1,8 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ANIMATION_CONFIG } from "../lib/constants";
-import type { AnimatedTextProps } from "../model/types";
+import { ANIMATION_CONFIG } from "../config/config";
+import type { AnimatedTextProps } from "../types/types";
 import { getCharOpacity } from "../lib/getCharOpacity";
 
 export function AnimatedText({
@@ -14,30 +13,24 @@ export function AnimatedText({
 
   return (
     <div
-      className="max-w-4xl mx-auto text-left transition-all duration-500 ease-out"
+      className="max-w-4xl mx-auto text-left"
       style={{
         transform: `translateY(${textTranslateY}%)`,
         opacity,
+        transition: `opacity ${ANIMATION_CONFIG.TRANSITION_DURATION}s ${ANIMATION_CONFIG.TRANSITION_EASE}, transform ${ANIMATION_CONFIG.TRANSITION_DURATION}s ${ANIMATION_CONFIG.TRANSITION_EASE}`,
       }}
     >
       <p className="text-[24px] leading-[1.4] font-medium tracking-tight sm:text-[36px] md:text-[44px]">
         {text.split("").map((char, i) => {
           const distance = i - visibleCharCount;
-          const opacity = getCharOpacity(distance);
-
           return (
-            <motion.span
+            <span
               key={i}
               className="inline-block"
-              initial={{ opacity: 0 }}
-              animate={{ opacity }}
-              transition={{
-                duration: ANIMATION_CONFIG.TRANSITION_DURATION,
-                ease: ANIMATION_CONFIG.TRANSITION_EASE,
-              }}
+              style={{ opacity: getCharOpacity(distance) }}
             >
               {char === " " ? "\u00A0" : char}
-            </motion.span>
+            </span>
           );
         })}
       </p>

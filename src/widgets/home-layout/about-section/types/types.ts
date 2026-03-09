@@ -7,12 +7,6 @@ export interface Benefit {
   description: string;
 }
 
-export interface ActionButton {
-  label: string;
-  variant?: "primary" | "outline" | "secondary";
-  size?: "sm" | "md" | "lg";
-}
-
 export interface SectionImageProps {
   src: string;
   alt: string;
@@ -29,17 +23,9 @@ export interface AboutSectionLayoutProps {
   heading: ReactNode;
   description: string;
   benefits: Benefit[];
-  primaryButton: {
-    label: string;
-    onClick?: () => void;
-  };
-  secondaryButton?: {
-    label: string;
-    variant?: "outline" | "secondary";
-    onClick?: () => void;
-  };
   imageSrc: string;
   imageAlt: string;
   imagePosition?: "left" | "right";
   zIndex?: string;
+  children?: ReactNode;
 }

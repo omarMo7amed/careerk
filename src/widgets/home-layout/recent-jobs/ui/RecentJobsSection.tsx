@@ -19,7 +19,6 @@ export default function RecentJobsSection() {
   return (
     <section className="py-24 relative overflow-hidden bg-background">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Section Title */}
         <motion.div
           ref={jobsSectionRef}
           initial={{ opacity: 0, y: 50 }}
@@ -33,15 +32,11 @@ export default function RecentJobsSection() {
         </motion.div>
       </div>
 
-      {/* Job Slider - Full Width */}
       <div>
         <JobSlider jobs={sliderJobs} isInView={isJobsInView} delay={0.4} />
       </div>
 
-      <ViewAllButton
-        jobsLength={(jobs ?? []).length}
-        isJobsInView={isJobsInView}
-      />
+      <ViewAllButton isJobsInView={isJobsInView} />
     </section>
   );
 }

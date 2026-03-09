@@ -1,10 +1,9 @@
-import { Button } from "@/shared";
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 export default function ViewAllButton({
-  jobsLength,
   isJobsInView,
 }: {
-  jobsLength: number;
   isJobsInView: boolean;
 }) {
   return (
@@ -15,14 +14,13 @@ export default function ViewAllButton({
         transition={{ duration: 0.8, delay: 0.6 }}
         className="mt-12 text-center"
       >
-        <Button
-          variant="primary"
-          onClick={() => {}}
-          size="lg"
-          className="rounded-full"
+        <Link
+          className="bg-bg-primary border border-border w-48 inline-flex items-center gap-2 justify-center rounded-full  py-4 text-lg font-medium text-foreground hover:bg-bg-primary/80 transition-colors duration-300"
+          href="/jobs"
         >
-          View All {jobsLength * 10}+ Jobs
-        </Button>
+          View All Jobs
+          <ArrowRight className="ml-2 w-4 h-4" />
+        </Link>
       </motion.div>
     </div>
   );

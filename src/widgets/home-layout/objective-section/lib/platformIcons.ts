@@ -1,4 +1,4 @@
-import type { PlatformIcon } from "../model/types";
+import type { PlatformIcon } from "../types/types";
 
 export const icons: PlatformIcon[] = [
   {

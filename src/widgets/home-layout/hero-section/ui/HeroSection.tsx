@@ -3,7 +3,7 @@ import HeroVisual from "./HeroVisual";
 
 export function HeroSection() {
   return (
-    <section className="bg-linear-to-br from-blue-50 via-white to-blue-50/30 min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)] text-foreground relative overflow-hidden">
+    <section className="bg-linear-to-br from-background via-bg-surface to-background min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)] text-foreground relative overflow-hidden">
       <div className="absolute top-20 -left-20 w-64 h-64 md:w-96 md:h-96 bg-primary/10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-10 -right-20 w-80 h-80 md:w-[500px] md:h-[500px] bg-primary/5 rounded-full blur-3xl"></div>
       <div className="container mx-auto px-4 py-10 md:py-16 lg:py-20 relative z-10">

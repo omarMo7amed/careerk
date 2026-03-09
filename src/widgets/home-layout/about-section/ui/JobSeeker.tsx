@@ -1,5 +1,6 @@
 import { AboutSectionLayout } from "./AboutSectionLayout";
 import { jobSeekerBenefits } from "../lib/jobSeekerBenefits";
+import { UploadCvButton } from "@/features/upload-cv";
 
 export default function JobSeeker() {
   return (
@@ -13,11 +14,12 @@ export default function JobSeeker() {
       }
       description="Stop jumping between multiple job boards. CareerK brings all opportunities to you and helps you stand out with personalized recommendations."
       benefits={jobSeekerBenefits}
-      primaryButton={{ label: "Upload Your CV" }}
       imageSrc="/about/job-seeker-illustration.webp"
       imageAlt="" //here don't write imagae alt for accessibility
       imagePosition="left"
       zIndex="z-10"
-    />
+    >
+      <UploadCvButton />
+    </AboutSectionLayout>
   );
 }

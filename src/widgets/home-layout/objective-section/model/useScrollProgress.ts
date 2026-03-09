@@ -1,14 +1,18 @@
-import { useState, useEffect, useRef } from "react";
-import { SCROLL_CONFIG } from "../lib/constants";
-import type { ScrollProgressReturn } from "./types";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { SCROLL_CONFIG } from "../config/config";
+import type { ScrollProgressReturn } from "../types/types";
 
 export function useScrollProgress(textLength: number): ScrollProgressReturn {
   const [visibleCharCount, setVisibleCharCount] = useState(0);
   const [textTranslateY, setTextTranslateY] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
+  const handleScroll = useCallback(() => {
+    if (rafRef.current !== null) return;
+
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null;
       if (!sectionRef.current) return;
 
       const sectionTop = sectionRef.current.offsetTop;
@@ -39,13 +43,18 @@ export function useScrollProgress(textLength: number): ScrollProgressReturn {
       } else {
         setTextTranslateY(0);
       }
-    };
+    });
+  }, [textLength]);
 
-    window.addEventListener("scroll", handleScroll);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [textLength]);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    };
+  }, [handleScroll]);
 
   return [{ visibleCharCount, textTranslateY }, sectionRef];
 }

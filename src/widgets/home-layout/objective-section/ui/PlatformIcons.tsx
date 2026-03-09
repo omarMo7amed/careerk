@@ -1,14 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { icons } from "../lib/platformIcons";
 
 export function PlatformIcons() {
   return (
-    <div className="absolute inset-0 h-[600px] overflow-hidden top-1/2">
+    <div className="hidden md:block absolute inset-0 h-[600px] overflow-hidden top-1/2">
       {icons.map(({ id, type, left, top, z, svg, text }) => (
-        <motion.div
+        <div
           key={`${id}-${left}-${top}`}
           className="absolute"
           style={{
@@ -16,8 +15,8 @@ export function PlatformIcons() {
             top,
             zIndex: 10,
             opacity: 0.6,
+            scale: String(z),
           }}
-          initial={{ x: "0%", y: "0%", scale: z }}
         >
           {type === "svg" ? (
             <Image
@@ -32,7 +31,7 @@ export function PlatformIcons() {
               {text}
             </div>
           )}
-        </motion.div>
+        </div>
       ))}
     </div>
   );

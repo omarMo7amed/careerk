@@ -25,7 +25,7 @@ export function Header() {
   return (
     <header
       className={cn(
-        "bg-bg-surface shadow-sm min-h-[70px] md:h-[90px] relative",
+        "bg-bg-surface min-h-[70px] md:h-[90px] relative border-b border-border",
       )}
     >
       <div className="container mx-auto px-4 py-4 h-full">

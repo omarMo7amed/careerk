@@ -17,6 +17,7 @@
 /* Animation classes */
 .float-organic {
   animation: float-organic 20s ease-in-out infinite;
+  will-change: transform;
 }
 
 /* Hover tilt effect */

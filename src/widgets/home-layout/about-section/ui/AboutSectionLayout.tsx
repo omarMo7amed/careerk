@@ -1,4 +1,4 @@
-import { Button, cn } from "@/shared";
+import {  cn } from "@/shared";
 import { BenefitCard } from "./BenefitCard";
 import { SectionBadge } from "./SectionBadge";
 import { SectionImage } from "./SectionImage";
@@ -10,12 +10,12 @@ export function AboutSectionLayout({
   heading,
   description,
   benefits,
-  primaryButton,
-  secondaryButton,
+
   imageSrc,
   imageAlt,
   imagePosition = "right",
   zIndex = "z-10",
+  children,
 }: AboutSectionLayoutProps) {
   const imageOrderClass =
     imagePosition === "left" ? "order-1 md:order-1" : "order-1 md:order-2";
@@ -50,22 +50,7 @@ export function AboutSectionLayout({
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-2">
-              <Button
-                size="md"
-                variant="primary"
-                onClick={primaryButton.onClick}
-              >
-                {primaryButton.label}
-              </Button>
-              {secondaryButton && (
-                <Button
-                  size="md"
-                  variant={secondaryButton.variant || "outline"}
-                  onClick={secondaryButton.onClick}
-                >
-                  {secondaryButton.label}
-                </Button>
-              )}
+              {children}
             </div>
           </div>
         </div>

@@ -3,3 +3,4 @@ export { CVDropZone } from "./ui/CvDropZone";
 export { CVPreviewModal } from "./ui/CVPreviewModal";
 export { CVPendingBanner } from "./ui/CVPendingBanner";
 export type { CVUploadState, CVFileStatus } from "./types/uploadCVReducer";
+export { UploadCvButton } from "./components/UploadCvButton";
