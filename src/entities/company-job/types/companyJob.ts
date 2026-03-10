@@ -2,6 +2,7 @@ export interface JobSkill {
   skillId: string;
   name: string;
 }
+
 export type Company = {
   id: string;
   name: string;

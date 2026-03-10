@@ -17,27 +17,25 @@ export function SearchSuggestions({
         <div
           role="listbox"
           aria-label="Search suggestions"
-          className="rounded-md bg-white border border-border shadow-lg overflow-hidden"
+          className="rounded-md bg-bg-surface border border-border shadow-lg overflow-hidden"
         >
           {isLoading && !suggestions.length && (
-            <div className="flex items-center gap-2 p-3 text-sm text-muted-foreground">
-              <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-muted-foreground border-t-transparent" />
+            <div className="flex items-center gap-2 p-3 text-sm text-text-muted">
+              <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-text-muted border-t-transparent" />
               Searching…
             </div>
           )}
 
           {error && (
-            <div className="p-3 text-sm text-destructive">{error.message}</div>
+            <div className="p-3 text-sm text-error">{error.message}</div>
           )}
 
           {!isLoading && !error && query && !suggestions.length && (
-            <div className="p-3 text-sm text-muted-foreground">
-              No results found
-            </div>
+            <div className="p-3 text-sm text-text-muted">No results found</div>
           )}
 
           {suggestions.length > 0 && (
-            <ul className="divide-y divide-border max-h-72 overflow-y-auto bg-white">
+            <ul className="divide-y divide-border max-h-72 overflow-y-auto bg-bg-surface">
               {suggestions.map((item, i) => (
                 <li
                   key={item.id}
@@ -47,7 +45,7 @@ export function SearchSuggestions({
                   onPointerLeave={() => onHighlight(-1)}
                   onClick={() => onSelect(item)}
                   className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition-colors ${
-                    highlighted === i ? "bg-accent/60" : "hover:bg-accent/30"
+                    highlighted === i ? "bg-bg-muted" : "hover:bg-bg-muted/50"
                   }`}
                 >
                   {/* We will implement it */}

@@ -15,7 +15,7 @@ export function TableOfOperation({
   options,
   selected: controlledSelected,
   onChange,
-  asDropdown = true,
+  asDropdown = false,
 }: TableOfOperationProps) {
   const { normalized, selected, toggle, clearAll, selectAll } =
     useTableOfOperation({

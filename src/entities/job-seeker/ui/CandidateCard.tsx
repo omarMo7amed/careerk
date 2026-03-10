@@ -35,6 +35,7 @@ export function CandidateCard({
     cvMatchPercentage,
     cvUrl,
     skills,
+    yearsOfExperience, //we will think about it
   } = candidate;
 
   return (

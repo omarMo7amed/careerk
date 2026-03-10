@@ -5,7 +5,7 @@ import Link from "next/link";
 import GoogleIcon from "../../../shared/ui/GoogleIcon";
 import { Button } from "@/shared";
 import { Divider } from "@/shared/ui/Divider";
-import Tabs from "@/shared/ui/Tabs";
+import { Tabs } from "@/shared/ui/Tabs";
 import JobSeekerForm from "./JobSeekerForm";
 import CompanyForm from "./CompanyForm";
 

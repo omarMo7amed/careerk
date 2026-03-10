@@ -13,7 +13,7 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-black/65" />
 
       <div className="relative z-10 max-w-7xl mx-auto p-4 text-center">
-        <h1 className="text-4xl font-bold text-white mb-4">Find Top Talent</h1>
+        <h1 className="text-white mb-4">Find Top Talent</h1>
         <p className="text-lg text-white mb-8">
           Search and connect with the best candidates for your job openings.
         </p>

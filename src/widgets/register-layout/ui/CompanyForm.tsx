@@ -3,7 +3,7 @@
 import { Button, Input } from "@/shared";
 import { useActionState, useState } from "react";
 import { CompanyData, RegisterState } from "../types/RegisterFormType";
-import Select from "@/shared/ui/Select";
+import { Select } from "@/shared/ui/Select";
 import { useFormStatus } from "react-dom";
 import { registerCompany } from "../lib/registerValidation";
 

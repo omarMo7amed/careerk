@@ -28,6 +28,7 @@ export const allJobSeekers: Candidate[] = [
     githubUrl: "https://github.com/aminahassan",
     avatarUrl: null,
     experienceLevel: "Mid Level",
+    yearsOfExperience: 4,
     cvUrl: null,
   },
   {
@@ -57,6 +58,7 @@ export const allJobSeekers: Candidate[] = [
     githubUrl: "https://github.com/johncarter-dev",
     avatarUrl: null,
     experienceLevel: "Senior Level",
+    yearsOfExperience: 8,
     cvUrl: null,
   },
   {
@@ -87,6 +89,7 @@ export const allJobSeekers: Candidate[] = [
     githubUrl: "https://github.com/marialopez",
     avatarUrl: null,
     experienceLevel: "Entry Level",
+    yearsOfExperience: 2,
     cvUrl: null,
   },
   {
@@ -117,6 +120,7 @@ export const allJobSeekers: Candidate[] = [
     githubUrl: "https://github.com/chenwei-ml",
     avatarUrl: null,
     experienceLevel: "Lead",
+    yearsOfExperience: 10,
     cvUrl: null,
   },
   {
@@ -147,6 +151,7 @@ export const allJobSeekers: Candidate[] = [
     githubUrl: "https://github.com/samuelokoye",
     avatarUrl: null,
     experienceLevel: "Mid Level",
+    yearsOfExperience: 5,
     cvUrl: null,
   },
   {
@@ -176,6 +181,7 @@ export const allJobSeekers: Candidate[] = [
     githubUrl: null,
     avatarUrl: null,
     experienceLevel: "Senior Level",
+    yearsOfExperience: 10,
     cvUrl: null,
   },
   {
@@ -205,6 +211,7 @@ export const allJobSeekers: Candidate[] = [
     githubUrl: "https://github.com/davidkimdev",
     avatarUrl: null,
     experienceLevel: "Entry Level",
+    yearsOfExperience: 1,
     cvUrl: null,
   },
   {
@@ -235,6 +242,7 @@ export const allJobSeekers: Candidate[] = [
     githubUrl: null,
     avatarUrl: null,
     experienceLevel: "Senior Level",
+    yearsOfExperience: 10,
     cvUrl: null,
   },
   {
@@ -264,6 +272,7 @@ export const allJobSeekers: Candidate[] = [
     githubUrl: null,
     avatarUrl: null,
     experienceLevel: "Lead",
+    yearsOfExperience: 10,
     cvUrl: null,
   },
   {
@@ -293,6 +302,7 @@ export const allJobSeekers: Candidate[] = [
     githubUrl: null,
     avatarUrl: null,
     experienceLevel: "Executive",
+    yearsOfExperience: 15,
     cvUrl: null,
   },
   {
@@ -322,6 +332,7 @@ export const allJobSeekers: Candidate[] = [
     githubUrl: "https://github.com/mateosantosqa",
     avatarUrl: null,
     experienceLevel: "Mid Level",
+    yearsOfExperience: 5,
     cvUrl: null,
   },
   {
@@ -351,6 +362,7 @@ export const allJobSeekers: Candidate[] = [
     githubUrl: "https://github.com/aishak",
     avatarUrl: null,
     experienceLevel: "Senior Level",
+    yearsOfExperience: 10,
     cvUrl: null,
   },
 ];

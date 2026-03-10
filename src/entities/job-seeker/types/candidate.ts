@@ -24,4 +24,5 @@ export type Candidate = Pick<
     | "cvScore" //missed from the database
     | "cvMatchPercentage" //missed from the database
     | "cvUrl" //missed from the database
+    | "yearsOfExperience"
   >;
