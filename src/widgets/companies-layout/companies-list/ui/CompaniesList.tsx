@@ -14,6 +14,7 @@ export function CompaniesList() {
   const router = useRouter();
 
   const listRef = useRef<HTMLDivElement>(null);
+  const hasNavigated = useRef(false);
 
   const page = Number(searchParams.get("page") || "1");
 
@@ -25,13 +26,16 @@ export function CompaniesList() {
   const totalPages = Math.ceil(CompaniesListing.length / 12);
 
   function handlePageChange(newPage: number) {
+    hasNavigated.current = true;
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", newPage.toString());
     router.push(`?${params.toString()}`, { scroll: false });
   }
 
   useEffect(() => {
-    listRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (hasNavigated.current) {
+      listRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   }, [page]);
 
   if (isLoading) {
