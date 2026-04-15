@@ -5,7 +5,7 @@ import Link from "next/link";
 import GoogleIcon from "@/shared/ui/GoogleIcon";
 import { Button } from "@/shared";
 import { Divider } from "@/shared/ui/Divider";
-import Tabs from "@/shared/ui/Tabs";
+import { Tabs } from "@/shared";
 import { LoginFormContent } from "./LoginFormContent";
 
 export function LoginForm() {

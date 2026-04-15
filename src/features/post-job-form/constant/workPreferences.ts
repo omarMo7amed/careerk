@@ -1,6 +1,8 @@
-export const workPreferences = [
-  { label: "On-site", value: "ONSITE" },
-  { label: "Remote", value: "REMOTE" },
-  { label: "Hybrid", value: "HYBRID" },
-  { label: "Any", value: "ANY" },
-];
+import { workPreferenceLabels } from "@/entities/company-job";
+
+export const workPreferencesOptions = Object.entries(workPreferenceLabels).map(
+  ([value, label]) => ({
+    value,
+    label,
+  }),
+);

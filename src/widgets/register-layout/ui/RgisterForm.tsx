@@ -5,7 +5,11 @@ import Link from "next/link";
 import GoogleIcon from "../../../shared/ui/GoogleIcon";
 import { Button } from "@/shared";
 import { Divider } from "@/shared/ui/Divider";
+<<<<<<< HEAD
 import { Tabs } from "@/shared/ui/Tabs";
+=======
+import { Tabs } from "@/shared";
+>>>>>>> aad304f (Add Company Profile)
 import JobSeekerForm from "./JobSeekerForm";
 import CompanyForm from "./CompanyForm";
 

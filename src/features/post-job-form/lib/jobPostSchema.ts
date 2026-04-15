@@ -25,9 +25,18 @@ export const jobPostSchema = z
       .min(20, "Requirements must be at least 20 characters")
       .max(5000),
 
-    jobType: z.string(),
-    workPreference: z.string(),
-    experienceLevel: z.string(),
+    jobType: z
+      .enum(["FULL_TIME", "PART_TIME", "CONTRACT", "FREELANCE", "INTERNSHIP"])
+      .default("FULL_TIME"),
+
+    workPreference: z
+      .enum(["ONSITE", "REMOTE", "HYBRID", "ANY"])
+      .default("ONSITE"),
+
+    experienceLevel: z
+      .enum(["ENTRY", "JUNIOR", "MID", "SENIOR", "LEAD", "MANAGER"])
+      .default("ENTRY"),
+    status: z.enum(["DRAFT", "PUBLISHED", "PAUSED", "CLOSED"]).default("DRAFT"),
 
     salaryMin: salaryField,
     salaryMax: salaryField,

@@ -6,10 +6,11 @@ import {
 } from "react-hook-form";
 import { Input, Label, Select } from "@/shared";
 import { FieldError } from "@/shared/ui/FieldError";
-import { jobTypes } from "../constant/jobTypes";
-import { workPreferences } from "../constant/workPreferences";
-import { experienceLevels } from "../constant/experienceLevels";
 import { JobPostFormData } from "../lib/jobPostSchema";
+import { jobStatusOptions } from "../constant/jobStatusOptions";
+import { jobTypesOptions } from "../constant/jobTypes";
+import { workPreferencesOptions } from "../constant/workPreferences";
+import { experienceLevelsOptions } from "../constant/experienceLevels";
 
 type FormFieldsProps = {
   register: UseFormRegister<JobPostFormData>;
@@ -55,14 +56,14 @@ export function FormFields({ register, control, errors }: FormFieldsProps) {
         <FieldError message={errors.requirements?.message} />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Controller
           name="jobType"
           control={control}
           render={({ field }) => (
             <Select
               label="Job Type"
-              options={jobTypes}
+              options={jobTypesOptions}
               className="bg-background border-border"
               {...field}
             />
@@ -74,7 +75,7 @@ export function FormFields({ register, control, errors }: FormFieldsProps) {
           render={({ field }) => (
             <Select
               label="Work Preference"
-              options={workPreferences}
+              options={workPreferencesOptions}
               className="bg-background border-border"
               {...field}
             />
@@ -86,7 +87,20 @@ export function FormFields({ register, control, errors }: FormFieldsProps) {
           render={({ field }) => (
             <Select
               label="Experience Level"
-              options={experienceLevels}
+              options={experienceLevelsOptions}
+              className="bg-background border-border"
+              {...field}
+            />
+          )}
+        />
+
+        <Controller
+          name="status"
+          control={control}
+          render={({ field }) => (
+            <Select
+              label="Status"
+              options={jobStatusOptions}
               className="bg-background border-border"
               {...field}
             />

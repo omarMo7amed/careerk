@@ -1,8 +1,17 @@
+import { CompanyProfileWidget } from "@/widgets/company-profile";
+
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Profile",
+  description:
+    "View and manage your company profile, including company details, social links, and branding information.",
+};
+
 export default function CompanyProfilePage() {
   return (
     <div>
-      <h1>Company Profile</h1>
-      <p>Company profile management page</p>
+      <CompanyProfileWidget isOwner />
     </div>
   );
 }

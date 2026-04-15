@@ -29,16 +29,7 @@ export function JobPostCard({ job, onDelete }: JobPostCardProps) {
   }
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const {
-    id,
-    title,
-    skills,
-    location,
-    workPreference,
-    jobType,
-    status,
-    // applicationsCount,
-  } = job;
+  const { id, title, skills, location, workPreference, jobType, status } = job;
 
   function handleConfirmDelete() {
     deleteJob(id);
@@ -71,11 +62,6 @@ export function JobPostCard({ job, onDelete }: JobPostCardProps) {
                 {location && `${capitalizeFirstLetter(location)} • `}
                 {jobTypeLabels[jobType]}
               </p>
-
-              {/* <div className="flex items-center gap-1 text-sm text-text-secondary mb-3">
-                <Users className="w-4 h-4" />
-                <span>{applicationsCount} applicants</span>
-              </div> */}
 
               <div className="flex flex-wrap gap-2">
                 {skills.map((skill) => (
