@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/shared";
 import { X } from "lucide-react";
 
 interface FilterSideModalProps {

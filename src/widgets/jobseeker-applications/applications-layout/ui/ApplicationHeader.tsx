@@ -12,8 +12,8 @@ interface ApplicationsHeaderProps {
 export function ApplicationsHeader({ stats }: ApplicationsHeaderProps) {
   return (
     <div className="bg-bg-surface p-4 md:p-8 rounded-lg mb-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-2">My Applications</h1>
-      <p className="text-gray-600 mb-6">
+      <h1 className="text-3xl font-bold text-primary mb-2">My Applications</h1>
+      <p className="text-text-secondary mb-6">
         Track all the jobs you have applied for and stay updated on their
         status.
       </p>

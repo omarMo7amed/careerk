@@ -1,5 +1,4 @@
-import { ApplicationListItem } from "@/entities/application";
-import { StatusConfig } from "../../../../entities/application/config/statusConfig";
+import { ApplicationListItem, StatusConfig } from "@/entities/application";
 import { Badge } from "@/shared";
 
 interface ApplicationCardHeaderProps {
