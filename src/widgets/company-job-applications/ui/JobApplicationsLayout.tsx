@@ -25,7 +25,7 @@ export function JobApplicationsLayout({ jobId }: { jobId?: string }) {
 
   const job = getJob(jobId!);
   return (
-    <div>
+    <div className="flex-1 overflow-y-auto px-8 py-8">
       <div className="mb-8">
         <BackButton />
       </div>

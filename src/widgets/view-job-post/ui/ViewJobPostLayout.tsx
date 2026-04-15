@@ -66,7 +66,7 @@ export function ViewJobPostLayout({ jobPost }: ViewJobPostLayoutProps) {
     .slice(0, 5);
 
   return (
-    <>
+    <div >
       <div>
         <div className="mb-8">
           <BackButton />
@@ -161,6 +161,6 @@ export function ViewJobPostLayout({ jobPost }: ViewJobPostLayoutProps) {
         confirmText="Delete"
         cancelText="Cancel"
       />
-    </>
+    </div>
   );
 }

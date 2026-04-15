@@ -1,12 +1,12 @@
 "use client";
 import { Candidate, CandidateCard, allJobSeekers } from "@/entities/job-seeker";
-import { Button, DashboardHeader, Pagination } from "@/shared";
+import { AnimatedSidebar, Button, DashboardHeader, Pagination } from "@/shared";
 import { Briefcase, SlidersHorizontal } from "lucide-react";
 import { SortSelect } from "./SortSelect";
 import { useState } from "react";
 import { List } from "@/widgets/list";
 import { SearchBar } from "@/features/search";
-import { FilterSideModal } from "@/widgets/filter-sidebar";
+
 import { TableOfOperation } from "@/features/filter";
 
 const PAGE_SIZE = 9;
@@ -70,7 +70,7 @@ export function CandidatesLayout() {
         columnsInSmall={1}
       />
       <Pagination totalPages={totalPages} page={page} onPageChange={setPage} />
-      <FilterSideModal isOpen={filterOpen} onClose={() => setFilterOpen(false)}>
+      <AnimatedSidebar isOpen={filterOpen} onClose={() => setFilterOpen(false)}>
         <TableOfOperation
           title="Experience Level"
           options={["Entry Level", "Mid Level", "Senior Level"]}
@@ -81,7 +81,7 @@ export function CandidatesLayout() {
           options={["Remote", "On-site", "Hybrid"]}
           asDropdown={false}
         />
-      </FilterSideModal>
+      </AnimatedSidebar>
     </div>
   );
 }

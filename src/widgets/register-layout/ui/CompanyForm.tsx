@@ -3,7 +3,11 @@
 import { Button, Input } from "@/shared";
 import { useActionState, useState } from "react";
 import { CompanyData, RegisterState } from "../types/RegisterFormType";
+<<<<<<< HEAD
 import { Select } from "@/shared/ui/Select";
+=======
+import { Select } from "@/shared";
+>>>>>>> aad304f (Add Company Profile)
 import { useFormStatus } from "react-dom";
 import { registerCompany } from "../lib/registerValidation";
 
