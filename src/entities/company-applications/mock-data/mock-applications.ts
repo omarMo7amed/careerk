@@ -9,6 +9,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_001",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-1",
@@ -47,6 +49,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_002",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-2",
@@ -85,6 +89,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_001",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-1",
@@ -122,7 +128,8 @@ export const mockApplications: JobApplication[] = [
     updatedAt: "2025-02-19T11:00:00Z",
     directJob: {
       id: "job_002",
-      title: "Senior Software Engineer",
+      title: "Senior Software Engineer", location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-2",
@@ -160,7 +167,8 @@ export const mockApplications: JobApplication[] = [
     updatedAt: "2025-02-21T14:30:00Z",
     directJob: {
       id: "job_003",
-      title: "Senior Software Engineer",
+      title: "Senior Software Engineer", location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-1",
@@ -199,6 +207,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_003",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-2",
@@ -237,6 +247,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_001",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-1",
@@ -275,6 +287,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_002",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-2",
@@ -313,6 +327,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_001",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-1",
@@ -351,6 +367,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_002",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-2",
@@ -389,6 +407,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_003",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-1",
@@ -427,6 +447,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_003",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-2",
@@ -465,6 +487,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_001",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-1",
@@ -503,6 +527,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_002",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-2",
@@ -541,6 +567,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_001",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-1",
@@ -579,6 +607,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_002",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-2",
@@ -609,82 +639,7 @@ export const mockApplications: JobApplication[] = [
       ],
     },
   },
-  {
-    id: "app-11",
-    status: "PENDING",
-    appliedAt: "2025-02-20T10:00:00Z",
-    updatedAt: "2025-02-21T14:30:00Z",
-    directJob: {
-      id: "job_003",
-      title: "Senior Software Engineer",
-    },
-    jobSeeker: {
-      id: "js-1",
-      firstName: "John",
-      lastName: "Doe",
-      profileImageUrl: "/about/job-seeker-illustration.webp",
-      email: "john@example.com",
-      profile: {
-        title: "Software Engineer",
-        summary: "Experienced software engineer",
-        location: "Cairo, Egypt",
-        yearsOfExperience: 3,
-        availabilityStatus: "Available",
-        workPreference: "REMOTE",
-        expectedSalary: 20000,
-        linkedinUrl: "https://linkedin.com/in/johndoe",
-        githubUrl: "https://github.com/johndoe",
-        cvMatchPercentage: 90,
-        email: "",
-        phone: "00000000000",
-        cvScore: 90,
-        cvUrl: "https://example.com/cv/john.pdf",
-      },
 
-      skills: [
-        { id: "s1", name: "TypeScript", verified: true },
-        { id: "s2", name: "Node.js", verified: true },
-      ],
-    },
-  },
-  {
-    id: "app-12",
-    status: "REVIEWED",
-    appliedAt: "2025-02-18T09:00:00Z",
-    updatedAt: "2025-02-19T11:00:00Z",
-    directJob: {
-      id: "job_003",
-      title: "Senior Software Engineer",
-    },
-    jobSeeker: {
-      id: "js-2",
-      firstName: "Sara",
-      lastName: "Ahmed",
-      profileImageUrl: "/about/job-seeker-illustration.webp",
-      email: "sara@example.com",
-      profile: {
-        title: "Frontend Developer",
-        summary: "React developer",
-        location: "Alexandria, Egypt",
-        yearsOfExperience: 2,
-        availabilityStatus: "Available",
-        workPreference: "HYBRID",
-        expectedSalary: 15000,
-        linkedinUrl: "https://linkedin.com/in/sara",
-        githubUrl: "https://github.com/sara",
-        cvMatchPercentage: 90,
-        email: "",
-        phone: "00000000000",
-        cvScore: 90,
-        cvUrl: "https://example.com/cv/john.pdf",
-      },
-
-      skills: [
-        { id: "s3", name: "React", verified: true },
-        { id: "s4", name: "TypeScript", verified: true },
-      ],
-    },
-  },
   {
     id: "app-13",
     status: "PENDING",
@@ -693,6 +648,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_001",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-1",
@@ -731,6 +688,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_002",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-2",
@@ -769,6 +728,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_001",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-1",
@@ -807,6 +768,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_002",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-2",
@@ -845,6 +808,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_003",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-1",
@@ -883,6 +848,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_003",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-2",
@@ -913,120 +880,7 @@ export const mockApplications: JobApplication[] = [
       ],
     },
   },
-  {
-    id: "app-19",
-    status: "PENDING",
-    appliedAt: "2025-02-20T10:00:00Z",
-    updatedAt: "2025-02-21T14:30:00Z",
-    directJob: {
-      id: "job_001",
-      title: "Senior Software Engineer",
-    },
-    jobSeeker: {
-      id: "js-1",
-      firstName: "John",
-      lastName: "Doe",
-      profileImageUrl: "/about/job-seeker-illustration.webp",
-      email: "john@example.com",
-      profile: {
-        title: "Software Engineer",
-        summary: "Experienced software engineer",
-        location: "Cairo, Egypt",
-        yearsOfExperience: 3,
-        availabilityStatus: "Available",
-        workPreference: "REMOTE",
-        expectedSalary: 20000,
-        linkedinUrl: "https://linkedin.com/in/johndoe",
-        githubUrl: "https://github.com/johndoe",
-        cvMatchPercentage: 90,
-        email: "",
-        phone: "00000000000",
-        cvScore: 90,
-        cvUrl: "https://example.com/cv/john.pdf",
-      },
 
-      skills: [
-        { id: "s1", name: "TypeScript", verified: true },
-        { id: "s2", name: "Node.js", verified: true },
-      ],
-    },
-  },
-  {
-    id: "app-20",
-    status: "REVIEWED",
-    appliedAt: "2025-02-18T09:00:00Z",
-    updatedAt: "2025-02-19T11:00:00Z",
-    directJob: {
-      id: "job_002",
-      title: "Senior Software Engineer",
-    },
-    jobSeeker: {
-      id: "js-2",
-      firstName: "Sara",
-      lastName: "Ahmed",
-      profileImageUrl: "/about/job-seeker-illustration.webp",
-      email: "sara@example.com",
-      profile: {
-        title: "Frontend Developer",
-        summary: "React developer",
-        location: "Alexandria, Egypt",
-        yearsOfExperience: 2,
-        availabilityStatus: "Available",
-        workPreference: "HYBRID",
-        expectedSalary: 15000,
-        linkedinUrl: "https://linkedin.com/in/sara",
-        githubUrl: "https://github.com/sara",
-        cvMatchPercentage: 90,
-        email: "",
-        phone: "00000000000",
-        cvScore: 90,
-        cvUrl: "https://example.com/cv/john.pdf",
-      },
-
-      skills: [
-        { id: "s3", name: "React", verified: true },
-        { id: "s4", name: "TypeScript", verified: true },
-      ],
-    },
-  },
-  {
-    id: "app-21",
-    status: "PENDING",
-    appliedAt: "2025-02-20T10:00:00Z",
-    updatedAt: "2025-02-21T14:30:00Z",
-    directJob: {
-      id: "job_001",
-      title: "Senior Software Engineer",
-    },
-    jobSeeker: {
-      id: "js-1",
-      firstName: "John",
-      lastName: "Doe",
-      profileImageUrl: "/about/job-seeker-illustration.webp",
-      email: "john@example.com",
-      profile: {
-        title: "Software Engineer",
-        summary: "Experienced software engineer",
-        location: "Cairo, Egypt",
-        yearsOfExperience: 3,
-        availabilityStatus: "Available",
-        workPreference: "REMOTE",
-        expectedSalary: 20000,
-        linkedinUrl: "https://linkedin.com/in/johndoe",
-        githubUrl: "https://github.com/johndoe",
-        cvMatchPercentage: 90,
-        email: "",
-        phone: "00000000000",
-        cvScore: 90,
-        cvUrl: "https://example.com/cv/john.pdf",
-      },
-
-      skills: [
-        { id: "s1", name: "TypeScript", verified: true },
-        { id: "s2", name: "Node.js", verified: true },
-      ],
-    },
-  },
   {
     id: "app-22",
     status: "REVIEWED",
@@ -1035,6 +889,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_002",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-2",
@@ -1073,6 +929,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_003",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-1",
@@ -1111,6 +969,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_003",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-2",
@@ -1149,6 +1009,8 @@ export const mockApplications: JobApplication[] = [
     directJob: {
       id: "job_001",
       title: "Senior Software Engineer",
+      location: "Cairo, Egypt",
+      jobType: "FULL_TIME",
     },
     jobSeeker: {
       id: "js-1",
@@ -1176,196 +1038,6 @@ export const mockApplications: JobApplication[] = [
       skills: [
         { id: "s1", name: "TypeScript", verified: true },
         { id: "s2", name: "Node.js", verified: true },
-      ],
-    },
-  },
-  {
-    id: "app-26",
-    status: "REVIEWED",
-    appliedAt: "2025-02-18T09:00:00Z",
-    updatedAt: "2025-02-19T11:00:00Z",
-    directJob: {
-      id: "job_002",
-      title: "Senior Software Engineer",
-    },
-    jobSeeker: {
-      id: "js-2",
-      firstName: "Sara",
-      lastName: "Ahmed",
-      profileImageUrl: "/about/job-seeker-illustration.webp",
-      email: "sara@example.com",
-      profile: {
-        title: "Frontend Developer",
-        summary: "React developer",
-        location: "Alexandria, Egypt",
-        yearsOfExperience: 2,
-        availabilityStatus: "Available",
-        workPreference: "HYBRID",
-        expectedSalary: 15000,
-        linkedinUrl: "https://linkedin.com/in/sara",
-        githubUrl: "https://github.com/sara",
-        cvMatchPercentage: 90,
-        email: "",
-        phone: "00000000000",
-        cvScore: 90,
-        cvUrl: "https://example.com/cv/john.pdf",
-      },
-
-      skills: [
-        { id: "s3", name: "React", verified: true },
-        { id: "s4", name: "TypeScript", verified: true },
-      ],
-    },
-  },
-  {
-    id: "app-27",
-    status: "PENDING",
-    appliedAt: "2025-02-20T10:00:00Z",
-    updatedAt: "2025-02-21T14:30:00Z",
-    directJob: {
-      id: "job_001",
-      title: "Senior Software Engineer",
-    },
-    jobSeeker: {
-      id: "js-1",
-      firstName: "John",
-      lastName: "Doe",
-      profileImageUrl: "/about/job-seeker-illustration.webp",
-      email: "john@example.com",
-      profile: {
-        title: "Software Engineer",
-        summary: "Experienced software engineer",
-        location: "Cairo, Egypt",
-        yearsOfExperience: 3,
-        availabilityStatus: "Available",
-        workPreference: "REMOTE",
-        expectedSalary: 20000,
-        linkedinUrl: "https://linkedin.com/in/johndoe",
-        githubUrl: "https://github.com/johndoe",
-        cvMatchPercentage: 90,
-        email: "",
-        phone: "00000000000",
-        cvScore: 90,
-        cvUrl: "https://example.com/cv/john.pdf",
-      },
-
-      skills: [
-        { id: "s1", name: "TypeScript", verified: true },
-        { id: "s2", name: "Node.js", verified: true },
-      ],
-    },
-  },
-  {
-    id: "app-28",
-    status: "REVIEWED",
-    appliedAt: "2025-02-18T09:00:00Z",
-    updatedAt: "2025-02-19T11:00:00Z",
-    directJob: {
-      id: "job_002",
-      title: "Senior Software Engineer",
-    },
-    jobSeeker: {
-      id: "js-2",
-      firstName: "Sara",
-      lastName: "Ahmed",
-      profileImageUrl: "/about/job-seeker-illustration.webp",
-      email: "sara@example.com",
-      profile: {
-        title: "Frontend Developer",
-        summary: "React developer",
-        location: "Alexandria, Egypt",
-        yearsOfExperience: 2,
-        availabilityStatus: "Available",
-        workPreference: "HYBRID",
-        expectedSalary: 15000,
-        linkedinUrl: "https://linkedin.com/in/sara",
-        githubUrl: "https://github.com/sara",
-        cvMatchPercentage: 90,
-        email: "",
-        phone: "00000000000",
-        cvScore: 90,
-        cvUrl: "https://example.com/cv/john.pdf",
-      },
-
-      skills: [
-        { id: "s3", name: "React", verified: true },
-        { id: "s4", name: "TypeScript", verified: true },
-      ],
-    },
-  },
-  {
-    id: "app-29",
-    status: "PENDING",
-    appliedAt: "2025-02-20T10:00:00Z",
-    updatedAt: "2025-02-21T14:30:00Z",
-    directJob: {
-      id: "job_003",
-      title: "Senior Software Engineer",
-    },
-    jobSeeker: {
-      id: "js-1",
-      firstName: "John",
-      lastName: "Doe",
-      profileImageUrl: "/about/job-seeker-illustration.webp",
-      email: "john@example.com",
-      profile: {
-        title: "Software Engineer",
-        summary: "Experienced software engineer",
-        location: "Cairo, Egypt",
-        yearsOfExperience: 3,
-        availabilityStatus: "Available",
-        workPreference: "REMOTE",
-        expectedSalary: 20000,
-        linkedinUrl: "https://linkedin.com/in/johndoe",
-        githubUrl: "https://github.com/johndoe",
-        cvMatchPercentage: 90,
-        email: "",
-        phone: "00000000000",
-        cvScore: 90,
-        cvUrl: "https://example.com/cv/john.pdf",
-      },
-
-      skills: [
-        { id: "s1", name: "TypeScript", verified: true },
-        { id: "s2", name: "Node.js", verified: true },
-      ],
-    },
-  },
-  {
-    id: "app-30",
-    status: "REVIEWED",
-    appliedAt: "2025-02-18T09:00:00Z",
-    updatedAt: "2025-02-19T11:00:00Z",
-    directJob: {
-      id: "job_003",
-      title: "Senior Software Engineer",
-    },
-    jobSeeker: {
-      id: "js-2",
-      firstName: "Sara",
-      lastName: "Ahmed",
-      profileImageUrl: "/about/job-seeker-illustration.webp",
-      email: "sara@example.com",
-      profile: {
-        title: "Frontend Developer",
-        summary: "React developer",
-        location: "Alexandria, Egypt",
-        yearsOfExperience: 2,
-        availabilityStatus: "Available",
-        workPreference: "HYBRID",
-        expectedSalary: 15000,
-        linkedinUrl: "https://linkedin.com/in/sara",
-        githubUrl: "https://github.com/sara",
-        cvMatchPercentage: 90,
-        email: "",
-        phone: "00000000000",
-        cvScore: 90,
-        cvUrl: "https://example.com/cv/john.pdf",
-      },
-
-      skills: [
-        { id: "s3", name: "React", verified: true },
-        { id: "s4", name: "TypeScript", verified: true },
       ],
     },
   },

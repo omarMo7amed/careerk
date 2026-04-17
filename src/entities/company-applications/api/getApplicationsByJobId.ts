@@ -9,7 +9,7 @@ export async function getApplicationsByJobId(jobId: string) {
 
   return {
     success: true,
-    data: applications,
+    data: { applications, total: 12, page: 1, limit: 6, totalPages: 2 },
     message: "Applications retrieved successfully",
   };
 }

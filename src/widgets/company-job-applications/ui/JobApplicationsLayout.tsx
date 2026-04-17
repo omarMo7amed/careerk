@@ -9,23 +9,24 @@ import {
 } from "@/entities/company-applications";
 import { useState } from "react";
 
-const PAGE_SIZE = 6;
 export function JobApplicationsLayout({ jobId }: { jobId?: string }) {
   const {
     data: applicationsResponse,
     isLoading,
     error,
   } = useApplicationsByJobId(jobId);
-  const applications = applicationsResponse?.data ?? [];
-  const [page, setPage] = useState(1);
+  const applications = applicationsResponse?.data.applications ?? [];
 
-  const totalPages = Math.ceil(applications.length / PAGE_SIZE);
-  const start = (page - 1) * PAGE_SIZE;
-  const paginatedApplication = applications.slice(start, start + PAGE_SIZE);
+  const [page, setPage] = useState(applicationsResponse?.data.page ?? 1);
+
+  const totalPages = applicationsResponse?.data.totalPages ?? 1;
+
+  // use directly
+  const paginatedApplications = applications;
 
   const job = getJob(jobId!);
   return (
-    <div className="flex-1 overflow-y-auto px-8 py-8">
+    <div>
       <div className="mb-8">
         <BackButton />
       </div>
@@ -44,7 +45,7 @@ export function JobApplicationsLayout({ jobId }: { jobId?: string }) {
 
         <DashboardHeader header="Top 5 Candidates" Icon={Star} />
         <div className="grid lg:grid-cols-2 gap-6">
-          {paginatedApplication.map((a) => (
+          {paginatedApplications.map((a) => (
             <ApplicationCard key={a.id} application={a} />
           ))}
         </div>

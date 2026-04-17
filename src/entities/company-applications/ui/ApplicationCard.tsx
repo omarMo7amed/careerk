@@ -91,6 +91,7 @@ export function ApplicationCard({
       lastName,
       profileImageUrl,
       email,
+      skills,
       profile: {
         title,
         location,
@@ -104,7 +105,6 @@ export function ApplicationCard({
         cvScore,
         cvMatchPercentage,
       },
-      skills,
     },
   } = application;
 
