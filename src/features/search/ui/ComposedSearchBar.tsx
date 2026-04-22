@@ -14,7 +14,7 @@ export function ComposedSearchBar({
   onKeyDown,
   className = "",
   searchButtonText = "Search",
-  type = "job",
+  type = "jobs",
   isLoading = false,
   onClear,
 }: ComposedSearchBarProps) {

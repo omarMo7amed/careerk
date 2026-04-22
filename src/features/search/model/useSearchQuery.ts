@@ -1,50 +1,41 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useDebouncedValue } from "./useDebouncedValue";
-import { getResult } from "../api/getResult";
 import { UseSearchQueryOptions } from "../types/useSearchQueryOptions";
-import { Job } from "@/entities/job";
-import { Company } from "@/entities/company";
-import { Candidate } from "@/entities/candidate";
 
 export function useSearchQuery({
+  type = "jobs",
   initialQuery = "",
   initialLocation = "",
-  debounceMs = 300,
-  type = "job",
+  getResult,
 }: UseSearchQueryOptions) {
   const [query, setQuery] = useState(initialQuery);
   const [location, setLocation] = useState(initialLocation);
 
-  const debouncedQuery = useDebouncedValue(query, debounceMs);
-  const debouncedLocation = useDebouncedValue(location, debounceMs);
+  useEffect(() => {
+    setQuery(initialQuery);
+  }, [initialQuery]);
+
+  useEffect(() => {
+    setLocation(initialLocation);
+  }, [initialLocation]);
 
   const queryClient = useQueryClient();
 
-  const queryKey = ["search", type, debouncedQuery, debouncedLocation] as const;
-  const { data, isLoading, isFetching, error } = useQuery<
-    Job[] | Company[] | Candidate[],
-    Error
-  >({
+  const queryKey = ["search", type, query, location] as const;
+  const { data, isLoading, isFetching, error } = useQuery<unknown, Error>({
     queryKey,
-    queryFn: ({ signal }) =>
-      getResult(debouncedQuery, debouncedLocation, type, { signal }),
-    enabled: !!(debouncedQuery || debouncedLocation),
+    queryFn: ({ signal }) => getResult({ search: query, location, signal }),
+    enabled: false,
     staleTime: 1000 * 30,
-    placeholderData: (prev) => prev,
+    placeholderData: (prev: unknown) => prev,
   });
 
   async function searchNow() {
     try {
-      const data = await queryClient.fetchQuery<
-        Job[] | Candidate[] | Company[]
-      >({
+      const data = await queryClient.fetchQuery<unknown>({
         queryKey: queryKey,
-        queryFn: ({ signal }) =>
-          getResult(query, location, type, {
-            signal,
-          }),
+        queryFn: ({ signal }) => getResult({ search: query, location, signal }),
       });
       return data;
     } catch {

@@ -10,7 +10,7 @@ import {
   JobDetails,
   JobFooter,
 } from "../components";
-import { RankingBadge } from "@/shared";
+import { RankingBadge, formatDate } from "@/shared";
 
 import { JobDescription } from "../components/JobDescription";
 import Link from "next/link";
@@ -18,33 +18,49 @@ import { usePathname } from "next/navigation";
 
 export function JobCardJobseeker({ job }: JobCardProps) {
   const pathname = usePathname();
+
+  const title = job.title ?? "Untitled Job";
+  const description = job.description ?? "";
+  const companyName = job.company?.name ?? job.companyName ?? "Unknown Company";
+  const companyLogo = job.company?.logoUrl ?? undefined;
+  const companyCategory = job.company?.industry;
+  const salary =
+    job.salary ??
+    (job.salaryMin != null && job.salaryMax != null
+      ? `$${job.salaryMin.toLocaleString()}-$${job.salaryMax.toLocaleString()}`
+      : undefined);
+  const employmentType = job.jobType?.toLowerCase().replace(/_/g, "-");
+  const workPreference = job.workPreference?.toLowerCase().replace(/_/g, "-");
+  const experienceLevel = job.experienceLevel?.toLowerCase().replace(/_/g, "-");
+  const location = job.location ?? "";
+  const totalApplicants = job.applicants ?? 0;
+  const postedDateRaw = job.postedAt ?? job.publishedAt ?? null;
+  const postedDate = postedDateRaw ? formatDate(postedDateRaw) : undefined;
+  const isScraped = job.type === "scraped";
+
+  console.log(totalApplicants);
+
   return (
-    <motion.div className="group relative rounded-2xl p-6 transition-all duration-300 hover:scale-[1.02] cursor-pointer h-full bg-bg-surface border border-border hover:shadow-lg">
+    <motion.div className="group relative rounded-2xl p-6 transition-shadow duration-300 cursor-pointer h-full bg-bg-surface border border-border hover:shadow-[0_20px_45px_rgba(10,102,194,0.28)]">
       <div className="flex">
         <div className="flex flex-1 gap-4">
           <div>
-            <CompanyLogo
-              logo={job.company.logo}
-              companyName={job.company.name}
-            />
+            <CompanyLogo logo={companyLogo} companyName={companyName} />
           </div>
           <div>
-            <JobTitle title={job.title} />
-            <CompanyInfo
-              companyName={job.company.name}
-              category={job.company.industry}
-            />
+            <JobTitle title={title} experienceLevel={experienceLevel} />
+            <CompanyInfo companyName={companyName} category={companyCategory} />
           </div>
         </div>
-        {job.job_matched_score === undefined && (
+        {job.job_matched_score !== undefined && (
           <RankingBadge rank={job.job_matched_score || 90} />
         )}
       </div>
       <div className="my-6 flex justify-between items-baseline">
         <SourceBadge source={job.source} />
-        {job.type === "scraped" ? (
+        {isScraped ? (
           <Link
-            href={job.url || "#"}
+            href={job.sourceUrl || "#"}
             target="_blank"
             className="text-sm text-primary hover:underline ml-2"
           >
@@ -61,17 +77,18 @@ export function JobCardJobseeker({ job }: JobCardProps) {
       </div>
 
       <div className="mb-6">
-        <JobDescription description={job.description} />
+        <JobDescription description={description} />
       </div>
 
       <JobDetails
-        salary={job.salary}
-        employmentType={job.employmentType}
-        location={job.location}
-        totalApplicants={job.applicationsCount}
+        salary={salary}
+        employmentType={employmentType}
+        workPreference={workPreference}
+        location={location}
+        totalApplicants={totalApplicants}
       />
 
-      <JobFooter postedDate={job.postedDate} />
+      <JobFooter postedDate={postedDate} />
     </motion.div>
   );
 }

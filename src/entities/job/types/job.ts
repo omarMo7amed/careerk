@@ -1,33 +1,41 @@
-import { Company } from "@/entities/company";
-import { SkillType } from "@/entities/skill";
+import { CompanyJob } from "@/entities/company-job";
+import type { JobSkill, JobType } from "@/entities/company-job";
 
-export interface Job {
-  id: string;
+export interface Job extends Partial<CompanyJob>, Partial<ScrapedJob> {
   type: "direct" | "scraped";
+  job_matched_score?: number; // For job matching algorithm
+}
+
+export interface ScrapedJob {
+  id: string;
   title: string;
   description: string;
-  company: Company;
-  location: string;
-  workArrangement: "remote" | "hybrid" | "onsite";
-  employmentType?: "full-time" | "part-time" | "contract" | "internship";
-  experienceLevel: "entry" | "mid" | "senior" | "lead";
-  salaryMin?: number;
-  salaryMax?: number;
-  skills: SkillType[];
-  publishedAt: string;
-  applicationDeadline?: string | null;
-  viewsCount: number;
-  applicationsCount: number;
-  status: "published" | "draft" | "closed";
-  isFeatured: boolean;
-  url?: string | null;
-  job_matched_score?: number; // For job matching algorithm
-
-  // For display purposes (legacy support)
-  category?: string;
-  salary?: string;
-  source?: string;
-  sourceColor?: string;
-  postedDate?: string;
-  applicants?: number;
+  location: string | null;
+  salary: string;
+  jobType: JobType;
+  companyName: string;
+  sourceUrl: string;
+  postedAt: string;
+  source: "LinkedIn" | "Indeed" | "Glassdoor" | "Bayt" | "Wuzzuf" | "Careerk"; //missed
+  skills: JobSkill[];
 }
+
+export type JobsResponse = {
+  jobs: Job[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+};
+
+export type GetJobsOptions = {
+  signal?: AbortSignal;
+  page?: number;
+  limit?: number;
+  search?: string;
+  location?: string;
+  workPreference?: string[];
+  experienceLevel?: string[];
+  jobType?: JobType[];
+  jobSource?: string[];
+};

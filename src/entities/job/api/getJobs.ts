@@ -1,33 +1,47 @@
-import { jobListings } from "../mock-data/jobs";
+import { GetJobsOptions, JobsResponse } from "../types/job";
 
-// export type GetJobsOptions = {
-//   signal?: AbortSignal;
-//   page?: number;
-//   pageSize?: number;
-//   q?: string;
-//   location?: string;
-// };
+export default async function getJobs(options: GetJobsOptions = {}) {
+  const params = new URLSearchParams();
+  if (options.page) params.set("page", String(options.page));
+  if (options.limit) params.set("limit", String(options.limit));
+  const search = options.search;
+  if (search) params.set("search", search);
+  if (options.location) params.set("location", options.location);
 
-export default async function getJobs() {
-  // const base = process.env.NEXT_PUBLIC_BASE_API_URL;
-  // if (base) {
-  //   const params = new URLSearchParams();
-  //   if (options?.page) params.set("page", String(options.page));
-  //   if (options?.pageSize) params.set("pageSize", String(options.pageSize));
-  //   if (options?.q) params.set("q", options.q);
-  //   if (options?.location) params.set("location", options.location);
+  if (options.jobType?.length) {
+    for (const type of options.jobType) {
+      params.append("jobType", type);
+    }
+  }
 
-  //   const url = `${base}/jobs${params.toString() ? `?${params.toString()}` : ""}`;
-  //   const res = await fetch(url, { signal: options?.signal });
+  if (options.experienceLevel?.length) {
+    for (const level of options.experienceLevel) {
+      params.append("experienceLevel", level);
+    }
+  }
 
-  //   if (!res.ok) {
-  //     const body = await res.text().catch(() => "");
-  //     throw new Error(`Failed to fetch jobs (${res.status}) ${body}`);
-  //   }
+  if (options.workPreference?.length) {
+    for (const preference of options.workPreference) {
+      params.append("workPreference", preference);
+    }
+  }
 
-  //   return res.json();
-  // }
+  if (options.jobSource?.length) {
+    for (const source of options.jobSource) {
+      params.append("jobSource", source);
+    }
+  }
 
-  // fallback to mock data while backend isn't available
-  return jobListings;
+  const url = `${process.env.NEXT_PUBLIC_BASE_API_URL}/jobs${params.toString() ? `?${params.toString()}` : ""}`;
+  const res = await fetch(url, {
+    signal: options.signal,
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    throw new Error(`Failed to fetch jobs (${res.status}) ${body}`);
+  }
+
+  return (await res.json()) as JobsResponse;
 }

@@ -7,6 +7,7 @@ export type Company = {
   id: string;
   name: string;
   logoUrl: string | null;
+  industry?: string;
 };
 
 export type JobType =
@@ -27,6 +28,7 @@ export type ExperienceLevel =
   | "MANAGER";
 
 export type JobStatus = "DRAFT" | "PUBLISHED" | "PAUSED" | "CLOSED";
+
 export interface CompanyJob {
   id: string;
   title: string;
@@ -44,4 +46,11 @@ export interface CompanyJob {
   publishedAt: string | null;
   company: Company;
   skills: JobSkill[];
+  applicants?: number; // missed
 }
+
+/**
+ * souad , write a readme file called Souad_MISSED.md
+ * put the same object but with the missed properties only and add a comment "missed" next to each of them
+ * write the endpoints that are use this structure in amr's Docs
+ *  */

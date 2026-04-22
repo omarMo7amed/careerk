@@ -7,6 +7,7 @@ export { mockJobs } from "./mock-jobs/mockJobs";
 export type {
   CompanyJob,
   JobType,
+  JobSkill,
   ExperienceLevel,
   WorkPreference,
 } from "./types/companyJob";

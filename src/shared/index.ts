@@ -18,6 +18,7 @@ export { AvailabilityBadge } from "./ui/AvailabilityBadge";
 export { RankingBadge } from "./ui/RankingBadge";
 export { Pagination } from "./ui/Pagination";
 export { Banner } from "./ui/Banner";
+
 // Shared lib functions
 export { useUserRole, useHasRole, getUserRole } from "./lib/useUserRole";
 export type { UserRole } from "./lib/useUserRole";
@@ -26,6 +27,7 @@ export { getProfileColor } from "./lib/getProfileColor";
 export { getInitialsFromFullName } from "./lib/getInitialsFromFullName";
 export { getDuration, formatDate, formatYear } from "./lib/date";
 export { capitalizeFirstLetter } from "./lib/capitalizeFirstLetter";
+export { parseMultiParam, setMultiParam } from "./lib/multiParams";
 
 // Hooks
 export { useClickOutside } from "./lib/useClickOutside";

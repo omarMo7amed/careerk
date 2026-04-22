@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { cn } from "@/shared";
 
 interface CompanyLogoProps {
   logo?: string;
@@ -18,7 +19,11 @@ export function CompanyLogo({ logo, companyName }: CompanyLogoProps) {
             className="object-contain"
           />
         ) : (
-          <div className="w-10 h-10 flex items-center justify-center text-2xl font-bold text-text-muted">
+          <div
+            className={cn(
+              "w-10 h-10 flex items-center justify-center text-2xl font-bold text-text-muted",
+            )}
+          >
             {companyName.charAt(0)}
           </div>
         )}

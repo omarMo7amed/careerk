@@ -1,8 +1,14 @@
 import { SearchType } from "./searchBar";
 
+export type SearchQueryOptions = {
+  signal?: AbortSignal;
+  search?: string;
+  location?: string;
+};
+
 export interface UseSearchQueryOptions {
   initialQuery?: string;
   initialLocation?: string;
-  debounceMs?: number;
   type?: SearchType;
+  getResult: (options?: SearchQueryOptions) => Promise<unknown>;
 }
