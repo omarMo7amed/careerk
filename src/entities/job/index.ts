@@ -20,3 +20,7 @@ export { jobsToJobCards } from "./lib/transformers";
 export { SavedJobCard } from "./ui/SavedJobCard";
 
 export type { SavedJobCardType } from "./types/savedJobCard";
+
+export { jobListings } from "./mock-data/jobs";
+export { default as getJobs } from "./api/getJobs";
+export type { GetJobsOptions, JobsResponse, ScrapedJob } from "./types/job";

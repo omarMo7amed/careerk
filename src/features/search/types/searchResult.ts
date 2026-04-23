@@ -1,4 +1,4 @@
-import { Candidate } from "@/entities/candidate";
+import { Candidate } from "@/entities/job-seeker";
 import { Company } from "@/entities/company";
 import { Job } from "@/entities/job";
 

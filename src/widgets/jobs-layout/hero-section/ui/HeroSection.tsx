@@ -1,6 +1,16 @@
+"use client";
+
 import { SearchBar } from "@/features/search";
+import { useRouter, useSearchParams } from "next/navigation";
+import { getJobs } from "@/entities/job";
 
 export function HeroSection() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const initialQuery = searchParams.get("search") ?? "";
+  const initialLocation = searchParams.get("location") ?? "";
+
   return (
     <section
       className="relative border-b border-border py-12 "
@@ -20,7 +30,25 @@ export function HeroSection() {
         </p>
       </div>
 
-      <SearchBar type="job" searchPlaceholder="Job Title" />
+      <SearchBar
+        type="jobs"
+        searchPlaceholder="Job Title"
+        initialQuery={initialQuery}
+        initialLocation={initialLocation}
+        onSearchSubmit={(searchValue, locationValue) => {
+          const params = new URLSearchParams();
+          if (searchValue) params.set("search", searchValue);
+          if (locationValue) params.set("location", locationValue);
+          params.set("page", "1");
+
+          const currentLimit = searchParams.get("limit");
+          if (currentLimit) params.set("limit", currentLimit);
+
+          const queryString = params.toString();
+          router.push(`/jobs${queryString ? `?${queryString}` : ""}`);
+        }}
+        getResult={getJobs}
+      />
     </section>
   );
 }

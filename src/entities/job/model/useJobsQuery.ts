@@ -2,36 +2,74 @@
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { jobListings } from "../mock-data/jobs";
-import { Job } from "../types/job";
-import { searchJobs } from "../api/search";
-
-type UseJobsQueryOptions = {
-  page?: number;
-  pageSize?: number;
-  enabled?: boolean;
-};
+import getJobs from "../api/getJobs";
+import { GetJobsOptions, JobsResponse } from "../types/job";
 
 export function useJobsQuery({
   page = 1,
-  pageSize = 12,
+  limit = 12,
+  search,
+  location,
+  jobType,
+  experienceLevel,
+  workPreference,
+  jobSource,
   enabled = false,
-}: UseJobsQueryOptions = {}) {
+}: GetJobsOptions & { enabled?: boolean } = {}) {
   const queryClient = useQueryClient();
-  const queryKey = ["jobs", page, pageSize] as const;
+  const queryKey = [
+    "jobs",
+    page,
+    limit,
+    search ?? "",
+    location ?? "",
+    (jobType ?? []).join(","),
+    (experienceLevel ?? []).join(","),
+    (workPreference ?? []).join(","),
+    (jobSource ?? []).join(","),
+  ] as const;
 
-  const { data, isLoading, isFetching, error } = useQuery<Job[], Error>({
+  const { data, isLoading, isFetching, error } = useQuery<JobsResponse, Error>({
     queryKey,
-    queryFn: ({ signal }) => searchJobs(signal, ""),
+    queryFn: ({ signal }) =>
+      getJobs({
+        signal,
+        page,
+        limit,
+        search,
+        location,
+        jobType,
+        experienceLevel,
+        workPreference,
+        jobSource,
+      }),
     enabled,
-    staleTime: 1000 * 60 * 5, // 5 minutes
-    placeholderData: jobListings,
+    staleTime: 1000 * 60 * 5,
+    placeholderData: {
+      jobs: jobListings,
+      total: jobListings.length,
+      page,
+      limit,
+      totalPages: Math.max(1, Math.ceil(jobListings.length / limit)),
+    },
   });
 
   async function refetchNow() {
     try {
-      return await queryClient.fetchQuery<Job[]>({
+      return await queryClient.fetchQuery<JobsResponse>({
         queryKey,
-        queryFn: ({ signal }) => searchJobs(signal, ""),
+        queryFn: ({ signal }) =>
+          getJobs({
+            signal,
+            page,
+            limit,
+            search,
+            location,
+            jobType,
+            experienceLevel,
+            workPreference,
+            jobSource,
+          }),
       });
     } catch {
       return null;
@@ -39,7 +77,11 @@ export function useJobsQuery({
   }
 
   return {
-    jobs: data ?? null,
+    jobs: data?.jobs ?? null,
+    total: data?.total ?? 0,
+    page: data?.page ?? page,
+    limit: data?.limit ?? limit,
+    totalPages: data?.totalPages ?? 1,
     isLoading: isLoading || isFetching,
     error: error ?? null,
     refetchNow,

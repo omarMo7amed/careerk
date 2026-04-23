@@ -13,7 +13,7 @@ export interface ComposedSearchBarProps {
   onSearch?: (
     searchValue: string,
     locationValue: string,
-    type: "candidate" | "job" | "company",
+    type: "candidates" | "jobs" | "company",
   ) => void;
 
   // Optional handler for key events (arrow navigation, select, etc.)
@@ -26,7 +26,7 @@ export interface ComposedSearchBarProps {
   searchButtonText?: string;
 
   // Type of search (for API endpoint)
-  type?: "candidate" | "job" | "company";
+  type?: "candidates" | "jobs" | "company";
 
   // UI state helpers (for containers)
   isLoading?: boolean;
