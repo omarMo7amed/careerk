@@ -2,10 +2,9 @@ export type {
   JobSeeker,
   JobSeekerBase,
   JobSeekerProfile,
-  WorkPreference,
-  JobType,
-  ExperienceLevel,
 } from "./types/jobSeeker";
+
+export type { AvailabilityStatus } from "./types/availabilityStatus";
 
 export { jobSeekerKeys } from "./lib/queryKeys";
 
@@ -23,10 +22,9 @@ export { useUpdateProfilePhoto } from "./model/useUpdateProfilePhoto";
 export { useUpdateProfile } from "./model/useUpdateProfile";
 
 //  Misc
-export { WORK_PREFERENCE_LABELS, JOB_TYPE_LABELS } from "./lib/labels";
+export { WORK_PREFERENCE_LABELS } from "./lib/labels";
 
 //  Candidate (company-facing view of a job seeker)
-export type { Candidate } from "./types/candidate";
 export { CandidateCard } from "./ui/CandidateCard";
 export { useCandidatesQuery } from "./model/useCandidatesQuery";
 export { useCandidateByIdQuery } from "./model/useCandidateByIdQuery";

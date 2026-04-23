@@ -11,7 +11,6 @@ export function setMultiParam(
   values: string[],
 ) {
   params.delete(key);
-
   for (const value of values) {
     params.append(key, value);
   }

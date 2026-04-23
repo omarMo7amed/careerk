@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { jobListings } from "../mock-data/jobs";
+// import { jobListings } from "../mock-data/jobs"; // this for testing
 import getJobs from "../api/getJobs";
 import { GetJobsOptions, JobsResponse } from "../types/job";
 
@@ -45,13 +45,14 @@ export function useJobsQuery({
       }),
     enabled,
     staleTime: 1000 * 60 * 5,
-    placeholderData: {
-      jobs: jobListings,
-      total: jobListings.length,
-      page,
-      limit,
-      totalPages: Math.max(1, Math.ceil(jobListings.length / limit)),
-    },
+    //
+    // placeholderData: {
+    //   jobs: jobListings,
+    //   total: jobListings.length,
+    //   page,
+    //   limit,
+    //   totalPages: Math.max(1, Math.ceil(jobListings.length / limit)),
+    // },
   });
 
   async function refetchNow() {
@@ -79,7 +80,7 @@ export function useJobsQuery({
   return {
     jobs: data?.jobs ?? null,
     total: data?.total ?? 0,
-    page: data?.page ?? page,
+    page: data?.page ?? 1,
     limit: data?.limit ?? limit,
     totalPages: data?.totalPages ?? 1,
     isLoading: isLoading || isFetching,

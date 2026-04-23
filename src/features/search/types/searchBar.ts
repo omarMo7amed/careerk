@@ -1,4 +1,4 @@
-import { Candidate } from "@/entities/job-seeker";
+import { JobSeeker } from "@/entities/job-seeker";
 import { Company } from "@/entities/company";
 import { Job } from "@/entities/job";
 import { SearchQueryOptions } from "./useSearchQueryOptions";
@@ -12,6 +12,6 @@ export interface SearchBarProps {
 
   initialQuery?: string;
   initialLocation?: string;
-  onSelect?: (item: Job | Candidate | Company) => void;
+  onSelect?: (item: Job | JobSeeker | Company) => void;
   onSearchSubmit?: (searchValue: string, locationValue: string) => void;
 }

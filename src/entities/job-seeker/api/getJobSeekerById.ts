@@ -11,35 +11,36 @@ export async function getJobSeekerById(
 
   await new Promise((resolve) => setTimeout(resolve, 400));
 
-  const jobSeeker = allJobSeekers.find((c) => c.jobSeekerId === jobSeekerId);
+  const jobSeeker = allJobSeekers.find(
+    (c) => c.profile.jobSeekerId === jobSeekerId,
+  );
   if (!jobSeeker) throw new Error(`Job Seeker ${jobSeekerId} not found`);
 
   return {
     firstName: jobSeeker.firstName,
     lastName: jobSeeker.lastName,
-    avatarUrl: jobSeeker.avatarUrl,
+    profileImageUrl: jobSeeker.profileImageUrl,
     skills: jobSeeker.skills,
     profile: {
-      jobSeekerId: jobSeeker.jobSeekerId,
-      title: jobSeeker.title,
-      location: jobSeeker.location ?? "",
-      availabilityStatus: jobSeeker.availabilityStatus ?? null,
-      workPreference: jobSeeker.workPreference ?? null,
+      jobSeekerId: jobSeeker.profile.jobSeekerId,
+      title: jobSeeker.profile.title,
+      location: jobSeeker.profile.location ?? "",
+      availabilityStatus: jobSeeker.profile.availabilityStatus ?? null,
+      workPreference: jobSeeker.profile.workPreference ?? null,
       preferredJobTypes: [],
-      experienceLevel: jobSeeker.experienceLevel ?? null,
       yearsOfExperience: 0,
-      linkedinUrl: jobSeeker.linkedinUrl ?? null,
-      portfolioUrl: jobSeeker.portfolioUrl ?? null,
-      githubUrl: jobSeeker.githubUrl ?? null,
-      cvEmail: jobSeeker.email ?? null,
-      email: jobSeeker.email ?? null,
+      linkedinUrl: jobSeeker.profile.linkedinUrl ?? null,
+      portfolioUrl: jobSeeker.profile.portfolioUrl ?? null,
+      githubUrl: jobSeeker.profile.githubUrl ?? null,
+      cvEmail: jobSeeker.profile.email ?? null,
+      email: jobSeeker.profile.email ?? null,
       noticePeriod: null,
-      phone: jobSeeker.phone ?? null,
-      expectedSalary: jobSeeker.expectedSalary ?? null,
-      summary: jobSeeker.summary ?? null,
-      cvScore: jobSeeker.cvScore ?? null,
-      cvMatchPercentage: jobSeeker.cvMatchPercentage ?? null,
-      cvUrl: jobSeeker.cvUrl ?? null,
+      phone: jobSeeker.profile.phone ?? null,
+      expectedSalary: jobSeeker.profile.expectedSalary ?? null,
+      summary: jobSeeker.profile.summary ?? null,
+      cvScore: jobSeeker.profile.cvScore ?? null,
+      cvMatchPercentage: jobSeeker.profile.cvMatchPercentage ?? null,
+      cvUrl: jobSeeker.profile.cvUrl ?? null,
     },
     educations: [],
     workExperiences: [],

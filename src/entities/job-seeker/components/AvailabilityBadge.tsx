@@ -1,13 +1,13 @@
-import { AVAILABILITY_BADGE_COLORS } from "../constant/availabilityBadgeColors";
-import { cn } from "../lib/cn";
-import { AvailabilityBadgeProps } from "../types/availabilityBadgeProps";
+import { cn } from "@/shared";
+import { AVAILABILITY_BADGE_COLORS } from "../config/availabilityBadgeColors";
+import { AvailabilityBadgeProps } from "../types/availabilityStatus";
 
 export function AvailabilityBadge({
   status,
   className = "",
 }: AvailabilityBadgeProps) {
   const style =
-    AVAILABILITY_BADGE_COLORS[status] ?? AVAILABILITY_BADGE_COLORS.Available;
+    AVAILABILITY_BADGE_COLORS[status] ?? AVAILABILITY_BADGE_COLORS.OPEN_TO_WORK;
 
   return (
     <span

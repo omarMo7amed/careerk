@@ -45,3 +45,32 @@ industry?: string;
 skills: {skillId:string , name:string};
 applicants?: number; // missed
 }
+
+JobSeeker Endpoints (Amr Docs):
+
+- GET /api/v1/job-seekers
+
+export interface CandidateData {
+firstName: string;
+lastName: string;
+profileImageUrl: string | null; // missed
+profile: {
+jobSeekerId: string;
+title: string;
+location: string;
+availabilityStatus: "NOT_LOOKING" | "AVAILABLE" | "OPEN_TO_OFFERS";
+workPreference: "REMOTE" | "ONSITE" | "HYBRID" | "OTHER";
+preferredJobTypes: ("FULL_TIME" | "PART_TIME" | "CONTRACT" | "FREELANCE" | "INTERNSHIP")[];
+yearsOfExperience: number;//missed
+linkedinUrl: string | null;
+portfolioUrl: string | null;
+githubUrl: string | null;
+summary: string | null; // missed
+expectedSalary: number | null; // missed
+email: string | null; // missed
+cvScore: number | null; // missed i want this in public
+cvMatchPercentage: number | null; // missed i want this for authenticated
+cvUrl: string | null; // missed
+};
+skills: { name: string; verified: boolean }[]; // missed
+}

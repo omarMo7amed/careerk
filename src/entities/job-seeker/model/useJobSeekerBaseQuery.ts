@@ -8,7 +8,7 @@ import type { JobSeeker } from "../types/jobSeeker";
 const selectBase = (data: JobSeeker): JobSeekerBase => ({
   firstName: data.firstName,
   lastName: data.lastName,
-  avatarUrl: data.avatarUrl,
+  profileImageUrl: data.profileImageUrl,
 });
 
 export function useJobSeekerBaseQuery() {
