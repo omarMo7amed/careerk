@@ -10,11 +10,7 @@ export interface ComposedSearchBarProps {
   onLocationValueChange?: (value: string) => void;
 
   // Search action
-  onSearch?: (
-    searchValue: string,
-    locationValue: string,
-    type: "candidates" | "jobs" | "company",
-  ) => void;
+  onSearch?: (searchValue: string, locationValue: string) => void;
 
   // Optional handler for key events (arrow navigation, select, etc.)
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -26,7 +22,6 @@ export interface ComposedSearchBarProps {
   searchButtonText?: string;
 
   // Type of search (for API endpoint)
-  type?: "candidates" | "jobs" | "company";
 
   // UI state helpers (for containers)
   isLoading?: boolean;

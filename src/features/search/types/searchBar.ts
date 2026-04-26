@@ -1,14 +1,12 @@
 import { JobSeeker } from "@/entities/job-seeker";
 import { Company } from "@/entities/company";
 import { Job } from "@/entities/job";
-import { SearchQueryOptions } from "./useSearchQueryOptions";
 
 export type SearchType = "candidates" | "jobs" | "companies";
 
 export interface SearchBarProps {
-  type: SearchType;
   searchPlaceholder: string;
-  getResult: (options?: SearchQueryOptions) => Promise<unknown>;
+  isLoading?: boolean;
 
   initialQuery?: string;
   initialLocation?: string;
