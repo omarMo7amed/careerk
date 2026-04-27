@@ -1,19 +1,77 @@
 "use client";
+
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { Job, JobCardJobseeker, useJobsQuery } from "@/entities/job";
-import { AnimatedSidebar, Button, Pagination } from "@/shared";
+
+import {
+  ExperienceLevel,
+  experienceLevelLabels,
+  JobType,
+  jobTypeLabels,
+  WorkPreference,
+  workPreferenceLabels,
+} from "@/entities/company-job";
+import { Job, JobCardJobseeker, useMatchedJobsQuery } from "@/entities/job";
+import {
+  AnimatedSidebar,
+  Button,
+  Pagination,
+  parseMultiParam,
+  setMultiParam,
+  Loader,
+} from "@/shared";
 import { List } from "@/widgets/list";
 import { TableOfOperation } from "@/features/filter";
+import { NotFound } from "@/features/search";
 
 export function JobsList() {
-  const { jobs } = useJobsQuery();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const query = searchParams.get("search") ?? searchParams.get("q") ?? "";
+  const location = searchParams.get("location") ?? "";
+  const page = Number(searchParams.get("page")) || 1;
+  const limit = Number(searchParams.get("limit")) || 12;
+  const jobType = parseMultiParam(searchParams, "jobType") as JobType[];
+  const experienceLevel = parseMultiParam(
+    searchParams,
+    "experienceLevel",
+  ) as ExperienceLevel[];
+  const workPreference = parseMultiParam(
+    searchParams,
+    "workPreference",
+  ) as WorkPreference[];
+  const jobSource = parseMultiParam(searchParams, "jobSource") as string[];
   const [filterOpen, setFilterOpen] = useState(false);
+  // const {token}=useAuth();
+
+  const { jobs, totalPages, isLoading, error } = useMatchedJobsQuery({
+    page,
+    limit,
+    search: query,
+    location,
+    jobType,
+    experienceLevel,
+    workPreference,
+    jobSource,
+    token: "", // we will handle auth later
+    enabled: true,
+  });
+
+  const displayJobs = jobs ?? [];
+
+  const handlePageChange = (nextPage: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", String(nextPage));
+    params.set("limit", String(limit));
+    router.push(`/dashboard/jobseeker/find-jobs?${params.toString()}`);
+  };
 
   return (
     <div className="overflow-y-auto max-h-screen p-5">
       <div className="flex justify-between mb-10 items-baseline">
         <span className="text-sm text-text-secondary baseline rounded">
-          Showing {jobs?.length} job{jobs && jobs.length > 1 ? "s" : ""}
+          Showing {displayJobs.length} job
+          {displayJobs.length === 1 ? "" : "s"}
         </span>
 
         <Button variant="outline" size="sm" onClick={() => setFilterOpen(true)}>
@@ -21,15 +79,35 @@ export function JobsList() {
         </Button>
       </div>
 
-      <List
-        items={jobs as Job[]}
-        renderItem={(j) => <JobCardJobseeker job={j} key={j.id} />}
-        columnsInLarge={3}
-        columnsInMedium={2}
-        columnsInSmall={1}
-      />
+      {error && (
+        <p className="mb-6 text-sm text-error">
+          Failed to load matched jobs. Please try again later.
+        </p>
+      )}
 
-      <Pagination totalPages={10} page={1} onPageChange={() => {}} />
+      {isLoading ? (
+        <Loader />
+      ) : !error && displayJobs.length === 0 ? (
+        <NotFound />
+      ) : (
+        <>
+          <List
+            items={displayJobs as Job[]}
+            renderItem={(j) => <JobCardJobseeker job={j} key={j.id} />}
+            columnsInLarge={3}
+            columnsInMedium={2}
+            columnsInSmall={1}
+          />
+
+          {displayJobs.length > 0 && (
+            <Pagination
+              totalPages={totalPages}
+              page={page}
+              onPageChange={handlePageChange}
+            />
+          )}
+        </>
+      )}
 
       <AnimatedSidebar
         title="Filter"
@@ -38,19 +116,77 @@ export function JobsList() {
       >
         <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
           <TableOfOperation
+            key={"Job Source"}
+            title="Job Source"
+            options={[
+              "Careerk",
+              "LinkedIn",
+              "Indeed",
+              "Glassdoor",
+              "Bayt",
+              "Wuzzuf",
+            ]}
+            selected={jobSource}
+            onChange={(data) => {
+              const params = new URLSearchParams(searchParams.toString());
+              setMultiParam(params, "jobSource", data);
+              params.set("page", "1");
+              router.push(
+                `/dashboard/jobseeker/find-jobs?${params.toString()}`,
+              );
+            }}
+          />
+
+          <TableOfOperation
+            key={"Job Type"}
             title="Job Type"
-            options={["Full-time", "Part-time", "Contract"]}
-            asDropdown={false}
+            options={Object.entries(jobTypeLabels).map(([value, label]) => ({
+              value,
+              label,
+            }))}
+            selected={jobType}
+            onChange={(data) => {
+              const params = new URLSearchParams(searchParams.toString());
+              setMultiParam(params, "jobType", data);
+              params.set("page", "1");
+              router.push(
+                `/dashboard/jobseeker/find-jobs?${params.toString()}`,
+              );
+            }}
           />
+
           <TableOfOperation
+            key={"Experience Level"}
             title="Experience Level"
-            options={["Entry Level", "Mid Level", "Senior Level"]}
-            asDropdown={false}
+            options={Object.entries(experienceLevelLabels).map(
+              ([value, label]) => ({ value, label }),
+            )}
+            selected={experienceLevel}
+            onChange={(data) => {
+              const params = new URLSearchParams(searchParams.toString());
+              setMultiParam(params, "experienceLevel", data);
+              params.set("page", "1");
+              router.push(
+                `/dashboard/jobseeker/find-jobs?${params.toString()}`,
+              );
+            }}
           />
+
           <TableOfOperation
-            title="Location"
-            options={["Remote", "On-site", "Hybrid"]}
-            asDropdown={false}
+            key={"Work Preference"}
+            title="Work Preference"
+            options={Object.entries(workPreferenceLabels).map(
+              ([value, label]) => ({ value, label }),
+            )}
+            selected={workPreference}
+            onChange={(data) => {
+              const params = new URLSearchParams(searchParams.toString());
+              setMultiParam(params, "workPreference", data);
+              params.set("page", "1");
+              router.push(
+                `/dashboard/jobseeker/find-jobs?${params.toString()}`,
+              );
+            }}
           />
         </div>
 

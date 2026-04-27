@@ -1,11 +1,10 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-// import { jobListings } from "../mock-data/jobs"; // this for testing
-import getJobs from "../api/getJobs";
+import getMatchedJobs from "../api/getMatchedJobs";
 import { GetJobsOptions, JobsResponse } from "../types/job";
 
-export function useJobsQuery({
+export function useMatchedJobsQuery({
   page = 1,
   limit = 12,
   search,
@@ -17,7 +16,7 @@ export function useJobsQuery({
   enabled = false,
 }: GetJobsOptions & { enabled?: boolean } = {}) {
   const queryKey = [
-    "jobs",
+    "job-matches",
     page,
     limit,
     search ?? "",
@@ -31,27 +30,20 @@ export function useJobsQuery({
   const { data, isLoading, isFetching, error } = useQuery<JobsResponse, Error>({
     queryKey,
     queryFn: ({ signal }) =>
-      getJobs({
+      getMatchedJobs({
         signal,
         page,
         limit,
         search,
         location,
         jobType,
+        token: "", // we will handle auth later
         experienceLevel,
         workPreference,
         jobSource,
       }),
     enabled,
     staleTime: 1000 * 60 * 5,
-    //
-    // placeholderData: {
-    //   jobs: jobListings,
-    //   total: jobListings.length,
-    //   page,
-    //   limit,
-    //   totalPages: Math.max(1, Math.ceil(jobListings.length / limit)),
-    // },
   });
 
   return {

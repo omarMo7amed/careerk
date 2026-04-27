@@ -74,3 +74,9 @@ cvUrl: string | null; // missed
 };
 skills: { name: string; verified: boolean }[]; // missed
 }
+
+matches Endpoints (Amr Docs):
+
+- GET /api/v1/job-seekers/me/matches
+
+i want it as - GET /api/v1/jobs with our modifications + keep matchScore

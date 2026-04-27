@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { jobListings } from "@/entities/job";
+import { matchedJobs } from "@/entities/job";
 
 function parsePositiveInt(value: string | null, fallback: number) {
   const num = Number(value);
@@ -14,36 +14,34 @@ function normalizeMultiValues(values: string[]) {
   return values.map((value) => value.trim().toLowerCase()).filter(Boolean);
 }
 
-function getCompanyName(job: (typeof jobListings)[number]) {
+function getCompanyName(job: (typeof matchedJobs)[number]) {
   return (job.company?.name ?? job.companyName ?? "").toLowerCase();
 }
 
-function getLocation(job: (typeof jobListings)[number]) {
+function getLocation(job: (typeof matchedJobs)[number]) {
   return (job.location ?? "").toLowerCase();
 }
 
-function getJobType(job: (typeof jobListings)[number]) {
+function getJobType(job: (typeof matchedJobs)[number]) {
   return (job.jobType ?? "").toLowerCase();
 }
 
-function getExperienceLevel(job: (typeof jobListings)[number]) {
+function getExperienceLevel(job: (typeof matchedJobs)[number]) {
   return (job.experienceLevel ?? "").toLowerCase();
 }
 
-function getWorkPreference(job: (typeof jobListings)[number]) {
+function getWorkPreference(job: (typeof matchedJobs)[number]) {
   return (job.workPreference ?? "").toLowerCase();
 }
 
-function getJobSource(job: (typeof jobListings)[number]) {
+function getJobSource(job: (typeof matchedJobs)[number]) {
   return (job.source ?? "").toLowerCase();
 }
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
 
-  const search = normalizeValue(
-    searchParams.get("search") ?? searchParams.get("q"),
-  );
+  const search = normalizeValue(searchParams.get("search"));
   const location = normalizeValue(searchParams.get("location"));
   const jobTypeValues = normalizeMultiValues(searchParams.getAll("jobType"));
   const experienceLevelValues = normalizeMultiValues(
@@ -56,7 +54,7 @@ export async function GET(request: NextRequest) {
   const page = parsePositiveInt(searchParams.get("page"), 1);
   const limit = parsePositiveInt(searchParams.get("limit"), 12);
 
-  const filtered = jobListings.filter((job) => {
+  const filtered = matchedJobs.filter((job) => {
     const matchesQuery =
       search.length === 0 ||
       (job.title ?? "").toLowerCase().includes(search) ||

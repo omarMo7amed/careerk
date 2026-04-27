@@ -11,6 +11,7 @@ export { JobFooter } from "./components/JobFooter";
 export { ViewJobOverlay } from "./components/ViewJobOverlay";
 
 export { useJobsQuery } from "./model/useJobsQuery";
+export { useMatchedJobsQuery } from "./model/useMatchedJobsQuery";
 
 export { useSavedJobs } from "./model/useSavedJobs";
 export { getBookmarkedJobs } from "./api/getBookmarkedJobs";
@@ -21,6 +22,10 @@ export { SavedJobCard } from "./ui/SavedJobCard";
 
 export type { SavedJobCardType } from "./types/savedJobCard";
 
-export { jobListings } from "./mock-data/jobs";
 export { default as getJobs } from "./api/getJobs";
+export { default as getMatchedJobs } from "./api/getMatchedJobs";
 export type { GetJobsOptions, JobsResponse, ScrapedJob } from "./types/job";
+
+// Mock data exports
+export { jobListings } from "./mock-data/jobs";
+export { matchedJobs } from "./mock-data/matchedJobs";
