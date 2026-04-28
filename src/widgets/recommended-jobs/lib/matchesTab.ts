@@ -14,9 +14,3 @@ export function matchesTab(job: Job, key: string): boolean {
     job.workPreference === key.replace("-", "").toUpperCase()
   );
 }
-
-//  return (
-//     job.experienceLevel === key.split("-")[0].toLowerCase() ||
-// ||
-//     job.workPreference === key.toUpperCase()
-//   );
