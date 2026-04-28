@@ -1,7 +1,7 @@
 "use client";
 import {
-  deleteJob,
   jobTypeLabels,
+  useDeleteCompanyJob,
   workPreferenceLabels,
 } from "@/entities/company-job";
 import { toggleJobStatus } from "@/entities/company-job";
@@ -17,15 +17,16 @@ import { useState } from "react";
 type JobPostCardProps = {
   job: CompanyJob;
 
-  onDelete?: (id: string) => void;
+  // onDelete?: (id: string) => void;
 };
 
-export function JobPostCard({ job, onDelete }: JobPostCardProps) {
+export function JobPostCard({ job }: JobPostCardProps) {
   const [cardStatus, setCardStatus] = useState(job.status);
+  const { mutate: deleteJob, isPending: isDeleting } = useDeleteCompanyJob();
 
   function handleToggleStatus() {
     const newStatus = toggleJobStatus(job.id);
-    setCardStatus(newStatus);
+    // setCardStatus(newStatus);
   }
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -34,7 +35,6 @@ export function JobPostCard({ job, onDelete }: JobPostCardProps) {
   function handleConfirmDelete() {
     deleteJob(id);
     setShowDeleteModal(false);
-    onDelete?.(id);
   }
 
   return (
@@ -128,7 +128,7 @@ export function JobPostCard({ job, onDelete }: JobPostCardProps) {
         onConfirm={handleConfirmDelete}
         title="Delete Job Post"
         message={`Are you sure you want to delete "${title}"? This action cannot be undone.`}
-        confirmText="Delete"
+        confirmText={isDeleting ? "Deleting..." : "Delete"}
         cancelText="Cancel"
       />
     </>

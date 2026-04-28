@@ -63,6 +63,19 @@ export interface GetCompanyJobsResponse {
   message: string;
   meta: ApiMeta;
 }
+
+export interface GetCompanyJobResponse<T> {
+  success: boolean;
+  data: T;
+  message: string;
+  meta: ApiMeta;
+}
+export interface DeleteJobResponse {
+  success: boolean;
+  data: Record<string, never>; // {}
+  message: string;
+  meta: ApiMeta;
+}
 /**
  * souad , write a readme file called Souad_MISSED.md
  * put the same object but with the missed properties only and add a comment "missed" next to each of them

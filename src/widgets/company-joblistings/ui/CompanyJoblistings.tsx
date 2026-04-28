@@ -13,7 +13,10 @@ export function CompanyJoblistings() {
   // }
 
   const { data: jobs = [], isLoading } = useCompanyJobs();
+
   if (isLoading) return <p>Loading...</p>;
+  if (!jobs) return null;
+
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
@@ -39,7 +42,6 @@ export function CompanyJoblistings() {
 
       <div className="grid grid-cols-1 md:grid-cols-2  gap-4">
         {jobs.map((job) => (
-          // <JobPostCard key={job.id} job={job} onDelete={handleDelete} />
           <JobPostCard key={job.id} job={job} />
         ))}
       </div>

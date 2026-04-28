@@ -4,6 +4,8 @@ import {
   JobType,
   ExperienceLevel,
   WorkPreference,
+  useCompanyJob,
+  useDeleteCompanyJob,
 } from "@/entities/company-job";
 import { Badge, Button, ConfirmationModal } from "@/shared";
 import { Card } from "@/shared";
@@ -13,7 +15,7 @@ import { JobSidebar } from "../../direct-job-content/ui/JobSidebar";
 import { JobPostFormData } from "@/features/post-job-form";
 import { updateJob } from "@/entities/company-job";
 import { BackButton } from "@/shared/ui/BackButton";
-import { deleteJob } from "@/entities/company-job";
+// import { deleteJob } from "@/entities/company-job";
 import { JobPostForm } from "@/features/post-job-form";
 import {
   DirectJobContentCard,
@@ -25,17 +27,31 @@ import { getScoreColor } from "../lib/getScoreColor";
 import { JobStatus } from "@/entities/company-job/types/companyJob";
 
 interface ViewJobPostLayoutProps {
-  jobPost: CompanyJob;
+  jobId: string;
 }
 
-export function ViewJobPostLayout({ jobPost }: ViewJobPostLayoutProps) {
-  const { title, deadline, status } = jobPost;
+export function ViewJobPostLayout({ jobId }: ViewJobPostLayoutProps) {
+  const { data: jobPost, isLoading } = useCompanyJob({ jobId });
+  const { mutate: deleteJob, isPending: isDeleting } = useDeleteCompanyJob();
+
+  const { candidates } = useCandidatesQuery();
+
   const [isEditingJob, setIsEditingJob] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const topCandidates = candidates
+    ?.slice()
+    .sort((a, b) => (b.cvMatchPercentage ?? 0) - (a.cvMatchPercentage ?? 0))
+    .slice(0, 5);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (!jobPost) return null;
+
+  const job = jobPost;
+  const { title, deadline, status } = job;
 
   function handleEditSubmit(data: JobPostFormData) {
     const updated: CompanyJob = {
-      ...jobPost,
+      ...job,
       ...data,
       jobType: data.jobType as JobType,
       workPreference: data.workPreference as WorkPreference,
@@ -50,23 +66,17 @@ export function ViewJobPostLayout({ jobPost }: ViewJobPostLayoutProps) {
       publishedAt: new Date().toISOString(),
     };
     console.log("edit", updated);
-    updateJob(jobPost.id, updated);
+    updateJob(job.id, updated);
     setIsEditingJob(false);
   }
 
   function handleConfirmDelete() {
-    deleteJob(jobPost.id);
+    deleteJob(job.id);
     setShowDeleteModal(false);
   }
 
-  const { candidates } = useCandidatesQuery();
-  const topCandidates = candidates
-    ?.slice()
-    .sort((a, b) => (b.cvMatchPercentage ?? 0) - (a.cvMatchPercentage ?? 0))
-    .slice(0, 5);
-
   return (
-    <div >
+    <div>
       <div>
         <div className="mb-8">
           <BackButton />
@@ -77,7 +87,7 @@ export function ViewJobPostLayout({ jobPost }: ViewJobPostLayoutProps) {
             <Card className="md:col-span-2 space-y-8">
               <JobPostForm
                 initialData={jobPost}
-                onSubmit={handleEditSubmit}
+                // onSubmit={handleEditSubmit}
                 onCancel={() => setIsEditingJob(false)}
               />
             </Card>
