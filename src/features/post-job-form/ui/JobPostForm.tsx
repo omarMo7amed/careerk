@@ -4,8 +4,7 @@ import { useForm } from "react-hook-form";
 import { Button, Input, Label } from "@/shared";
 import { FieldError } from "@/shared/ui/FieldError";
 import { JobPostFormData, jobPostSchema } from "../lib/jobPostSchema";
-import { CompanyJob } from "@/entities/company-job";
-import { buildNewJob } from "../lib/buildNewJob";
+import { CompanyJob, useCreateCompanyJob } from "@/entities/company-job";
 import { FormFields } from "./FormFields";
 import { SkillsInput } from "./SkillsInput";
 
@@ -13,14 +12,18 @@ type JobPostFormProps = {
   initialData?: CompanyJob;
   onSubmit?: (data: JobPostFormData) => void;
   onCancel?: () => void;
+  onSuccess?: () => void;
 };
 
 export function JobPostForm({
   initialData,
   onSubmit: onSubmitProp,
   onCancel,
+  onSuccess,
 }: JobPostFormProps) {
   const isEditMode = !!initialData;
+  const { mutateAsync: createJob, isPending: isCreating } =
+    useCreateCompanyJob();
 
   const {
     register,
@@ -44,7 +47,7 @@ export function JobPostForm({
           salaryMax: initialData.salaryMax?.toString() ?? "",
           location: initialData.location ?? "",
           deadline: initialData.deadline ?? "",
-          skills: initialData.skills.map((s) => s.name),
+          skills: initialData.skills,
         }
       : {
           jobType: "FULL_TIME",
@@ -55,17 +58,19 @@ export function JobPostForm({
   });
 
   const skills = watch("skills") ?? [];
+  const isLoading = isSubmitting || isCreating;
 
-  function onSubmit(data: JobPostFormData) {
+  async function onSubmit(data: JobPostFormData) {
     if (onSubmitProp) {
       onSubmitProp(data);
-    } else {
-      console.log(
-        "Job posted:",
-        buildNewJob(data, { id: "2", logoUrl: "/", name: "ss" }),
-      );
-      reset();
+      console.log("Job edit:", data);
+      return;
     }
+    await createJob(data);
+    console.log("Job posted:", data);
+
+    reset();
+    onSuccess?.();
   }
 
   return (
@@ -97,13 +102,13 @@ export function JobPostForm({
           Cancel
         </Button>
         <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting
+          {isLoading
             ? isEditMode
               ? "Saving..."
-              : "Publishing..."
+              : "Creating..."
             : isEditMode
               ? "Save Changes"
-              : "Publish Job"}
+              : "Create Job"}
         </Button>
       </div>
     </form>

@@ -1,9 +1,23 @@
-import { mockJobs } from "../mock-jobs/mockJobs";
 import { CompanyJob } from "../types/companyJob";
 
-export function updateJob(id: string, updated: CompanyJob): CompanyJob {
-  const index = mockJobs.findIndex((j) => j.id === id);
-  if (index === -1) throw new Error(`Job ${id} not found`);
-  mockJobs[index] = updated; // mutates the array in place
-  return mockJobs[index];
+export async function updateJob(
+  jobId: string,
+  data: Partial<CompanyJob>,
+): Promise<CompanyJob> {
+  const res = await fetch(`/api/v1/company-jobs/${jobId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      // Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify(data),
+  });
+
+  const json = await res.json();
+
+  if (!res.ok) {
+    throw new Error(json.message || "Failed to update job");
+  }
+
+  return json.data;
 }

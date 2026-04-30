@@ -4,6 +4,7 @@ import {
   ExperienceLevel,
   WorkPreference,
   Company,
+  JobStatus,
 } from "@/entities/company-job";
 
 import { JobPostFormData } from "../lib/jobPostSchema";
@@ -34,14 +35,11 @@ export function buildNewJob(
     workPreference: data.workPreference as WorkPreference,
     experienceLevel: data.experienceLevel as ExperienceLevel,
 
-    status: "PUBLISHED",
+    status: data.status as JobStatus,
 
     deadline: data.deadline ?? null,
     publishedAt: now,
 
-    skills: data.skills.map((name) => ({
-      skillId: crypto.randomUUID(),
-      name,
-    })),
+    skills: data.skills,
   };
 }

@@ -12,6 +12,55 @@ function deleteMockJob(jobId: string): boolean {
   return true;
 }
 
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: Promise<{ jobId: string }> },
+) {
+  await new Promise((r) => setTimeout(r, 600));
+
+  const { jobId } = await params;
+  const body = await req.json();
+
+  const jobIndex = mockJobs.findIndex((j) => j.id === jobId);
+
+  if (jobIndex === -1) {
+    return NextResponse.json(
+      {
+        success: false,
+        data: null,
+        message: "Job not found",
+        meta: {
+          timestamp: new Date().toISOString(),
+          path: `/api/v1/company-jobs/${jobId}`,
+          method: "PATCH",
+        },
+      },
+      { status: 404 },
+    );
+  }
+
+  const existingJob = mockJobs[jobIndex];
+
+  const updatedJob: CompanyJob = {
+    ...existingJob,
+    ...body,
+  };
+
+  mockJobs[jobIndex] = updatedJob;
+  console.log(updatedJob);
+
+  return NextResponse.json<GetCompanyJobResponse<CompanyJob>>({
+    success: true,
+    data: updatedJob,
+    message: "Success",
+    meta: {
+      timestamp: new Date().toISOString(),
+      path: `/api/v1/company-jobs/${jobId}`,
+      method: "PATCH",
+    },
+  });
+}
+
 export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ jobId: string }> },

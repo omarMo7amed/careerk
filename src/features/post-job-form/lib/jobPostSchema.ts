@@ -43,9 +43,27 @@ export const jobPostSchema = z
 
     location: z.string().optional(),
 
-    deadline: z.string().optional(),
+    deadline: z
+      .string()
+      .optional()
+      .refine((val) => {
+        if (!val) return true;
 
-    skills: z.array(z.string()).min(1, "Please add at least one skill").max(20),
+        const date = new Date(val);
+        if (isNaN(date.getTime())) return false;
+
+        return date >= new Date();
+      }, "Deadline must be a valid future date"),
+
+    skills: z
+      .array(
+        z.object({
+          skillId: z.string(),
+          name: z.string().min(1, "Skill name is required"),
+        }),
+      )
+      .min(1, "Please add at least one skill")
+      .max(20),
   })
   .refine(
     (data) => {

@@ -1,11 +1,11 @@
 "use client";
 import {
-  CompanyJob,
   JobType,
   ExperienceLevel,
   WorkPreference,
   useCompanyJob,
   useDeleteCompanyJob,
+  useUpdateCompanyJob,
 } from "@/entities/company-job";
 import { Badge, Button, ConfirmationModal } from "@/shared";
 import { Card } from "@/shared";
@@ -13,9 +13,7 @@ import { useState } from "react";
 import { JobSidebar } from "../../direct-job-content/ui/JobSidebar";
 
 import { JobPostFormData } from "@/features/post-job-form";
-import { updateJob } from "@/entities/company-job";
 import { BackButton } from "@/shared/ui/BackButton";
-// import { deleteJob } from "@/entities/company-job";
 import { JobPostForm } from "@/features/post-job-form";
 import {
   DirectJobContentCard,
@@ -26,13 +24,10 @@ import { useCandidatesQuery } from "@/entities/job-seeker";
 import { getScoreColor } from "../lib/getScoreColor";
 import { JobStatus } from "@/entities/company-job/types/companyJob";
 
-interface ViewJobPostLayoutProps {
-  jobId: string;
-}
-
-export function ViewJobPostLayout({ jobId }: ViewJobPostLayoutProps) {
+export function ViewJobPostLayout({ jobId }: { jobId: string }) {
   const { data: jobPost, isLoading } = useCompanyJob(jobId);
   const { mutate: deleteJob, isPending: isDeleting } = useDeleteCompanyJob();
+  const { mutateAsync: updateJob } = useUpdateCompanyJob();
 
   const { candidates } = useCandidatesQuery();
 
@@ -49,24 +44,27 @@ export function ViewJobPostLayout({ jobId }: ViewJobPostLayoutProps) {
   const job = jobPost;
   const { title, deadline, status } = job;
 
-  function handleEditSubmit(data: JobPostFormData) {
-    const updated: CompanyJob = {
-      ...job,
-      ...data,
+  async function handleEditSubmit(data: JobPostFormData) {
+    const updatedJob = {
+      title: data.title,
+      description: data.description,
+      requirements: data.requirements,
       jobType: data.jobType as JobType,
       workPreference: data.workPreference as WorkPreference,
       experienceLevel: data.experienceLevel as ExperienceLevel,
       status: data.status as JobStatus,
       salaryMin: data.salaryMin ? Number(data.salaryMin) : null,
       salaryMax: data.salaryMax ? Number(data.salaryMax) : null,
-      skills: data.skills.map((name, i) => ({
-        skillId: String(i),
-        name,
-      })),
+      location: data.location,
+      deadline: data.deadline,
+      skills: data.skills,
       publishedAt: new Date().toISOString(),
     };
-    console.log("edit", updated);
-    updateJob(job.id, updated);
+    await updateJob({
+      jobId: job.id,
+      data: updatedJob,
+    });
+
     setIsEditingJob(false);
   }
 
@@ -87,7 +85,7 @@ export function ViewJobPostLayout({ jobId }: ViewJobPostLayoutProps) {
             <Card className="md:col-span-2 space-y-8">
               <JobPostForm
                 initialData={jobPost}
-                // onSubmit={handleEditSubmit}
+                onSubmit={handleEditSubmit}
                 onCancel={() => setIsEditingJob(false)}
               />
             </Card>
@@ -168,7 +166,7 @@ export function ViewJobPostLayout({ jobId }: ViewJobPostLayoutProps) {
         onConfirm={handleConfirmDelete}
         title="Delete Job Post"
         message={`Are you sure you want to delete "${title}"? This action cannot be undone.`}
-        confirmText="Delete"
+        confirmText={isDeleting ? "Deleting..." : "Delete"}
         cancelText="Cancel"
       />
     </div>
