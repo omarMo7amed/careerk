@@ -1,18 +1,14 @@
 "use client";
 
+import { Button, ConfirmationModal } from "@/shared";
 import { useState } from "react";
 import { useWithdrawApplication } from "../model/useWithdrawApplication";
-import { Button, ConfirmationModal } from "@/shared";
 
 interface WithdrawButtonProps {
   applicationId: string;
-  onSuccess?: () => void;
 }
 
-export function WithdrawButton({
-  applicationId,
-  onSuccess,
-}: WithdrawButtonProps) {
+export function WithdrawButton({ applicationId }: WithdrawButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { mutate: withdraw, isPending } = useWithdrawApplication();
 
@@ -20,7 +16,6 @@ export function WithdrawButton({
     withdraw(applicationId, {
       onSuccess: () => {
         setIsModalOpen(false);
-        onSuccess?.();
       },
     });
   };
@@ -28,6 +23,7 @@ export function WithdrawButton({
   return (
     <>
       <Button
+        disabled={isPending}
         onClick={() => setIsModalOpen(true)}
         variant="outline"
         className="flex-1"
