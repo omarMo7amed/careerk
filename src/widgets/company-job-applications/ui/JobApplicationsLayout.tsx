@@ -1,5 +1,5 @@
 "use client";
-import { getJob } from "@/entities/company-job";
+import { useCompanyJob } from "@/entities/company-job";
 import { BackButton, DashboardHeader, Pagination } from "@/shared";
 import { Star } from "lucide-react";
 
@@ -15,16 +15,16 @@ export function JobApplicationsLayout({ jobId }: { jobId?: string }) {
     isLoading,
     error,
   } = useApplicationsByJobId(jobId);
-  const applications = applicationsResponse?.data.applications ?? [];
-
   const [page, setPage] = useState(applicationsResponse?.data.page ?? 1);
+  const { data: job } = useCompanyJob(jobId!);
 
-  const totalPages = applicationsResponse?.data.totalPages ?? 1;
+  if (!applicationsResponse || !job) return null;
+
+  const applications = applicationsResponse.data.applications ?? [];
+  const totalPages = applicationsResponse.data.totalPages ?? 1;
 
   // use directly
   const paginatedApplications = applications;
-
-  const job = getJob(jobId!);
   return (
     <div>
       <div className="mb-8">

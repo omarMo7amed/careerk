@@ -31,7 +31,7 @@ interface ViewJobPostLayoutProps {
 }
 
 export function ViewJobPostLayout({ jobId }: ViewJobPostLayoutProps) {
-  const { data: jobPost, isLoading } = useCompanyJob({ jobId });
+  const { data: jobPost, isLoading } = useCompanyJob(jobId);
   const { mutate: deleteJob, isPending: isDeleting } = useDeleteCompanyJob();
 
   const { candidates } = useCandidatesQuery();
