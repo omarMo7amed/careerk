@@ -1,6 +1,6 @@
 import { CompanyJob } from "../types/companyJob";
 
-export async function updateJob(
+export async function updateCompanyJob(
   jobId: string,
   data: Partial<CompanyJob>,
 ): Promise<CompanyJob> {

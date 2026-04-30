@@ -55,13 +55,8 @@ export const jobPostSchema = z
         return date >= new Date();
       }, "Deadline must be a valid future date"),
 
-    skills: z
-      .array(
-        z.object({
-          skillId: z.string(),
-          name: z.string().min(1, "Skill name is required"),
-        }),
-      )
+    skillNames: z
+      .array(z.string().min(1, "Skill name is required"))
       .min(1, "Please add at least one skill")
       .max(20),
   })

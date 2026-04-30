@@ -40,14 +40,23 @@ export async function PATCH(
   }
 
   const existingJob = mockJobs[jobIndex];
+  // handle skillNames replacement
+  let updatedSkills = existingJob.skills;
+
+  if (body.skillNames) {
+    updatedSkills = body.skillNames.map((name: string) => ({
+      skillId: crypto.randomUUID(),
+      name,
+    }));
+  }
 
   const updatedJob: CompanyJob = {
     ...existingJob,
-    ...body,
+
+    skills: updatedSkills,
   };
 
   mockJobs[jobIndex] = updatedJob;
-  console.log(updatedJob);
 
   return NextResponse.json<GetCompanyJobResponse<CompanyJob>>({
     success: true,

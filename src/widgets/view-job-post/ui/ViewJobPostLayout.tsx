@@ -57,14 +57,14 @@ export function ViewJobPostLayout({ jobId }: { jobId: string }) {
       salaryMax: data.salaryMax ? Number(data.salaryMax) : null,
       location: data.location,
       deadline: data.deadline,
-      skills: data.skills,
+      skillNames: data.skillNames,
       publishedAt: new Date().toISOString(),
     };
-    await updateJob({
+    const dd = await updateJob({
       jobId: job.id,
       data: updatedJob,
     });
-
+    console.log("response", dd);
     setIsEditingJob(false);
   }
 

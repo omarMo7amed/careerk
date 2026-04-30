@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateJob } from "../api/updateJob";
+import { updateCompanyJob } from "../api/updateCompanyJob";
 import { CompanyJob } from "../types/companyJob";
 
 export function useUpdateCompanyJob() {
@@ -12,7 +12,7 @@ export function useUpdateCompanyJob() {
     }: {
       jobId: string;
       data: Partial<CompanyJob>;
-    }) => updateJob(jobId, data),
+    }) => updateCompanyJob(jobId, data),
 
     onSuccess: (updatedJob, variables) => {
       const { jobId } = variables;

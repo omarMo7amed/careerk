@@ -47,17 +47,20 @@ export function JobPostForm({
           salaryMax: initialData.salaryMax?.toString() ?? "",
           location: initialData.location ?? "",
           deadline: initialData.deadline ?? "",
-          skills: initialData.skills,
+          skillNames:
+            initialData.skills?.map((s) =>
+              typeof s === "string" ? s : s.name,
+            ) ?? [],
         }
       : {
           jobType: "FULL_TIME",
           workPreference: "REMOTE",
           experienceLevel: "ENTRY",
-          skills: [],
+          skillNames: [],
         },
   });
 
-  const skills = watch("skills") ?? [];
+  const skillNames = watch("skillNames") ?? [];
   const isLoading = isSubmitting || isCreating;
 
   async function onSubmit(data: JobPostFormData) {
@@ -66,6 +69,7 @@ export function JobPostForm({
       console.log("Job edit:", data);
       return;
     }
+
     await createJob(data);
     console.log("Job posted:", data);
 
@@ -92,8 +96,8 @@ export function JobPostForm({
         <SkillsInput
           register={register}
           setValue={setValue}
-          skills={skills}
-          error={errors.skills?.message}
+          skillNames={skillNames}
+          error={errors.skillNames?.message}
         />
       </div>
 

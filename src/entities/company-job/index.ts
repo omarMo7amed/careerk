@@ -1,4 +1,4 @@
-export { updateJob } from "./api/updateJob";
+export { updateCompanyJob } from "./api/updateCompanyJob";
 export { getCompanyJobs } from "./api/getCompanyJobs";
 export { useCompanyJobs } from "./hook/useCompanyJobs";
 export { useCompanyJob } from "./hook/useCompanyJob";

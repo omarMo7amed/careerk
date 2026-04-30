@@ -9,25 +9,45 @@ export async function POST(req: NextRequest) {
   await new Promise((r) => setTimeout(r, 600));
 
   const body = await req.json();
+  const { skillNames, ...rest } = body;
+
+  // Guard — skillNames must be an array
+  if (!Array.isArray(skillNames)) {
+    return NextResponse.json(
+      {
+        success: false,
+        data: null,
+        message: "skillNames must be an array",
+        meta: {
+          timestamp: new Date().toISOString(),
+          path: "/api/v1/company-jobs",
+          method: "POST",
+        },
+      },
+      { status: 400 },
+    );
+  }
 
   const newJob: CompanyJob = {
     id: crypto.randomUUID(),
-    ...body,
-    status: body.status,
+    ...rest,
+    status: rest.status,
     publishedAt: null,
-    requirements: body.requirements ?? null,
-    responsibilities: body.responsibilities ?? null,
-    location: body.location ?? null,
-    salaryMin: body.salaryMin ?? null,
-    salaryMax: body.salaryMax ?? null,
-    deadline: body.deadline ?? null,
+    requirements: rest.requirements ?? null,
+    responsibilities: rest.responsibilities ?? null,
+    location: rest.location ?? null,
+    salaryMin: rest.salaryMin ?? null,
+    salaryMax: rest.salaryMax ?? null,
+    deadline: rest.deadline ?? null,
     company: {
-      //will be changed
       id: "company_001",
       name: "Careerk",
       logoUrl: null,
     },
-    skills: body.skills ?? [],
+    skills: (skillNames as string[]).map((name) => ({
+      skillId: crypto.randomUUID(),
+      name,
+    })),
   };
 
   return NextResponse.json<GetCompanyJobResponse<CompanyJob>>(

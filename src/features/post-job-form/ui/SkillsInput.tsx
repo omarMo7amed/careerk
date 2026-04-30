@@ -3,19 +3,18 @@ import { Badge, Input, Label } from "@/shared";
 import { FieldError } from "@/shared/ui/FieldError";
 import { JobPostFormData } from "../lib/jobPostSchema";
 import { X } from "lucide-react";
-import { JobSkill } from "@/entities/company-job";
 
 type SkillsInputProps = {
   register: UseFormRegister<JobPostFormData>;
   setValue: UseFormSetValue<JobPostFormData>;
-  skills: JobSkill[];
+  skillNames: string[];
   error?: string;
 };
 
 export function SkillsInput({
   register,
   setValue,
-  skills,
+  skillNames,
   error,
 }: SkillsInputProps) {
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -27,15 +26,10 @@ export function SkillsInput({
 
       if (!skillName) return;
 
-      const exists = skills.some((s) => s.name === skillName);
+      const exists = skillNames.includes(skillName);
       if (exists) return;
 
-      const newSkill: JobSkill = {
-        skillId: crypto.randomUUID(),
-        name: skillName,
-      };
-
-      setValue("skills", [...skills, newSkill], {
+      setValue("skillNames", [...skillNames, skillName], {
         shouldValidate: true,
         shouldDirty: true,
       });
@@ -44,10 +38,10 @@ export function SkillsInput({
     }
   }
 
-  function removeSkill(skillId: string) {
+  function removeSkill(skillName: string) {
     setValue(
-      "skills",
-      skills.filter((s) => s.skillId !== skillId),
+      "skillNames",
+      skillNames.filter((s) => s !== skillName),
       { shouldValidate: true, shouldDirty: true },
     );
   }
@@ -64,15 +58,15 @@ export function SkillsInput({
         className="bg-background"
         onKeyDown={handleKeyDown}
       />
-      <input type="hidden" {...register("skills")} />
+      <input type="hidden" {...register("skillNames")} />
       <FieldError message={error} />
-      {skills.length > 0 && (
+      {skillNames.length > 0 && (
         <div className="mt-2 flex flex-wrap gap-2">
-          {skills.map((skill) => (
-            <div key={skill.skillId}>
+          {skillNames.map((skill) => (
+            <div key={skill}>
               <Badge variant="skill" className="cursor-pointer">
-                {skill.name}
-                <span onClick={() => removeSkill(skill.skillId)}>
+                {skill}
+                <span onClick={() => removeSkill(skill)}>
                   <X className="w-4 h-4" />
                 </span>
               </Badge>
