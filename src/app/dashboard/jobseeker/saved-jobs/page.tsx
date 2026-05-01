@@ -1,9 +1,9 @@
-import { SavedJobsList } from "@/widgets/saved-jobs-layout";
+import SavedJobsPage from "@/widgets/saved-jobs-layout/ui/SavedJobsPage";
 
 function page() {
   return (
     <div className="space-y-8 p-6">
-      <SavedJobsList />
+      <SavedJobsPage />
     </div>
   );
 }

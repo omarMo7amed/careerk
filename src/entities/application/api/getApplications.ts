@@ -70,7 +70,6 @@ export async function getApplications({
   }
 
   const data = await response.json();
-
   return data;
 }
 

@@ -1,28 +1,52 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import { Job } from "../types/BoomarkedJob";
+import { BookmarksResponse } from "../types/BoomarkedJob";
 import { getBookmarkedJobs } from "../api/getBookmarkedJobs";
 
 type UseSavedJobsOptions = {
   page?: number;
-  pageSize?: number;
+  limit?: number;
+  search?: string;
+  location?: string;
+  jobType?: string[];
+  jobSource?: string[];
 };
 export function useSavedJobs({
   page = 1,
-  pageSize = 10,
+  limit = 10,
+  search,
+  location,
+  jobType,
+  jobSource,
 }: UseSavedJobsOptions = {}) {
-  const queryKey = ["bookmark", page, pageSize] as const;
+  const queryKey = [
+    "bookmark",
+    page,
+    limit,
+    search,
+    location,
+    jobType,
+    jobSource,
+  ] as const;
 
-  const { isPending, data, error } = useQuery<Job[], Error>({
+  const { isPending, data, error } = useQuery<BookmarksResponse, Error>({
     queryKey,
     queryFn: async ({ signal }) => {
-      return getBookmarkedJobs({ signal, page, pageSize });
+      return getBookmarkedJobs({
+        signal,
+        page,
+        limit,
+        search,
+        location,
+        jobType,
+        jobSource,
+      });
     },
     staleTime: 1000 * 60 * 5,
   });
 
   return {
-    jobs: data ?? [],
+    data,
     isLoading: isPending,
     error: error ?? null,
   };

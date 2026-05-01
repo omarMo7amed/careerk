@@ -1,19 +1,20 @@
-import { Job } from "../types/BoomarkedJob";
+import { BookmarkedJob } from "../types/BoomarkedJob";
 import { SavedJobCardType } from "../types/savedJobCard";
 
-export function jobToJobCard(job: Job): SavedJobCardType {
+export function jobToJobCard(bookmark: BookmarkedJob): SavedJobCardType {
   return {
-    id: job.id,
-    title: job.title,
-    companyName: job.companyName,
-    location: job.location,
-    salary: job.salary,
-    jobType: job.jobType,
-    skills: job.skills,
+    id: bookmark.job.id,
+    bookmarkId: bookmark.bookmarkId,
+    title: bookmark.job.title,
+    companyName: bookmark.job.companyName,
+    location: bookmark.job.location,
+    salary: bookmark.job.salary,
+    jobType: bookmark.job.jobType,
+    skills: bookmark.job.skills,
     isBookmarked: true, // Assuming all fetched jobs are bookmarked
   };
 }
 
-export function jobsToJobCards(jobs: Job[]): SavedJobCardType[] {
-  return jobs.map(jobToJobCard);
+export function jobsToJobCards(bookmarks: BookmarkedJob[]): SavedJobCardType[] {
+  return bookmarks.map(jobToJobCard);
 }

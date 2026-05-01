@@ -1,14 +1,21 @@
-import { Bookmark, Clock } from "lucide-react";
+import { Clock } from "lucide-react";
 import { ApplyNow } from "./ApplyNow";
+import { BookmarkButton } from "@/features/bookmark-job";
 
 interface JobFooterProps {
   postedDate?: string;
   isAuthenticated?: boolean;
+  id: string;
+  bookmarkId?: string;
+  isBookmarked?: boolean;
 }
 
 export function JobFooter({
   postedDate,
   isAuthenticated = true,
+  id,
+  bookmarkId,
+  isBookmarked,
 }: JobFooterProps) {
   return (
     <div className="pt-4 border-t border-border flex items-center justify-between">
@@ -20,10 +27,12 @@ export function JobFooter({
       )}
 
       <div className="flex items-center gap-4">
-        <Bookmark
-          className="text-primary hover:bg-primary/10 p-2 rounded-lg"
-          size={40}
+        <BookmarkButton
+          jobId={id}
+          bookmarkId={bookmarkId}
+          isBookmarked={isBookmarked}
         />
+
         {isAuthenticated && <ApplyNow />}
       </div>
     </div>

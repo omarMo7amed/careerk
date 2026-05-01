@@ -18,7 +18,9 @@ import { usePathname } from "next/navigation";
 
 export function JobCardJobseeker({ job }: JobCardProps) {
   const pathname = usePathname();
-
+  const id = job.id ?? job.id ?? "";
+  const bookmarkId = job.bookmarkId;
+  const isBookmarked = job.isBookmarked ?? false;
   const title = job.title ?? "Untitled Job";
   const description = job.description ?? "";
   const companyName = job.company?.name ?? job.companyName ?? "Unknown Company";
@@ -88,7 +90,12 @@ export function JobCardJobseeker({ job }: JobCardProps) {
         totalApplicants={totalApplicants}
       />
 
-      <JobFooter postedDate={postedDate} />
+      <JobFooter
+        postedDate={postedDate}
+        id={id}
+        bookmarkId={bookmarkId}
+        isBookmarked={isBookmarked}
+      />
     </motion.div>
   );
 }
