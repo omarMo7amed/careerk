@@ -26,7 +26,8 @@ import { JobStatus } from "@/entities/company-job/types/companyJob";
 
 export function ViewJobPostLayout({ jobId }: { jobId: string }) {
   const { data: jobPost, isLoading } = useCompanyJob(jobId);
-  const { mutate: deleteJob, isPending: isDeleting } = useDeleteCompanyJob();
+  const { mutateAsync: deleteJob, isPending: isDeleting } =
+    useDeleteCompanyJob();
   const { mutateAsync: updateJob } = useUpdateCompanyJob();
 
   const { candidates } = useCandidatesQuery();
@@ -68,8 +69,8 @@ export function ViewJobPostLayout({ jobId }: { jobId: string }) {
     setIsEditingJob(false);
   }
 
-  function handleConfirmDelete() {
-    deleteJob(job.id);
+  async function handleConfirmDelete() {
+    await deleteJob(job.id);
     setShowDeleteModal(false);
   }
 

@@ -6,12 +6,6 @@ import Link from "next/link";
 import { useCompanyJobs } from "@/entities/company-job";
 
 export function CompanyJoblistings() {
-  // const [jobs, setJobs] = useState(mockJobs);
-
-  // function handleDelete(id: string) {
-  //   setJobs((prev) => prev.filter((j) => j.id !== id));
-  // }
-
   const { data: jobs = [], isLoading } = useCompanyJobs();
 
   if (isLoading) return <p>Loading...</p>;

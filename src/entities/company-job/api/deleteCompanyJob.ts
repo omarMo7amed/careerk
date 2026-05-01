@@ -12,5 +12,5 @@ export async function deleteCompanyJob(id: string) {
   const { data } = await axiosInstance.delete<DeleteJobResponse>(
     `/company-jobs/${id}`,
   );
-  return data;
+  return data.data.id;
 }

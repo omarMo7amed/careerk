@@ -21,3 +21,9 @@ company: Company;
 skills: JobSkill[];
 applicants?: number; // missed
 }
+
+---
+
+export type JobStatus = "DRAFT" | "PUBLISHED" | "PAUSED" | "CLOSED"; //Remove "DRAFT" & "CLOSED"
+//New
+export type JobStatus = "PUBLISHED" | "PAUSED" ;

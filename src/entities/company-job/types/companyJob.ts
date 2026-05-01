@@ -27,7 +27,7 @@ export type ExperienceLevel =
   | "LEAD"
   | "MANAGER";
 
-export type JobStatus = "DRAFT" | "PUBLISHED" | "PAUSED" | "CLOSED";
+export type JobStatus = "PUBLISHED" | "PAUSED";
 
 export interface CompanyJob {
   id: string;
@@ -76,8 +76,3 @@ export interface DeleteJobResponse {
   message: string;
   meta: ApiMeta;
 }
-/**
- * souad , write a readme file called Souad_MISSED.md
- * put the same object but with the missed properties only and add a comment "missed" next to each of them
- * write the endpoints that are use this structure in amr's Docs
- *  */

@@ -50,6 +50,8 @@ export async function POST(req: NextRequest) {
     })),
   };
 
+  mockJobs.unshift(newJob);
+  console.log("added", mockJobs);
   return NextResponse.json<GetCompanyJobResponse<CompanyJob>>(
     {
       success: true,

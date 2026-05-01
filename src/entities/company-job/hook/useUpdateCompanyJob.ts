@@ -19,7 +19,9 @@ export function useUpdateCompanyJob() {
 
       queryClient.setQueryData(["company-job", jobId], updatedJob);
 
-      queryClient.invalidateQueries({ queryKey: ["company-jobs"] });
+      queryClient.setQueryData(["company-jobs"], (old: CompanyJob[]) =>
+        old?.map((job) => (job.id === jobId ? updatedJob : job)),
+      );
     },
   });
 }

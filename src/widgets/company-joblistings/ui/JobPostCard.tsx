@@ -2,6 +2,7 @@
 import {
   jobTypeLabels,
   useDeleteCompanyJob,
+  useUpdateCompanyJob,
   workPreferenceLabels,
 } from "@/entities/company-job";
 import { toggleJobStatus } from "@/entities/company-job";
@@ -21,19 +22,24 @@ type JobPostCardProps = {
 };
 
 export function JobPostCard({ job }: JobPostCardProps) {
-  const [cardStatus, setCardStatus] = useState(job.status);
-  const { mutate: deleteJob, isPending: isDeleting } = useDeleteCompanyJob();
+  const { mutateAsync: deleteJob, isPending: isDeleting } =
+    useDeleteCompanyJob();
 
-  function handleToggleStatus() {
-    const newStatus = toggleJobStatus(job.id);
-    // setCardStatus(newStatus);
-  }
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const { id, title, skills, location, workPreference, jobType, status } = job;
+  const { mutateAsync: updateJob } = useUpdateCompanyJob();
+  async function handleToggleStatus() {
+    const newStatus = status === "PUBLISHED" ? "PAUSED" : "PUBLISHED";
+    const dd =await updateJob({
+      jobId: job.id,
+      data: { status: newStatus },
+    });
+    console.log("status update",dd)
+  }
 
-  function handleConfirmDelete() {
-    deleteJob(id);
+  async function handleConfirmDelete() {
+    await deleteJob(id);
     setShowDeleteModal(false);
   }
 
@@ -88,7 +94,7 @@ export function JobPostCard({ job }: JobPostCardProps) {
               </Button>
             </Link>
 
-            {cardStatus === "PUBLISHED" ? (
+            {status === "PUBLISHED" ? (
               <Button
                 size="sm"
                 variant="ghost"

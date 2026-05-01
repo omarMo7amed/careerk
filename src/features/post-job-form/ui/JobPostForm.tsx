@@ -43,6 +43,7 @@ export function JobPostForm({
           jobType: initialData.jobType,
           workPreference: initialData.workPreference,
           experienceLevel: initialData.experienceLevel,
+          status: initialData.status,
           salaryMin: initialData.salaryMin?.toString() ?? "",
           salaryMax: initialData.salaryMax?.toString() ?? "",
           location: initialData.location ?? "",

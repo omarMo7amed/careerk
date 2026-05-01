@@ -9,6 +9,7 @@ function deleteMockJob(jobId: string): boolean {
   const index = mockJobs.findIndex((j) => j.id === jobId);
   if (index === -1) return false;
   mockJobs.splice(index, 1);
+  console.log("deleted",mockJobs)
   return true;
 }
 
@@ -40,11 +41,14 @@ export async function PATCH(
   }
 
   const existingJob = mockJobs[jobIndex];
+
+  const { skillNames, ...restBody } = body;
+
   // handle skillNames replacement
   let updatedSkills = existingJob.skills;
 
-  if (body.skillNames) {
-    updatedSkills = body.skillNames.map((name: string) => ({
+  if (skillNames) {
+    updatedSkills = skillNames.map((name: string) => ({
       skillId: crypto.randomUUID(),
       name,
     }));
@@ -52,7 +56,7 @@ export async function PATCH(
 
   const updatedJob: CompanyJob = {
     ...existingJob,
-
+    ...restBody,
     skills: updatedSkills,
   };
 

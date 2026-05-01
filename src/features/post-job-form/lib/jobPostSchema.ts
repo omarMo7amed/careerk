@@ -36,7 +36,7 @@ export const jobPostSchema = z
     experienceLevel: z
       .enum(["ENTRY", "JUNIOR", "MID", "SENIOR", "LEAD", "MANAGER"])
       .default("ENTRY"),
-    status: z.enum(["DRAFT", "PUBLISHED", "PAUSED", "CLOSED"]).default("DRAFT"),
+    status: z.enum(["PUBLISHED", "PAUSED"]).default("PUBLISHED"),
 
     salaryMin: salaryField,
     salaryMax: salaryField,

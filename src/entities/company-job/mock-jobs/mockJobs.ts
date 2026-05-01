@@ -1,6 +1,6 @@
 import { CompanyJob } from "../types/companyJob";
 
-export const mockJobs: CompanyJob[] = [
+export let mockJobs: CompanyJob[] = [
   {
     id: "job_001",
 

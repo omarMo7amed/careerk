@@ -1,14 +1,17 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createCompanyJob, CreateJobPayload } from "../api/createCompanyJob";
-// import { JobPostFormData } from "@/features/post-job-form";
+import { CompanyJob } from "../types/companyJob";
 
 export function useCreateCompanyJob() {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (payload: CreateJobPayload) => createCompanyJob(payload),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["company-jobs"] });
+    onSuccess: (newJob) => {
+      queryClient.setQueryData(["company-jobs"], (old: CompanyJob[]) => [
+        newJob,
+        ...(old || []),
+      ]);
     },
   });
 }
