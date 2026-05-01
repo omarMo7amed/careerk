@@ -37,7 +37,7 @@ export async function getBookmarkedJobs(options?: GetBookmarkedJobsOptions) {
     {
       method: "GET",
       headers: {
-        "Content-Type": "saved-jobs/json",
+        "Content-Type": "application/json",
         authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     },

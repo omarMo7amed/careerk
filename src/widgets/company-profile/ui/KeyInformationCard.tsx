@@ -44,11 +44,15 @@ export function KeyInformationCard({
         foundedYear: Number(form.foundedYear),
       },
       {
-        onSuccess: () => {
-          toast.success("Key Informations updated!");
-          setEditing(false);
+        onSuccess: (response) => {
+          if (response.success) {
+            toast.success(response.message);
+            setEditing(false);
+          }
         },
-        onError: () => toast.error("Failed to update key informations."),
+        onError: (error) => {
+          toast.error(error?.message || "Failed to update key information.");
+        },
       },
     );
   }

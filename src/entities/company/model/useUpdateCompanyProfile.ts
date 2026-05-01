@@ -10,8 +10,13 @@ export function useUpdateCompanyProfile() {
   const { mutate, isPending, isError } = useMutation({
     mutationFn: (data: Partial<CompanyProfile>) =>
       updateCompanyProfile(data.id!, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["companyProfile"] });
+    onSuccess: (response) => {
+      if (response.success) {
+        queryClient.setQueryData(["companyProfile"], response.data);
+      }
+    },
+    onError: (error) => {
+      console.error("Update company profile error:", error);
     },
   });
 

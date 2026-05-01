@@ -12,11 +12,11 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export function SavedJobsSection() {
-  const { data, isLoading, error } = useSavedJobs({
+  const { jobs, isLoading, error } = useSavedJobs({
     page: 1,
     limit: 3,
   });
-  const savedJobCards: SavedJobCardType[] = jobsToJobCards(data?.data || []);
+  const savedJobCards: SavedJobCardType[] = jobsToJobCards(jobs);
 
   return (
     <div className="rounded-2xl p-6">

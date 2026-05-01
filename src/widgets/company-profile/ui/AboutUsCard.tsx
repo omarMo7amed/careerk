@@ -20,11 +20,15 @@ export function AboutUsCard({
     updateProfile(
       { description: value },
       {
-        onSuccess: () => {
-          toast.success("Description updated!");
-          setEditing(false);
+        onSuccess: (response) => {
+          if (response.success) {
+            toast.success(response.message);
+            setEditing(false);
+          }
         },
-        onError: () => toast.error("Failed to update description."),
+        onError: (error) => {
+          toast.error(error?.message || "Failed to update description.");
+        },
       },
     );
   }

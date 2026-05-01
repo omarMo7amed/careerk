@@ -31,7 +31,7 @@ export function SavedJobsList() {
   const page = Number(searchParams.get("page")) || 1;
   const limit = Number(searchParams.get("limit")) || 12;
 
-  const { data, isLoading, error } = useSavedJobs({
+  const { jobs, isLoading, error } = useSavedJobs({
     search: query,
     location,
     jobType,
@@ -39,7 +39,7 @@ export function SavedJobsList() {
     page,
     limit,
   });
-  const jobs = data?.data || [];
+
   const jobCards = jobsToJobCards(jobs);
   const totalPages = Math.ceil(jobCards.length / 12);
 

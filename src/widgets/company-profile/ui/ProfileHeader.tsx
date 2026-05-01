@@ -40,11 +40,15 @@ export function ProfileHeader({ isOwner, headerInfo, id }: ProfileHeaderProps) {
         type: form.type ? (form.type as CompanyType) : undefined,
       },
       {
-        onSuccess: () => {
-          toast.success("Header updated!");
-          setIsEditing(false);
+        onSuccess: (response) => {
+          if (response.success) {
+            toast.success(response.message);
+            setIsEditing(false);
+          }
         },
-        onError: () => toast.error("Failed to update header."),
+        onError: (error) => {
+          toast.error(error?.message || "Failed to update header.");
+        },
       },
     );
   }

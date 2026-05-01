@@ -42,11 +42,12 @@ export function useSavedJobs({
         jobSource,
       });
     },
+
     staleTime: 1000 * 60 * 5,
   });
 
   return {
-    data,
+    jobs: data?.data || [],
     isLoading: isPending,
     error: error ?? null,
   };
