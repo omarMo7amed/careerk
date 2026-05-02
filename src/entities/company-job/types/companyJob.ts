@@ -76,3 +76,29 @@ export interface DeleteJobResponse {
   message: string;
   meta: ApiMeta;
 }
+
+//////////////////////////////////
+
+export type AvailabilityStatus =
+  | "OPEN_TO_WORK"
+  | "NOT_LOOKING"
+  | "PASSIVELY_LOOKING";
+
+export interface JobMatch {
+  id: string;
+  jobSeekerId: string;
+  jobSeekerName: string;
+  jobSeekerTitle: string;
+  availabilityStatus: AvailabilityStatus;
+  location: string;
+  matchScore: number;
+  createdAt: string;
+}
+
+export interface JobMatchesData {
+  matches: JobMatch[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}

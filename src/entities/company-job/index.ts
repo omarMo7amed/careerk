@@ -5,9 +5,10 @@ export { useCompanyJob } from "./hook/useCompanyJob";
 export { useDeleteCompanyJob } from "./hook/useDeleteCompanyJob";
 export { useCreateCompanyJob } from "./hook/useCreateCompanyJob";
 export { useUpdateCompanyJob } from "./hook/useUpdateCompanyJob";
+export { useCompanyJobMatches } from "./hook/useCompanyJobMatches";
 
 export { toggleJobStatus } from "./api/toggleJobStatus";
-export { mockJobs } from "./mock-jobs/mockJobs";
+export { mockJobs, getMockJob, getMockMatches } from "./mock-jobs/mockJobs";
 export type {
   CompanyJob,
   JobType,
@@ -18,6 +19,8 @@ export type {
   GetCompanyJobsResponse,
   GetCompanyJobResponse,
   DeleteJobResponse,
+  JobMatch,
+  JobMatchesData,
 } from "./types/companyJob";
 export type { Company } from "./types/companyJob";
 export {
