@@ -6,11 +6,12 @@ import { toast } from "react-hot-toast";
 import { SummaryProps } from "../types/summaryType";
 import { DisplayMode } from "../components/DisplayMode";
 import { EditingMode } from "../components/EditingMode";
-
+// import {useAuth}from "@/features/auth";
 export function Summary({ summary, isOwner }: SummaryProps) {
+  // const {token}=useAuth();
   const [editing, setEditing] = useState(false);
   const [value, setValue] = useState(summary ?? "");
-  const { updateProfile, isPending } = useUpdateProfile();
+  const { updateProfile, isPending } = useUpdateProfile({ token: "" });
 
   function handleSave() {
     updateProfile(

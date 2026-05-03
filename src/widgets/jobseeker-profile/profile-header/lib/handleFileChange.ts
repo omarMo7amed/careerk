@@ -3,7 +3,7 @@ import {
   ACCEPTED_IMAGE_TYPES,
   MAX_IMAGE_SIZE_MB,
   MAX_IMAGE_SIZE_BYTES,
-} from "@/shared/constant/media";
+} from "@/shared";
 
 export function handleFileChange(
   e: React.ChangeEvent<HTMLInputElement>,
@@ -12,6 +12,8 @@ export function handleFileChange(
   const file = e.target.files?.[0];
   e.target.value = "";
   if (!file) return;
+
+  console.log("Selected file:", file);
 
   if (
     !ACCEPTED_IMAGE_TYPES.includes(

@@ -9,6 +9,7 @@ import { useUpdateProfilePhoto } from "@/entities/job-seeker";
 
 import { ACCEPTED_IMAGE_TYPES } from "@/shared";
 import { ProfileImageProps } from "../types/profileImage";
+// import { useAuth } from "@/features/auth";
 
 export function ProfileImage({
   id,
@@ -17,9 +18,12 @@ export function ProfileImage({
   isOwner,
 }: ProfileImageProps) {
   const initials = getInitialsFromFullName(fullName);
+  // const {token}=useAuth();
   const color = getProfileColor(id);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { upload, isPending, isError, error } = useUpdateProfilePhoto();
+  const { upload, isPending, isError, error } = useUpdateProfilePhoto({
+    token: "",
+  });
 
   return (
     <div className="-mt-14 shrink-0">

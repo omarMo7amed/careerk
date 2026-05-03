@@ -8,14 +8,14 @@ export function FileInfo({ pendingCV }: { pendingCV: StoredCV }) {
 
   return (
     <div className="flex items-center gap-2">
-      <div className="shrink-0 p-2 bg-white rounded-lg border border-blue-100 shadow-sm">
-        <FileTextIcon size={22} className="text-blue-500" />
+      <div className="shrink-0 p-2 bg-bg-surface rounded-lg border border-primary/20 shadow-sm">
+        <FileTextIcon size={22} className="text-primary" />
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-semibold text-gray-800 truncate">
+        <p className="text-sm font-semibold text-foreground truncate">
           {pendingCV.name}
         </p>
-        <p className="text-xs text-gray-400">{fileSizeMB} MB</p>
+        <p className="text-xs text-text-muted">{fileSizeMB} MB</p>
       </div>
     </div>
   );

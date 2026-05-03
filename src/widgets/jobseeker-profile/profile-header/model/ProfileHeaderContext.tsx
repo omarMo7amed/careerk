@@ -63,7 +63,8 @@ function InfoSection() {
 }
 
 function ActionsSection() {
-  const { profileHeader } = useProfileHeaderContext();
+  const { profileHeader, isOwner } = useProfileHeaderContext();
+  if (isOwner) return null;
   return (
     <div className="flex flex-col lg:flex-row gap-2">
       <ContactButton />

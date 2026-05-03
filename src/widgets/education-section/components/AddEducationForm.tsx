@@ -3,7 +3,7 @@ import { DEGREE_LABELS } from "@/entities/education";
 import { useEducationContext } from "../model/EducationContext";
 
 export function AddEducationForm() {
-  const { form, setFormField, submitForm, closeForm } = useEducationContext();
+  const { form, setFormField, addEducation, closeForm } = useEducationContext();
 
   if (!form) return null;
 
@@ -116,7 +116,7 @@ export function AddEducationForm() {
         </Button>
         <Button
           variant="primary"
-          onClick={submitForm}
+          onClick={addEducation}
           disabled={!form.institutionName.trim() || !form.fieldOfStudy.trim()}
         >
           Add Entry

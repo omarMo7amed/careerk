@@ -19,11 +19,10 @@ export function SkillsProvider({
   skills?: SkillsContextValue["skills"];
 }) {
   const model = useSkillsModel({ isOwner });
+  const visibleSkills = model.editing ? model.skills : skills ?? model.skills;
 
   return (
-    <SkillsContext.Provider
-      value={{ ...model, skills: skills ?? model.skills }}
-    >
+    <SkillsContext.Provider value={{ ...model, skills: visibleSkills }}>
       <section className="bg-bg-surface rounded-xl border border-border p-6 shadow-sm">
         {children}
       </section>

@@ -6,12 +6,9 @@ import {
 } from "../model/ContactInfoContext";
 import type { ContactInfoRootProps } from "../types/contactInfoProps";
 
-export function ContactInfo({
-  contactInfo,
-  isOwner = false,
-}: ContactInfoRootProps) {
+export function ContactInfo({ isOwner = false }: ContactInfoRootProps) {
   return (
-    <ContactInfoProvider contactInfo={contactInfo} isOwner={isOwner}>
+    <ContactInfoProvider isOwner={isOwner}>
       <ContactInfoComponents.Header />
       <ContactInfoComponents.Display />
       <ContactInfoComponents.EditingMode />

@@ -68,6 +68,16 @@ export function useCVUpload() {
     });
   }
 
+  function openPreviewPendingCV() {
+    if (!state.pendingCV) return;
+    const file = storedCVToFile(state.pendingCV);
+    const previewUrl = state.pendingCV.data;
+    dispatch({
+      type: "SELECT_FILE",
+      payload: { file, previewUrl },
+    });
+  }
+
   function discard() {
     clearCVFromLocalStorage();
     dispatch({ type: "DISCARD_PENDING" });
@@ -111,5 +121,6 @@ export function useCVUpload() {
     pendingUploadError: state.pendingUploadError,
     discard,
     uploadToServer,
+    openPreviewPendingCV,
   };
 }

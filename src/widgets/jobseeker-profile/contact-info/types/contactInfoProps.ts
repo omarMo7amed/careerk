@@ -2,11 +2,10 @@ import { JobSeekerProfile } from "@/entities/job-seeker";
 
 export type ContactInfoData = Pick<
   JobSeekerProfile,
-  "phone" | "cvEmail" | "location"
+  "phone" | "cvEmail" | "location" | "noticePeriod"
 >;
 
 export interface ContactInfoRootProps {
-  contactInfo: ContactInfoData;
   isOwner?: boolean;
 }
 

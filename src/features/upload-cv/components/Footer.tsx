@@ -11,7 +11,7 @@ export default function Footer({
   onClose: () => void;
 }) {
   return (
-    <div className="flex gap-3 justify-end px-6 py-4 border-t border-gray-100">
+    <div className="flex gap-3 justify-end px-6 py-4 border-t border-border">
       <Button variant="ghost" onClick={onClose} disabled={isUploading}>
         Cancel
       </Button>

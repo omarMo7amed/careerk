@@ -5,14 +5,9 @@ import {
   LinksPortfolioProvider,
 } from "../model/LinksPortfolioContext";
 
-import type { LinksPortfolioProps } from "../types/types";
-
-export function LinksPortfolio({
-  profile,
-  isOwner = false,
-}: LinksPortfolioProps) {
+export function LinksPortfolio({ isOwner = false }: { isOwner?: boolean }) {
   return (
-    <LinksPortfolioProvider profile={profile} isOwner={isOwner}>
+    <LinksPortfolioProvider isOwner={isOwner}>
       <LinksPortfolioComponents.Header />
       <LinksPortfolioComponents.Display />
       <LinksPortfolioComponents.EditingMode />

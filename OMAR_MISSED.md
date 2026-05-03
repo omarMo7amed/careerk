@@ -49,6 +49,11 @@ applicants?: number; // missed
 JobSeeker Endpoints (Amr Docs):
 
 - GET /api/v1/job-seekers
+- GET /api/v1/job-seekers/me
+  return skillId for each skill and id for each education with the same name
+
+- PATCH /api/v1/job-seekers/me
+  i want to return just the data modified not all object ( you corrupt my cache hasbya allah wa n3ma el wakel )
 
 export interface CandidateData {
 firstName: string;
@@ -80,3 +85,14 @@ matches Endpoints (Amr Docs):
 - GET /api/v1/job-seekers/me/matches
 
 i want it as - GET /api/v1/jobs with our modifications + keep matchScore
+
+Skills Endpoints (Amr Docs):
+
+- DELETE /api/v1/job-seekers/me/skills/:skillId
+  i want it /api/v1/job-seekers/me/skills and i will send patch of ids in body with ids of skills as this {
+  method: "DELETE",
+  // headers: {
+  // Authorization: `Bearer ${token}`,
+  // },
+  body: JSON.stringify({ ids: skillIds }),
+  },

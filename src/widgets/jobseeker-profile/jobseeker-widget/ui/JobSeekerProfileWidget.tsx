@@ -1,5 +1,5 @@
 "use client";
-import { useJobSeekerQuery, type JobSeeker } from "@/entities/job-seeker";
+import { useMyProfileQuery, type JobSeeker } from "@/entities/job-seeker";
 import { ProfileHeader } from "../../profile-header";
 import { Summary } from "../../../jobseeker-summary";
 import { ContactInfo } from "../../contact-info";
@@ -9,10 +9,10 @@ import { ExperienceSection } from "@/widgets/experience-section";
 import { EducationSection } from "@/widgets/education-section";
 import { SkillsSection } from "@/widgets/skills-section";
 
-import {
-  ProfileStatus,
-  EditingState,
-} from "@/widgets/jobseeker-profile/profile-status";
+// import {useAuth} from "@/hooks/useAuth";
+
+import { ProfileStatus } from "@/widgets/jobseeker-profile/profile-status";
+import { Loader } from "@/shared";
 
 interface JobSeekerProfileWidgetProps {
   jobSeeker?: JobSeeker;
@@ -23,27 +23,15 @@ export function JobSeekerProfileWidget({
   jobSeeker: jobSeekerProp,
   isOwner = false,
 }: JobSeekerProfileWidgetProps) {
-  const { jobSeeker: ownData, isLoading, error } = useJobSeekerQuery();
+  // const {token} = useAuth();
+  const {
+    jobSeeker: ownData,
+    isLoading,
+    error,
+  } = useMyProfileQuery({ token: "" });
 
   const jobSeeker = jobSeekerProp ?? ownData;
   const loading = !jobSeekerProp && isLoading;
-
-  //i will refactor this when implementing the API, for now we need to map the data to the expected format of the components
-
-  const profileStatus: Omit<EditingState, "status"> = {
-    availabilityStatus: jobSeeker?.profile.availabilityStatus ?? "",
-    workPreference: jobSeeker?.profile.workPreference ?? "",
-    preferredJobTypes: jobSeeker?.profile.preferredJobTypes ?? [],
-    expectedSalary: jobSeeker?.profile.expectedSalary ?? null,
-    noticePeriod: jobSeeker?.profile.noticePeriod ?? "",
-  };
-
-  const contactInfo = {
-    phone: jobSeeker?.profile.phone || "",
-    cvEmail: jobSeeker?.profile.cvEmail || "",
-    location: jobSeeker?.profile.location || "",
-    noticePeriod: jobSeeker?.profile.noticePeriod || "",
-  };
 
   const profileInfo = {
     jobSeekerId: jobSeeker?.profile.jobSeekerId || "",
@@ -52,12 +40,12 @@ export function JobSeekerProfileWidget({
     lastName: jobSeeker?.lastName || "",
     yearsOfExperience: jobSeeker?.profile.yearsOfExperience || 0,
     title: jobSeeker?.profile.title || "",
-    avatarUrl: jobSeeker?.avatarUrl || null,
+    avatarUrl: jobSeeker?.profileImageUrl || null,
     cvUrl: jobSeeker?.profile.cvUrl || null,
   };
 
   if (loading) {
-    return null; //  replace with skeleton or loading ya shahd
+    return <Loader />;
   }
 
   if ((!jobSeekerProp && error) || !jobSeeker) {
@@ -75,15 +63,20 @@ export function JobSeekerProfileWidget({
       <div className="flex flex-col lg:flex-row gap-4 my-4">
         <div className="flex flex-col gap-4">
           <Summary summary={jobSeeker.profile.summary} isOwner={isOwner} />
-          <ExperienceSection workExperiences={jobSeeker.workExperiences} />
-          <SkillsSection isOwner={isOwner} />
-          <EducationSection isOwner={isOwner} />
+          <ExperienceSection
+            workExperiences={jobSeeker.workExperiences || []}
+          />
+          <SkillsSection skills={jobSeeker.skills || []} isOwner={isOwner} />
+          <EducationSection
+            educations={jobSeeker.educations || []}
+            isOwner={isOwner}
+          />
         </div>
 
         <div className="flex flex-col gap-4">
-          <ProfileStatus profileStatus={profileStatus} isOwner={isOwner} />
-          <ContactInfo contactInfo={contactInfo} isOwner={isOwner} />
-          <LinksPortfolio profile={jobSeeker.profile} isOwner={isOwner} />
+          <ProfileStatus isOwner={isOwner} />
+          <ContactInfo isOwner={isOwner} />
+          <LinksPortfolio isOwner={isOwner} />
         </div>
       </div>
     </div>

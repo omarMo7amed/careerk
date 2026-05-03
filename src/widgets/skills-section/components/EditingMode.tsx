@@ -1,6 +1,7 @@
 import { X, Plus } from "lucide-react";
 import { Button } from "@/shared";
 import { useSkillsContext } from "../model/SkillsContext";
+import { JobSeekerSkill } from "@/entities/skill";
 
 export function EditingMode() {
   const {
@@ -24,14 +25,17 @@ export function EditingMode() {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap gap-2">
-        {skills.map((s) => (
+        {skills.map((s: JobSeekerSkill) => (
           <span
-            key={s.name}
+            key={s.skillId}
             className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-bg-muted border border-border text-foreground"
           >
             {s.name}
             <button
-              onClick={() => removeSkill(s.name)}
+              onClick={() => {
+                removeSkill(s.skillId);
+                console.log("Removing skill:", s.skillId);
+              }}
               className="text-text-muted hover:text-error transition-colors ml-0.5"
               aria-label={`Remove ${s.name}`}
             >

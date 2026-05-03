@@ -14,9 +14,9 @@ export default function CvManagementPage() {
         subtitle="Manage your CV, analyze your CV performance and get insights to improve it"
       />
 
-      {/* <CVDropZone /> */}
+      <CVDropZone />
 
-      <CVManagementContent />
+      {/* <CVManagementContent /> */}
     </div>
   );
 }

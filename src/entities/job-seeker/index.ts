@@ -14,15 +14,23 @@ export { getJobSeekerById } from "./api/getJobSeekerById";
 export { uploadProfilePhoto } from "./api/uploadProfilePhoto";
 
 //  Query hooks
-export { useJobSeekerQuery } from "./model/useJobSeekerQuery";
-export { useJobSeekerBaseQuery } from "./model/useJobSeekerBaseQuery";
-
+export { useMyProfileQuery } from "./model/useProfile";
+export {
+  useBaseProfile,
+  useProfileDetails,
+  useEducations,
+  useWorkExperiences,
+  useSkills,
+} from "./model/useProfile";
 //  Mutation hooks
 export { useUpdateProfilePhoto } from "./model/useUpdateProfilePhoto";
 export { useUpdateProfile } from "./model/useUpdateProfile";
 
 //  Misc
-export { WORK_PREFERENCE_LABELS } from "./lib/labels";
+export {
+  WORK_PREFERENCE_LABELS,
+  AVAILABILITY_STATUS_LABELS,
+} from "./lib/labels";
 
 //  Candidate (company-facing view of a job seeker)
 export { CandidateCard } from "./ui/CandidateCard";
@@ -39,3 +47,4 @@ export { default as CandidateSkills } from "./components/Skills";
 
 //  Mock data (for development/testing)
 export { allJobSeekers } from "./mock-data/allJobSeekers";
+export { mockJobSeeker } from "./mock-data/jobSeeker";

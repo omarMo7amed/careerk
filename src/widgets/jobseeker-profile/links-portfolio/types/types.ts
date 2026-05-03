@@ -5,11 +5,6 @@ export type LinksPortfolioData = Pick<
   "linkedinUrl" | "githubUrl" | "portfolioUrl"
 >;
 
-export interface LinksPortfolioProps {
-  profile: LinksPortfolioData;
-  isOwner?: boolean;
-}
-
 export interface LinkRowProps {
   icon: React.ReactNode;
   label: string;

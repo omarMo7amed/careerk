@@ -8,7 +8,7 @@ export function profileStatusReducer(state: State, action: Action): State {
       const p = action.profileStatus;
       return {
         status: "editing",
-        availabilityStatus: p.availabilityStatus || "",
+        availabilityStatus: p.availabilityStatus,
         workPreference: p.workPreference || "",
         preferredJobTypes: p.preferredJobTypes || [],
         expectedSalary: p.expectedSalary,

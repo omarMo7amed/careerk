@@ -35,38 +35,31 @@ export function educationToForm(edu: Education): EducationForm {
   };
 }
 
-export type EducationState =
-  | { status: "idle" }
-  | {
-      status: "editing";
-      educations: Education[];
-      form: EducationForm;
-      isFormVisible: boolean;
-      editingIndex: number | null;
-      editForm: EducationForm;
-    };
+export type EducationState = {
+  form: EducationForm;
+  isAddingVisible: boolean;
+  updatingIndex: number | null;
+  updatingId: string | null;
+  updateForm: EducationForm;
+};
 
 export type EducationAction =
-  | { type: "START_EDIT"; educations: Education[] }
   | {
-      type: "SET_FORM_FIELD";
+      type: "SET_ADDING_FORM_FIELD";
       field: keyof EducationForm;
       value: string | boolean | null;
     }
-  | { type: "OPEN_FORM" }
-  | { type: "CLOSE_FORM" }
-  | { type: "SUBMIT_FORM" }
-  | { type: "REMOVE"; index: number } // index but i will change to id later ya zmeeely
-  | { type: "CANCEL" }
-  | { type: "SAVE_SUCCESS" }
-  | { type: "START_EDIT_ENTRY"; index: number }
+  | { type: "OPEN_ADDING_FORM" }
+  | { type: "CLOSE_ADDING_FORM" }
+  | { type: "SUBMIT_ADDING_FORM" }
+  | { type: "START_UPDATING_ENTRY"; index: number; education: Education }
   | {
-      type: "SET_EDIT_FORM_FIELD";
+      type: "SET_UPDATING_FORM_FIELD";
       field: keyof EducationForm;
       value: string | boolean | null;
     }
-  | { type: "SUBMIT_EDIT_FORM" }
-  | { type: "CANCEL_EDIT_ENTRY" };
+  | { type: "SUBMIT_UPDATING_FORM" }
+  | { type: "CANCEL_UPDATING_ENTRY" };
 
 export interface EducationSectionProps {
   isOwner?: boolean;

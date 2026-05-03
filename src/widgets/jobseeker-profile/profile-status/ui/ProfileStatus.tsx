@@ -6,9 +6,9 @@ import {
 } from "../model/ProfileStatusContext";
 import { ProfileStatusProps } from "../types/profileStatus";
 
-export function ProfileStatus({ profileStatus, isOwner }: ProfileStatusProps) {
+export function ProfileStatus({ isOwner }: ProfileStatusProps) {
   return (
-    <ProfileStatusProvider profileStatus={profileStatus} isOwner={isOwner}>
+    <ProfileStatusProvider isOwner={isOwner}>
       <ProfileStatusComponents.Header />
       <ProfileStatusComponents.Display />
       <ProfileStatusComponents.EditingMode />

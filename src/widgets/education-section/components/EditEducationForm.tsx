@@ -4,15 +4,15 @@ import { DEGREE_LABELS } from "@/entities/education";
 import { useEducationContext } from "../model/EducationContext";
 
 export function EditEducationForm() {
-  const { editForm, setEditFormField, submitEditForm, cancelEditEntry } =
+  const { updateForm, setUpdateFormField, updateEducation, cancelEditEntry } =
     useEducationContext();
 
-  if (!editForm) return null;
+  if (!updateForm) return null;
 
   return (
     <div className="flex flex-col gap-3 border border-primary/40 rounded-lg p-4 bg-bg-muted mt-2">
       <h3 className="text-sm font-semibold text-foreground">
-        Edit Education Entry
+        Update Education Entry
       </h3>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -20,9 +20,9 @@ export function EditEducationForm() {
           <label className="text-xs text-text-muted">Institution *</label>
           <input
             className="rounded-lg border border-border bg-bg-surface px-3 py-1.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-            value={editForm.institutionName}
+            value={updateForm.institutionName}
             onChange={(e) =>
-              setEditFormField("institutionName", e.target.value)
+              setUpdateFormField("institutionName", e.target.value)
             }
             placeholder="University / School name"
           />
@@ -32,8 +32,8 @@ export function EditEducationForm() {
           <label className="text-xs text-text-muted">Field of Study *</label>
           <input
             className="rounded-lg border border-border bg-bg-surface px-3 py-1.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-            value={editForm.fieldOfStudy}
-            onChange={(e) => setEditFormField("fieldOfStudy", e.target.value)}
+            value={updateForm.fieldOfStudy}
+            onChange={(e) => setUpdateFormField("fieldOfStudy", e.target.value)}
             placeholder="e.g. Computer Science"
           />
         </div>
@@ -42,11 +42,11 @@ export function EditEducationForm() {
           <label className="text-xs text-text-muted">Degree</label>
           <select
             className="rounded-lg border border-border bg-bg-surface px-3 py-1.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-            value={editForm.degreeType ?? ""}
+            value={updateForm.degreeType ?? ""}
             onChange={(e) =>
-              setEditFormField(
+              setUpdateFormField(
                 "degreeType",
-                (e.target.value as typeof editForm.degreeType) || null,
+                (e.target.value as typeof updateForm.degreeType) || null,
               )
             }
           >
@@ -67,8 +67,8 @@ export function EditEducationForm() {
             max={4}
             step={0.01}
             className="rounded-lg border border-border bg-bg-surface px-3 py-1.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-            value={editForm.gpa}
-            onChange={(e) => setEditFormField("gpa", e.target.value)}
+            value={updateForm.gpa}
+            onChange={(e) => setUpdateFormField("gpa", e.target.value)}
             placeholder="e.g. 3.8"
           />
         </div>
@@ -78,8 +78,8 @@ export function EditEducationForm() {
           <input
             type="date"
             className="rounded-lg border border-border bg-bg-surface px-3 py-1.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-            value={editForm.startDate}
-            onChange={(e) => setEditFormField("startDate", e.target.value)}
+            value={updateForm.startDate}
+            onChange={(e) => setUpdateFormField("startDate", e.target.value)}
           />
         </div>
 
@@ -87,16 +87,18 @@ export function EditEducationForm() {
           <label className="text-xs text-text-muted">End Date</label>
           <input
             type="date"
-            disabled={editForm.isCurrent}
+            disabled={updateForm.isCurrent}
             className="rounded-lg border border-border bg-bg-surface px-3 py-1.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
-            value={editForm.endDate}
-            onChange={(e) => setEditFormField("endDate", e.target.value)}
+            value={updateForm.endDate}
+            onChange={(e) => setUpdateFormField("endDate", e.target.value)}
           />
           <label className="flex items-center gap-2 text-xs text-text-muted mt-1 cursor-pointer">
             <input
               type="checkbox"
-              checked={editForm.isCurrent}
-              onChange={(e) => setEditFormField("isCurrent", e.target.checked)}
+              checked={updateForm.isCurrent}
+              onChange={(e) =>
+                setUpdateFormField("isCurrent", e.target.checked)
+              }
             />
             Currently studying here
           </label>
@@ -108,8 +110,8 @@ export function EditEducationForm() {
         <textarea
           rows={2}
           className="rounded-lg border border-border bg-bg-surface px-3 py-1.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none"
-          value={editForm.description}
-          onChange={(e) => setEditFormField("description", e.target.value)}
+          value={updateForm.description}
+          onChange={(e) => setUpdateFormField("description", e.target.value)}
           placeholder="Brief description…"
         />
       </div>
@@ -120,9 +122,10 @@ export function EditEducationForm() {
         </Button>
         <Button
           variant="primary"
-          onClick={submitEditForm}
+          onClick={updateEducation}
           disabled={
-            !editForm.institutionName.trim() || !editForm.fieldOfStudy.trim()
+            !updateForm.institutionName.trim() ||
+            !updateForm.fieldOfStudy.trim()
           }
         >
           Save Changes

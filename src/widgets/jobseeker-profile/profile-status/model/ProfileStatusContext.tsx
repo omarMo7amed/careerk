@@ -11,17 +11,40 @@ import {
   ProfileStatusProviderProps,
 } from "../types/profileStatusContext";
 import { ProfileStatusHeader } from "../components/ProfileStatusHeader";
+import { useProfileDetails } from "@/entities/job-seeker/model/useProfile";
+
+// import {useAuth} from "@/feature/auth";
 
 const ProfileStatusContext = createContext<ProfileStatusContextValue | null>(
   null,
 );
 
 export function ProfileStatusProvider({
-  profileStatus,
   isOwner = false,
   children,
 }: ProfileStatusProviderProps) {
-  const model = useProfileStatusModel({ profileStatus, isOwner });
+  // const {token} = useAuth();
+  const {
+    jobSeekerDetails: {
+      availabilityStatus,
+      workPreference,
+      preferredJobTypes,
+      expectedSalary,
+      noticePeriod,
+    },
+  } = useProfileDetails({ token: "" });
+
+  const model = useProfileStatusModel({
+    profileStatus: {
+      availabilityStatus,
+      workPreference,
+      preferredJobTypes,
+      expectedSalary,
+      noticePeriod,
+    },
+    isOwner,
+  });
+
   return (
     <ProfileStatusContext.Provider value={model}>
       <section className="bg-bg-surface rounded-xl border border-border p-6 shadow-sm">

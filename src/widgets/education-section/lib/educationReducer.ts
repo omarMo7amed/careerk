@@ -1,110 +1,64 @@
 import type { EducationState, EducationAction } from "../types/educationTypes";
 import { EMPTY_EDUCATION_FORM, educationToForm } from "../types/educationTypes";
-import type { Education } from "@/entities/education";
 
 export function educationReducer(
   state: EducationState,
   action: EducationAction,
 ): EducationState {
   switch (action.type) {
-    case "START_EDIT":
-      return {
-        status: "editing",
-        educations: action.educations,
-        form: EMPTY_EDUCATION_FORM,
-        isFormVisible: false,
-        editingIndex: null,
-        editForm: EMPTY_EDUCATION_FORM,
-      };
-
-    case "SET_FORM_FIELD":
-      if (state.status !== "editing") return state;
+    case "SET_ADDING_FORM_FIELD":
       return {
         ...state,
         form: { ...state.form, [action.field]: action.value },
       };
 
-    case "OPEN_FORM":
-      if (state.status !== "editing") return state;
-      return { ...state, isFormVisible: true };
+    case "OPEN_ADDING_FORM":
+      return { ...state, isAddingVisible: true };
 
-    case "CLOSE_FORM":
-      if (state.status !== "editing") return state;
-      return { ...state, isFormVisible: false, form: EMPTY_EDUCATION_FORM };
+    case "CLOSE_ADDING_FORM":
+      return { ...state, isAddingVisible: false, form: EMPTY_EDUCATION_FORM };
 
-    case "SUBMIT_FORM": {
-      if (state.status !== "editing") return state;
-      const { gpa, isCurrent, endDate, ...rest } = state.form;
-      const newEntry: Education = {
-        ...rest,
-        gpa: gpa ? parseFloat(gpa) : null,
-        isCurrent,
-        endDate: isCurrent ? null : endDate || null,
-      };
+    case "SUBMIT_ADDING_FORM": {
       return {
         ...state,
-        educations: [...state.educations, newEntry],
         form: EMPTY_EDUCATION_FORM,
-        isFormVisible: false,
+        isAddingVisible: false,
       };
     }
 
-    case "REMOVE":
-      if (state.status !== "editing") return state;
+    case "START_UPDATING_ENTRY": {
       return {
         ...state,
-        educations: state.educations.filter((_, i) => i !== action.index),
-      };
-
-    case "START_EDIT_ENTRY":
-      if (state.status !== "editing") return state;
-      return {
-        ...state,
-        editingIndex: action.index,
-        editForm: educationToForm(state.educations[action.index]),
-        isFormVisible: false,
-      };
-
-    case "SET_EDIT_FORM_FIELD":
-      if (state.status !== "editing") return state;
-      return {
-        ...state,
-        editForm: { ...state.editForm, [action.field]: action.value },
-      };
-
-    case "SUBMIT_EDIT_FORM": {
-      if (state.status !== "editing" || state.editingIndex === null)
-        return state;
-      const { gpa, isCurrent, endDate, ...rest } = state.editForm;
-      const updated: Education = {
-        ...rest,
-        gpa: gpa ? parseFloat(gpa) : null,
-        isCurrent,
-        endDate: isCurrent ? null : endDate || null,
-      };
-      const newEducations = state.educations.map((e, i) =>
-        i === state.editingIndex ? updated : e,
-      );
-      return {
-        ...state,
-        educations: newEducations,
-        editingIndex: null,
-        editForm: EMPTY_EDUCATION_FORM,
+        form: EMPTY_EDUCATION_FORM,
+        isAddingVisible: false,
+        updatingIndex: action.index,
+        updatingId: action.education.id ?? null,
+        updateForm: educationToForm(action.education),
       };
     }
 
-    case "CANCEL_EDIT_ENTRY":
-      if (state.status !== "editing") return state;
+    case "SET_UPDATING_FORM_FIELD":
       return {
         ...state,
-        editingIndex: null,
-        editForm: EMPTY_EDUCATION_FORM,
+        updateForm: { ...state.updateForm, [action.field]: action.value },
       };
 
-    case "CANCEL":
-    case "SAVE_SUCCESS":
-      return { status: "idle" };
+    case "SUBMIT_UPDATING_FORM": {
+      return {
+        ...state,
+        updatingIndex: null,
+        updatingId: null,
+        updateForm: EMPTY_EDUCATION_FORM,
+      };
+    }
 
+    case "CANCEL_UPDATING_ENTRY":
+      return {
+        ...state,
+        updatingIndex: null,
+        updatingId: null,
+        updateForm: EMPTY_EDUCATION_FORM,
+      };
     default:
       return state;
   }

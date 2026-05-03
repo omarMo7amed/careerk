@@ -17,25 +17,24 @@
  *  …
  */
 
-const ROOT = "job-seeker" as const;
+const ROOT = "job-seeker-me";
 
 const me = {
-  all: [ROOT, "me"] as const,
-  base: [ROOT, "me", "base"] as const,
-  profile: [ROOT, "me", "profile"] as const,
-  educations: [ROOT, "me", "educations"] as const,
-  workExperiences: [ROOT, "me", "workExperiences"] as const,
-  skills: [ROOT, "me", "skills"] as const,
-} as const;
+  all: [ROOT],
+  base: [ROOT, "base"],
+  profile: [ROOT, "profile"],
+  educations: [ROOT, "educations"],
+  workExperiences: [ROOT, "workExperiences"],
+  skills: [ROOT, "skills"],
+};
 
-const byId = (id: string) =>
-  ({
-    all: [ROOT, id] as const,
-    base: [ROOT, id, "base"] as const,
-    profile: [ROOT, id, "profile"] as const,
-    educations: [ROOT, id, "educations"] as const,
-    workExperiences: [ROOT, id, "workExperiences"] as const,
-    skills: [ROOT, id, "skills"] as const,
-  }) as const;
+const byId = (id: string) => ({
+  all: [ROOT, id],
+  base: [ROOT, id, "base"],
+  profile: [ROOT, id, "profile"],
+  educations: [ROOT, id, "educations"],
+  workExperiences: [ROOT, id, "workExperiences"],
+  skills: [ROOT, id, "skills"],
+});
 
-export const jobSeekerKeys = { me, byId } as const;
+export const jobSeekerKeys = { me, byId };

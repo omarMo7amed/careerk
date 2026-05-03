@@ -1,26 +1,33 @@
 "use client";
 import { createContext, useContext } from "react";
-import type { ContactInfoData } from "../types/contactInfoProps";
 import { useContactInfoModel } from "./useContactInfoModel";
 import { ContactInfoHeader } from "../component/ContactInfoHeader";
 import { DisplayMode } from "../component/DisplayMode";
 import { EditingMode as EditMode } from "../component/EditingMode";
 import { ContactInfoContextValue } from "../types/contactInfoContextValue";
+import { useProfileDetails } from "@/entities/job-seeker";
 
 export const ContactInfoContext = createContext<ContactInfoContextValue | null>(
   null,
 );
 
 export function ContactInfoProvider({
-  contactInfo,
   isOwner,
   children,
 }: {
-  contactInfo: ContactInfoData;
   isOwner: boolean;
   children: React.ReactNode;
 }) {
-  const model = useContactInfoModel({ contactInfo, isOwner });
+  const {
+    jobSeekerDetails: { phone, cvEmail, location, noticePeriod },
+  } = useProfileDetails({
+    token: "",
+  });
+
+  const model = useContactInfoModel({
+    contactInfo: { phone, cvEmail, location, noticePeriod },
+    isOwner,
+  });
 
   return (
     <ContactInfoContext.Provider value={model}>

@@ -4,17 +4,28 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateProfile } from "../api/updateProfile";
 import { jobSeekerKeys } from "../lib/queryKeys";
 
-export function useUpdateProfile() {
+export function useUpdateProfile({ token }: { token: string }) {
   const queryClient = useQueryClient();
 
   const { mutate, isPending, isError } = useMutation({
-    mutationFn: updateProfile,
-    onSuccess: (updated) => {
-      // Surgically patch the profile sub-object inside the shared primary cache.
-      // Only components whose selected slice actually changed will re-render.
+    mutationFn: (payload: any) => updateProfile(token, payload),
+    onSuccess: (data: any) => {
       queryClient.setQueryData(jobSeekerKeys.me.all, (old: any) => {
         if (!old) return old;
-        return { ...old, profile: { ...old.profile, ...updated } };
+        if (
+          data.data.firstName ||
+          data.data.lastName ||
+          data.data.profileImageUrl
+        ) {
+          return { ...old, data: { ...(old.data || {}), ...data.data } };
+        }
+        return {
+          ...old,
+          data: {
+            ...old.data,
+            profile: { ...old.data.profile, ...data.data },
+          },
+        };
       });
     },
   });

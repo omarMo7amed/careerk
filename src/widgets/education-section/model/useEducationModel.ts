@@ -1,107 +1,150 @@
 "use client";
 import { useReducer } from "react";
 import { toast } from "react-hot-toast";
-import { useEducationsQuery, useSaveEducations } from "@/entities/education";
+import {
+  useCreateEducation,
+  useUpdateEducation,
+  useDeleteEducation,
+  Education,
+} from "@/entities/education";
 import { educationReducer } from "../lib/educationReducer";
-import { EducationForm } from "../types/educationTypes";
+import { EducationForm, EMPTY_EDUCATION_FORM } from "../types/educationTypes";
+import { useEducations } from "@/entities/job-seeker";
+import { getChangedFields } from "@/shared";
+// import { useAuth } from "@/features/auth";
 
 export function useEducationModel({ isOwner }: { isOwner: boolean }) {
-  const { data: fetchedEducations = [] } = useEducationsQuery();
-  const { saveEducations, isPending } = useSaveEducations();
-  const [state, dispatch] = useReducer(educationReducer, { status: "idle" });
-
-  const educations =
-    state.status === "editing" ? state.educations : fetchedEducations;
-
-  function startEdit() {
-    dispatch({ type: "START_EDIT", educations: fetchedEducations });
-  }
-
-  function cancelEdit() {
-    dispatch({ type: "CANCEL" });
-  }
+  // const {token}= useAuth();
+  const { educations = [] } = useEducations({ token: "" });
+  const { createEducation, isPending: isCreatePending } =
+    useCreateEducation("");
+  const {
+    updateEducation: updateEducationRequest,
+    isPending: isUpdatePending,
+  } = useUpdateEducation("");
+  const { deleteEducation, isPending: isDeletePending } =
+    useDeleteEducation("");
+  const [state, dispatch] = useReducer(educationReducer, {
+    form: EMPTY_EDUCATION_FORM,
+    isAddingVisible: false,
+    updatingIndex: null,
+    updatingId: null,
+    updateForm: EMPTY_EDUCATION_FORM,
+  });
 
   function setFormField<K extends keyof EducationForm>(
     field: K,
     value: EducationForm[K],
   ) {
     dispatch({
-      type: "SET_FORM_FIELD",
+      type: "SET_ADDING_FORM_FIELD",
       field,
       value: value as string | boolean | null,
     });
   }
 
   function openForm() {
-    dispatch({ type: "OPEN_FORM" });
+    dispatch({ type: "OPEN_ADDING_FORM" });
   }
 
   function closeForm() {
-    dispatch({ type: "CLOSE_FORM" });
+    dispatch({ type: "CLOSE_ADDING_FORM" });
   }
 
-  function submitForm() {
-    dispatch({ type: "SUBMIT_FORM" });
+  function addEducation() {
+    const payload = {
+      ...state.form,
+      gpa: state.form.gpa ? parseFloat(state.form.gpa) : null,
+      endDate: state.form.isCurrent ? null : state.form.endDate || null,
+    };
+
+    createEducation(payload, {
+      onSuccess: () => {
+        dispatch({ type: "SUBMIT_ADDING_FORM" });
+        toast.success("Education added successfully!");
+      },
+      onError: () => toast.error("Failed to add education."),
+    });
   }
 
-  function removeEducation(index: number) {
-    dispatch({ type: "REMOVE", index });
+  function updateEducation() {
+    if (!state.updatingId) return;
+
+    const original = educations.find(
+      (education: Education) => education.id === state.updatingId,
+    );
+
+    if (!original) return;
+
+    const nextValues = {
+      ...state.updateForm,
+      gpa: state.updateForm.gpa ? parseFloat(state.updateForm.gpa) : null,
+      endDate: state.updateForm.isCurrent
+        ? null
+        : state.updateForm.endDate || null,
+    };
+
+    const patch: Partial<Education> = getChangedFields(original, nextValues);
+
+    if (Object.keys(patch).length === 0) {
+      toast("No changes to save.");
+      return;
+    }
+
+    updateEducationRequest(
+      { id: state.updatingId, patch },
+      {
+        onSuccess: () => {
+          dispatch({ type: "SUBMIT_UPDATING_FORM" });
+          toast.success("Education updated successfully!");
+        },
+        onError: () => toast.error("Failed to update education."),
+      },
+    );
   }
 
-  function startEditEntry(index: number) {
-    dispatch({ type: "START_EDIT_ENTRY", index });
+  function removeEducation(educationId: string) {
+    deleteEducation(educationId, {
+      onSuccess: () => toast.success("Education deleted successfully!"),
+      onError: () => toast.error("Failed to delete education."),
+    });
+  }
+
+  function startEditEntry(index: number, education: Education) {
+    dispatch({ type: "START_UPDATING_ENTRY", index, education });
   }
 
   function cancelEditEntry() {
-    dispatch({ type: "CANCEL_EDIT_ENTRY" });
+    dispatch({ type: "CANCEL_UPDATING_ENTRY" });
   }
 
-  function setEditFormField<K extends keyof EducationForm>(
+  function setUpdateFormField<K extends keyof EducationForm>(
     field: K,
     value: EducationForm[K],
   ) {
     dispatch({
-      type: "SET_EDIT_FORM_FIELD",
+      type: "SET_UPDATING_FORM_FIELD",
       field,
       value: value as string | boolean | null,
-    });
-  }
-
-  function submitEditForm() {
-    dispatch({ type: "SUBMIT_EDIT_FORM" });
-  }
-
-  function handleSave() {
-    if (state.status !== "editing") return;
-    saveEducations(state.educations, {
-      onSuccess: () => {
-        toast.success("Education saved!");
-        dispatch({ type: "SAVE_SUCCESS" });
-      },
-      onError: () => toast.error("Failed to save educations."),
     });
   }
 
   return {
     educations,
     isOwner,
-    editing: state.status === "editing",
-    isFormVisible: state.status === "editing" && state.isFormVisible,
-    form: state.status === "editing" ? state.form : null,
-    editingIndex: state.status === "editing" ? state.editingIndex : null,
-    editForm: state.status === "editing" ? state.editForm : null,
-    isPending,
-    startEdit,
-    cancelEdit,
+    isAddingVisible: state.isAddingVisible,
+    form: state.form,
+    updatingIndex: state.updatingIndex,
+    updateForm: state.updateForm,
+    isPending: isCreatePending || isUpdatePending || isDeletePending,
     setFormField,
     openForm,
     closeForm,
-    submitForm,
+    addEducation,
+    updateEducation,
     removeEducation,
     startEditEntry,
     cancelEditEntry,
-    setEditFormField,
-    submitEditForm,
-    handleSave,
+    setUpdateFormField,
   };
 }

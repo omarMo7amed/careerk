@@ -4,11 +4,9 @@ import { useEducationContext } from "../model/EducationContext";
 import { AddEducationForm } from "./AddEducationForm";
 
 export function AddEducationSection() {
-  const { isFormVisible, editingIndex, openForm } = useEducationContext();
+  const { isAddingVisible, openForm } = useEducationContext();
 
-  if (editingIndex !== null) return null;
-
-  return isFormVisible ? (
+  return isAddingVisible ? (
     <AddEducationForm />
   ) : (
     <Button onClick={openForm} variant="outline">

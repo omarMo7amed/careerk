@@ -1,4 +1,4 @@
-import { Skill } from "@/entities/skill";
+import { JobSeekerSkill, Skill } from "@/entities/skill";
 import { useSkillsContext } from "../model/SkillsContext";
 
 export function DisplayMode() {
@@ -7,8 +7,8 @@ export function DisplayMode() {
   if (!skills.length)
     return <p className="text-text-muted text-sm">No skills added yet.</p>;
 
-  const verified = skills.filter((s) => s.verified);
-  const other = skills.filter((s) => !s.verified);
+  const verified = skills.filter((s: JobSeekerSkill) => s.verified);
+  const other = skills.filter((s: JobSeekerSkill) => !s.verified);
 
   return (
     <>
@@ -16,7 +16,7 @@ export function DisplayMode() {
         <div className="mb-4">
           <p className="text-xs text-text-muted font-medium mb-2">Verified</p>
           <div className="flex flex-wrap gap-2">
-            {verified.map((s) => (
+            {verified.map((s: JobSeekerSkill) => (
               <Skill key={s.name} skill={s} />
             ))}
           </div>
@@ -27,7 +27,7 @@ export function DisplayMode() {
         <div>
           <p className="text-xs text-text-muted font-medium mb-2">Other</p>
           <div className="flex flex-wrap gap-2">
-            {other.map((s) => (
+            {other.map((s: JobSeekerSkill) => (
               <Skill key={s.name} skill={s} />
             ))}
           </div>
