@@ -32,7 +32,7 @@ export function educationReducer(
         form: EMPTY_EDUCATION_FORM,
         isAddingVisible: false,
         updatingIndex: action.index,
-        updatingId: action.education.id ?? null,
+        updatingId: action.education.id ?? action.index,
         updateForm: educationToForm(action.education),
       };
     }

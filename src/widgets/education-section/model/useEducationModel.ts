@@ -9,21 +9,32 @@ import {
 } from "@/entities/education";
 import { educationReducer } from "../lib/educationReducer";
 import { EducationForm, EMPTY_EDUCATION_FORM } from "../types/educationTypes";
-import { useEducations } from "@/entities/job-seeker";
+import { useEducations, useProfileDetails } from "@/entities/job-seeker";
 import { getChangedFields } from "@/shared";
 // import { useAuth } from "@/features/auth";
 
 export function useEducationModel({ isOwner }: { isOwner: boolean }) {
   // const {token}= useAuth();
-  const { educations = [] } = useEducations({ token: "" });
-  const { createEducation, isPending: isCreatePending } =
-    useCreateEducation("");
+  const { hasProfile } = useProfileDetails({ token: "" });
+  const { educations = [] } = useEducations({ hasProfile, token: "" });
+  const { createEducation, isPending: isCreatePending } = useCreateEducation({
+    hasProfile,
+    token: "",
+  });
+
   const {
     updateEducation: updateEducationRequest,
     isPending: isUpdatePending,
-  } = useUpdateEducation("");
-  const { deleteEducation, isPending: isDeletePending } =
-    useDeleteEducation("");
+  } = useUpdateEducation({
+    hasProfile,
+    token: "",
+  });
+
+  const { deleteEducation, isPending: isDeletePending } = useDeleteEducation({
+    hasProfile,
+    token: "",
+  });
+
   const [state, dispatch] = useReducer(educationReducer, {
     form: EMPTY_EDUCATION_FORM,
     isAddingVisible: false,
@@ -68,11 +79,19 @@ export function useEducationModel({ isOwner }: { isOwner: boolean }) {
   }
 
   function updateEducation() {
+    console.log(
+      "Attempting to update education with form values:",
+      state.updatingId,
+    );
     if (!state.updatingId) return;
+    const updatingIndex = parseInt(state.updatingId);
 
     const original = educations.find(
-      (education: Education) => education.id === state.updatingId,
+      (education: Education, index: number) =>
+        education.id === state.updatingId || index === updatingIndex,
     );
+
+    console.log("Original education data:", original);
 
     if (!original) return;
 

@@ -9,7 +9,7 @@ export type DegreeType =
   | "OTHER";
 
 export interface Education {
-  id: string;
+  id?: string;
   degreeType: DegreeType | null;
   description: string;
   institutionName: string;

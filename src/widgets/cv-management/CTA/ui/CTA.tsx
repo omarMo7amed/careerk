@@ -1,9 +1,67 @@
+"use client";
+
+import { useState } from "react";
+import { Modal } from "@/shared";
 import { Button } from "@/shared";
 import { Lock, ShieldCheck } from "lucide-react";
+import toast from "react-hot-toast";
 
-export function CTA({ confirmed }: { confirmed: boolean }) {
+export function CTA({
+  confirmed,
+  confirmCVParse,
+}: {
+  confirmed: boolean;
+  confirmCVParse: () => Promise<void>;
+}) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleConfirmClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleConfirmInModal = async () => {
+    setIsLoading(true);
+    try {
+      await confirmCVParse();
+      toast.success("The CV has Confirmed successfully");
+      setIsModalOpen(false);
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to confirm CV";
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <>
+    <div>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Confirm CV Information"
+        maxWidth="sm"
+      >
+        <div className="space-y-4">
+          <p className="text-sm text-text-secondary">
+            Are you sure you want to confirm this CV? Once confirmed, all fields
+            will be locked and cannot be edited.
+          </p>
+          <div className="flex justify-end gap-2">
+            <Button variant="ghost" onClick={() => setIsModalOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              variant="primary"
+              disabled={isLoading}
+              onClick={handleConfirmInModal}
+            >
+              {isLoading ? "Confirming..." : "Confirm"}
+            </Button>
+          </div>
+        </div>
+      </Modal>
       {!confirmed ? (
         <div className="rounded-2xl border border-border bg-bg-surface p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
@@ -15,11 +73,12 @@ export function CTA({ confirmed }: { confirmed: boolean }) {
           <Button
             variant="primary"
             size="lg"
-            onClick={() => {}}
+            onClick={handleConfirmClick}
+            disabled={isLoading}
             className="shrink-0 flex items-center gap-2"
           >
             <ShieldCheck className="w-5 h-5" />
-            Confirm &amp; Lock Data
+            {isLoading ? "Confirming..." : "Confirm"}
           </Button>
         </div>
       ) : (
@@ -37,6 +96,6 @@ export function CTA({ confirmed }: { confirmed: boolean }) {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }

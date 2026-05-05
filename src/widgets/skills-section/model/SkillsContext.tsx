@@ -19,7 +19,7 @@ export function SkillsProvider({
   skills?: SkillsContextValue["skills"];
 }) {
   const model = useSkillsModel({ isOwner });
-  const visibleSkills = model.editing ? model.skills : skills ?? model.skills;
+  const visibleSkills = model.editing ? model.skills : (skills ?? model.skills);
 
   return (
     <SkillsContext.Provider value={{ ...model, skills: visibleSkills }}>

@@ -9,7 +9,11 @@ export function EducationManage() {
   return (
     <div className="flex flex-col gap-4">
       {educations.map((edu: Education, idx: number) => (
-        <EducationItem key={edu.id} education={edu} index={idx} />
+        <EducationItem
+          key={edu.id || idx.toString()}
+          education={edu}
+          index={idx}
+        />
       ))}
       {isOwner && <AddEducationSection />}
     </div>

@@ -84,7 +84,7 @@ export function EducationItem({ education, index }: EducationItemProps) {
               variant="outline"
               className="text-error border-error hover:bg-error/10"
               onClick={() => {
-                removeEducation(education.id);
+                removeEducation(education?.id || index.toString());
                 setIsDeleteModalOpen(false);
               }}
             >

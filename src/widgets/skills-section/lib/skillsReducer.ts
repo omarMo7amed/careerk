@@ -44,8 +44,11 @@ export function skillsReducer(
         return state;
       return {
         ...state,
-        skills: state.skills.filter((s) => s.skillId !== action.skillId),
-        RemovedSkill: [...state.RemovedSkill, { skillId: action.skillId }],
+        skills: state.skills.filter(
+          (s, index) =>
+            s.skillId !== action.skillId && index.toString() !== action.skillId,
+        ),
+        RemovedSkill: [...state.RemovedSkill, action.skillId],
       };
 
     case "CANCEL":

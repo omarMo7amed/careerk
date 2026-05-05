@@ -4,9 +4,9 @@ import { ExperienceCard, WorkExperience } from "@/entities/experience";
 export function ExperienceSection({
   workExperiences,
 }: {
-  workExperiences: WorkExperience[];
+  workExperiences?: WorkExperience[];
 }) {
-  if (!workExperiences.length) return null;
+  if (!workExperiences?.length) return null;
 
   return (
     <section className="bg-bg-surface rounded-xl border border-border p-6 shadow-sm">
@@ -19,7 +19,7 @@ export function ExperienceSection({
         {/* Timeline */}
         <div className="absolute left-[7px] top-2 bottom-2 w-px bg-border" />
         <div className="flex flex-col gap-6">
-          {workExperiences.map((exp, idx) => (
+          {workExperiences?.map((exp, idx) => (
             <ExperienceCard
               key={idx}
               experience={exp}

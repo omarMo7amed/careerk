@@ -2,38 +2,59 @@
 
 import { EditableTable } from "../components/EditableTable";
 
-import type { CVInfo } from "@/entities/cv";
-
 import { ExperienceSection } from "@/widgets/experience-section";
 import { EducationSection } from "@/widgets/education-section";
 import { SkillsSection } from "@/widgets/skills-section";
 import { Summary } from "@/widgets/jobseeker-summary";
+import { JobSeeker, JobSeekerProfile } from "@/entities/job-seeker";
 
-interface ExtractedCVInfoProps {
-  cvInfo: CVInfo;
-}
+export function ExtractedCVInfo({
+  cvInfo,
+  isConfirmed,
+  hasProfile,
+}: {
+  cvInfo?: JobSeeker;
+  isConfirmed: boolean;
+  hasProfile: boolean;
+}) {
+  if (!cvInfo) {
+    return <div>No CV information available.</div>;
+  }
 
-export function ExtractedCVInfo({ cvInfo }: ExtractedCVInfoProps) {
-  const { personalInfo, summary, experience, education, skills, title } =
-    cvInfo;
+  const personalInfo = {
+    firstName: cvInfo?.firstName,
+    lastName: cvInfo?.lastName,
+    cvEmail: cvInfo?.profile?.cvEmail || "",
+    phone: cvInfo?.profile?.phone || "",
+    location: cvInfo?.profile?.location || "",
+    linkedinUrl: cvInfo?.profile?.linkedinUrl || "",
+    githubUrl: cvInfo?.profile?.githubUrl || "",
+    portfolioUrl: cvInfo?.profile?.portfolioUrl || "",
+    title: cvInfo?.profile?.title || "",
+    yearsOfExperience: cvInfo?.profile?.yearsOfExperience || 0,
+  };
+
+  console.log("Personal Info for EditableTable:", personalInfo);
 
   return (
     <div className="flex flex-col gap-8 ">
       <EditableTable
-        title={title}
-        personalInfo={personalInfo}
-        confirmed={false}
+        hasProfile={hasProfile}
+        personalInfo={
+          personalInfo as JobSeekerProfile & "firstName" & "lastName"
+        }
+        confirmed={isConfirmed}
       />
 
-      <Summary isOwner summary={summary} />
+      <Summary isOwner summary={cvInfo?.profile?.summary || ""} />
 
-      <ExperienceSection workExperiences={experience} />
+      <ExperienceSection workExperiences={cvInfo?.workExperiences} />
       <div className="grid grid-cols-1 lg:grid-cols-9 gap-6">
         <div className="lg:col-span-5">
-          <EducationSection educations={education} isOwner />
+          <EducationSection educations={cvInfo?.educations} isOwner />
         </div>
         <div className="lg:col-span-4">
-          <SkillsSection skills={skills} isOwner />
+          <SkillsSection skills={cvInfo?.skills} isOwner />
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ export type SkillsState =
       status: "adding" | "deleting";
       skills: JobSeekerSkill[];
       input: string;
-      RemovedSkill: { skillId: string }[];
+      RemovedSkill: string[];
       AddedSkill: JobSeekerSkill[];
     };
 

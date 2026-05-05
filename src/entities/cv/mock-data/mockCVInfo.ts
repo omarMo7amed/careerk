@@ -1,58 +1,60 @@
-import type { CVInfo } from "../types/cvInfo";
+import type { CVParseResponse } from "../types/cvParseResponse";
 
-export const mockCVInfo: CVInfo = {
-  personalInfo: {
-    cvEmail: "john.doe@example.com",
-    phone: "+1 555-123-4567",
-    location: "San Francisco, CA",
-    linkedinUrl: "https://linkedin.com/in/johndoe",
-    githubUrl: "https://github.com/johndoe",
-    portfolioUrl: "https://johndoe.dev",
-    yearsOfExperience: 5,
+export const mockCVParseResponse: CVParseResponse = {
+  status: "COMPLETED",
+  parseResultId: "9968ae8c-e8f4-4d36-a17a-79215cca669c",
+  firstName: "Amr",
+  lastName: "Ashraf Mubarak",
+  profileImageUrl: null,
+  profile: {
+    jobSeekerId: "a9ff20fb-8010-4a22-8873-344c103726af",
+    title: "Software Engineer",
+    location: "Egypt",
+    availabilityStatus: "OPEN_TO_WORK",
+    workPreference: "REMOTE",
+    preferredJobTypes: [],
+    yearsOfExperience: 0.3,
+    linkedinUrl: "linkedin.com/in/amramubarak",
+    portfolioUrl: null,
+    githubUrl: "github.com/amrrdev",
+    cvEmail: "amrrdev@gmail.com",
+    noticePeriod: null,
+    phone: "+20 120 456 2326",
+    expectedSalary: null,
+    summary:
+      "Software Engineer with 1+ year of experience building scalable microservices and full-stack applications. Proficient in TypeScript, Node.js, and NestJS.",
+    cvScore: null,
+    cvMatchPercentage: null,
+    cvUrl: null,
   },
-  title: "Senior Frontend Developer",
-  summary:
-    "Experienced frontend developer with 5+ years building high-performance web applications using React, TypeScript, and Next.js. Passionate about clean code, great UX, and continuous improvement.",
-  experience: [
+  educations: [
     {
-      jobTitle: "Senior Frontend Developer",
-      companyName: "TechCorp Inc.",
-      location: "San Francisco, CA",
-      startDate: "2022-01-01",
-      endDate: null,
-      isCurrent: true,
-      description:
-        "Led development of a customer-facing dashboard serving 50k+ users. Reduced page load time by 40% through code splitting and lazy loading.",
-    },
-    {
-      jobTitle: "Frontend Developer",
-      companyName: "StartupXYZ",
-      location: "Remote",
-      startDate: "2019-06-01",
-      endDate: "2021-12-31",
+      degreeType: "BACHELOR",
+      description: "",
+      institutionName: "Benha University",
       isCurrent: false,
-      description:
-        "Built and maintained React applications. Collaborated with designers to deliver pixel-perfect UI components.",
+      fieldOfStudy: "Science in Computer Science",
+      endDate: "2026-01-01",
+      gpa: 3.6,
+      startDate: "2022-01-01",
     },
   ],
-  education: [
+  workExperiences: [
     {
-      institutionName: "University of California, Berkeley",
-      degreeType: "bachelor",
-      fieldOfStudy: "Computer Science",
-      startDate: "2015-09-01",
-      endDate: "2019-05-31",
+      companyName: "Linux Foundation Decentralized Trust",
+      description:
+        "Developed a testing strategy for a decentralized trust solution. Implemented automated tests and CI/CD pipelines.",
       isCurrent: false,
-      gpa: 3.7,
-      description: "",
+      startDate: "2025-05-01",
+      jobTitle: "Software Engineer",
+      location: "Remote",
+      endDate: "2025-07-01",
     },
   ],
   skills: [
-    { name: "React", verified: true },
-    { name: "TypeScript", verified: true },
-    { name: "Next.js", verified: true },
-    { name: "TailwindCSS", verified: false },
-    { name: "Node.js", verified: false },
-    { name: "PostgreSQL", verified: false },
+    { name: "typescript", verified: true },
+    { name: "node.js", verified: true },
+    { name: "nestjs", verified: true },
   ],
+  processingTime: 952,
 };

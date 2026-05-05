@@ -14,12 +14,3 @@ export type PersonalInfo = Pick<
 > & {
   yearsOfExperience: number;
 };
-
-export interface CVInfo {
-  personalInfo: PersonalInfo;
-  title: string;
-  summary: string;
-  experience: WorkExperience[];
-  education: Education[];
-  skills: JobSeekerSkill[];
-}

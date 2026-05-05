@@ -3,12 +3,13 @@ import { useQuery } from "@tanstack/react-query";
 import { getMe } from "../api/getMe";
 import { jobSeekerKeys } from "../lib/queryKeys";
 import { selectBase } from "../lib/selectBase";
+import { getMyCVInfo } from "@/entities/cv";
 
 export function useMyProfileQuery({ token }: { token: string }) {
   const { data, isLoading, error } = useQuery({
     queryKey: jobSeekerKeys.me.all,
     queryFn: () => getMe(token),
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 60,
     // placeholderData: mockJobSeeker, //this for test ya zmeeely
   });
 
@@ -36,16 +37,30 @@ export function useProfileDetails({ token }: { token: string }) {
     staleTime: 1000 * 60 * 5,
     select: (d) => d.data?.profile,
   });
-  return { jobSeekerDetails: data, isLoading, error };
+
+  const hasProfile = !!data;
+  return { jobSeekerDetails: data, isLoading, error, hasProfile };
 }
 
-export function useEducations({ token }: { token: string }) {
+export function useEducations({
+  token,
+  hasProfile,
+}: {
+  hasProfile: boolean;
+  token: string;
+}) {
   const { data, isLoading, error } = useQuery({
-    queryKey: jobSeekerKeys.me.all,
-    queryFn: () => getMe(token),
+    queryKey: hasProfile ? jobSeekerKeys.me.all : ["cv-info"],
+    queryFn: () => {
+      if (hasProfile) {
+        return getMe(token);
+      }
+      return getMyCVInfo(token);
+    },
     select: (d) => d.data?.educations,
     staleTime: 1000 * 60 * 5,
   });
+
   return { educations: data, isLoading, error };
 }
 
@@ -59,12 +74,24 @@ export function useWorkExperiences({ token }: { token: string }) {
   return { workExperiences: data, isLoading, error };
 }
 
-export function useSkills({ token }: { token: string }) {
+export function useSkills({
+  token,
+  hasProfile,
+}: {
+  token: string;
+  hasProfile: boolean;
+}) {
   const { data, isLoading, error } = useQuery({
-    queryKey: jobSeekerKeys.me.all,
-    queryFn: () => getMe(token),
+    queryKey: hasProfile ? jobSeekerKeys.me.all : ["cv-info"],
+    queryFn: () => {
+      if (hasProfile) {
+        return getMe(token);
+      }
+      return getMyCVInfo(token);
+    },
     select: (d) => d.data?.skills,
     staleTime: 1000 * 60 * 5,
   });
+
   return { skills: data, isLoading, error };
 }

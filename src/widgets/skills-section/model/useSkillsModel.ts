@@ -2,14 +2,21 @@
 import { useReducer } from "react";
 import { toast } from "react-hot-toast";
 import { useAddSkills, useDeleteSkill } from "@/entities/skill";
-import { useSkills } from "@/entities/job-seeker";
+import { useProfileDetails, useSkills } from "@/entities/job-seeker";
 import { skillsReducer, INITIAL_SKILLS_STATE } from "../lib/skillsReducer";
 // import {useAuth} from "@/features/auth";
 
 export function useSkillsModel({ isOwner }: { isOwner: boolean }) {
-  const { skills: fetchedSkills = [] } = useSkills({ token: "" });
-  const { addSkills, isPending } = useAddSkills({ token: "" });
-  const { deleteSkill } = useDeleteSkill("");
+  const { hasProfile } = useProfileDetails({ token: "" });
+  const { skills: fetchedSkills = [] } = useSkills({
+    hasProfile,
+    token: "",
+  });
+  const { addSkills, isPending } = useAddSkills({
+    hasProfile,
+    token: "",
+  });
+  const { deleteSkill } = useDeleteSkill({ hasProfile, token: "" });
   const [state, dispatch] = useReducer(skillsReducer, INITIAL_SKILLS_STATE);
 
   const skills =
@@ -53,16 +60,13 @@ export function useSkillsModel({ isOwner }: { isOwner: boolean }) {
     }
 
     if (state.RemovedSkill.length !== 0) {
-      deleteSkill(
-        state.RemovedSkill.map((skill) => skill.skillId),
-        {
-          onSuccess: () => {
-            toast.success("Skills removed successfully!");
-            dispatch({ type: "SAVE_SUCCESS" });
-          },
-          onError: () => toast.error("Failed to remove skills."),
+      deleteSkill(state.RemovedSkill, {
+        onSuccess: () => {
+          toast.success("Skills removed successfully!");
+          dispatch({ type: "SAVE_SUCCESS" });
         },
-      );
+        onError: () => toast.error("Failed to remove skills."),
+      });
     }
   }
 

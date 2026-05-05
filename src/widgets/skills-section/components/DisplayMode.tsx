@@ -16,8 +16,8 @@ export function DisplayMode() {
         <div className="mb-4">
           <p className="text-xs text-text-muted font-medium mb-2">Verified</p>
           <div className="flex flex-wrap gap-2">
-            {verified.map((s: JobSeekerSkill) => (
-              <Skill key={s.name} skill={s} />
+            {verified.map((s: JobSeekerSkill, index: number) => (
+              <Skill key={s.skillId || index} skill={s} index={index} />
             ))}
           </div>
         </div>
@@ -27,8 +27,8 @@ export function DisplayMode() {
         <div>
           <p className="text-xs text-text-muted font-medium mb-2">Other</p>
           <div className="flex flex-wrap gap-2">
-            {other.map((s: JobSeekerSkill) => (
-              <Skill key={s.name} skill={s} />
+            {other.map((s: JobSeekerSkill, index: number) => (
+              <Skill key={s.skillId || index} skill={s} index={index} />
             ))}
           </div>
         </div>

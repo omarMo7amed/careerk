@@ -2,7 +2,13 @@ import { JobSeekerSkill } from "../types/skill";
 import { cn } from "@/shared";
 import { BadgeCheck } from "lucide-react";
 
-export default function Skill({ skill }: { skill: JobSeekerSkill }) {
+export default function Skill({
+  skill,
+  index,
+}: {
+  skill: JobSeekerSkill;
+  index: number;
+}) {
   return (
     <>
       {skill.verified ? (

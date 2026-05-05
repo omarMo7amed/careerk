@@ -1,17 +1,50 @@
-// Replace with your actual backend endpoint
-const CV_UPLOAD_URL = "/api/cv/upload";
+export async function uploadCVToServer(token: string, file: File) {
+  // Step 1: Get presigned URL from CareerK API
+  const presignedRes = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_API_URL}/cv/presigned-url`,
+    {
+      method: "POST",
+      headers: {
+        // Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fileName: file.name,
+        mimeType: file.type,
+      }),
+    },
+  );
 
-export async function uploadCVToServer(file: File): Promise<void> {
-  const formData = new FormData();
-  formData.append("file", file);
+  if (!presignedRes.ok) throw new Error("Failed to get presigned URL");
+  const { uploadUrl, key } = await presignedRes.json();
 
-  const response = await fetch(CV_UPLOAD_URL, {
-    method: "POST",
-    body: formData,
-  });
+  // Step 2: Upload file to R2 storage
+  // const uploadRes = await fetch(uploadUrl, {
+  //   method: "PUT",
+  //   headers: {
+  //     "Content-Type": file.type,
+  //   },
+  //   body: file,
+  // });
 
-  if (!response.ok) {
-    const message = await response.text().catch(() => "Upload failed.");
-    throw new Error(message || "Upload failed.");
-  }
+  // if (!uploadRes.ok) throw new Error("Failed to upload image to storage");
+
+  // Step 3: Confirm upload and get file URL
+  const confirmRes = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_API_URL}/cv/confirm`,
+    {
+      method: "POST",
+      headers: {
+        // Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ key, fileName: file.name, mimeType: file.type }),
+    },
+  );
+
+  if (!confirmRes.ok) throw new Error("Failed to confirm image upload");
+
+  return await confirmRes.json();
+
+  // Step 4: Update profile with new image URL
 }

@@ -19,7 +19,7 @@ export function CVDropZoneProvider({
 
   return (
     <CVDropZoneContext.Provider value={cvUpload}>
-      <section className="w-full flex flex-col gap-3 p-4">{children}</section>
+      <section className="w-full flex flex-col gap-3">{children}</section>
     </CVDropZoneContext.Provider>
   );
 }
