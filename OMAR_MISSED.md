@@ -96,3 +96,11 @@ Skills Endpoints (Amr Docs):
   // },
   body: JSON.stringify({ ids: skillIds }),
   },
+
+CV Endpoints (Amr Docs):
+GET /api/v1/cv/me/download-url
+i want response as this interface DownloadCVResponse {
+downloadUrl: string;
+expiresAt: string;
+expiresIn: number;
+}

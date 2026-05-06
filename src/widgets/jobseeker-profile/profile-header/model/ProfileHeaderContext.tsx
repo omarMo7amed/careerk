@@ -1,6 +1,7 @@
 "use client";
 import { createContext, useContext } from "react";
-import { ContactButton, DownloadButton } from "@/entities/job-seeker";
+import { ContactButton } from "@/entities/job-seeker";
+import { DownloadButton } from "@/entities/cv";
 import { Banner } from "@/shared";
 import type { ProfileHeaderContextValue } from "../types/profileHeaderContextValue";
 import { useProfileHeaderModel } from "./useProfileHeaderModel";
@@ -51,7 +52,7 @@ function ImageSection() {
     <ProfileImage
       id={profileHeader.jobSeekerId}
       fullName={fullName}
-      profileImageUrl={profileHeader.avatarUrl}
+      profileImageUrl={profileHeader.profileImageUrl}
       isOwner={isOwner}
     />
   );
@@ -63,12 +64,12 @@ function InfoSection() {
 }
 
 function ActionsSection() {
-  const { profileHeader, isOwner } = useProfileHeaderContext();
-  if (isOwner) return null;
+  const { profileHeader, isOwner, editing } = useProfileHeaderContext();
+  if (isOwner || editing) return null;
   return (
     <div className="flex flex-col lg:flex-row gap-2">
-      <ContactButton />
-      <DownloadButton href={profileHeader.cvUrl ?? "#"} />
+      <ContactButton email={profileHeader.cvEmail || ""} />
+      <DownloadButton />
     </div>
   );
 }

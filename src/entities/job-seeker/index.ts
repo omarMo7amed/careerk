@@ -10,7 +10,7 @@ export { jobSeekerKeys } from "./lib/queryKeys";
 
 // API functions
 export { getMe } from "./api/getMe";
-export { getJobSeekerById } from "./api/getJobSeekerById";
+export { getCandidateById } from "./api/getCandidateById";
 export { uploadProfilePhoto } from "./api/uploadProfilePhoto";
 
 //  Query hooks
@@ -42,7 +42,6 @@ export { CandidateMetaItem } from "./components/CandidateMetaItem";
 export { CandidateSocialLinks } from "./components/CandidateSocialLinks";
 export { ViewProfile } from "./components/ViewProfile";
 export { ContactButton } from "./components/ContactButton";
-export { DownloadButton } from "./components/DownloadButton";
 export { default as CandidateSkills } from "./components/Skills";
 
 //  Mock data (for development/testing)

@@ -11,7 +11,6 @@ import {
   ProfileStatusProviderProps,
 } from "../types/profileStatusContext";
 import { ProfileStatusHeader } from "../components/ProfileStatusHeader";
-import { useProfileDetails } from "@/entities/job-seeker/model/useProfile";
 
 // import {useAuth} from "@/feature/auth";
 
@@ -21,27 +20,13 @@ const ProfileStatusContext = createContext<ProfileStatusContextValue | null>(
 
 export function ProfileStatusProvider({
   isOwner = false,
+  profileStatus,
   children,
 }: ProfileStatusProviderProps) {
   // const {token} = useAuth();
-  const {
-    jobSeekerDetails: {
-      availabilityStatus,
-      workPreference,
-      preferredJobTypes,
-      expectedSalary,
-      noticePeriod,
-    },
-  } = useProfileDetails({ token: "" });
 
   const model = useProfileStatusModel({
-    profileStatus: {
-      availabilityStatus,
-      workPreference,
-      preferredJobTypes,
-      expectedSalary,
-      noticePeriod,
-    },
+    profileStatus,
     isOwner,
   });
 

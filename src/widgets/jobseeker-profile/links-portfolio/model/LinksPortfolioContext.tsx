@@ -18,16 +18,18 @@ const LinksPortfolioContext = createContext<LinksPortfolioContextValue | null>(
 export function LinksPortfolioProvider({
   isOwner = false,
   children,
+  socialContacts,
 }: {
+  socialContacts: {
+    linkedinUrl?: string;
+    githubUrl?: string;
+    portfolioUrl?: string;
+  };
   children: React.ReactNode;
   isOwner?: boolean;
 }) {
-  const {
-    jobSeekerDetails: { linkedinUrl, githubUrl, portfolioUrl },
-  } = useProfileDetails({ token: "" });
-
   const model = useLinksPortfolioModel({
-    socialContacts: { linkedinUrl, githubUrl, portfolioUrl },
+    socialContacts,
     isOwner,
   });
 

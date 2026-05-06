@@ -29,4 +29,5 @@ export interface ProfileStatusContextValue {
 export interface ProfileStatusProviderProps {
   isOwner?: boolean;
   children: React.ReactNode;
+  profileStatus: ProfileStatusData;
 }

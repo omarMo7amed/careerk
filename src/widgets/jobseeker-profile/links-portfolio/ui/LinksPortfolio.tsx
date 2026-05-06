@@ -5,9 +5,19 @@ import {
   LinksPortfolioProvider,
 } from "../model/LinksPortfolioContext";
 
-export function LinksPortfolio({ isOwner = false }: { isOwner?: boolean }) {
+export function LinksPortfolio({
+  socialContacts,
+  isOwner = false,
+}: {
+  socialContacts: {
+    linkedinUrl?: string;
+    githubUrl?: string;
+    portfolioUrl?: string;
+  };
+  isOwner?: boolean;
+}) {
   return (
-    <LinksPortfolioProvider isOwner={isOwner}>
+    <LinksPortfolioProvider socialContacts={socialContacts} isOwner={isOwner}>
       <LinksPortfolioComponents.Header />
       <LinksPortfolioComponents.Display />
       <LinksPortfolioComponents.EditingMode />

@@ -12,6 +12,7 @@ import {
 export function DisplayMode() {
   const { viewProfileStatus } = useProfileStatusContext();
   const profileStatus = viewProfileStatus;
+  console.log("Rendering DisplayMode with profileStatus:", profileStatus);
 
   return (
     <div className="flex flex-col gap-4">

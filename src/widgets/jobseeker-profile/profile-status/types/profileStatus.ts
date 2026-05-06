@@ -4,4 +4,5 @@ export type ProfileStatusData = Omit<EditingState, "status">;
 
 export interface ProfileStatusProps {
   isOwner?: boolean;
+  profileStatus: ProfileStatusData;
 }

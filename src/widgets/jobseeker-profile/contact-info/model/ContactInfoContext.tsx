@@ -5,29 +5,27 @@ import { ContactInfoHeader } from "../component/ContactInfoHeader";
 import { DisplayMode } from "../component/DisplayMode";
 import { EditingMode as EditMode } from "../component/EditingMode";
 import { ContactInfoContextValue } from "../types/contactInfoContextValue";
-import { useProfileDetails } from "@/entities/job-seeker";
+import { ContactInfoData } from "../types/contactInfoProps";
 
 export const ContactInfoContext = createContext<ContactInfoContextValue | null>(
   null,
 );
 
 export function ContactInfoProvider({
+  contactInfo,
   isOwner,
   children,
 }: {
   isOwner: boolean;
   children: React.ReactNode;
+  contactInfo: ContactInfoData;
 }) {
-  const {
-    jobSeekerDetails: { phone, cvEmail, location, noticePeriod },
-  } = useProfileDetails({
-    token: "",
-  });
-
   const model = useContactInfoModel({
-    contactInfo: { phone, cvEmail, location, noticePeriod },
+    contactInfo,
     isOwner,
   });
+
+  console.log("ContactInfoProvider model:", model.contactInfo); // Debug log
 
   return (
     <ContactInfoContext.Provider value={model}>

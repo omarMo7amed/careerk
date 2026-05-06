@@ -4,8 +4,7 @@ import { JobSeekerProfileWidget } from "@/widgets/jobseeker-profile/jobseeker-wi
 import { Loader2 } from "lucide-react";
 
 export function CandidateProfileLoader({ id }: { id: string }) {
-  const { jobSeeker, isLoading, error } = useCandidateByIdQuery(id);
-
+  const { jobSeeker, isLoading, error } = useCandidateByIdQuery(id || "");
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">

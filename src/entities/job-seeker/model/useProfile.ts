@@ -35,7 +35,7 @@ export function useProfileDetails({ token }: { token: string }) {
     queryKey: jobSeekerKeys.me.all,
     queryFn: () => getMe(token),
     staleTime: 1000 * 60 * 5,
-    select: (d) => d.data?.profile,
+    select: (d) => d?.data?.profile,
   });
 
   const hasProfile = !!data;

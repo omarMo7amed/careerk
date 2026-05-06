@@ -1,7 +1,7 @@
 "use client";
-import { useState } from "react";
+import { use, useState } from "react";
 import { toast } from "react-hot-toast";
-import { useUpdateProfile } from "@/entities/job-seeker";
+import { useProfileDetails, useUpdateProfile } from "@/entities/job-seeker";
 import type { ContactInfoData } from "../types/contactInfoProps";
 import type {
   ContactInfoContextValue,
@@ -21,7 +21,11 @@ export function useContactInfoModel({
   const [editing, setEditing] = useState(false);
   const [phone, setPhone] = useState(contactInfo.phone ?? "");
   const [location, setLocation] = useState(contactInfo.location ?? "");
-  const { updateProfile, isPending } = useUpdateProfile({ token: "" });
+  const { hasProfile } = useProfileDetails({ token: "" });
+  const { updateProfile, isPending } = useUpdateProfile({
+    token: "",
+    hasProfile,
+  });
 
   const isVisible = Boolean(
     isOwner || contactInfo.phone || contactInfo.cvEmail || contactInfo.location,
