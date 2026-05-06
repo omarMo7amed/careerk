@@ -43,10 +43,10 @@ export function NotificationToggle({
   };
 
   return (
-    <div className="flex items-center justify-between p-4 bg-bg-surface border border-gray-200 rounded-lg hover:border-gray-300 transition-colors">
+    <div className="flex items-center justify-between p-4 bg-bg-surface border border-border rounded-lg hover:border-primary/30 transition-colors">
       <div className="flex items-start gap-3 flex-1">
         {Icon && (
-          <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center shrink-0 mt-0.5">
+          <div className="w-10 h-10 bg-primary/5 rounded-lg flex items-center justify-center shrink-0 mt-0.5">
             <Icon className="w-5 h-5 text-primary" />
           </div>
         )}

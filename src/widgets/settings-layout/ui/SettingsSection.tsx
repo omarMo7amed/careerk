@@ -18,7 +18,7 @@ export function SettingsSection({ role }: SettingsSectionProps) {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold  mb-2">Settings</h1>
-          <span className="inline-block px-3 py-1 bg-green-100 text-green-700 text-sm font-semibold rounded-full">
+          <span className="inline-block px-3 py-1 bg-success/20 text-success text-sm font-semibold rounded-full">
             Verified Account
           </span>
         </div>

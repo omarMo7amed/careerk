@@ -21,9 +21,9 @@ export function NotificationsTab({ role }: NotificationsTabProps) {
   const userPreferences = data?.data.preferences || {};
 
   return (
-    <div className="bg-bg-surface rounded-xl border border-gray-200 p-6">
+    <div className="bg-bg-surface rounded-xl border border-border p-6">
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+        <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
           <Bell className="w-5 h-5 text-primary" />
         </div>
         <h2 className="text-xl font-bold ">Notification Preferences</h2>
