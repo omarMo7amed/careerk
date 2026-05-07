@@ -10,18 +10,21 @@ import { JobSeekerProfile, useUpdateProfile } from "@/entities/job-seeker";
 interface EditableTableProps {
   confirmed: boolean;
   personalInfo: JobSeekerProfile & "firstName" & "lastName";
-  hasProfile: boolean;
   tableRef?: React.Ref<{ getEditedData: () => Record<string, any> }>;
+  hasCVInfo: boolean;
 }
 
 export function EditableTable({
   confirmed,
   personalInfo,
-  hasProfile,
+  hasCVInfo,
 }: EditableTableProps) {
   // const {token}=useAuth()
   const { handleChange } = useTableHook(personalInfo);
-  const { updateProfile } = useUpdateProfile({ token: "", hasProfile });
+  const { updateProfile } = useUpdateProfile({
+    token: "",
+    hasCVInfo,
+  });
   const handleFieldBlur = (fieldKey: string, value: string) => {
     updateProfile({ [fieldKey]: value });
   };

@@ -11,11 +11,11 @@ import { JobSeeker, JobSeekerProfile } from "@/entities/job-seeker";
 export function ExtractedCVInfo({
   cvInfo,
   isConfirmed,
-  hasProfile,
+  hasCVInfo,
 }: {
   cvInfo?: JobSeeker;
   isConfirmed: boolean;
-  hasProfile: boolean;
+  hasCVInfo: boolean;
 }) {
   if (!cvInfo) {
     return <div>No CV information available.</div>;
@@ -34,16 +34,14 @@ export function ExtractedCVInfo({
     yearsOfExperience: cvInfo?.profile?.yearsOfExperience || 0,
   };
 
-  console.log("Personal Info for EditableTable:", personalInfo);
-
   return (
     <div className="flex flex-col gap-8 ">
       <EditableTable
-        hasProfile={hasProfile}
         personalInfo={
           personalInfo as JobSeekerProfile & "firstName" & "lastName"
         }
         confirmed={isConfirmed}
+        hasCVInfo={hasCVInfo}
       />
 
       <Summary isOwner summary={cvInfo?.profile?.summary || ""} />

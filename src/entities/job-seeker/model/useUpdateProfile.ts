@@ -7,10 +7,10 @@ import { usePathname } from "next/navigation";
 
 export function useUpdateProfile({
   token,
-  hasProfile,
+  hasCVInfo,
 }: {
   token: string;
-  hasProfile: boolean;
+  hasCVInfo: boolean;
 }) {
   const queryClient = useQueryClient();
   const isProfilePage = Boolean(usePathname().match("profile"));
@@ -18,7 +18,7 @@ export function useUpdateProfile({
   const { mutate, isPending, isError } = useMutation({
     mutationFn: (payload: any) => {
       if (
-        hasProfile ||
+        !hasCVInfo ||
         payload.profileImageUrl ||
         payload.firstName ||
         payload.lastName ||
@@ -29,7 +29,7 @@ export function useUpdateProfile({
       return Promise.resolve({ data: payload });
     },
     onSuccess: (data: any) => {
-      if (hasProfile || isProfilePage) {
+      if (!hasCVInfo || isProfilePage) {
         queryClient.setQueryData(jobSeekerKeys.me.all, (old: any) => {
           if (!old) return old;
           if (

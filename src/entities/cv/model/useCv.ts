@@ -4,6 +4,7 @@ import { getMyCVInfo } from "../api/getMyCVInfo";
 import { uploadCVToServer } from "../api/uploadCV";
 import { jobSeekerKeys, useMyProfileQuery } from "@/entities/job-seeker";
 import { confirmCVParse } from "../api/confirmCVParse";
+import { deleteCVParse } from "../api/deleteCVParse";
 import { CVConfirmPayload } from "../types/cvParseResponse";
 
 export function useCV({ token }: { token: string }) {
@@ -23,9 +24,10 @@ export function useCVInfo({ token }: { token: string }) {
   const { jobSeeker, isLoading: isProfileLoading } = useMyProfileQuery({
     token,
   });
-  const test = { firstName: "omar", lastName: "mohamed", profile: null };
-  const hasProfile = !!jobSeeker?.profile;
-  console.log("Job Seeker Profile:", hasProfile);
+
+  console.log("Job Seeker Profile Data:", jobSeeker);
+
+  const hasJobSeekerProfile = !!jobSeeker?.profile;
 
   const {
     data: cvData,
@@ -34,52 +36,120 @@ export function useCVInfo({ token }: { token: string }) {
   } = useQuery({
     queryKey: ["cv-info"],
     queryFn: () => getMyCVInfo(token),
-    enabled: !hasProfile, // Only fetch if profile doesn't exist
+    enabled: !hasJobSeekerProfile,
     staleTime: 5 * 60 * 1000,
   });
+  const hasCVData = !!cvData?.data; // PRIMARY CHECK
 
-  if (hasProfile) {
+  // State Detection Logic:
+  // Case 1: Both cvData AND profile → Pending update (shows "New CV Data Available" CTA with modal)
+  // Case 2: Profile only (no cvData) → Confirmed (shows "Data confirmed and locked" CTA)
+  // Case 3: cvData only (no profile) → First upload (shows "Ready to confirm?" CTA)
+  // case 4: Neither cvData nor profile → Empty state (shows only drop zone)
+
+  // Case 1
+  const isUpdatePending = hasCVData && hasJobSeekerProfile;
+  // Case 2
+  const isConfirmed = hasJobSeekerProfile && !hasCVData;
+  // Case 3
+  const isFirstUpload = hasCVData && !hasJobSeekerProfile;
+  // Case 4
+  const isEmptyState = !hasCVData && !hasJobSeekerProfile;
+
+  if (isUpdatePending) {
+    return {
+      data: cvData?.data,
+      isLoading: false,
+      error: null,
+      hasProfile: true,
+      isConfirmed: false,
+      isUpdatePending: true,
+      isFirstUpload: false,
+    };
+  }
+
+  // Case 2: Only profile exists (Confirmed)
+  if (isConfirmed) {
     return {
       data: jobSeeker,
       isLoading: isProfileLoading,
       error: null,
-      hasProfile,
+      hasProfile: true,
+      isConfirmed: true,
+      isUpdatePending: false,
+      isFirstUpload: false,
     };
   }
-  return { data: cvData?.data, error, isLoading, hasProfile };
+
+  // Case 3: Only cvData exists (First upload)
+  if (isFirstUpload) {
+    return {
+      data: cvData?.data,
+      isLoading: false,
+      error: null,
+      hasProfile: false,
+      isConfirmed: false,
+      isUpdatePending: false,
+      isFirstUpload: true,
+    };
+  }
+
+  // Empty state (neither exists)
+  return {
+    data: cvData?.data,
+    error,
+    isLoading,
+    hasProfile: false,
+    isConfirmed: false,
+    isUpdatePending: false,
+    isFirstUpload: false,
+  };
 }
 
 export function useConfirmCVParse({ token }: { token: string }) {
   const queryClient = useQueryClient();
-  const data = queryClient.getQueryData(["cv-info"]) as any;
 
-  const payload: CVConfirmPayload = {
-    parseResultId: data?.parseResultId,
-    data: {
-      firstName: data?.data?.firstName,
-      lastName: data?.data?.lastName,
-      cvEmail: data?.data?.profile?.cvEmail,
-      phone: data?.data?.profile?.phone,
-      location: data?.data?.profile?.location,
-      linkedinUrl: data?.data?.profile?.linkedinUrl,
-      githubUrl: data?.data?.profile?.githubUrl,
-      portfolioUrl: data?.data?.profile?.portfolioUrl,
-      title: data?.data?.profile?.title,
-      summary: data?.data?.profile?.summary,
-      noticePeriod: data?.data?.profile?.noticePeriod,
-      workPreference: data?.data?.profile?.workPreference,
-      availabilityStatus: data?.data?.profile?.availabilityStatus,
-      education: data?.data?.educations,
-      skills: data?.data?.skills,
-    },
-  };
-  const { mutateAsync, error, isError, isSuccess, isPending } = useMutation({
+  const { mutateAsync, error, isPending } = useMutation({
     mutationKey: ["cv-info"],
-    mutationFn: () => confirmCVParse(payload, token),
-    onSuccess: () => {
+    mutationFn: async () => {
+      const cachedData = queryClient.getQueryData(["cv-info"]) as any;
+
+      if (!cachedData) {
+        throw new Error("CV data not found in cache. Please upload CV first.");
+      }
+
+      const payload: CVConfirmPayload = {
+        parseResultId: cachedData?.parseResultId,
+        data: {
+          firstName: cachedData?.data?.firstName || "",
+          lastName: cachedData?.data?.lastName || "",
+          cvEmail: cachedData?.data?.profile?.cvEmail || "",
+          phone: cachedData?.data?.profile?.phone || "",
+          location: cachedData?.data?.profile?.location || "",
+          linkedinUrl: cachedData?.data?.profile?.linkedinUrl || "",
+          githubUrl: cachedData?.data?.profile?.githubUrl || "",
+          portfolioUrl: cachedData?.data?.profile?.portfolioUrl || "",
+          title: cachedData?.data?.profile?.title || "",
+          summary: cachedData?.data?.profile?.summary || "",
+          noticePeriod: cachedData?.data?.profile?.noticePeriod || "",
+          workPreference: cachedData?.data?.profile?.workPreference || "",
+          availabilityStatus:
+            cachedData?.data?.profile?.availabilityStatus || "",
+          education: cachedData?.data?.educations || [],
+          skills: cachedData?.data?.skills || [],
+        },
+      };
+
+      const response = await confirmCVParse(payload, token);
+      return { payload, response, cachedData };
+    },
+    onSuccess: (result) => {
+      const { payload, cachedData } = result;
+
       queryClient.removeQueries({ queryKey: ["cv-info"] });
       queryClient.setQueryData(jobSeekerKeys.me.all, (old: any) => {
         if (!old) return old;
+
         return {
           ...old,
           data: {
@@ -88,7 +158,7 @@ export function useConfirmCVParse({ token }: { token: string }) {
             lastName: payload?.data?.lastName,
             educations: payload?.data?.education,
             skills: payload?.data?.skills,
-            workExperiences: data?.data?.workExperiences,
+            workExperiences: cachedData?.data?.workExperiences,
             profile: {
               ...old.data.profile,
               cvEmail: payload?.data?.cvEmail,
@@ -108,5 +178,27 @@ export function useConfirmCVParse({ token }: { token: string }) {
       });
     },
   });
-  return { confirmCVParse: mutateAsync, isError, error, isSuccess, isPending };
+
+  return {
+    confirmCVParse: mutateAsync,
+    error,
+    isLoading: isPending,
+  };
+}
+
+export function useRestoreCVParse({ token }: { token: string }) {
+  const queryClient = useQueryClient();
+
+  const { mutateAsync, error, isPending } = useMutation({
+    mutationKey: ["restore-cv"],
+    mutationFn: () => deleteCVParse(token),
+    onSuccess: () => {
+      queryClient.setQueryData(["cv-info"], (old: any) => {
+        if (!old) return old;
+        return { ...old, data: null };
+      });
+    },
+  });
+
+  return { restoreCVParse: mutateAsync, error, isLoading: isPending };
 }

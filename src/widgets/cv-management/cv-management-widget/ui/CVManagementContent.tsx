@@ -7,13 +7,14 @@ import { CVDropZone } from "@/features/upload-cv";
 
 export function CVManagementContent() {
   // const {token}=useAuth();
-  const { data, isLoading, error, hasProfile } = useCVInfo({ token: "" });
   const {
-    confirmCVParse,
-    // isPending: isConfirming,
-    // isSuccess: confirmSuccess,
-    // isError: confirmError,
-  } = useConfirmCVParse({ token: "" });
+    data,
+    isLoading,
+    error,
+    isConfirmed,
+    isUpdatePending,
+    isFirstUpload,
+  } = useCVInfo({ token: "" });
 
   if (isLoading) {
     return <div className="p-6">Loading CV information...</div>;
@@ -23,7 +24,11 @@ export function CVManagementContent() {
     return <div className="p-6 text-red-600">Error loading CV information</div>;
   }
 
-  if (!data.profile) {
+  // PRIMARY CONDITION: If cv-info has data OR profile is confirmed, show data
+  const hasData = isUpdatePending || isConfirmed || isFirstUpload;
+
+  if (!hasData) {
+    // State 3: No data - show only drop zone
     return (
       <section className="space-y-10 p-6">
         <CVDropZone />
@@ -31,16 +36,22 @@ export function CVManagementContent() {
     );
   }
 
+  // State 2: Has confirmed profile (ONLY jobSeekersKeys.me.all) OR pending CV (BOTH caches)
   return (
     <section className="space-y-10 p-6">
-      <CTA confirmed={hasProfile} confirmCVParse={confirmCVParse} />
-      <ExtractedCVInfo
-        hasProfile={hasProfile}
-        cvInfo={data}
-        isConfirmed={hasProfile}
+      <CTA
+        isConfirmed={isConfirmed}
+        isUpdatePending={isUpdatePending}
+        isFirstUpload={isFirstUpload}
       />
 
-      {hasProfile && <RecommendationInsights />}
+      <ExtractedCVInfo
+        cvInfo={data}
+        isConfirmed={isConfirmed}
+        hasCVInfo={isUpdatePending || isFirstUpload}
+      />
+
+      {isConfirmed && <RecommendationInsights />}
       <CVDropZone />
     </section>
   );
