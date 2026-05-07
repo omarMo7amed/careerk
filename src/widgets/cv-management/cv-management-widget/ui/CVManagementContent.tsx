@@ -1,9 +1,12 @@
-import { useCVInfo, useConfirmCVParse } from "@/entities/cv";
+import { RecommendationInsights } from "../../recommendation-insights";
 import { ExtractedCVInfo } from "../../extracted-info";
 import { CTA } from "../../CTA/ui/CTA";
-import { RecommendationInsights } from "../../recommendation-insights";
+
 import { CVDropZone } from "@/features/upload-cv";
 // import { useAuth } from "@/features/auth";
+import { useCVInfo } from "@/entities/cv";
+
+import { Error, Loader } from "@/shared";
 
 export function CVManagementContent() {
   // const {token}=useAuth();
@@ -17,18 +20,16 @@ export function CVManagementContent() {
   } = useCVInfo({ token: "" });
 
   if (isLoading) {
-    return <div className="p-6">Loading CV information...</div>;
+    return <Loader />;
   }
 
   if (error) {
-    return <div className="p-6 text-red-600">Error loading CV information</div>;
+    return <Error />;
   }
 
-  // PRIMARY CONDITION: If cv-info has data OR profile is confirmed, show data
   const hasData = isUpdatePending || isConfirmed || isFirstUpload;
 
   if (!hasData) {
-    // State 3: No data - show only drop zone
     return (
       <section className="space-y-10 p-6">
         <CVDropZone />
@@ -36,7 +37,6 @@ export function CVManagementContent() {
     );
   }
 
-  // State 2: Has confirmed profile (ONLY jobSeekersKeys.me.all) OR pending CV (BOTH caches)
   return (
     <section className="space-y-10 p-6">
       <CTA
