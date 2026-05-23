@@ -22,7 +22,7 @@ interface Props {
 async function ApplicationsPage({ searchParams }: Props) {
   const { jobId } = await searchParams;
 
-  //   if (!jobId) redirect("./");
+  if (!jobId) throw new Error("jobId is missing");
 
   return (
     <div>

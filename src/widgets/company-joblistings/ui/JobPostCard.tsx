@@ -5,7 +5,6 @@ import {
   useUpdateCompanyJob,
   workPreferenceLabels,
 } from "@/entities/company-job";
-import { toggleJobStatus } from "@/entities/company-job";
 import { CompanyJob } from "@/entities/company-job";
 import { JobStatusLabels } from "@/entities/company-job/lib/labelMap";
 import { Badge, Button, ConfirmationModal } from "@/shared";
@@ -31,11 +30,11 @@ export function JobPostCard({ job }: JobPostCardProps) {
   const { mutateAsync: updateJob } = useUpdateCompanyJob();
   async function handleToggleStatus() {
     const newStatus = status === "PUBLISHED" ? "PAUSED" : "PUBLISHED";
-    const dd =await updateJob({
+    const dd = await updateJob({
       jobId: job.id,
       data: { status: newStatus },
     });
-    console.log("status update",dd)
+    console.log("status update", dd);
   }
 
   async function handleConfirmDelete() {
@@ -83,7 +82,9 @@ export function JobPostCard({ job }: JobPostCardProps) {
           </Link>
 
           <div className="flex flex-wrap gap-2 pt-2 border-t border-border/50">
-            <Link href={`./job-listings/applications?jobId=${id}`}>
+            <Link
+              href={`/dashboard/company/job-listings/applications?jobId=${id}`}
+            >
               <Button
                 size="sm"
                 variant="ghost"

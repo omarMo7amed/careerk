@@ -12,11 +12,13 @@ import { ApplicationStatus } from "@/entities/application";
 
 export function JobApplicationsLayout({ jobId }: { jobId: string }) {
   const [page, setPage] = useState(1);
+  const token = "123"; // will change
 
   const { data, isLoading, error } = useJobApplications({
     jobId,
     page,
     limit: 10,
+    token,
   });
 
   const { mutate: updateStatus } = useUpdateApplicationStatus();
@@ -53,7 +55,9 @@ export function JobApplicationsLayout({ jobId }: { jobId: string }) {
               key={a.id}
               application={a}
               initialStatus={a.status as ApplicationStatus}
-              onStatusChange={(status) => updateStatus({ id: a.id, status })}
+              onStatusChange={(status) =>
+                updateStatus({ id: a.id, status, token })
+              }
             />
           ))}
         </div>
