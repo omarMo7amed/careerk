@@ -17,7 +17,7 @@ jobType: JobType;
 companyName: string;
 sourceUrl: string;
 postedAt: string;
-source: "LinkedIn" | "Indeed" | "Glassdoor" | "Bayt" | "Wuzzuf" | "Careerk"; //missed
+source: "LinkedIn" | "Indeed" | "Glassdoor" | "Bayt" | "Wuzzuf" ; //missed
 skills: {skillId:string , name:string};
 }
 
@@ -42,6 +42,7 @@ name: string;
 logoUrl: string | null;
 industry?: string;
 };
+
 skills: {skillId:string , name:string};
 applicants?: number; // missed
 }
@@ -66,16 +67,14 @@ location: string;
 availabilityStatus: "NOT_LOOKING" | "AVAILABLE" | "OPEN_TO_OFFERS";
 workPreference: "REMOTE" | "ONSITE" | "HYBRID" | "OTHER";
 preferredJobTypes: ("FULL_TIME" | "PART_TIME" | "CONTRACT" | "FREELANCE" | "INTERNSHIP")[];
-yearsOfExperience: number;//missed
+yearsOfExperience: number;
 linkedinUrl: string | null;
 portfolioUrl: string | null;
 githubUrl: string | null;
 summary: string | null; // missed
 expectedSalary: number | null; // missed
 email: string | null; // missed
-cvScore: number | null; // missed i want this in public
-cvMatchPercentage: number | null; // missed i want this for authenticated
-cvUrl: string | null; // missed
+cvScore: number | null; // missed
 };
 skills: { name: string; verified: boolean }[]; // missed
 }

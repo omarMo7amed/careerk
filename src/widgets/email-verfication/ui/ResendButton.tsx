@@ -1,9 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useResendOtp } from "../model/useResendOtp";
-import toast from "react-hot-toast";
 import { Button } from "@/shared";
+import { useVerifyEmail } from "@/features/auth";
 
 interface ResendButtonProps {
   email: string;
@@ -13,7 +12,7 @@ interface ResendButtonProps {
 export function ResendButton({ email, onResendSuccess }: ResendButtonProps) {
   const [countdown, setCountdown] = useState(60);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const { mutate: resendCode, isPending } = useResendOtp();
+  const { resendOTP, isPending } = useVerifyEmail();
 
   const clearCountdown = useCallback(() => {
     if (timerRef.current) {
@@ -42,25 +41,15 @@ export function ResendButton({ email, onResendSuccess }: ResendButtonProps) {
     return clearCountdown;
   }, [startTimer, clearCountdown]);
 
-  const handleResend = () => {
-    resendCode(
-      { email },
-      {
-        onSuccess: (response) => {
-          toast.success(response.message);
-          setCountdown(60);
-          startTimer();
-          onResendSuccess?.();
-        },
-      },
-    );
-  };
   return (
     <div className="text-center">
       <p className="text-sm text-text-secondary mb-2">
         Didn&apos;t receive the code?
       </p>
-      <Button onClick={handleResend} disabled={isPending || countdown > 0}>
+      <Button
+        onClick={async () => await resendOTP({ email })}
+        disabled={isPending || countdown > 0}
+      >
         {countdown > 0
           ? `Resend in ${countdown}s`
           : isPending

@@ -1,5 +1,5 @@
 "use client";
-import { cn } from "@/shared/lib/cn";
+import { cn } from "@/shared";
 import { useRef, useState, KeyboardEvent, ClipboardEvent } from "react";
 
 interface OtpInputProps {

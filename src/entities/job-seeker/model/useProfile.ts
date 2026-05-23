@@ -20,12 +20,13 @@ export function useMyProfileQuery({ token }: { token: string }) {
   };
 }
 
-export function useBaseProfile({ token }: { token: string }) {
+export function useBaseProfile({ token }: { token: string | null }) {
   const { data, isLoading, error } = useQuery({
     queryKey: jobSeekerKeys.me.all,
     queryFn: () => getMe(token),
     select: selectBase,
     staleTime: 1000 * 60 * 5,
+    enabled: false,
   });
   return { jobSeekerBase: data, isLoading, error };
 }

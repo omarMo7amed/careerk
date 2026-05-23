@@ -3,10 +3,9 @@ import { Button, Loader } from "@/shared";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Mail } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useVerifyEmail } from "../model/useVerifyEmail";
 import {
   VerifyEmailFormData,
   verifyEmailSchema,
@@ -14,6 +13,7 @@ import {
 import { ExpiryTimer } from "./ExpiryTimer";
 import { OtpInput } from "./OtpInput";
 import { ResendButton } from "./ResendButton";
+import { useVerifyEmail } from "@/features/auth";
 
 export function VerifyEmailForm() {
   const router = useRouter();
@@ -23,9 +23,9 @@ export function VerifyEmailForm() {
   const [otpValue, setOtpValue] = useState("");
   const [isExpired, setIsExpired] = useState(false);
   const [timerKey, setTimerKey] = useState(0);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
-  const { mutate, isPending } = useVerifyEmail();
+  const { verifyEmail, isPending } = useVerifyEmail();
 
   const {
     register,
@@ -42,11 +42,14 @@ export function VerifyEmailForm() {
 
   useEffect(() => {
     setValue("code", otpValue);
+    if (otpValue.length < 6) {
+      setHasSubmitted(false);
+    }
   }, [otpValue, setValue]);
 
   const onSubmit = useCallback(
     (data: VerifyEmailFormData) => {
-      if (isExpired || isSubmitting) {
+      if (isExpired || isPending || hasSubmitted) {
         return;
       }
 
@@ -55,59 +58,33 @@ export function VerifyEmailForm() {
         return;
       }
 
-      setIsSubmitting(true);
-
-      mutate(data, {
-        onSuccess: (response) => {
-          if (response.success) {
-            toast.success(response.message);
-            localStorage.setItem("accessToken", response.data.accessToken);
-
-            const userData = response.data;
-            const isJobSeeker = "firstName" in userData;
-            const dashboardUrl = isJobSeeker
-              ? "/dashboard/jobseeker/overview"
-              : "/dashboard/company/overview";
-
-            router.push(dashboardUrl);
-          } else {
-            toast.error(response.message);
-            setOtpValue("");
-            setIsSubmitting(false);
-          }
-        },
-        onError: (error) => {
-          toast.error(
-            error?.message || "Verification failed. Please try again.",
-          );
-          setOtpValue("");
-          setIsSubmitting(false);
-        },
-      });
+      setHasSubmitted(true);
+      verifyEmail(data);
     },
-    [isExpired, isSubmitting, mutate, router],
+    [isExpired, isPending, hasSubmitted, verifyEmail],
   );
 
   // Auto-submit when 6 digits entered
   useEffect(() => {
-    if (otpValue.length === 6 && !isPending && !isExpired) {
+    if (otpValue.length === 6 && !isPending && !isExpired && !hasSubmitted) {
       handleSubmit(onSubmit)();
     }
-  }, [otpValue, isPending, isExpired, handleSubmit, onSubmit]);
+  }, [otpValue, isPending, isExpired, hasSubmitted, handleSubmit, onSubmit]);
 
   const handleExpire = () => {
     setIsExpired(true);
     setOtpValue("");
+    setHasSubmitted(false);
     toast.error("Verification code has expired");
   };
 
   const handleResendSuccess = () => {
     setIsExpired(false);
     setOtpValue("");
+    setHasSubmitted(false);
     setTimerKey((prev) => prev + 1);
   };
 
-  // Redirect if no email
   if (!emailFromUrl) {
     router.push("/signup");
     return null;
@@ -135,7 +112,7 @@ export function VerifyEmailForm() {
               value={otpValue}
               onChange={setOtpValue}
               error={errors.code?.message}
-              disabled={isPending || isSubmitting || isExpired}
+              disabled={isPending || isExpired}
             />
           </div>
 
@@ -143,9 +120,7 @@ export function VerifyEmailForm() {
 
           <Button
             type="submit"
-            disabled={
-              isPending || isSubmitting || otpValue.length !== 6 || isExpired
-            }
+            disabled={isPending || otpValue.length !== 6 || isExpired}
             className="w-full"
           >
             {isPending && <Loader />}
@@ -161,7 +136,7 @@ export function VerifyEmailForm() {
         <div className="mt-6 text-center">
           <Button
             variant="outline"
-            onClick={() => router.push("/signup")}
+            onClick={() => router.push("/auth/register")}
             className="text-sm text-text-secondary "
           >
             Wrong email?{" "}

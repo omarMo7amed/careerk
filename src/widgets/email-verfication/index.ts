@@ -3,9 +3,6 @@ export { OtpInput } from "./ui/OtpInput";
 export { ResendButton } from "./ui/ResendButton";
 export { ExpiryTimer } from "./ui/ExpiryTimer";
 
-export { useVerifyEmail } from "./model/useVerifyEmail";
-export { useResendOtp } from "./model/useResendOtp";
-
 export { verifyEmailSchema, resendOtpSchema } from "./model/verifyEmailSchema";
 
 export type {
