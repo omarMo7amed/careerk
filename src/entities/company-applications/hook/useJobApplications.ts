@@ -4,9 +4,9 @@ import {
   getJobApplications,
 } from "../api/getJobApplications";
 
-export function useJobApplications(params: GetApplicationsParams) {
+export function useJobApplications(params: GetApplicationsParams = {}) {
   return useQuery({
-    queryKey: ["job-applications", params],
+    queryKey: ["company-applications", params],
     queryFn: () => getJobApplications(params),
   });
 }

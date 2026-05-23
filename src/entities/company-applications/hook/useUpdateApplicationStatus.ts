@@ -12,7 +12,7 @@ export function useUpdateApplicationStatus() {
     onSuccess: (_, { id, status }) => {
       queryClient
         .getQueriesData<GetApplicationResponse["data"]>({
-          queryKey: ["job-applications"],
+          queryKey: ["company-applications"],
         })
         .forEach(([key, data]) => {
           if (!data) return;

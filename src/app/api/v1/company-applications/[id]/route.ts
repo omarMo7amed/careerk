@@ -12,6 +12,7 @@ const validStatuses: ApplicationStatus[] = [
   "HIRED",
   "WITHDRAWN",
 ];
+
 function updateMockApplicationStatus(
   id: string,
   status: ApplicationStatus,

@@ -1,32 +1,32 @@
-import { ApplicationStatus } from "@/entities/application";
-import { mockApplications } from "@/entities/company-applications";
-import { GetApplicationResponse } from "@/entities/company-applications";
 import { NextRequest, NextResponse } from "next/server";
 
-const PATH = "/companies/me/jobs/{jobId}/applications";
+import { ApplicationStatus } from "@/entities/application";
+import {
+  GetApplicationResponse,
+  mockApplications,
+} from "@/entities/company-applications";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ jobId: string }> },
-) {
+const validStatuses: ApplicationStatus[] = [
+  "PENDING",
+  "REVIEWED",
+  "SHORTLISTED",
+  "INTERVIEW_SCHEDULED",
+  "REJECTED",
+  "HIRED",
+  "WITHDRAWN",
+];
+
+const PATH = "/companies/me/applications";
+
+export async function GET(req: NextRequest) {
   await new Promise((r) => setTimeout(r, 600));
 
-  const { jobId } = await params;
   const { searchParams } = req.nextUrl;
 
   const page = Number(searchParams.get("page") ?? 1);
   const limit = Number(searchParams.get("limit") ?? 10);
+  const jobId = searchParams.get("jobId");
   const status = searchParams.get("status") as ApplicationStatus | null;
-
-  const validStatuses: ApplicationStatus[] = [
-    "PENDING",
-    "REVIEWED",
-    "SHORTLISTED",
-    "REJECTED",
-    "INTERVIEW_SCHEDULED",
-    "HIRED",
-    "WITHDRAWN",
-  ];
 
   if (status && !validStatuses.includes(status)) {
     return NextResponse.json(
@@ -45,9 +45,11 @@ export async function GET(
     );
   }
 
-  let applications = mockApplications.filter(
-    (app) => app.directJob.id === jobId,
-  );
+  let applications = mockApplications;
+
+  if (jobId) {
+    applications = applications.filter((app) => app.directJob.id === jobId);
+  }
 
   if (status) {
     applications = applications.filter((app) => app.status === status);
