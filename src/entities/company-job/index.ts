@@ -7,7 +7,6 @@ export { useCreateCompanyJob } from "./hook/useCreateCompanyJob";
 export { useUpdateCompanyJob } from "./hook/useUpdateCompanyJob";
 export { useCompanyJobMatches } from "./hook/useCompanyJobMatches";
 
-export { toggleJobStatus } from "./api/toggleJobStatus";
 export { mockJobs, getMockJob, getMockMatches } from "./mock-jobs/mockJobs";
 export type {
   CompanyJob,

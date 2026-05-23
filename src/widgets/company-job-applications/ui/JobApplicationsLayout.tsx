@@ -5,8 +5,10 @@ import { Star } from "lucide-react";
 import {
   ApplicationCard,
   useJobApplications,
+  useUpdateApplicationStatus,
 } from "@/entities/company-applications";
 import { useState } from "react";
+import { ApplicationStatus } from "@/entities/application";
 
 export function JobApplicationsLayout({ jobId }: { jobId: string }) {
   const [page, setPage] = useState(1);
@@ -16,6 +18,8 @@ export function JobApplicationsLayout({ jobId }: { jobId: string }) {
     page,
     limit: 10,
   });
+
+  const { mutate: updateStatus } = useUpdateApplicationStatus();
 
   if (isLoading) return <p>Loading applications...</p>;
   if (error)
@@ -45,7 +49,12 @@ export function JobApplicationsLayout({ jobId }: { jobId: string }) {
         <DashboardHeader header="Top 5 Candidates" Icon={Star} />
         <div className="grid lg:grid-cols-2 gap-6">
           {applications.map((a) => (
-            <ApplicationCard key={a.id} application={a} />
+            <ApplicationCard
+              key={a.id}
+              application={a}
+              initialStatus={a.status as ApplicationStatus}
+              onStatusChange={(status) => updateStatus({ id: a.id, status })}
+            />
           ))}
         </div>
         <Pagination

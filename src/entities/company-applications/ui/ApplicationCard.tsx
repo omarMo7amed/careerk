@@ -142,14 +142,14 @@ export function ApplicationCard({
           <button
             onClick={() => setOpen((v) => !v)}
             className={`
-              flex items-center h-fit gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium
+              flex items-center h-fit gap-2 px-3 py-1 rounded-full text-sm font-medium
               border border-border transition-all
               ${cfg.bg} ${cfg.color}
             `}
           >
             {cfg.label}
             <ChevronDown
-              className={`w-3 h-3 transition-transform ${
+              className={`w-4 h-4 transition-transform ${
                 open ? "rotate-180" : ""
               }`}
             />
@@ -170,14 +170,14 @@ export function ApplicationCard({
                         key={s}
                         onClick={() => handleSelect(s)}
                         className={`
-                          w-full flex items-center justify-between px-3 py-2 text-xs
-                          transition-colors text-left
+                          w-full flex items-center justify-between px-3 py-2 text-sm
+                          transition-colors text-left hover:bg-bg-muted
                           ${s === status ? "font-medium" : ""}
                         `}
                       >
                         <span className={c.color}>{c.label}</span>
                         {s === status && (
-                          <Check className="w-3 h-3 text-text-secondary" />
+                          <Check className={`w-4 h-4 ${c.color}`} />
                         )}
                       </button>
                     );
@@ -210,7 +210,6 @@ export function ApplicationCard({
         <div className="flex items-center justify-between gap-2">
           <CandidateSocialLinks
             linkedinUrl={linkedinUrl}
-            // portfolioUrl={portfolioUrl}
             githubUrl={githubUrl}
           />
 
