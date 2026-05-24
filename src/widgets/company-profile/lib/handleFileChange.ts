@@ -3,7 +3,7 @@ import {
   ACCEPTED_IMAGE_TYPES,
   MAX_IMAGE_SIZE_MB,
   MAX_IMAGE_SIZE_BYTES,
-} from "@/shared/constant/media";
+} from "@/shared/config/media";
 
 export function handleFileChange(
   e: React.ChangeEvent<HTMLInputElement>,

@@ -5,11 +5,11 @@ import { ContactButton } from "../components/ContactButton";
 import { ViewProfile } from "../components/ViewProfile";
 
 import { DollarSign, BriefcaseBusiness, MapPin, Clock3 } from "lucide-react";
-import { DownloadButton } from "../components/DownloadButton";
 import Skills from "../components/Skills";
 import { JobSeeker } from "../types/jobSeeker";
 import { AVAILABILITY_STATUS_LABELS } from "../lib/labels";
 import { AvailabilityStatus } from "../types/availabilityStatus";
+import { DownloadButton } from "@/entities/cv";
 
 export function CandidateCard({
   candidate,
@@ -33,10 +33,9 @@ export function CandidateCard({
       linkedinUrl,
       portfolioUrl,
       githubUrl,
-      email,
+      cvEmail,
       cvScore,
       cvMatchPercentage,
-      cvUrl,
       yearsOfExperience,
     },
     skills,
@@ -95,9 +94,9 @@ export function CandidateCard({
       />
 
       <div className="w-full flex flex-wrap text-nowrap justify-between gap-2 mt-4">
-        <DownloadButton href={cvUrl ?? "#"} />
+        <DownloadButton />
 
-        <ContactButton email={email} />
+        <ContactButton email={cvEmail || ""} />
       </div>
 
       <ViewProfile id={jobSeekerId} />

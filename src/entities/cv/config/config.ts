@@ -6,15 +6,27 @@ import {
   Mail,
   MapPin,
   Phone,
+  Briefcase,
   User,
+  User2,
 } from "lucide-react";
 import { FieldMeta } from "../types/fieldMeta";
 
 export const FIELD_META: FieldMeta[] = [
   {
+    key: "firstName",
+    label: "First Name",
+    Icon: User,
+  },
+  {
+    key: "lastName",
+    label: "Last Name",
+    Icon: User2,
+  },
+  {
     key: "title",
     label: "Job Title",
-    Icon: User,
+    Icon: Briefcase,
   },
   {
     key: "cvEmail",

@@ -1,11 +1,11 @@
 "use client";
 
-import { createContext, use, useContext } from "react";
+import { createContext, useContext } from "react";
 import { useLinksPortfolioModel } from "./useLinksPortfolioModel";
-import type { LinksPortfolioProps } from "../types/types";
 import { LinksPortfolioHeader } from "../components/LinksPortfolioHeader";
 import { DisplayMode } from "../components/DisplayMode";
 import { EditingMode as EditMode } from "../components/EditingMode";
+import { useProfileDetails } from "@/entities/job-seeker";
 
 export type LinksPortfolioContextValue = ReturnType<
   typeof useLinksPortfolioModel
@@ -16,11 +16,22 @@ const LinksPortfolioContext = createContext<LinksPortfolioContextValue | null>(
 );
 
 export function LinksPortfolioProvider({
-  profile,
   isOwner = false,
   children,
-}: LinksPortfolioProps & { children: React.ReactNode }) {
-  const model = useLinksPortfolioModel({ profile, isOwner });
+  socialContacts,
+}: {
+  socialContacts: {
+    linkedinUrl?: string;
+    githubUrl?: string;
+    portfolioUrl?: string;
+  };
+  children: React.ReactNode;
+  isOwner?: boolean;
+}) {
+  const model = useLinksPortfolioModel({
+    socialContacts,
+    isOwner,
+  });
 
   if (!model.isVisible) return null;
 

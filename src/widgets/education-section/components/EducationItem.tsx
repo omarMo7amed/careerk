@@ -1,7 +1,10 @@
+"use client";
+import { useState } from "react";
 import { Trash2, Pencil } from "lucide-react";
 import { EducationCard } from "@/entities/education";
 import { useEducationContext } from "../model/EducationContext";
 import { EditEducationForm } from "./EditEducationForm";
+import { Button, Modal } from "@/shared";
 import type { Education } from "@/entities/education";
 
 interface EducationItemProps {
@@ -10,33 +13,35 @@ interface EducationItemProps {
 }
 
 export function EducationItem({ education, index }: EducationItemProps) {
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const {
-    isFormVisible,
-    editingIndex,
+    isOwner,
+    isAddingVisible,
+    updatingIndex,
     removeEducation,
     startEditEntry,
     cancelEditEntry,
   } = useEducationContext();
 
-  const isEditingEntry = editingIndex !== null;
-  const isThisEntryEditing = editingIndex === index;
+  const isUpdatingEntry = updatingIndex !== null;
+  const isThisEntryUpdating = updatingIndex === index;
 
   return (
     <div>
       <div className="relative group">
         <EducationCard education={education} />
 
-        {!isEditingEntry && !isFormVisible && (
+        {isOwner && !isUpdatingEntry && !isAddingVisible && (
           <>
             <button
-              onClick={() => removeEducation(index)}
+              onClick={() => setIsDeleteModalOpen(true)}
               className="absolute top-2 right-2 text-text-muted hover:text-error transition-colors opacity-0 group-hover:opacity-100"
               aria-label="Remove education"
             >
               <Trash2 className="w-4 h-4" />
             </button>
             <button
-              onClick={() => startEditEntry(index)}
+              onClick={() => startEditEntry(index, education)}
               className="absolute top-2 right-8 text-text-muted hover:text-primary transition-colors opacity-0 group-hover:opacity-100"
               aria-label="Edit education"
             >
@@ -45,7 +50,7 @@ export function EducationItem({ education, index }: EducationItemProps) {
           </>
         )}
 
-        {isThisEntryEditing && (
+        {isOwner && isThisEntryUpdating && (
           <button
             onClick={cancelEditEntry}
             className="absolute top-2 right-2 text-text-muted hover:text-error transition-colors"
@@ -56,7 +61,38 @@ export function EducationItem({ education, index }: EducationItemProps) {
         )}
       </div>
 
-      {isThisEntryEditing && <EditEducationForm />}
+      {isThisEntryUpdating && <EditEducationForm />}
+
+      <Modal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        title="Delete Education"
+        maxWidth="sm"
+      >
+        <div className="space-y-4">
+          <p className="text-sm text-text-secondary">
+            Are you sure you want to remove this education entry?
+          </p>
+          <div className="flex justify-end gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setIsDeleteModalOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="outline"
+              className="text-error border-error hover:bg-error/10"
+              onClick={() => {
+                removeEducation(education?.id || index.toString());
+                setIsDeleteModalOpen(false);
+              }}
+            >
+              Remove
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

@@ -4,9 +4,9 @@ export interface ProfileHeaderInfo {
   lastName: string;
   title: string;
   location: string;
-  avatarUrl: string | null;
+  profileImageUrl: string | null;
   yearsOfExperience: number;
-  cvUrl: string | null;
+  cvEmail: string | null;
 }
 
 export interface ProfileHeaderProps {

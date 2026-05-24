@@ -28,6 +28,7 @@ export const mockJobSeeker: JobSeeker = {
   },
   educations: [
     {
+      id: "edu-001",
       degreeType: "bachelor",
       description:
         "Focused on algorithms, data structures, and software engineering principles.",
@@ -62,11 +63,11 @@ export const mockJobSeeker: JobSeeker = {
     },
   ],
   skills: [
-    { name: "React", verified: true },
-    { name: "TypeScript", verified: true },
-    { name: "Next.js", verified: true },
-    { name: "Tailwind CSS", verified: false },
-    { name: "GraphQL", verified: false },
-    { name: "Node.js", verified: false },
+    { skillId: "skill-001", name: "React", verified: true },
+    { skillId: "skill-002", name: "TypeScript", verified: true },
+    { skillId: "skill-003", name: "Next.js", verified: true },
+    { skillId: "skill-004", name: "Tailwind CSS", verified: false },
+    { skillId: "skill-005", name: "GraphQL", verified: false },
+    { skillId: "skill-006", name: "Node.js", verified: false },
   ],
 };

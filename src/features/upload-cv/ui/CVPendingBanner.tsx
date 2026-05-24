@@ -18,12 +18,13 @@ export function CVPendingBanner() {
     isPendingUploading,
     pendingUploadError,
     uploadToServer,
+    openPreviewPendingCV,
   } = useCVDropZoneContext();
 
   if (!pendingCV) return null;
 
   return (
-    <div className="w-full rounded-xl border border-blue-200 bg-blue-50 p-4">
+    <div className="w-full rounded-xl border border-border bg-bg-muted p-4">
       <StatusRow pendingCV={pendingCV} />
 
       <div className="flex items-center justify-between gap-3">
@@ -35,9 +36,22 @@ export function CVPendingBanner() {
             disabled={isPendingUploading}
             title="Discard"
             aria-label="discard cv"
-            className="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors disabled:opacity-40"
+            className="p-2 rounded-lg text-text-muted hover:text-error hover:bg-error/5 transition-colors disabled:opacity-40"
           >
             <Trash2Icon size={20} />
+          </button>
+
+          <button
+            onClick={openPreviewPendingCV}
+            disabled={isPendingUploading}
+            className={cn(
+              "px-3 py-1.5",
+              "bg-bg-surface text-foreground hover:bg-bg-surface/80 cursor-pointer",
+              "rounded-md",
+              "disabled:opacity-60 disabled:cursor-not-allowed",
+            )}
+          >
+            Preview
           </button>
 
           <Button
@@ -64,7 +78,7 @@ export function CVPendingBanner() {
       </div>
 
       {!isPendingUploading && !pendingUploadError && (
-        <p className="mt-3 flex items-center gap-1.5 text-xs text-indigo-500">
+        <p className="mt-3 flex items-center gap-1.5 text-xs text-primary">
           <BrainCircuitIcon size={13} />
           Our AI will extract your skills, experience, and education
           automatically.
@@ -72,7 +86,7 @@ export function CVPendingBanner() {
       )}
 
       {pendingUploadError && (
-        <p className="mt-2 text-xs text-red-600">{pendingUploadError}</p>
+        <p className="mt-2 text-xs text-error">{pendingUploadError}</p>
       )}
     </div>
   );

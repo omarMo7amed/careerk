@@ -11,10 +11,11 @@ import {
 import { cvUploadReducer } from "../lib/uploadCVReducer";
 import type { CVUploadState } from "../types/uploadCVReducer";
 import { initialCVUploadState } from "../config/config";
-import { uploadCVToServer } from "@/entities/cv";
+import { useCV } from "@/entities/cv/model/useCv";
 
 export function useCVUpload() {
   const [state, dispatch] = useReducer(cvUploadReducer, initialCVUploadState);
+  const { uploadCVToServer } = useCV({ token: "" });
 
   useEffect(() => {
     dispatch({
@@ -68,6 +69,16 @@ export function useCVUpload() {
     });
   }
 
+  function openPreviewPendingCV() {
+    if (!state.pendingCV) return;
+    const file = storedCVToFile(state.pendingCV);
+    const previewUrl = state.pendingCV.data;
+    dispatch({
+      type: "SELECT_FILE",
+      payload: { file, previewUrl },
+    });
+  }
+
   function discard() {
     clearCVFromLocalStorage();
     dispatch({ type: "DISCARD_PENDING" });
@@ -78,7 +89,7 @@ export function useCVUpload() {
     dispatch({ type: "PENDING_UPLOAD_START" });
     try {
       const file = storedCVToFile(state.pendingCV);
-      await uploadCVToServer(file);
+      uploadCVToServer(file);
       clearCVFromLocalStorage();
       dispatch({ type: "PENDING_UPLOAD_SUCCESS" });
       onSuccess?.();
@@ -111,5 +122,6 @@ export function useCVUpload() {
     pendingUploadError: state.pendingUploadError,
     discard,
     uploadToServer,
+    openPreviewPendingCV,
   };
 }

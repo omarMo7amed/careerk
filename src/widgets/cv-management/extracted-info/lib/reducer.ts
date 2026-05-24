@@ -7,7 +7,11 @@ export function reducer(state: State, action: Action): State {
     case "START_EDITING":
       return { ...state, status: "editing" };
     case "SET_FIELD":
-      return { ...state, [action.field]: action.value };
+      return {
+        ...state,
+        status: "editing",
+        [action.field]: action.value,
+      };
     default:
       return state;
   }

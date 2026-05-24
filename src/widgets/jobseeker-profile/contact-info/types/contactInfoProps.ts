@@ -6,8 +6,8 @@ export type ContactInfoData = Pick<
 >;
 
 export interface ContactInfoRootProps {
-  contactInfo: ContactInfoData;
   isOwner?: boolean;
+  contactInfo: ContactInfoData;
 }
 
 export interface ContactInfoProps {

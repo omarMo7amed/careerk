@@ -1,14 +1,19 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function addSkill(skills: string[]) {
-  //   const response = await fetch("/api/skills", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({ skillNames: skills }),
-  //   });
-  //   if (!response.ok) {
-  //     throw new Error("Failed to add skill");
-  //   }
-  //   return response.json();
+export async function addSkill(token: string, skills: string[]) {
+  if (skills.length === 0) return { data: [] };
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_API_URL}/job-seekers/me/skills`,
+    {
+      method: "POST",
+      // headers: {
+      //   "Content-Type": "application/json",
+      //   Authorization: `Bearer ${token}`,
+      // },
+      body: JSON.stringify({ skillNames: skills }),
+    },
+  );
+  if (!res.ok) {
+    throw new Error("Failed to add skills");
+  }
+  const data = await res.json();
+  return data;
 }

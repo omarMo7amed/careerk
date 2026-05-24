@@ -1,15 +1,28 @@
 "use client";
 import { useReducer } from "react";
 import { toast } from "react-hot-toast";
-import { useSkillsQuery, useUpdateSkills } from "@/entities/skill";
+import { useAddSkills, useDeleteSkill } from "@/entities/skill";
+import { useProfileDetails, useSkills } from "@/entities/job-seeker";
 import { skillsReducer, INITIAL_SKILLS_STATE } from "../lib/skillsReducer";
+// import {useAuth} from "@/features/auth";
 
 export function useSkillsModel({ isOwner }: { isOwner: boolean }) {
-  const { data: fetchedSkills = [] } = useSkillsQuery();
-  const { updateSkills, isPending } = useUpdateSkills();
+  const { hasProfile } = useProfileDetails({ token: "" });
+  const { skills: fetchedSkills = [] } = useSkills({
+    hasProfile,
+    token: "",
+  });
+  const { addSkills, isPending } = useAddSkills({
+    hasProfile,
+    token: "",
+  });
+  const { deleteSkill } = useDeleteSkill({ hasProfile, token: "" });
   const [state, dispatch] = useReducer(skillsReducer, INITIAL_SKILLS_STATE);
 
-  const skills = state.status === "editing" ? state.skills : fetchedSkills;
+  const skills =
+    state.status === "adding" || state.status === "deleting"
+      ? state.skills
+      : fetchedSkills;
 
   function startEdit() {
     dispatch({ type: "START_EDIT", skills: fetchedSkills });
@@ -27,29 +40,44 @@ export function useSkillsModel({ isOwner }: { isOwner: boolean }) {
     dispatch({ type: "ADD_SKILL" });
   }
 
-  function removeSkill(name: string) {
-    dispatch({ type: "REMOVE_SKILL", name });
+  function removeSkill(skillId: string) {
+    dispatch({ type: "REMOVE_SKILL", skillId });
   }
 
   function handleSave() {
-    if (state.status !== "editing") return;
-    updateSkills(
-      state.skills.map((skill) => skill.name),
-      {
+    if (state.status !== "adding" && state.status !== "deleting") return;
+    if (state.AddedSkill.length !== 0) {
+      addSkills(
+        state.AddedSkill.map((skill) => skill.name),
+        {
+          onSuccess: () => {
+            toast.success("Skills Added successfully!");
+            dispatch({ type: "SAVE_SUCCESS" });
+          },
+          onError: () => toast.error("Failed to save skills."),
+        },
+      );
+    }
+
+    if (state.RemovedSkill.length !== 0) {
+      deleteSkill(state.RemovedSkill, {
         onSuccess: () => {
-          toast.success("Skills saved!");
+          toast.success("Skills removed successfully!");
           dispatch({ type: "SAVE_SUCCESS" });
         },
-        onError: () => toast.error("Failed to save skills."),
-      },
-    );
+        onError: () => toast.error("Failed to remove skills."),
+      });
+    }
   }
 
   return {
     skills,
     isOwner,
-    editing: state.status === "editing",
-    input: state.status === "editing" ? state.input : "",
+    editing: state.status === "adding" || state.status === "deleting",
+    input:
+      state.status === "adding" || state.status === "deleting"
+        ? state.input
+        : "",
     isPending,
     startEdit,
     cancelEdit,

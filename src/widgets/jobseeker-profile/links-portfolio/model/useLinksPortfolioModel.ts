@@ -8,27 +8,31 @@ import {
   INITIAL_STATE,
   linksPortfolioReducer,
 } from "../lib/linksPortfolioReducer";
+import { getChangedFields } from "@/shared";
 
 export interface UseLinksPortfolioModelParams {
-  profile: LinksPortfolioData;
+  socialContacts: LinksPortfolioData;
   isOwner: boolean;
 }
 
 export function useLinksPortfolioModel({
-  profile,
+  socialContacts,
   isOwner,
 }: UseLinksPortfolioModelParams) {
   const [state, dispatch] = useReducer(linksPortfolioReducer, INITIAL_STATE);
-  const { updateProfile, isPending } = useUpdateProfile();
+  const { updateProfile, isPending } = useUpdateProfile({ token: "" });
 
   const isVisible =
-    !!(profile.linkedinUrl || profile.githubUrl || profile.portfolioUrl) ||
-    isOwner;
+    !!(
+      socialContacts.linkedinUrl ||
+      socialContacts.githubUrl ||
+      socialContacts.portfolioUrl
+    ) || isOwner;
 
   const editing = state.status === "editing";
 
   function startEdit() {
-    dispatch({ type: "START_EDIT", data: profile });
+    dispatch({ type: "START_EDIT", data: socialContacts });
   }
 
   function cancelEdit() {
@@ -41,20 +45,32 @@ export function useLinksPortfolioModel({
 
   function handleSave() {
     if (state.status !== "editing") return;
-    updateProfile(
+    const patch = getChangedFields(
       {
-        linkedinUrl: state.linkedin || null,
-        githubUrl: state.github || null,
-        portfolioUrl: state.portfolio || null,
+        linkedinUrl: socialContacts.linkedinUrl || "",
+        githubUrl: socialContacts.githubUrl || "",
+        portfolioUrl: socialContacts.portfolioUrl || "",
       },
       {
-        onSuccess: () => {
-          toast.success("Links updated!");
-          dispatch({ type: "SAVE_SUCCESS" });
-        },
-        onError: () => toast.error("Failed to update links."),
+        linkedinUrl: state.linkedin,
+        githubUrl: state.github,
+        portfolioUrl: state.portfolio,
       },
     );
+
+    if (Object.keys(patch).length === 0) {
+      toast("No changes made.");
+      dispatch({ type: "CANCEL" });
+      return;
+    }
+
+    updateProfile(patch, {
+      onSuccess: () => {
+        toast.success("Links updated!");
+        dispatch({ type: "SAVE_SUCCESS" });
+      },
+      onError: () => toast.error("Failed to update links."),
+    });
   }
 
   return {
@@ -67,6 +83,6 @@ export function useLinksPortfolioModel({
     startEdit,
     cancelEdit,
     handleSave,
-    profile,
+    socialContacts,
   };
 }

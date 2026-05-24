@@ -1,16 +1,21 @@
 "use client";
 import { useState } from "react";
-import { useUpdateProfile } from "@/entities/job-seeker";
+import { useProfileDetails, useUpdateProfile } from "@/entities/job-seeker";
 import { toast } from "react-hot-toast";
 
 import { SummaryProps } from "../types/summaryType";
 import { DisplayMode } from "../components/DisplayMode";
 import { EditingMode } from "../components/EditingMode";
-
+// import {useAuth}from "@/features/auth";
 export function Summary({ summary, isOwner }: SummaryProps) {
+  // const {token}=useAuth();
+  const { hasProfile } = useProfileDetails({ token: "" });
   const [editing, setEditing] = useState(false);
   const [value, setValue] = useState(summary ?? "");
-  const { updateProfile, isPending } = useUpdateProfile();
+  const { updateProfile, isPending } = useUpdateProfile({
+    token: "",
+    hasProfile,
+  });
 
   function handleSave() {
     updateProfile(

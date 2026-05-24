@@ -43,3 +43,5 @@ next-env.d.ts
 
 # instructions
 CLAUDE.md
+CV_INFO_PRIMARY_CONDITION.md
+STATE_MACHINE.md

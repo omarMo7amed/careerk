@@ -2,7 +2,7 @@
 
 import { useMemo, useReducer } from "react";
 import { toast } from "react-hot-toast";
-import { WorkPreference, useUpdateProfile } from "@/entities/job-seeker";
+import { useUpdateProfile } from "@/entities/job-seeker";
 
 import {
   INITIAL_STATE,
@@ -11,6 +11,8 @@ import {
 import type { State } from "../types/profileStatusReducer";
 import type { ProfileStatusData } from "../types/profileStatus";
 import { toggleJobType } from "../lib/toggleJobType";
+import { WorkPreference } from "@/entities/company-job";
+import { getChangedFields } from "@/shared";
 
 export interface UseProfileStatusModelParams {
   profileStatus: ProfileStatusData | null;
@@ -22,7 +24,7 @@ export function useProfileStatusModel({
   isOwner,
 }: UseProfileStatusModelParams) {
   const [state, dispatch] = useReducer(profileStatusReducer, INITIAL_STATE);
-  const { updateProfile, isPending } = useUpdateProfile();
+  const { updateProfile, isPending } = useUpdateProfile({ token: "" });
 
   const viewProfileStatus: ProfileStatusData = useMemo(
     () => ({
@@ -62,23 +64,27 @@ export function useProfileStatusModel({
   function handleSave() {
     if (!isOwner) return;
     if (state.status !== "editing") return;
+    const patch = getChangedFields(viewProfileStatus, {
+      availabilityStatus: state.availabilityStatus,
+      workPreference: state.workPreference as WorkPreference | "",
+      preferredJobTypes: state.preferredJobTypes,
+      expectedSalary: state.expectedSalary,
+      noticePeriod: state.noticePeriod,
+    });
 
-    updateProfile(
-      {
-        availabilityStatus: state.availabilityStatus || null,
-        workPreference: (state.workPreference as WorkPreference) || null,
-        preferredJobTypes: state.preferredJobTypes,
-        expectedSalary: state.expectedSalary,
-        noticePeriod: state.noticePeriod || null,
+    if (Object.keys(patch).length === 0) {
+      toast("No changes made.");
+      dispatch({ type: "CANCEL" });
+      return;
+    }
+
+    updateProfile(patch, {
+      onSuccess: () => {
+        toast.success("Status updated!");
+        dispatch({ type: "SAVE_SUCCESS" });
       },
-      {
-        onSuccess: () => {
-          toast.success("Status updated!");
-          dispatch({ type: "SAVE_SUCCESS" });
-        },
-        onError: () => toast.error("Failed to update status."),
-      },
-    );
+      onError: () => toast.error("Failed to update status."),
+    });
   }
 
   return {

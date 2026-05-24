@@ -59,14 +59,14 @@ export function ViewJobPostLayout({ jobPost }: ViewJobPostLayoutProps) {
     setShowDeleteModal(false);
   }
 
-  const { candidates } = useCandidatesQuery();
+  const { candidates } = useCandidatesQuery({});
   const topCandidates = candidates
     ?.slice()
     .sort((a, b) => (b.cvMatchPercentage ?? 0) - (a.cvMatchPercentage ?? 0))
     .slice(0, 5);
 
   return (
-    <div >
+    <div>
       <div>
         <div className="mb-8">
           <BackButton />

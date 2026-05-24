@@ -1,13 +1,21 @@
-import { JobSeeker } from "../types/jobSeeker";
-import { mockJobSeeker } from "../mock-data/jobSeeker";
+export async function getMe(token: string | null) {
+  // if (!token) {
+  //   throw new Error("No token provided");
+  // }
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_API_URL}/job-seekers/me`,
+    {
+      // headers: {
+      //   Authorization: `Bearer ${token}`,
+      // },
+    },
+  );
 
-export async function getMe(): Promise<JobSeeker> {
-  // TODO: Replace with real API call
-  // const res = await fetch("/api/job-seekers/me", { signal });
-  // if (!res.ok) throw new Error("Failed to fetch job seeker profile");
-  // return res.json();
+  if (!res.ok) throw new Error("Failed to fetch job seeker profile");
 
-  // Simulate network delay
-  await new Promise((resolve) => setTimeout(resolve, 500));
-  return mockJobSeeker;
+  const data = await res.json();
+
+  // console.log("Fetched job seeker profile:", data);
+
+  return data;
 }

@@ -1,9 +1,9 @@
-import { JobType, WorkPreference } from "@/entities/job-seeker";
-import { AvailabilityStatus } from "@/shared";
+import { JobType, WorkPreference } from "@/entities/company-job";
+import { AvailabilityStatus } from "@/entities/job-seeker";
 
 export interface EditingState {
   status: "editing";
-  availabilityStatus: AvailabilityStatus | "";
+  availabilityStatus: AvailabilityStatus;
   workPreference: WorkPreference | "";
   preferredJobTypes: JobType[];
   expectedSalary: number | null;

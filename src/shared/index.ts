@@ -61,3 +61,4 @@ export {
   normalizeValue,
   normalizeMultiValues,
 } from "./lib/NormalizeValues";
+export { getChangedFields } from "./lib/getChangedFields";
