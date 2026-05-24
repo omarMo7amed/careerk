@@ -6,7 +6,9 @@ export function useDeleteCompanyJob() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: deleteCompanyJob,
+    mutationFn: ({ id, token }: { id: string; token: string }) =>
+      deleteCompanyJob(id, token),
+
     onSuccess: (jobId) => {
       queryClient.setQueryData(["company-jobs"], (old: CompanyJob[]) =>
         old?.filter((job) => job.id !== jobId),

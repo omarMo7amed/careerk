@@ -21,6 +21,7 @@ type JobPostCardProps = {
 };
 
 export function JobPostCard({ job }: JobPostCardProps) {
+  const token = "123";
   const { mutateAsync: deleteJob, isPending: isDeleting } =
     useDeleteCompanyJob();
 
@@ -28,17 +29,19 @@ export function JobPostCard({ job }: JobPostCardProps) {
 
   const { id, title, skills, location, workPreference, jobType, status } = job;
   const { mutateAsync: updateJob } = useUpdateCompanyJob();
+
   async function handleToggleStatus() {
     const newStatus = status === "PUBLISHED" ? "PAUSED" : "PUBLISHED";
     const dd = await updateJob({
       jobId: job.id,
       data: { status: newStatus },
+      token,
     });
     console.log("status update", dd);
   }
 
   async function handleConfirmDelete() {
-    await deleteJob(id);
+    await deleteJob({ id, token });
     setShowDeleteModal(false);
   }
 

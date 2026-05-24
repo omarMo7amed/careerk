@@ -6,7 +6,8 @@ import Link from "next/link";
 import { useCompanyJobs } from "@/entities/company-job";
 
 export function CompanyJoblistings() {
-  const { data: jobs = [], isLoading } = useCompanyJobs();
+  const token = "123";
+  const { data: jobs = [], isLoading } = useCompanyJobs(token);
 
   if (isLoading) return <p>Loading...</p>;
   if (!jobs) return null;

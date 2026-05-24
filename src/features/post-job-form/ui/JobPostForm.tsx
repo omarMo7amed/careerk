@@ -21,6 +21,7 @@ export function JobPostForm({
   onCancel,
   onSuccess,
 }: JobPostFormProps) {
+  const token = "123";
   const isEditMode = !!initialData;
   const { mutateAsync: createJob, isPending: isCreating } =
     useCreateCompanyJob();
@@ -71,7 +72,7 @@ export function JobPostForm({
       return;
     }
 
-    await createJob(data);
+    await createJob({ payload: data, token });
     console.log("Job posted:", data);
 
     reset();

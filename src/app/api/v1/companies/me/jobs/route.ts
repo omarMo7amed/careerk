@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
         message: "skillNames must be an array",
         meta: {
           timestamp: new Date().toISOString(),
-          path: "/api/v1/company-jobs",
+          path: "/companies/me/jobs",
           method: "POST",
         },
       },
@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
       message: "Success",
       meta: {
         timestamp: new Date().toISOString(),
-        path: "/api/v1/company-jobs",
+        path: "/companies/me/jobs",
         method: "POST",
       },
     },
@@ -77,7 +77,7 @@ export async function GET() {
       message: "Success",
       meta: {
         timestamp: new Date().toISOString(),
-        path: "/api/v1/company-jobs",
+        path: "/companies/me/jobs",
         method: "GET",
       },
     },

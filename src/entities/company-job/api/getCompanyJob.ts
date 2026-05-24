@@ -1,10 +1,24 @@
-import { axiosInstance } from "@/shared/api/axiosInstance";
 import { CompanyJob, GetCompanyJobResponse } from "../types/companyJob";
 
-export async function getCompanyJob(jobId: string): Promise<CompanyJob> {
-  const { data } = await axiosInstance.get<GetCompanyJobResponse<CompanyJob>>(
-    `/company-jobs/${jobId}`,
+export async function getCompanyJob(
+  jobId: string,
+  token: string,
+): Promise<CompanyJob> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_API_URL}/companies/me/jobs/${jobId}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
   );
-  console.log(data.data);
-  return data.data;
+
+  const json: GetCompanyJobResponse<CompanyJob> = await res.json();
+
+  if (!res.ok) {
+    throw new Error(json?.message || "Failed to fetch job");
+  }
+
+  return json.data;
 }

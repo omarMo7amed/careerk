@@ -9,7 +9,7 @@ function deleteMockJob(jobId: string): boolean {
   const index = mockJobs.findIndex((j) => j.id === jobId);
   if (index === -1) return false;
   mockJobs.splice(index, 1);
-  console.log("deleted",mockJobs)
+  console.log("deleted", mockJobs);
   return true;
 }
 
@@ -32,7 +32,7 @@ export async function PATCH(
         message: "Job not found",
         meta: {
           timestamp: new Date().toISOString(),
-          path: `/api/v1/company-jobs/${jobId}`,
+          path: `/companies/me/jobs/${jobId}`,
           method: "PATCH",
         },
       },
@@ -68,7 +68,7 @@ export async function PATCH(
     message: "Success",
     meta: {
       timestamp: new Date().toISOString(),
-      path: `/api/v1/company-jobs/${jobId}`,
+      path: `/companies/me/jobs/${jobId}`,
       method: "PATCH",
     },
   });
@@ -92,7 +92,7 @@ export async function GET(
         message: "Job not found",
         meta: {
           timestamp: new Date().toISOString(),
-          path: `/api/v1/company-jobs/${jobId}`,
+          path: `/companies/me/jobs/${jobId}`,
           method: "GET",
         },
       },
@@ -106,7 +106,7 @@ export async function GET(
     message: "Success",
     meta: {
       timestamp: new Date().toISOString(),
-      path: `/api/v1/company-jobs${jobId}`,
+      path: `/companies/me/jobs/${jobId}`,
       method: "GET",
     },
   });
@@ -131,7 +131,7 @@ export async function DELETE(
         message: "Job not found",
         meta: {
           timestamp: new Date().toISOString(),
-          path: `/api/v1/company-jobs/${jobId}`,
+          path: `/companies/me/jobs/${jobId}`,
           method: "DELETE",
         },
       },
@@ -146,7 +146,7 @@ export async function DELETE(
       message: "Job deleted successfully",
       meta: {
         timestamp: new Date().toISOString(),
-        path: `/api/v1/company-jobs/${jobId}`,
+        path: `/companies/me/jobs/${jobId}`,
         method: "DELETE",
       },
     },

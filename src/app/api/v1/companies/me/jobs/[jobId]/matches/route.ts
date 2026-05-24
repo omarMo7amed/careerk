@@ -7,8 +7,6 @@ import {
 } from "@/entities/company-job/types/companyJob";
 import { NextRequest, NextResponse } from "next/server";
 
-const PATH = "/companies/me/jobs/{jobId}/matches";
-
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ jobId: string }> },
@@ -41,7 +39,7 @@ export async function GET(
           message: ["availabilityStatus must be a valid enum value"],
           statusCode: 400,
           timestamp: new Date().toISOString(),
-          path: PATH,
+          path: `/companies/me/jobs/${jobId}/matches`,
           method: "GET",
           details: "Bad Request",
         },
@@ -60,7 +58,7 @@ export async function GET(
           message: "Job not found",
           statusCode: 404,
           timestamp: new Date().toISOString(),
-          path: PATH,
+          path: `/companies/me/jobs/${jobId}/matches`,
           method: "GET",
           details: "Not Found",
         },
@@ -102,7 +100,7 @@ export async function GET(
     message: "Company job matches retrieved successfully",
     meta: {
       timestamp: new Date().toISOString(),
-      path: PATH,
+      path: `/companies/me/jobs/${jobId}/matches`,
       method: "GET",
     },
   });

@@ -9,10 +9,12 @@ export function useUpdateCompanyJob() {
     mutationFn: ({
       jobId,
       data,
+      token,
     }: {
       jobId: string;
       data: Partial<CompanyJob>;
-    }) => updateCompanyJob(jobId, data),
+      token: string;
+    }) => updateCompanyJob(jobId, data, token),
 
     onSuccess: (updatedJob, variables) => {
       const { jobId } = variables;
