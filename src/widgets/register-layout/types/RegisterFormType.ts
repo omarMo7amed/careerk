@@ -6,7 +6,7 @@ export type JobSeekerData = {
 };
 
 export type CompanyData = {
-  companyName: string;
+  name: string;
   email: string;
   password: string;
   industry: string;
@@ -30,7 +30,7 @@ export type RegisterState = {
     password?: string[];
     firstName?: string[];
     lastName?: string[];
-    companyName?: string[];
+    name?: string[];
     industry?: string[];
     size?: string[];
     type?: string[];

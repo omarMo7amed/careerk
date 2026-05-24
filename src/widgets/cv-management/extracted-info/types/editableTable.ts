@@ -6,6 +6,7 @@ export type EditableRowProps = {
   Icon: LucideIcon;
   isLink?: boolean;
   handleChange: (key: string, value: string) => void;
+  onBlur?: (key: string, value: string) => void;
   confirmed: boolean;
   value: string | number;
   isEven: boolean;

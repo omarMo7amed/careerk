@@ -102,10 +102,12 @@ export async function GET(request: NextRequest) {
   const totalPages = Math.max(1, Math.ceil(total / limit));
 
   return NextResponse.json({
-    jobs: filtered.slice(start, end),
-    total,
-    page,
-    limit,
-    totalPages,
+    data: {
+      jobs: filtered.slice(start, end),
+      total,
+      page,
+      limit,
+      totalPages,
+    },
   });
 }

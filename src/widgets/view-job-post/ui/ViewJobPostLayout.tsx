@@ -73,6 +73,15 @@ export function ViewJobPostLayout({ jobId }: { jobId: string }) {
     setShowDeleteModal(false);
   }
 
+<<<<<<< HEAD
+=======
+  const { candidates } = useCandidatesQuery({});
+  const topCandidates = candidates
+    ?.slice()
+    .sort((a, b) => (b.cvMatchPercentage ?? 0) - (a.cvMatchPercentage ?? 0))
+    .slice(0, 5);
+
+>>>>>>> 36606741aebf48a3c9a381c80d782b15463dcc7e
   return (
     <div>
       <div>

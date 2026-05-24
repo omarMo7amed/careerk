@@ -1,11 +1,11 @@
 "use client";
 import { createContext, useContext } from "react";
-import type { ContactInfoData } from "../types/contactInfoProps";
 import { useContactInfoModel } from "./useContactInfoModel";
 import { ContactInfoHeader } from "../component/ContactInfoHeader";
 import { DisplayMode } from "../component/DisplayMode";
 import { EditingMode as EditMode } from "../component/EditingMode";
 import { ContactInfoContextValue } from "../types/contactInfoContextValue";
+import { ContactInfoData } from "../types/contactInfoProps";
 
 export const ContactInfoContext = createContext<ContactInfoContextValue | null>(
   null,
@@ -16,11 +16,16 @@ export function ContactInfoProvider({
   isOwner,
   children,
 }: {
-  contactInfo: ContactInfoData;
   isOwner: boolean;
   children: React.ReactNode;
+  contactInfo: ContactInfoData;
 }) {
-  const model = useContactInfoModel({ contactInfo, isOwner });
+  const model = useContactInfoModel({
+    contactInfo,
+    isOwner,
+  });
+
+  console.log("ContactInfoProvider model:", model.contactInfo); // Debug log
 
   return (
     <ContactInfoContext.Provider value={model}>

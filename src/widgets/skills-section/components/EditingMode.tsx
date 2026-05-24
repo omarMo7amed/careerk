@@ -1,6 +1,9 @@
 import { X, Plus } from "lucide-react";
 import { Button } from "@/shared";
 import { useSkillsContext } from "../model/SkillsContext";
+import { JobSeekerSkill } from "@/entities/skill";
+import { useVerifiedSkillRemoval } from "../model/useVerifiedSkillRemoval";
+import { VerifiedSkillWarningModal } from "./VerifiedSkillWarningModal";
 
 export function EditingMode() {
   const {
@@ -14,6 +17,14 @@ export function EditingMode() {
     isPending,
   } = useSkillsContext();
 
+  const {
+    isWarningOpen,
+    skillToRemove,
+    handleRemoveClick,
+    handleConfirmRemoveVerified,
+    closeWarning,
+  } = useVerifiedSkillRemoval(removeSkill);
+
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -23,17 +34,27 @@ export function EditingMode() {
 
   return (
     <div className="flex flex-col gap-4">
+      <VerifiedSkillWarningModal
+        isOpen={isWarningOpen}
+        onClose={closeWarning}
+        onConfirm={handleConfirmRemoveVerified}
+        skillName={skillToRemove?.name || ""}
+      />
+
       <div className="flex flex-wrap gap-2">
-        {skills.map((s) => (
+        {skills.map((s: JobSeekerSkill, index: number) => (
           <span
-            key={s.name}
+            key={s.skillId || index}
             className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-bg-muted border border-border text-foreground"
           >
             {s.name}
             <button
-              onClick={() => removeSkill(s.name)}
+              onClick={() => {
+                handleRemoveClick(s, index);
+              }}
               className="text-text-muted hover:text-error transition-colors ml-0.5"
               aria-label={`Remove ${s.name}`}
+              title={s.verified ? "This is a verified skill" : "Remove skill"}
             >
               <X className="w-3 h-3" />
             </button>

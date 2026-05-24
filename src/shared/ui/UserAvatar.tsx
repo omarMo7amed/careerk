@@ -6,15 +6,15 @@ import { getProfileColor } from "../lib/getProfileColor";
 export function UserAvatar({
   id,
   name,
-  avatarUrl,
+  profileImageUrl,
   size = 10,
 }: UserAvatarProps) {
   const initials = getInitialsFromFullName(name);
   const color = getProfileColor(id);
-  if (avatarUrl) {
+  if (profileImageUrl) {
     return (
       <Image
-        src={avatarUrl}
+        src={profileImageUrl}
         alt={name || "avatar"}
         width={size}
         height={size}

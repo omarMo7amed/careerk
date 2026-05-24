@@ -14,7 +14,6 @@ export { Select } from "./ui/Select";
 export { Tabs } from "./ui/Tabs";
 export { ConfirmationModal } from "./ui/ConfirmationModal";
 export { UserAvatar } from "./ui/UserAvatar";
-export { AvailabilityBadge } from "./ui/AvailabilityBadge";
 export { RankingBadge } from "./ui/RankingBadge";
 export { Pagination } from "./ui/Pagination";
 export { Banner } from "./ui/Banner";
@@ -28,6 +27,7 @@ export { getInitialsFromFullName } from "./lib/getInitialsFromFullName";
 export { getDuration, formatDate, formatYear } from "./lib/date";
 export { capitalizeFirstLetter } from "./lib/capitalizeFirstLetter";
 export { parseMultiParam, setMultiParam } from "./lib/multiParams";
+export { getFilterKeyFromValue } from "./lib/getFilterKeyFromValue";
 
 // Hooks
 export { useClickOutside } from "./lib/useClickOutside";
@@ -40,8 +40,6 @@ export { QueryProvider } from "./providers/QueryProvider";
 // Constants (all grouped by domain — add new files to constant/index.ts)
 export * from "./constant";
 
-// Types
-export type { AvailabilityStatus } from "./types/availabilityBadgeProps";
 // Nav constants
 export type { NavItem } from "./constant/dashboardNavItems";
 export {
@@ -57,3 +55,5 @@ export { Empty } from "./ui/Empty";
 export { AnimatedSidebar } from "./ui/AnimatedSidebar";
 export { Toggle } from "./ui/Toggle";
 export { Modal } from "./ui/Modal";
+
+export { getChangedFields } from "./lib/getChangedFields";

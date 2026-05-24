@@ -1,10 +1,12 @@
 "use client";
 
 import { Button, Input } from "@/shared";
-import { useActionState, useState } from "react";
+import { useState } from "react";
 import { JobSeekerData, RegisterState } from "../types/RegisterFormType";
-import { registerJobSeeker } from "../lib/registerValidation";
-import { useFormStatus } from "react-dom";
+import { registerValidation } from "../lib/registerValidation";
+import { useRegisterJobSeeker } from "@/features/auth";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const initialState: RegisterState = {
   errors: {},
@@ -12,13 +14,11 @@ const initialState: RegisterState = {
 };
 
 function JobSeekerForm() {
-  const [state, registerAction] = useActionState(
-    registerJobSeeker,
-    initialState,
-  );
-  const { pending } = useFormStatus();
+  const { registerJobSeeker, isError, error, isPending } =
+    useRegisterJobSeeker();
+  const [state, setState] = useState<RegisterState>(initialState);
+  const router = useRouter();
 
-  //
   const [formData, setFormData] = useState<JobSeekerData>({
     firstName: "",
     lastName: "",
@@ -26,9 +26,37 @@ function JobSeekerForm() {
     password: "",
   });
 
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const result = await registerValidation(
+      state,
+      new FormData(e.currentTarget),
+    );
+
+    setState(result);
+
+    if (!result.success) return;
+
+    try {
+      await registerJobSeeker(formData);
+
+      toast.success("Registration successful");
+    } catch (error) {
+      setTimeout(() => {
+        router.push(
+          `/auth/verify-email?email=${formData.email}&role=jobseeker`,
+        );
+      }, 1000);
+
+      toast.error(
+        error instanceof Error ? error.message : "Registration failed",
+      );
+    }
+  }
   return (
     <form
-      action={registerAction}
+      onSubmit={handleSubmit}
       key={state?.success ? "success" : "idle"}
       className="space-y-4"
     >
@@ -66,7 +94,9 @@ function JobSeekerForm() {
         name="email"
         label="Email"
         // required
-        error={state?.errors.email?.[0]}
+        error={
+          state?.errors.email?.[0] || (isError ? error?.message : undefined)
+        }
         type="email"
         value={formData.email}
         onChange={(e) =>
@@ -81,7 +111,9 @@ function JobSeekerForm() {
         name="password"
         label="Password"
         // required
-        error={state?.errors.password?.[0]}
+        error={
+          state?.errors.password?.[0] || (isError ? error?.message : undefined)
+        }
         type="password"
         value={formData.password}
         onChange={(e) =>
@@ -93,13 +125,13 @@ function JobSeekerForm() {
       />
 
       <Button
-        disabled={pending}
+        disabled={isPending}
         variant="primary"
         size="md"
         type="submit"
         className="w-full"
       >
-        Sign Up
+        {isPending ? "Signing Up..." : "Sign Up"}
       </Button>
     </form>
   );

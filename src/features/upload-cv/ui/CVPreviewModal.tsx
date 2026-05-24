@@ -19,7 +19,7 @@ export function CVPreviewModal() {
         onClick={!isPendingUploading ? handleCloseModal : undefined}
       />
 
-      <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-3xl mx-4 flex flex-col overflow-hidden max-h-[90vh]">
+      <div className="relative bg-bg-surface rounded-2xl shadow-2xl w-full max-w-3xl mx-4 flex flex-col overflow-hidden max-h-[90vh]">
         <Header
           file={file}
           isUploading={isPendingUploading}
@@ -29,8 +29,8 @@ export function CVPreviewModal() {
         <PreviewArea previewUrl={previewUrl || ""} file={file} />
 
         {error && (
-          <div className="px-6 py-3 bg-red-50 border-t border-red-100">
-            <p className="text-sm text-red-600">{error}</p>
+          <div className="px-6 py-3 bg-error/5 border-t border-error/20">
+            <p className="text-sm text-error">{error}</p>
           </div>
         )}
 

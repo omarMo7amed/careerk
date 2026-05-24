@@ -59,7 +59,7 @@ export function JobsList() {
 
   return (
     <div className="max-w-screen-2xl mx-auto flex flex-col sm:flex-row gap-4 ">
-      <div className="sm:w-1/3 lg:w-1/4   pt-4">
+      <div className="sm:w-1/3 lg:w-1/4 pt-4">
         <div className="flex flex-row sm:flex-col gap-4 max-h-screen overflow-scroll">
           <TableOfOperation
             key={"Job Source"}

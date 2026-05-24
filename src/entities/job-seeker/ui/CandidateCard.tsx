@@ -3,39 +3,42 @@ import { CandidateMetaItem } from "../components/CandidateMetaItem";
 import { CandidateHeader } from "../components/CandidateHeader";
 import { ContactButton } from "../components/ContactButton";
 import { ViewProfile } from "../components/ViewProfile";
-import { Candidate } from "../types/candidate";
 
-import { DollarSign, BriefcaseBusiness, MapPin } from "lucide-react";
-import { DownloadButton } from "../components/DownloadButton";
+import { DollarSign, BriefcaseBusiness, MapPin, Clock3 } from "lucide-react";
 import Skills from "../components/Skills";
+import { JobSeeker } from "../types/jobSeeker";
+import { AVAILABILITY_STATUS_LABELS } from "../lib/labels";
+import { AvailabilityStatus } from "../types/availabilityStatus";
+import { DownloadButton } from "@/entities/cv";
 
 export function CandidateCard({
   candidate,
   includeSkills = true,
 }: {
-  candidate: Candidate;
+  candidate: JobSeeker;
   includeSkills?: boolean;
 }) {
   const {
-    jobSeekerId,
     firstName,
     lastName,
-    title,
-    location,
-    summary,
-    availabilityStatus,
-    avatarUrl,
-    workPreference,
-    expectedSalary,
-    linkedinUrl,
-    portfolioUrl,
-    githubUrl,
-    email,
-    cvScore,
-    cvMatchPercentage,
-    cvUrl,
+    profileImageUrl,
+    profile: {
+      jobSeekerId,
+      title,
+      location,
+      summary,
+      availabilityStatus,
+      workPreference,
+      expectedSalary,
+      linkedinUrl,
+      portfolioUrl,
+      githubUrl,
+      cvEmail,
+      cvScore,
+      cvMatchPercentage,
+      yearsOfExperience,
+    },
     skills,
-    yearsOfExperience, //we will think about it
   } = candidate;
 
   return (
@@ -46,8 +49,12 @@ export function CandidateCard({
           firstName={firstName}
           lastName={lastName}
           title={title}
-          avatarUrl={avatarUrl}
-          availabilityStatus={availabilityStatus ?? "Not Available"}
+          profileImageUrl={profileImageUrl}
+          availabilityStatus={
+            AVAILABILITY_STATUS_LABELS[
+              availabilityStatus ?? "NOT_LOOKING"
+            ] as AvailabilityStatus
+          }
           rank={cvMatchPercentage ?? cvScore ?? 0}
         />
       </div>
@@ -67,6 +74,10 @@ export function CandidateCard({
           label={location}
         />
         <CandidateMetaItem
+          icon={<Clock3 className="w-4 h-4 text-text-secondary" />}
+          label={`${yearsOfExperience} years exp`}
+        />
+        <CandidateMetaItem
           icon={<BriefcaseBusiness className="w-4 h-4 text-text-secondary" />}
           label={workPreference}
         />
@@ -83,9 +94,9 @@ export function CandidateCard({
       />
 
       <div className="w-full flex flex-wrap text-nowrap justify-between gap-2 mt-4">
-        <DownloadButton href={cvUrl ?? "#"} />
+        <DownloadButton />
 
-        <ContactButton email={email} />
+        <ContactButton email={cvEmail || ""} />
       </div>
 
       <ViewProfile id={jobSeekerId} />

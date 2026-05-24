@@ -1,14 +1,20 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { JobCardJobseeker, useJobsQuery } from "@/entities/job";
+import { JobCardJobseeker, useMatchedJobsQuery } from "@/entities/job";
 import { List } from "@/widgets/list";
 import { LocalFilterBar } from "./LocalFilterBar";
 import { matchesTab } from "../lib/matchesTab";
 import { buildTabs } from "../lib/buildTabs";
-
+// import { useAuth } from "@/features/auth";
 export function RecommendedSection() {
-  const { jobs } = useJobsQuery();
+  // const { token } = useAuth();
+  const { jobs, isLoading, error } = useMatchedJobsQuery({
+    page: 1,
+    limit: 12,
+    enabled: true,
+    // token: token || "", // we will handle auth later
+  });
   const [activeTab, setActiveTab] = useState("all");
 
   const tabs = useMemo(() => buildTabs(jobs ?? []), [jobs]);
@@ -25,13 +31,29 @@ export function RecommendedSection() {
       <LocalFilterBar tabs={tabs} active={activeTab} onChange={setActiveTab} />
 
       <div className="p-5">
+        {error && (
+          <p className="mb-4 text-sm text-error">
+            Failed to load recommended jobs. Please try again later.
+          </p>
+        )}
+
         <p className="text-sm text-text-secondary mb-4">
           {activeCount} job{activeCount !== 1 ? "s" : ""} found
         </p>
-        <List
-          items={filtered}
-          renderItem={(job) => <JobCardJobseeker job={job} key={job.id} />}
-        />
+        {isLoading ? (
+          <p className="text-sm text-text-secondary">
+            Loading recommended jobs...
+          </p>
+        ) : filtered.length === 0 ? (
+          <p className="text-sm text-text-secondary">
+            No recommended jobs found.
+          </p>
+        ) : (
+          <List
+            items={filtered}
+            renderItem={(job) => <JobCardJobseeker job={job} key={job.id} />}
+          />
+        )}
       </div>
     </div>
   );

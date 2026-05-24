@@ -8,28 +8,47 @@ export function skillsReducer(
 ): SkillsState {
   switch (action.type) {
     case "START_EDIT":
-      return { status: "editing", skills: action.skills, input: "" };
+      return {
+        status: "adding",
+        skills: action.skills,
+        input: "",
+        AddedSkill: [],
+        RemovedSkill: [],
+      };
 
     case "SET_INPUT":
-      if (state.status !== "editing") return state;
+      if (state.status !== "adding" && state.status !== "deleting")
+        return state;
       return { ...state, input: action.value };
 
     case "ADD_SKILL": {
-      if (state.status !== "editing") return state;
+      if (state.status !== "adding") return state;
       const name = state.input.trim();
       if (!name || state.skills.some((s) => s.name === name)) return state;
       return {
         ...state,
-        skills: [...state.skills, { name, verified: false }],
+        skills: [
+          ...state.skills,
+          { skillId: Date.now().toString(), name, verified: false },
+        ],
+        AddedSkill: [
+          ...state.AddedSkill,
+          { skillId: Date.now().toString(), name, verified: false },
+        ],
         input: "",
       };
     }
 
     case "REMOVE_SKILL":
-      if (state.status !== "editing") return state;
+      if (state.status !== "adding" && state.status !== "deleting")
+        return state;
       return {
         ...state,
-        skills: state.skills.filter((s) => s.name !== action.name),
+        skills: state.skills.filter(
+          (s, index) =>
+            s.skillId !== action.skillId && index.toString() !== action.skillId,
+        ),
+        RemovedSkill: [...state.RemovedSkill, action.skillId],
       };
 
     case "CANCEL":

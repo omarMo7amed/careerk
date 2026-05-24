@@ -1,48 +1,66 @@
 "use client";
 
-import { useImprovementReport } from "@/entities/improvement";
-import { Strengths } from "../components/Strengths";
-import { Gaps } from "../components/Gaps";
-import { Recommendations } from "../components/Recommendations";
-import { Hero } from "../components/Hero";
-import { IdleStatus } from "../components/IdleStatus";
-import { LoadingStatus } from "../components/LoadingStatus";
-import { ErrorStatus } from "../components/ErrorStatus";
-import { ProcessingStatus } from "../components/ProcessingStatus";
-
+import {
+  ErrorStatus,
+  IdleStatus,
+  LoadingStatus,
+  ProcessingStatus,
+  Gaps,
+  Hero,
+  Strengths,
+  Recommendations,
+} from "@/entities/improvement";
+import { useImprovementsQuery } from "@/features/suggest-improvements";
+// import { useAuth } from "@/features/auth";
 export function RecommendationInsights() {
-  const { state, getReport, retry } = useImprovementReport();
+  // const {token }=useAuth()
+  const {
+    report,
+    isPending,
+    requestImprovement,
+    isProcessing,
+    isError,
+    error,
+    reset,
+    reportExists,
+    regenerateReport,
+  } = useImprovementsQuery({
+    token: "",
+  });
 
-  if (state.status === "idle") {
-    return <IdleStatus getReport={getReport} />;
-  }
-
-  if (state.status === "loading") {
-    return <LoadingStatus />;
-  }
-
-  if (state.status === "error") {
-    return <ErrorStatus errorMessage={state.message} retry={retry} />;
-  }
-
-  const { report } = state;
-
-  if (report.status === "PROCESSING") {
-    return <ProcessingStatus />;
-  }
-
-  if (report.status === "FAILED") {
+  if (isError) {
     return (
       <ErrorStatus
-        errorMessage="Analysis failed. Please try again."
-        retry={retry}
+        errorMessage={error?.message || "An error occurred"}
+        retry={reset}
       />
     );
   }
 
+  if (isPending) {
+    return <LoadingStatus />;
+  }
+
+  if (isProcessing) {
+    return <ProcessingStatus />;
+  }
+
+  if (!reportExists) {
+    return <IdleStatus getReport={requestImprovement} />;
+  }
+
   return (
     <div className="space-y-6">
-      <h2 className="text-foreground">Suggestions for Improvements</h2>
+      <div className="flex justify-between items-center">
+        <h2 className="text-foreground">Suggestions for Improvements</h2>
+        <button
+          onClick={regenerateReport}
+          disabled={isPending}
+          className="px-4 py-2 rounded bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
+        >
+          {isPending ? "Regenerating..." : "Regenerate"}
+        </button>
+      </div>
       <div className="grid grid-cols-1 lg:grid-cols-9 gap-6">
         <div className="order-2 lg:order-1 lg:col-span-5">
           <Gaps gaps={report.gaps} />

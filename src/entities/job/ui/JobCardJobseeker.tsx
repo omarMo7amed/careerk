@@ -52,8 +52,8 @@ export function JobCardJobseeker({ job }: JobCardProps) {
             <CompanyInfo companyName={companyName} category={companyCategory} />
           </div>
         </div>
-        {job.job_matched_score !== undefined && (
-          <RankingBadge rank={job.job_matched_score || 90} />
+        {job.matchScore !== undefined && (
+          <RankingBadge rank={job.matchScore || 90} />
         )}
       </div>
       <div className="my-6 flex justify-between items-baseline">

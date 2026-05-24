@@ -12,16 +12,24 @@ import {
 } from "../types/profileStatusContext";
 import { ProfileStatusHeader } from "../components/ProfileStatusHeader";
 
+// import {useAuth} from "@/feature/auth";
+
 const ProfileStatusContext = createContext<ProfileStatusContextValue | null>(
   null,
 );
 
 export function ProfileStatusProvider({
-  profileStatus,
   isOwner = false,
+  profileStatus,
   children,
 }: ProfileStatusProviderProps) {
-  const model = useProfileStatusModel({ profileStatus, isOwner });
+  // const {token} = useAuth();
+
+  const model = useProfileStatusModel({
+    profileStatus,
+    isOwner,
+  });
+
   return (
     <ProfileStatusContext.Provider value={model}>
       <section className="bg-bg-surface rounded-xl border border-border p-6 shadow-sm">

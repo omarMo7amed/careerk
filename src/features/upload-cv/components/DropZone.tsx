@@ -22,8 +22,8 @@ export function DropZone() {
         "border-2 border-dashed transition-colors duration-200",
         "w-full h-64 rounded-xl p-4 text-center",
         isDragging
-          ? "border-blue-500 bg-blue-50"
-          : "border-gray-300 bg-gray-50 hover:bg-gray-100 hover:border-gray-400",
+          ? "border-primary bg-primary/5"
+          : "border-border bg-bg-surface hover:bg-bg-muted hover:border-border/60",
       )}
     >
       <label
@@ -32,17 +32,17 @@ export function DropZone() {
       >
         <UploadCloudIcon
           size={32}
-          className={cn("text-gray-400", isDragging && "text-blue-500")}
+          className={cn("text-text-muted", isDragging && "text-primary")}
         />
 
-        <span className="font-medium text-gray-700 text-sm">
+        <span className="font-medium text-foreground text-sm">
           {isDragging
             ? "Drop your CV here"
             : pendingCV
               ? "Replace CV — drag & drop or click to upload"
               : "Drag & drop or click to upload"}
         </span>
-        <span className="text-xs text-gray-400">PDF or Word · Max 3 MB</span>
+        <span className="text-xs text-text-muted">PDF or Word · Max 3 MB</span>
       </label>
 
       <input

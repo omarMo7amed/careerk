@@ -1,16 +1,19 @@
-import type { WorkPreference, JobType } from "../types/jobSeeker";
+import { WorkPreference } from "@/entities/company-job";
 
 export const WORK_PREFERENCE_LABELS: Record<WorkPreference, string> = {
-  remote: "Remote",
-  "on-site": "On-site",
-  hybrid: "Hybrid",
-  other: "Other",
+  REMOTE: "Remote",
+  ONSITE: "On-site",
+  HYBRID: "Hybrid",
+  ANY: "Other",
 };
 
-export const JOB_TYPE_LABELS: Record<JobType, string> = {
-  "full-time": "Full-time",
-  "part-time": "Part-time",
-  contract: "Contract",
-  freelance: "Freelance",
-  internship: "Internship",
+export type AvailabilityStatus =
+  | "OPEN_TO_WORK"
+  | "NOT_LOOKING"
+  | "PASSIVELY_LOOKING";
+
+export const AVAILABILITY_STATUS_LABELS: Record<AvailabilityStatus, string> = {
+  OPEN_TO_WORK: "Open to Work",
+  NOT_LOOKING: "Not Looking",
+  PASSIVELY_LOOKING: "Passively Looking",
 };

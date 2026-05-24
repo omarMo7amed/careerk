@@ -5,26 +5,15 @@ import type { SearchBarProps } from "../types/searchBar";
 import { useSearchQuery } from "../model/useSearchQuery";
 
 export function SearchBar({
-  type,
   initialQuery,
   initialLocation,
   onSearchSubmit,
   searchPlaceholder,
-  getResult,
+  isLoading,
 }: SearchBarProps) {
-  const {
-    query,
-    setQuery,
-    location,
-    setLocation,
-    isLoading,
-    searchNow,
-    clear,
-  } = useSearchQuery({
-    type,
+  const { query, setQuery, location, setLocation, clear } = useSearchQuery({
     initialQuery,
     initialLocation,
-    getResult,
   });
 
   return (
@@ -44,8 +33,6 @@ export function SearchBar({
             onSearchSubmit(searchValue, locationValue);
             return;
           }
-
-          searchNow();
         }}
         isLoading={isLoading}
         onClear={clear}

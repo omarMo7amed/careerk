@@ -14,7 +14,6 @@ export function ComposedSearchBar({
   onKeyDown,
   className = "",
   searchButtonText = "Search",
-  type = "jobs",
   isLoading = false,
   onClear,
 }: ComposedSearchBarProps) {
@@ -27,12 +26,12 @@ export function ComposedSearchBar({
   };
 
   const handleSearchClick = () => {
-    onSearch?.(searchValue || "", locationValue || "", type);
+    onSearch?.(searchValue || "", locationValue || "");
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(e);
-    if (e.key === "Enter" && !e.defaultPrevented) {
+    if (e.key === "Enter" && !e.defaultPrevented && !e.repeat) {
       handleSearchClick();
     }
   };

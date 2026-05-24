@@ -15,4 +15,5 @@ export type CVDropZoneContextType = {
   pendingUploadError: string | null;
   discard: () => void;
   uploadToServer: (onSuccess?: () => void) => Promise<void>;
+  openPreviewPendingCV: () => void;
 };

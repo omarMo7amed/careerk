@@ -1,7 +1,7 @@
 "use client";
 
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { jobListings } from "../mock-data/jobs";
+import { useQuery } from "@tanstack/react-query";
+// import { jobListings } from "../mock-data/jobs"; // this for testing
 import getJobs from "../api/getJobs";
 import { GetJobsOptions, JobsResponse } from "../types/job";
 
@@ -16,7 +16,6 @@ export function useJobsQuery({
   jobSource,
   enabled = false,
 }: GetJobsOptions & { enabled?: boolean } = {}) {
-  const queryClient = useQueryClient();
   const queryKey = [
     "jobs",
     page,
@@ -45,45 +44,23 @@ export function useJobsQuery({
       }),
     enabled,
     staleTime: 1000 * 60 * 5,
-    placeholderData: {
-      jobs: jobListings,
-      total: jobListings.length,
-      page,
-      limit,
-      totalPages: Math.max(1, Math.ceil(jobListings.length / limit)),
-    },
+    //
+    // placeholderData: {
+    //   jobs: jobListings,
+    //   total: jobListings.length,
+    //   page,
+    //   limit,
+    //   totalPages: Math.max(1, Math.ceil(jobListings.length / limit)),
+    // },
   });
 
-  async function refetchNow() {
-    try {
-      return await queryClient.fetchQuery<JobsResponse>({
-        queryKey,
-        queryFn: ({ signal }) =>
-          getJobs({
-            signal,
-            page,
-            limit,
-            search,
-            location,
-            jobType,
-            experienceLevel,
-            workPreference,
-            jobSource,
-          }),
-      });
-    } catch {
-      return null;
-    }
-  }
-
   return {
-    jobs: data?.jobs ?? null,
-    total: data?.total ?? 0,
-    page: data?.page ?? page,
-    limit: data?.limit ?? limit,
-    totalPages: data?.totalPages ?? 1,
+    jobs: data?.data.jobs ?? null,
+    total: data?.data.total ?? 0,
+    page: data?.data.page ?? 1,
+    limit: data?.data.limit ?? limit,
+    totalPages: data?.data.totalPages ?? 1,
     isLoading: isLoading || isFetching,
     error: error ?? null,
-    refetchNow,
   };
 }

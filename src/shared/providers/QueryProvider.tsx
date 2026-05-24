@@ -20,8 +20,13 @@ export function QueryProvider({ children }: { children: ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
+<<<<<<< HEAD
       {children}
       <ReactQueryDevtools initialIsOpen={false} />
+=======
+      <ReactQueryDevtools initialIsOpen={false} />
+      {children}
+>>>>>>> 36606741aebf48a3c9a381c80d782b15463dcc7e
     </QueryClientProvider>
   );
 }

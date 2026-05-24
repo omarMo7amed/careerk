@@ -1,7 +1,6 @@
-import { VerifyEmailForm } from "@/features/verify-email";
 import { Suspense } from "react";
-import { Loader2 } from "lucide-react";
 import { Loader } from "@/shared";
+import { VerifyEmailForm } from "@/widgets/email-verfication";
 
 function VerifyEmailContent() {
   return (

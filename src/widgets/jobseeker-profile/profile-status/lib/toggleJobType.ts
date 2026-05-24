@@ -1,4 +1,4 @@
-import { JobType } from "@/entities/job-seeker";
+import { JobType } from "@/entities/company-job";
 import { Action, State } from "../types/profileStatusReducer";
 import { Dispatch } from "react";
 

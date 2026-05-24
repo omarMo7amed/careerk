@@ -17,8 +17,7 @@ export function EducationSection({
   return (
     <EducationProvider isOwner={isOwner} educations={educations}>
       <EducationComponents.Header />
-      <EducationComponents.Display />
-      <EducationComponents.Editing />
+      <EducationComponents.Content />
     </EducationProvider>
   );
 }

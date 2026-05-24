@@ -1,24 +1,40 @@
 import { Activity, Laptop, Tag, DollarSign, Clock } from "lucide-react";
-import { Badge, AvailabilityBadge } from "@/shared";
+import { Badge } from "@/shared";
 import { Row } from "./Row";
-import { JOB_TYPE_LABELS, WORK_PREFERENCE_LABELS } from "@/entities/job-seeker";
 import { useProfileStatusContext } from "../model/ProfileStatusContext";
+import { AvailabilityBadge } from "@/entities/job-seeker/components/AvailabilityBadge";
+import { jobTypeLabels } from "@/entities/company-job";
+import {
+  AVAILABILITY_STATUS_LABELS,
+  WORK_PREFERENCE_LABELS,
+} from "@/entities/job-seeker";
 
 export function DisplayMode() {
   const { viewProfileStatus } = useProfileStatusContext();
   const profileStatus = viewProfileStatus;
+  console.log("Rendering DisplayMode with profileStatus:", profileStatus);
 
   return (
     <div className="flex flex-col gap-4">
       {profileStatus.availabilityStatus && (
         <Row icon={<Activity className="w-4 h-4" />} label="Availability">
-          <AvailabilityBadge status={profileStatus.availabilityStatus} />
+          <AvailabilityBadge
+            status={
+              AVAILABILITY_STATUS_LABELS[
+                profileStatus.availabilityStatus
+              ] as string
+            }
+          />
         </Row>
       )}
       {profileStatus.workPreference && (
         <Row icon={<Laptop className="w-4 h-4" />} label="Work Preference">
           <Badge variant="info" size="sm">
-            {WORK_PREFERENCE_LABELS[profileStatus.workPreference]}
+            {
+              WORK_PREFERENCE_LABELS[
+                profileStatus.workPreference as keyof typeof WORK_PREFERENCE_LABELS
+              ]
+            }
           </Badge>
         </Row>
       )}
@@ -26,7 +42,7 @@ export function DisplayMode() {
         <Row icon={<Tag className="w-4 h-4" />} label="Job Types">
           {profileStatus.preferredJobTypes.map((type) => (
             <Badge key={type} variant="default" size="sm">
-              {JOB_TYPE_LABELS[type]}
+              {jobTypeLabels[type as keyof typeof jobTypeLabels]}
             </Badge>
           ))}
         </Row>

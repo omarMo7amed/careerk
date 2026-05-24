@@ -1,11 +1,11 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import { getJobSeekerById } from "../api/getJobSeekerById";
+import { getCandidateById } from "../api/getCandidateById";
 
 export function useCandidateByIdQuery(id: string) {
   const { data, isLoading, error } = useQuery({
-    queryKey: ["job-seeker", id],
-    queryFn: () => getJobSeekerById(id),
+    queryKey: ["candidate", id],
+    queryFn: () => getCandidateById(id),
     staleTime: 1000 * 60 * 5,
     enabled: Boolean(id),
   });

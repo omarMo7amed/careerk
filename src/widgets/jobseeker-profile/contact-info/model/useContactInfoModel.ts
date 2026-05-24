@@ -1,12 +1,13 @@
 "use client";
-import { useState } from "react";
+import { use, useState } from "react";
 import { toast } from "react-hot-toast";
-import { useUpdateProfile } from "@/entities/job-seeker";
+import { useProfileDetails, useUpdateProfile } from "@/entities/job-seeker";
 import type { ContactInfoData } from "../types/contactInfoProps";
 import type {
   ContactInfoContextValue,
   ContactInfoFieldKey,
 } from "../types/contactInfoContextValue";
+import { getChangedFields } from "@/shared";
 
 interface UseContactInfoModelInput {
   contactInfo: ContactInfoData;
@@ -20,7 +21,11 @@ export function useContactInfoModel({
   const [editing, setEditing] = useState(false);
   const [phone, setPhone] = useState(contactInfo.phone ?? "");
   const [location, setLocation] = useState(contactInfo.location ?? "");
-  const { updateProfile, isPending } = useUpdateProfile();
+  const { hasProfile } = useProfileDetails({ token: "" });
+  const { updateProfile, isPending } = useUpdateProfile({
+    token: "",
+    hasProfile,
+  });
 
   const isVisible = Boolean(
     isOwner || contactInfo.phone || contactInfo.cvEmail || contactInfo.location,
@@ -48,16 +53,24 @@ export function useContactInfoModel({
   }
 
   function handleSave() {
-    updateProfile(
-      { phone, location },
+    const patch = getChangedFields(
       {
-        onSuccess: () => {
-          toast.success("Contact info updated!");
-          setEditing(false);
-        },
-        onError: () => toast.error("Failed to update contact info."),
+        phone: contactInfo.phone ?? "",
+        location: contactInfo.location ?? "",
       },
+      { phone, location },
     );
+    if (Object.keys(patch).length === 0) {
+      toast("No changes made.");
+      return;
+    }
+    updateProfile(patch, {
+      onSuccess: () => {
+        toast.success("Contact info updated!");
+        setEditing(false);
+      },
+      onError: () => toast.error("Failed to update contact info."),
+    });
   }
 
   return {

@@ -1,13 +1,15 @@
 export type DegreeType =
-  | "bachelor"
-  | "master"
-  | "phd"
-  | "associate"
-  | "diploma"
-  | "certificate"
-  | "other";
+  | "HIGH_SCHOOL"
+  | "ASSOCIATE"
+  | "BACHELOR"
+  | "MASTER"
+  | "PHD"
+  | "BOOTCAMP"
+  | "CERTIFICATION"
+  | "OTHER";
 
 export interface Education {
+  id?: string;
   degreeType: DegreeType | null;
   description: string;
   institutionName: string;

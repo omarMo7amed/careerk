@@ -2,7 +2,6 @@
 
 import { SearchBar } from "@/features/search";
 import { useRouter, useSearchParams } from "next/navigation";
-import { getJobs } from "@/entities/job";
 
 export function HeroSection() {
   const router = useRouter();
@@ -31,7 +30,6 @@ export function HeroSection() {
       </div>
 
       <SearchBar
-        type="jobs"
         searchPlaceholder="Job Title"
         initialQuery={initialQuery}
         initialLocation={initialLocation}
@@ -45,9 +43,18 @@ export function HeroSection() {
           if (currentLimit) params.set("limit", currentLimit);
 
           const queryString = params.toString();
-          router.push(`/jobs${queryString ? `?${queryString}` : ""}`);
+          const nextUrl = `/jobs${queryString ? `?${queryString}` : ""}`;
+          const currentQueryString = searchParams.toString();
+          const currentUrl = `/jobs${
+            currentQueryString ? `?${currentQueryString}` : ""
+          }`;
+
+          if (nextUrl === currentUrl) {
+            return;
+          }
+
+          router.push(nextUrl);
         }}
-        getResult={getJobs}
       />
     </section>
   );

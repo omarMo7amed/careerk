@@ -1,11 +1,10 @@
 import {
-  JOB_TYPE_LABELS,
   WORK_PREFERENCE_LABELS,
-  JobType,
-  WorkPreference,
+  AVAILABILITY_STATUS_LABELS,
 } from "@/entities/job-seeker";
-import { AVAILABILITY_OPTIONS, AvailabilityStatus } from "@/shared";
 import { useProfileStatusContext } from "../model/ProfileStatusContext";
+import { JobType, jobTypeLabels, WorkPreference } from "@/entities/company-job";
+import type { AvailabilityStatus } from "@/entities/job-seeker";
 
 export function EditingMode() {
   const {
@@ -35,17 +34,16 @@ export function EditingMode() {
         <select
           value={availability}
           onChange={(e) =>
-            setField(
-              "availabilityStatus",
-              e.target.value as AvailabilityStatus | "",
-            )
+            setField("availabilityStatus", e.target.value as AvailabilityStatus)
           }
           className="rounded-lg border border-border bg-bg-muted px-3 py-1.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
         >
           <option value="">— none —</option>
-          {AVAILABILITY_OPTIONS.map((o) => (
+          {(
+            Object.keys(AVAILABILITY_STATUS_LABELS) as AvailabilityStatus[]
+          ).map((o) => (
             <option key={o} value={o}>
-              {o}
+              {AVAILABILITY_STATUS_LABELS[o]}
             </option>
           ))}
         </select>
@@ -78,18 +76,18 @@ export function EditingMode() {
       <div className="flex flex-col gap-1">
         <label className="text-xs text-text-muted font-medium">Job Types</label>
         <div className="flex flex-wrap gap-2">
-          {(Object.keys(JOB_TYPE_LABELS) as JobType[]).map((type) => (
+          {Object.keys(jobTypeLabels).map((type) => (
             <button
               key={type}
               type="button"
-              onClick={() => onToggleJobType(type)}
+              onClick={() => onToggleJobType(type as JobType)}
               className={`px-3 py-1 text-xs rounded-full border transition-colors ${
-                preferredJobTypes.includes(type)
+                preferredJobTypes.includes(type as JobType)
                   ? "bg-primary text-white border-primary"
                   : "border-border text-text-secondary hover:border-primary"
               }`}
             >
-              {JOB_TYPE_LABELS[type]}
+              {jobTypeLabels[type as keyof typeof jobTypeLabels]}
             </button>
           ))}
         </div>

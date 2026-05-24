@@ -3,7 +3,7 @@ import type { JobSkill, JobType } from "@/entities/company-job";
 
 export interface Job extends Partial<CompanyJob>, Partial<ScrapedJob> {
   type: "direct" | "scraped";
-  job_matched_score?: number; // For job matching algorithm
+  matchScore?: number; // For job matching algorithm
 }
 
 export interface ScrapedJob {
@@ -21,11 +21,13 @@ export interface ScrapedJob {
 }
 
 export type JobsResponse = {
-  jobs: Job[];
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
+  data: {
+    jobs: Job[];
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
 };
 
 export type GetJobsOptions = {
@@ -38,4 +40,5 @@ export type GetJobsOptions = {
   experienceLevel?: string[];
   jobType?: JobType[];
   jobSource?: string[];
+  token?: string;
 };

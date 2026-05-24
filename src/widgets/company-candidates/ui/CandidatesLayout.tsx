@@ -1,5 +1,5 @@
 "use client";
-import { Candidate, CandidateCard, allJobSeekers } from "@/entities/job-seeker";
+import { CandidateCard, JobSeeker, allJobSeekers } from "@/entities/job-seeker";
 import { AnimatedSidebar, Button, DashboardHeader, Pagination } from "@/shared";
 import { Briefcase, SlidersHorizontal } from "lucide-react";
 import { SortSelect } from "./SortSelect";
@@ -62,8 +62,10 @@ export function CandidatesLayout() {
       </div>
 
       <List
-        items={paginatedCandidates as Candidate[]}
-        renderItem={(c) => <CandidateCard key={c.jobSeekerId} candidate={c} />}
+        items={paginatedCandidates as JobSeeker[]}
+        renderItem={(c) => (
+          <CandidateCard key={c.profile.jobSeekerId} candidate={c} />
+        )}
         columnsInLarge={3}
         columnsInMedium={2}
         columnsInSmall={1}

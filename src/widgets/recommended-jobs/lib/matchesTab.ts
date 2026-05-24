@@ -2,5 +2,15 @@ import { Job } from "@/entities/job";
 
 export function matchesTab(job: Job, key: string): boolean {
   if (key === "all") return true;
-  return job.workArrangement === key || job.employmentType === key;
+  console.log(
+    "Matching job",
+    job.workPreference,
+    "against tab",
+    key.replace("-", "_").toUpperCase(),
+  );
+  return (
+    job.experienceLevel?.toLowerCase() === key.split("-")[0].toLowerCase() ||
+    job.jobType === key.replace("-", "_").toUpperCase() ||
+    job.workPreference === key.replace("-", "").toUpperCase()
+  );
 }

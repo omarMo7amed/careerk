@@ -1,16 +1,13 @@
-import {
-  AvailabilityBadge,
-  UserAvatar as CandidateAvatar,
-  RankingBadge,
-} from "@/shared";
+import { UserAvatar as CandidateAvatar, RankingBadge } from "@/shared";
 import type { CandidateHeaderProps } from "../types/candidateHeader";
+import { AvailabilityBadge } from "./AvailabilityBadge";
 
 export function CandidateHeader({
   id,
   firstName,
   lastName,
   title,
-  avatarUrl,
+  profileImageUrl,
   availabilityStatus,
   rank,
 }: CandidateHeaderProps) {
@@ -21,7 +18,7 @@ export function CandidateHeader({
         <CandidateAvatar
           id={id}
           name={fullName}
-          avatarUrl={avatarUrl}
+          profileImageUrl={profileImageUrl}
           size={50}
         />
       </div>

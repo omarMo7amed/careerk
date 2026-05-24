@@ -5,7 +5,8 @@ import { useUpdateProfile } from "@/entities/job-seeker";
 import { headerReducer, INITIAL_HEADER_STATE } from "../lib/headerReducer";
 import type { ProfileHeaderContextValue } from "../types/profileHeaderContextValue";
 import { ProfileHeaderInfo } from "../types/profileHeader";
-
+import { getChangedFields } from "@/shared";
+// import { useAuth } from "@/features/auth";
 interface UseProfileHeaderModelInput {
   profileHeader: ProfileHeaderInfo;
   isOwner: boolean;
@@ -17,9 +18,10 @@ export function useProfileHeaderModel({
 }: UseProfileHeaderModelInput): ProfileHeaderContextValue {
   const { firstName, lastName, title, location } = profileHeader;
   const fullName = `${firstName} ${lastName}`;
+  // const token = useAuth()
 
   const [state, dispatch] = useReducer(headerReducer, INITIAL_HEADER_STATE);
-  const { updateProfile, isPending } = useUpdateProfile();
+  const { updateProfile, isPending } = useUpdateProfile({ token: "" });
 
   function startEdit() {
     dispatch({
@@ -42,22 +44,25 @@ export function useProfileHeaderModel({
     if (state.status !== "editing") return;
     const [first, ...rest] = state.fullName.trim().split(" ");
     const last = rest.join(" ") || "";
-
-    updateProfile(
+    const patch = getChangedFields(
+      { firstName, lastName, title, location },
       {
         firstName: first,
         lastName: last,
         title: state.title,
         location: state.location,
       },
-      {
-        onSuccess: () => {
-          toast.success("Profile updated!");
-          dispatch({ type: "SAVE_SUCCESS" });
-        },
-        onError: () => toast.error("Failed to update profile."),
-      },
     );
+
+    // console.log("Changed fields:", patch);
+
+    updateProfile(patch, {
+      onSuccess: () => {
+        toast.success("Profile updated!");
+        dispatch({ type: "SAVE_SUCCESS" });
+      },
+      onError: () => toast.error("Failed to update profile."),
+    });
   }
 
   return {

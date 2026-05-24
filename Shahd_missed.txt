@@ -1,0 +1,9 @@
+/api/v1/jobs/bookmark
+
+implement pagination , return total , totalPages
+
+
+
+login:
+for jobseeker response (sha3bolely el response shwya)
+for example : return if profile made or not , GitHub url , linkedin url, recommend job length

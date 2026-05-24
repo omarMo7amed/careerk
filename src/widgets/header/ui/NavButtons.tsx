@@ -5,7 +5,7 @@ function NavButtons() {
   return (
     <div className="flex items-center gap-5">
       <a
-        href="/dashboard/jobseeker/overview"
+        href="/auth/login"
         className="text-text-secondary hover:text-primary font-semibold transition-colors"
       >
         Login
@@ -15,7 +15,7 @@ function NavButtons() {
         variant="primary"
         className="hover:shadow-2xl hover:scale-105 transition-all duration-300"
       >
-        <Link className="text-white" href="/auth/signup">
+        <Link className="text-white" href="/auth/register">
           Sign Up
         </Link>
       </Button>
