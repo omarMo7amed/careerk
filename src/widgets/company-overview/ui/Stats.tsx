@@ -1,5 +1,4 @@
-import { Badge } from "@/shared";
-import { Card } from "@/shared";
+import { Badge, Card } from "@/shared";
 import {
   Briefcase,
   TrendingUp,
@@ -7,31 +6,49 @@ import {
   CircleCheck,
   MessageSquare,
 } from "lucide-react";
+import { CompanyJob } from "@/entities/company-job";
+import { JobApplication } from "@/entities/company-applications";
 
-const stats = [
-  {
-    label: "Total Jobs",
-    value: "3",
-    color: "text-foreground",
-    icon: Briefcase,
-  },
-  { label: "Active Jobs", value: "2", color: "text-success", icon: TrendingUp },
-  {
-    label: "Total Applicants",
-    value: "101",
-    color: "text-foreground",
-    icon: Users,
-  },
-  { label: "Hires", value: "8", color: "text-foreground", icon: CircleCheck },
-  {
-    label: "Interviews",
-    value: "12",
-    color: "text-foreground",
-    icon: MessageSquare,
-  },
-];
+interface Props {
+  jobs: CompanyJob[];
+  applications: JobApplication[];
+}
 
-function OverviewStats() {
+function OverviewStats({ jobs, applications }: Props) {
+  const stats = [
+    {
+      label: "Total Jobs",
+      value: jobs.length,
+      color: "text-foreground",
+      icon: Briefcase,
+    },
+    {
+      label: "Active Jobs",
+      value: jobs.filter((j) => j.status === "PUBLISHED").length,
+      color: "text-success",
+      icon: TrendingUp,
+    },
+    {
+      label: "Total Applicants",
+      value: applications.length,
+      color: "text-foreground",
+      icon: Users,
+    },
+    {
+      label: "Hires",
+      value: applications.filter((a) => a.status === "HIRED").length,
+      color: "text-foreground",
+      icon: CircleCheck,
+    },
+    {
+      label: "Interviews",
+      value: applications.filter((a) => a.status === "INTERVIEW_SCHEDULED")
+        .length,
+      color: "text-foreground",
+      icon: MessageSquare,
+    },
+  ];
+
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
       {stats.map((stat, index) => {
@@ -45,7 +62,6 @@ function OverviewStats() {
               <div className={`text-2xl font-bold ${stat.color}`}>
                 {stat.value}
               </div>
-
               <Badge
                 variant="info"
                 className="min-w-8 min-h-8 rounded-lg justify-center border-none"

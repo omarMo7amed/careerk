@@ -40,6 +40,7 @@ export let mockJobs: CompanyJob[] = [
       { skillId: "skill_003", name: "Tailwind CSS" },
       { skillId: "skill_004", name: "Next.js" },
     ],
+    applicants:20
   },
   {
     id: "job_002",
@@ -68,6 +69,7 @@ export let mockJobs: CompanyJob[] = [
       { skillId: "skill_006", name: "PostgreSQL" },
       { skillId: "skill_007", name: "Docker" },
     ],
+    applicants:10
   },
   {
     id: "job_003",
@@ -96,7 +98,9 @@ export let mockJobs: CompanyJob[] = [
       { skillId: "skill_006", name: "PostgreSQL" },
       { skillId: "skill_007", name: "Docker" },
     ],
+    applicants:60
   },
+
 ];
 const mockMatches: Record<string, JobMatch[]> = {
   job_001: [
