@@ -1,7 +1,7 @@
+import { DownloadButton } from "@/entities/cv";
 import {
   CandidateSocialLinks,
   ContactButton,
-  DownloadButton,
   ViewProfile,
 } from "@/entities/job-seeker";
 
@@ -25,7 +25,7 @@ export function ApplicationActions({
       <div className="flex items-center justify-between gap-2">
         <CandidateSocialLinks linkedinUrl={linkedinUrl} githubUrl={githubUrl} />
         <div className="flex items-center gap-2">
-          <DownloadButton href={cvUrl ?? "#"} />
+          <DownloadButton />
           <ContactButton email={email} />
           <ViewProfile id={id} />
         </div>

@@ -19,24 +19,18 @@ import {
   DirectJobContentCard,
   JobStatistics,
 } from "@/widgets/direct-job-content";
-import { MapPin, Sparkles } from "lucide-react";
-import { useCandidatesQuery } from "@/entities/job-seeker";
-import { getScoreColor } from "../lib/getScoreColor";
 import { JobStatus } from "@/entities/company-job/types/companyJob";
 import { RecommendedCandidates } from "./RecommendedCandidates";
 
 export function ViewJobPostLayout({ jobId }: { jobId: string }) {
-  const { data: jobPost, isLoading } = useCompanyJob(jobId);
+  const token = "123";
+  const { data: jobPost, isLoading } = useCompanyJob(jobId, token);
   const { mutateAsync: deleteJob, isPending: isDeleting } =
     useDeleteCompanyJob();
   const { mutateAsync: updateJob } = useUpdateCompanyJob();
 
   const [isEditingJob, setIsEditingJob] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  // const topCandidates = candidates
-  //   ?.slice()
-  //   .sort((a, b) => (b.cvMatchPercentage ?? 0) - (a.cvMatchPercentage ?? 0))
-  //   .slice(0, 5);
 
   if (isLoading) return <p>Loading...</p>;
   if (!jobPost) return null;
@@ -63,25 +57,17 @@ export function ViewJobPostLayout({ jobId }: { jobId: string }) {
     const dd = await updateJob({
       jobId: job.id,
       data: updatedJob,
+      token,
     });
     console.log("response", dd);
     setIsEditingJob(false);
   }
 
   async function handleConfirmDelete() {
-    await deleteJob(job.id);
+    await deleteJob({ id: job.id, token });
     setShowDeleteModal(false);
   }
 
-<<<<<<< HEAD
-=======
-  const { candidates } = useCandidatesQuery({});
-  const topCandidates = candidates
-    ?.slice()
-    .sort((a, b) => (b.cvMatchPercentage ?? 0) - (a.cvMatchPercentage ?? 0))
-    .slice(0, 5);
-
->>>>>>> 36606741aebf48a3c9a381c80d782b15463dcc7e
   return (
     <div>
       <div>

@@ -6,13 +6,14 @@ import { useRouter } from "next/navigation";
 
 export function RecommendedCandidates({ jobId }: { jobId: string }) {
   const router = useRouter();
-
+  const token = "123";
   const { data, isLoading, error } = useCompanyJobMatches({
     jobId,
     page: 1,
     limit: 5,
     minScore: 50,
     availabilityStatus: "OPEN_TO_WORK",
+    token
   });
 
   if (isLoading) return <p>Loading matches...</p>;
