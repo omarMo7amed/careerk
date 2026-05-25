@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Candidate } from "@/entities/job-seeker";
+import { JobSeeker } from "@/entities/job-seeker";
 import { Select } from "@/shared";
 import { sortOptions } from "../constant/sortOptions";
-// import { sortCandidates } from "../lib/sortCandidates";
+import { sortCandidates } from "../lib/sortCandidates";
 
 type SortSelectProps = {
-  candidates: Candidate[];
-  onSort: (sorted: Candidate[]) => void;
+  candidates: JobSeeker[];
+  onSort: (sorted: JobSeeker[]) => void;
 };
 
 export function SortSelect({ candidates, onSort }: SortSelectProps) {
@@ -17,7 +17,9 @@ export function SortSelect({ candidates, onSort }: SortSelectProps) {
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const value = e.target.value;
     setSortBy(value);
-    // onSort(sortCandidates(candidates, value));
+    const sorted = sortCandidates(candidates, value);
+
+    onSort(sorted);
   }
 
   return (

@@ -1,26 +1,79 @@
 "use client";
-import { CandidateCard, JobSeeker, allJobSeekers } from "@/entities/job-seeker";
-import { AnimatedSidebar, Button, DashboardHeader, Pagination } from "@/shared";
+import {
+  AVAILABILITY_STATUS_LABELS,
+  AvailabilityStatus,
+  CandidateCard,
+  JobSeeker,
+  useCandidatesQuery,
+} from "@/entities/job-seeker";
+import {
+  AnimatedSidebar,
+  Button,
+  DashboardHeader,
+  getFilterKeyFromValue,
+  Loader,
+  Pagination,
+  parseMultiParam,
+  setMultiParam,
+} from "@/shared";
 import { Briefcase, SlidersHorizontal } from "lucide-react";
 import { SortSelect } from "./SortSelect";
 import { useState } from "react";
 import { List } from "@/widgets/list";
-import { SearchBar } from "@/features/search";
+import { NotFound, SearchBar } from "@/features/search";
 import { TableOfOperation } from "@/features/filter";
-
-const PAGE_SIZE = 9;
+import { useRouter, useSearchParams } from "next/navigation";
+import {
+  JobType,
+  jobTypeLabels,
+  WorkPreference,
+  workPreferenceLabels,
+} from "@/entities/company-job";
 
 export function CandidatesLayout() {
-  const [displayedCandidates, setDisplayedCandidates] = useState(allJobSeekers);
   const [filterOpen, setFilterOpen] = useState(false);
-  const [page, setPage] = useState(1);
 
-  const totalPages = Math.ceil(displayedCandidates.length / PAGE_SIZE);
-  const start = (page - 1) * PAGE_SIZE;
-  const paginatedCandidates = displayedCandidates.slice(
-    start,
-    start + PAGE_SIZE,
-  );
+  const router = useRouter();
+  // Search and Filter
+  const searchParams = useSearchParams();
+
+  const search = searchParams.get("search") ?? "";
+  const location = searchParams.get("location") ?? "";
+  const page = Number(searchParams.get("page")) || 1;
+  const limit = Number(searchParams.get("limit")) || 12;
+  const workPreference = parseMultiParam(
+    searchParams,
+    "workPreference",
+  ) as WorkPreference[];
+  const preferredJobTypes = parseMultiParam(
+    searchParams,
+    "preferredJobTypes",
+  ) as JobType[];
+  const availabilityStatus = parseMultiParam(
+    searchParams,
+    "availabilityStatus",
+  ) as AvailabilityStatus[];
+
+  const { candidates, totalPages, error, isLoading } = useCandidatesQuery({
+    page,
+    limit,
+    search,
+    location,
+    workPreference,
+    preferredJobTypes,
+    availabilityStatus,
+    enabled: true,
+  });
+
+  // Sort
+  // const [sortedCandidates, setSortedCandidates] = useState(candidates);
+
+  const handlePageChange = (nextPage: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", String(nextPage));
+    params.set("limit", String(limit));
+    router.push(`/dashboard/company/candidates?${params.toString()}`);
+  };
 
   return (
     <div>
@@ -32,20 +85,43 @@ export function CandidatesLayout() {
       />
       {/* Search */}
       <div className="mb-6">
-        <SearchBar searchPlaceholder="Search for candidates by name or keyword" />
+        <SearchBar
+          searchPlaceholder="Search for candidates by name or keyword"
+          initialQuery={search}
+          initialLocation={location}
+          isLoading={isLoading}
+          onSearchSubmit={(searchValue, locationValue) => {
+            const params = new URLSearchParams();
+            if (searchValue) params.set("search", searchValue);
+            if (locationValue) params.set("location", locationValue);
+            params.set("page", "1");
+
+            const currentLimit = searchParams.get("limit");
+            if (currentLimit) params.set("limit", currentLimit);
+
+            const queryString = params.toString();
+            const nextUrl = `/dashboard/company/candidates${queryString ? `?${queryString}` : ""}`;
+            const currentQueryString = searchParams.toString();
+            const currentUrl = `/dashboard/company/candidates${
+              currentQueryString ? `?${currentQueryString}` : ""
+            }`;
+
+            if (nextUrl === currentUrl) {
+              return;
+            }
+
+            router.push(nextUrl);
+          }}
+        />
       </div>
 
       {/* Sort and Filters */}
-      <div className="flex items-center justify-between mb-6">
-        <p className="text-sm font-semibold">
-          {allJobSeekers.length} Candidates Found
-        </p>
-
+      <div className="flex items-center justify-end mb-6">
         <div className="flex gap-3">
-          <SortSelect
-            candidates={allJobSeekers}
-            onSort={setDisplayedCandidates}
-          />
+          {/* <SortSelect
+            candidates={sortedCandidates}
+            onSort={setSortedCandidates}
+          /> */}
 
           <Button
             className="flex gap-2"
@@ -61,27 +137,92 @@ export function CandidatesLayout() {
         </div>
       </div>
 
-      <List
-        items={paginatedCandidates as JobSeeker[]}
-        renderItem={(c) => (
-          <CandidateCard key={c.profile.jobSeekerId} candidate={c} />
-        )}
-        columnsInLarge={3}
-        columnsInMedium={2}
-        columnsInSmall={1}
-      />
-      <Pagination totalPages={totalPages} page={page} onPageChange={setPage} />
+      {error && (
+        <p className="m-auto text-sm text-error">
+          Failed to load jobs search results. please try again later.
+        </p>
+      )}
+
+      {!isLoading && !error && candidates?.length === 0 && <NotFound />}
+
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <List
+            items={candidates as JobSeeker[]}
+            renderItem={(candidate: JobSeeker) => (
+              <CandidateCard
+                candidate={candidate}
+                key={candidate.profile.jobSeekerId}
+              />
+            )}
+            columnsInLarge={2}
+            columnsInMedium={1}
+            columnsInSmall={1}
+          />
+          {candidates?.length > 0 && (
+            <Pagination
+              page={page}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          )}
+        </>
+      )}
+
       <AnimatedSidebar isOpen={filterOpen} onClose={() => setFilterOpen(false)}>
         <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
           <TableOfOperation
-            title="Experience Level"
-            options={["Entry Level", "Mid Level", "Senior Level"]}
-            asDropdown={false}
+            title="Availability"
+            options={[...Object.entries(AVAILABILITY_STATUS_LABELS)].map(
+              ([value, label]) => ({
+                value,
+                label,
+              }),
+            )}
+            onChange={(values) => {
+              const params = new URLSearchParams(searchParams.toString());
+              setMultiParam(
+                params,
+                "availabilityStatus",
+                getFilterKeyFromValue(values),
+              );
+              params.set("page", "1");
+              router.push(`/dashboard/company/candidates?${params.toString()}`);
+            }}
           />
           <TableOfOperation
-            title="Location"
-            options={["Remote", "On-site", "Hybrid"]}
-            asDropdown={false}
+            title="Work Preference"
+            options={[...Object.entries(workPreferenceLabels)].map(
+              ([value, label]) => ({
+                value,
+                label,
+              }),
+            )}
+            onChange={(values) => {
+              const params = new URLSearchParams(searchParams.toString());
+              setMultiParam(
+                params,
+                "workPreference",
+                getFilterKeyFromValue(values),
+              );
+              params.set("page", "1");
+              router.push(`/dashboard/company/candidates?${params.toString()}`);
+            }}
+          />
+          <TableOfOperation
+            title="Preferred Job Types"
+            options={(Object.entries(jobTypeLabels) as [JobType, string][]).map(
+              ([value, label]) => ({ value, label }),
+            )}
+            onChange={(values) => {
+              const params = new URLSearchParams(searchParams.toString());
+              setMultiParam(params, "preferredJobTypes", values);
+              params.set("page", "1");
+              console.log(params);
+              router.push(`/dashboard/company/candidates?${params.toString()}`);
+            }}
           />
         </div>
       </AnimatedSidebar>
