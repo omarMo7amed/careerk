@@ -1,6 +1,5 @@
 // Model (hooks)
 export { useAuth } from "./model/useAuth";
-export { useAuthStore } from "./model/useAuthStore";
 export { useLogin } from "./model/useLogin";
 export { useLogout } from "./model/useLogout";
 export { useRefresh } from "./model/useRefresh";
@@ -19,4 +18,4 @@ export type {
   ForgotPasswordRequest,
   ResetPasswordRequest,
   ChangePasswordRequest,
-} from "./api/types";
+} from "./types";

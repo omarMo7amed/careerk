@@ -1,29 +1,33 @@
 "use client";
+import { useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import type { VerifyEmailRequest } from "../types/index";
 import { verifyEmail } from "../api/verifyEmail";
 import { resendVerification } from "../api/resendVerification";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
-import { useAuthStore } from "./useAuthStore";
+import { useAuthStore } from "@/shared";
 
 export function useVerifyEmail() {
   const router = useRouter();
-  const searchParams = new URLSearchParams(window.location.search);
+  const searchParams = useSearchParams();
   const setAuth = useAuthStore((state) => state.setAuth);
 
   const isJobSeeker = searchParams.get("role") === "jobseeker";
+  const isCompany = searchParams.get("role") === "company";
 
-  if (!isJobSeeker && searchParams.get("role") !== "company") {
-    router.push("/auth/login");
-  }
+  useEffect(() => {
+    if (!isJobSeeker && !isCompany) {
+      router.push("/auth/login");
+    }
+  }, [isCompany, isJobSeeker, router]);
 
   const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
     mutationFn: (data: VerifyEmailRequest) => verifyEmail(data),
     onSuccess: (res) => {
       toast.success(res.message + " You will be redirected to your dashboard");
 
-      setAuth(res.data.accessToken, res.data);
+      setAuth(res.data.accessToken, res.data.role);
 
       const dashboardUrl = isJobSeeker
         ? "/dashboard/jobseeker/overview"

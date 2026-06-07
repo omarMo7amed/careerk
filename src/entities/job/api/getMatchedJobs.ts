@@ -1,5 +1,7 @@
 import { GetJobsOptions, JobsResponse } from "../types/job";
 
+import { authInterceptor } from "@/shared";
+
 export default async function getMatchedJobs(options: GetJobsOptions = {}) {
   const params = new URLSearchParams();
   if (options.page) params.set("page", String(options.page));
@@ -32,13 +34,11 @@ export default async function getMatchedJobs(options: GetJobsOptions = {}) {
     }
   }
 
-  const url = `${process.env.NEXT_PUBLIC_BASE_API_URL}/job-seekers/me/matches${params.toString() ? `?${params.toString()}` : ""}`;
-  const res = await fetch(url, {
+  const urlParams = params.toString() ? `?${params.toString()}` : "";
+  const endpoint = `/job-seekers/me/matches${urlParams}`;
+  const res = await authInterceptor(endpoint, {
     signal: options.signal,
     cache: "no-store",
-    headers: {
-      // Authorization: `Bearer ${options.token ?? ""}`,
-    },
   });
 
   if (!res.ok) {

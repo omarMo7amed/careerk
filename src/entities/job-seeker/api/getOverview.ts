@@ -7,11 +7,11 @@ export interface JobSeekerOverview {
 }
 
 export async function getOverview(token: string | null) {
-  const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
-
-  const res = await fetch(`${BASE_URL}/job-seekers/overview`, {
+  const res = await fetch(`/api/v1/job-seekers/overview`, {
+    method: "GET",
     headers: {
-      // Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+      ...(token && { Authorization: `Bearer ${token}` }),
     },
   });
 

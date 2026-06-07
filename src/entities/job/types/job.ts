@@ -16,7 +16,7 @@ export interface ScrapedJob {
   companyName: string;
   sourceUrl: string;
   postedAt: string;
-  source: "LinkedIn" | "Indeed" | "Glassdoor" | "Bayt" | "Wuzzuf" | "Careerk"; //missed
+  source: "LinkedIn" | "Indeed" | "Glassdoor" | "Bayt" | "Wuzzuf" | "Careerk";
   skills: JobSkill[];
 }
 

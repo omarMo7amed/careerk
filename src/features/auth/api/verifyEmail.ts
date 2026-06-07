@@ -1,6 +1,6 @@
 import { AUTH_ENDPOINTS } from "../config/auth.endpoints";
 
-import { handleApiError } from "../lib/handleError";
+import { handleApiError } from "@/shared";
 import { VerifyEmailRequest } from "../types";
 
 const BASE_URL =

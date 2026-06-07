@@ -14,10 +14,10 @@ import {
   CandidateMetaItem,
   CandidateSocialLinks,
   ContactButton,
-  DownloadButton,
   ViewProfile,
 } from "@/entities/job-seeker";
 import Skills from "@/entities/job-seeker/components/Skills";
+import { DownloadButton } from "@/entities/cv";
 
 export type ApplicationStatus =
   | "PENDING"
@@ -126,7 +126,7 @@ export function ApplicationCard({
           firstName={firstName}
           lastName={lastName}
           title={title}
-          avatarUrl={profileImageUrl}
+          profileImageUrl={profileImageUrl}
           availabilityStatus={availabilityStatus ?? "Not Available"}
           rank={cvMatchPercentage ?? cvScore ?? 0}
         />
@@ -215,7 +215,7 @@ export function ApplicationCard({
           />
 
           <div className="flex items-center gap-2">
-            <DownloadButton href={cvUrl ?? "#"} />
+            <DownloadButton />
             <ContactButton email={email} />
             <ViewProfile id={id} />
           </div>

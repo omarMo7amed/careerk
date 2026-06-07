@@ -96,7 +96,7 @@ export function OtpInput({
               focus:ring-primary transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
                 error
                   ? "border-error focus:border-error focus:ring-error"
-                  : "border-gray-300 focus:border-primary"
+                  : "border-border focus:border-primary"
               }`,
             )}
           />

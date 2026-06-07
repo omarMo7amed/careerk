@@ -2,7 +2,8 @@
 
 import { useMutation } from "@tanstack/react-query";
 import { logout } from "../api/logout";
-import { useAuthStore } from "./useAuthStore";
+import { useAuthStore } from "@/shared";
+import { toast } from "react-hot-toast";
 
 export function useLogout() {
   const clearAuth = useAuthStore((s) => s.clearAuth);
@@ -13,7 +14,7 @@ export function useLogout() {
       clearAuth();
     },
     onError: () => {
-      clearAuth();
+      toast.error("Failed to logout. Please try again.");
     },
   });
 

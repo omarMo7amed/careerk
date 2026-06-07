@@ -1,5 +1,5 @@
 import { refreshToken } from "../api/refreshToken";
-import { useAuthStore } from "../model/useAuthStore";
+import { useAuthStore } from "../providers/useAuthStore";
 import { refreshQueue } from "./refreshQueue";
 
 export async function authInterceptor(
@@ -11,8 +11,15 @@ export async function authInterceptor(
 
   const buildHeaders = (token: string | null): Headers => {
     const headers = new Headers(options.headers);
-    headers.set("Content-Type", "application/json");
-    if (token) headers.set("Authorization", `Bearer ${token}`);
+
+    // Only set application/json if body is not FormData
+    if (!(options.body instanceof FormData)) {
+      headers.set("Content-Type", "application/json");
+    }
+
+    if (token) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
     return headers;
   };
 
@@ -23,14 +30,22 @@ export async function authInterceptor(
     headers: buildHeaders(token),
   });
 
-  if (res.status !== 401) return res;
+  if (res.status !== 401) {
+    return res;
+  }
 
   // ── 401 → try silent refresh ──────────────────────────────────────────────
   try {
     const newToken = await refreshQueue.getOrRefresh(async () => {
-      const data = await refreshToken();
-      useAuthStore.getState().setAuth(data.accessToken, data.user);
-      return data.accessToken;
+      const resData = await refreshToken();
+      const newAccessToken = resData?.data?.accessToken || resData?.accessToken;
+      const role = resData?.data?.role || resData?.role || resData?.user?.role;
+
+      if (!newAccessToken)
+        throw new Error("No access token in refresh response");
+
+      useAuthStore.getState().setAuth(newAccessToken, role);
+      return newAccessToken;
     });
 
     // ── Retry with new token ─────────────────────────────────────────────
@@ -39,7 +54,6 @@ export async function authInterceptor(
       headers: buildHeaders(newToken),
     });
   } catch {
-    // Refresh also failed — clear auth state so the user is redirected to login
     useAuthStore.getState().clearAuth();
   }
 

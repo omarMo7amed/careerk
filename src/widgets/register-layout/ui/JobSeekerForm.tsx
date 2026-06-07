@@ -42,13 +42,12 @@ function JobSeekerForm() {
       await registerJobSeeker(formData);
 
       toast.success("Registration successful");
-    } catch (error) {
       setTimeout(() => {
         router.push(
           `/auth/verify-email?email=${formData.email}&role=jobseeker`,
         );
       }, 1000);
-
+    } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Registration failed",
       );

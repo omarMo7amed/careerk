@@ -4,16 +4,22 @@ import { MockupCards } from "./MockupCards";
 export function SignupHero() {
   return (
     <div className="lg:w-1/2 relative min-h-[300px] lg:min-h-screen overflow-hidden">
-      {/* Abstract gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0353a4] via-[#0466c8] to-[#4895ef]" />
+      {/* Abstract gradient background using theme primary color */}
+      <div
+        className="absolute inset-0 bg-gradient-to-br from-[color:var(--primary)] via-[#1957bc] to-[#4895ef]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to bottom right, var(--primary), #1957bc, #4895ef)",
+        }}
+      />
 
       <FloatingShapes />
 
       {/* Content Overlay */}
       <div className="relative z-10 h-full flex flex-col justify-between p-8 lg:p-12">
         {/* Top Section: Headline */}
-        <div className="text-bg-surface">
-          <h2 className="text-bg-surface text-4xl lg:text-5xl font-bold mb-4 leading-tight">
+        <div className="text-white">
+          <h2 className="text-white text-4xl lg:text-5xl font-bold mb-4 leading-tight">
             All Job Sites,
             <br />
             One Smart Search

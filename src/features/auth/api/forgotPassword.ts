@@ -1,7 +1,7 @@
 import { AUTH_ENDPOINTS } from "../config/auth.endpoints";
-import type { ForgotPasswordRequest, ForgotPasswordResponse } from "./types";
+import type { ForgotPasswordRequest, ForgotPasswordResponse } from "../types";
 
-import { handleApiError } from "../lib/handleError";
+import { handleApiError } from "@/shared";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_BASE_API_URL ?? "http://localhost:3000/api/v1";

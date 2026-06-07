@@ -1,13 +1,8 @@
+import { authInterceptor } from "@/shared";
+
 export async function getMyCVInfo(token: string) {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/cv-parse/preview`,
-      {
-        headers: {
-          // Authorization: `Bearer ${token}`,
-        },
-      },
-    );
+    const res = await authInterceptor("/cv-parse/preview", {});
     if (!res.ok) {
       throw new Error("Failed to fetch CV info");
     }

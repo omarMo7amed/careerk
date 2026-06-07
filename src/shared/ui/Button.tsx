@@ -18,7 +18,8 @@ export function Button({
 
   const variantStyles = {
     primary: "btn-primary",
-    secondary: "bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500",
+    secondary:
+      "bg-bg-muted text-foreground hover:bg-bg-surface focus:ring-primary",
     outline: "btn-outline",
     ghost: "btn-ghost",
   };

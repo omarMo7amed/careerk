@@ -1,14 +1,18 @@
 import { LogOut } from "lucide-react";
-import { SideBarNavItem } from "./SideBarNavItem";
+import { useLogout } from "@/features/auth";
 
 type Props = {
   open: boolean;
 };
 
 export function SideBarFooter({ open }: Props) {
+  const { logout } = useLogout();
   return (
     <div className="p-4 border-t border-border">
-      <SideBarNavItem href="/" variant="ghost">
+      <button
+        onClick={() => logout()}
+        className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-text-secondary hover:text-foreground hover:bg-bg-muted transition-all duration-200"
+      >
         <LogOut className="w-4 h-4 shrink-0" />
 
         <span className="hidden lg:inline-block whitespace-nowrap">Logout</span>
@@ -23,7 +27,7 @@ export function SideBarFooter({ open }: Props) {
         >
           Logout
         </span>
-      </SideBarNavItem>
+      </button>
     </div>
   );
 }

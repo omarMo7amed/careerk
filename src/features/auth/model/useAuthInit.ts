@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { refreshToken } from "../api/refreshToken";
-import { useAuthStore } from "./useAuthStore";
+import { useAuthStore, refreshToken } from "@/shared";
 
 export function useAuthInit() {
   const setAuth = useAuthStore((s) => s.setAuth);
@@ -10,8 +9,14 @@ export function useAuthInit() {
 
   useEffect(() => {
     refreshToken()
-      .then(({ accessToken, user }) => {
-        setAuth(accessToken, user);
+      .then((res) => {
+        const token = res?.data?.accessToken || res?.accessToken;
+        const role = res?.data?.role || res?.role || res?.user?.role;
+        if (token && role) {
+          setAuth(token, role);
+        } else {
+          clearAuth();
+        }
       })
       .catch(() => {
         clearAuth();

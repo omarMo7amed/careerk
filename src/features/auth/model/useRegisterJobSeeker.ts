@@ -2,7 +2,7 @@
 
 import { useMutation } from "@tanstack/react-query";
 import { registerJobSeeker } from "../api/registerJobSeeker";
-import type { RegisterJobSeekerRequest } from "../api/types";
+import type { RegisterJobSeekerRequest } from "../types";
 
 export function useRegisterJobSeeker() {
   const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({

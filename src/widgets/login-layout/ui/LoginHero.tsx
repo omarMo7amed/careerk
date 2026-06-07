@@ -1,10 +1,16 @@
-import { FloatingShapes } from "../../../shared/ui/FloatingShapes";
+import { FloatingShapes } from "@/shared";
 import { MockupCards } from "./MockupCards";
 
 export function LoginHero() {
   return (
     <div className="lg:w-1/2 relative min-h-[300px] lg:min-h-screen overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0353a4] via-[#0466c8] to-[#4895ef]" />
+      <div
+        className="absolute inset-0 bg-gradient-to-br from-[color:var(--primary)] via-[#1957bc] to-[#4895ef]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to bottom right, var(--primary), #1957bc, #4895ef)",
+        }}
+      />
 
       <FloatingShapes />
 

@@ -42,9 +42,6 @@ export function VerifyEmailForm() {
 
   useEffect(() => {
     setValue("code", otpValue);
-    if (otpValue.length < 6) {
-      setHasSubmitted(false);
-    }
   }, [otpValue, setValue]);
 
   const onSubmit = useCallback(
@@ -92,7 +89,7 @@ export function VerifyEmailForm() {
 
   return (
     <div className="w-full max-w-md mx-auto">
-      <div className="bg-surface rounded-2xl shadow-xl p-8">
+      <div className="bg-bg-surface border border-border rounded-2xl shadow-xl p-8">
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <Mail className="w-8 h-8 text-primary" />
@@ -110,7 +107,13 @@ export function VerifyEmailForm() {
           <div>
             <OtpInput
               value={otpValue}
-              onChange={setOtpValue}
+              onChange={(value) => {
+                setOtpValue(value);
+
+                if (value.length < 6) {
+                  setHasSubmitted(false);
+                }
+              }}
               error={errors.code?.message}
               disabled={isPending || isExpired}
             />

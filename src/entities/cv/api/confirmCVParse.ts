@@ -6,8 +6,8 @@ export async function confirmCVParse(payload: CVConfirmPayload, token: string) {
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
+        // Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(payload),
     },

@@ -52,7 +52,7 @@ export function Modal({
                 <Button
                   variant="ghost"
                   onClick={onClose}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="p-2 hover:bg-bg-muted rounded-lg transition-colors"
                 >
                   <X className="w-5 h-5 text-text-secondary" />
                 </Button>

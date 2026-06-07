@@ -1,13 +1,10 @@
-import { AUTH_ENDPOINTS } from "../config/auth.endpoints";
-import type { RefreshTokenResponse } from "./types";
-
 import { handleApiError } from "../lib/handleError";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_BASE_API_URL ?? "http://localhost:3000/api/v1";
 
-export async function refreshToken(): Promise<RefreshTokenResponse> {
-  const res = await fetch(`${BASE_URL}${AUTH_ENDPOINTS.REFRESH}`, {
+export async function refreshToken() {
+  const res = await fetch(`${BASE_URL}/auth/refresh-token`, {
     method: "POST",
     credentials: "include",
   });

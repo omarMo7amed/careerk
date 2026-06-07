@@ -17,6 +17,8 @@ export { UserAvatar } from "./ui/UserAvatar";
 export { RankingBadge } from "./ui/RankingBadge";
 export { Pagination } from "./ui/Pagination";
 export { Banner } from "./ui/Banner";
+export {FloatingShapes} from "./ui/FloatingShapes";
+export { AuthGuard } from "./ui/AuthGuard";
 
 // Shared lib functions
 export { useUserRole, useHasRole, getUserRole } from "./lib/useUserRole";
@@ -28,6 +30,8 @@ export { getDuration, formatDate, formatYear } from "./lib/date";
 export { capitalizeFirstLetter } from "./lib/capitalizeFirstLetter";
 export { parseMultiParam, setMultiParam } from "./lib/multiParams";
 export { getFilterKeyFromValue } from "./lib/getFilterKeyFromValue";
+export { handleApiError } from "./lib/handleError";
+export { authInterceptor } from "./lib/authInterceptor";
 
 // Hooks
 export { useClickOutside } from "./lib/useClickOutside";
@@ -36,6 +40,7 @@ export { useClickOutside } from "./lib/useClickOutside";
 export { InterFont, spaceGrotesk } from "./lib/fonts";
 // Providers
 export { QueryProvider } from "./providers/QueryProvider";
+export { useAuthStore } from "./providers/useAuthStore";
 
 // Constants (all grouped by domain — add new files to constant/index.ts)
 export * from "./constant";
@@ -57,3 +62,9 @@ export { Toggle } from "./ui/Toggle";
 export { Modal } from "./ui/Modal";
 
 export { getChangedFields } from "./lib/getChangedFields";
+
+// API
+export { refreshToken } from "./api/refreshToken";
+
+// Types
+export type * from "./types/auth";

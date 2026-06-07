@@ -1,15 +1,12 @@
 import { updateProfile } from "./updateProfile";
+import { authInterceptor } from "@/shared";
 
 export async function uploadProfilePhoto(token: string, file: File) {
   // Step 1: Get presigned URL from CareerK API
-  const presignedRes = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/job-seekers/me/profile-image/presigned-url`,
+  const presignedRes = await authInterceptor(
+    "/job-seekers/me/profile-image/presigned-url",
     {
       method: "POST",
-      headers: {
-        // Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify({
         fileName: file.name,
         mimeType: file.type,
@@ -32,14 +29,10 @@ export async function uploadProfilePhoto(token: string, file: File) {
   if (!uploadRes.ok) throw new Error("Failed to upload image to storage");
 
   // Step 3: Confirm upload and get file URL
-  const confirmRes = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/job-seekers/me/profile-image/confirm`,
+  const confirmRes = await authInterceptor(
+    "/job-seekers/me/profile-image/confirm",
     {
       method: "POST",
-      headers: {
-        // Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify({ key }),
     },
   );

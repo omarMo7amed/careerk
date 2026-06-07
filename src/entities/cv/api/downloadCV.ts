@@ -8,13 +8,16 @@ interface DownloadCVError {
 }
 
 export async function downloadCV(token: string) {
-  const response = await fetch("/api/v1/cv/me/download-url", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      // Authorization: `Bearer ${token}`,
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_API_URL}/cv/me/download-url`,
+    {
+      method: "GET",
+      headers: {
+        // Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     },
-  });
+  );
 
   if (!response.ok) {
     const errorData = (await response

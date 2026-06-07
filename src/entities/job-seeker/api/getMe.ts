@@ -1,15 +1,7 @@
+import { authInterceptor } from "@/shared";
+
 export async function getMe(token: string | null) {
-  // if (!token) {
-  //   throw new Error("No token provided");
-  // }
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/job-seekers/me`,
-    {
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
-    },
-  );
+  const res = await authInterceptor("/job-seekers/me", {});
 
   if (!res.ok) throw new Error("Failed to fetch job seeker profile");
 

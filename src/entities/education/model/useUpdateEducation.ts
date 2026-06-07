@@ -45,7 +45,7 @@ export function useUpdateEducation({
         // Update cv-info cache
         queryClient.setQueryData(["cv-info"], (old: any | undefined) => {
           if (!old) return old;
-          const index = parseInt(updated.id);
+          const index = parseInt(updated.id!);
           const educations = (old.data?.educations || []).map(
             (education: any, i: number) =>
               i === index ? { ...education, ...updated } : education,

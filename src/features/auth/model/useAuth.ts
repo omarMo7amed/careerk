@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuthStore } from "./useAuthStore";
+import { useAuthStore } from "@/shared";
 
 export interface UseAuthReturn {
   token: string | null;

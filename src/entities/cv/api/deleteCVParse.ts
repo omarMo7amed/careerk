@@ -1,10 +1,8 @@
+import { authInterceptor } from "@/shared";
+
 export async function deleteCVParse(token: string): Promise<void> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/cv-parse`, {
+  const res = await authInterceptor("/cv-parse", {
     method: "DELETE",
-    headers: {
-      // Authorization: `Bearer ${token}`,
-      // "Content-Type": "application/json",
-    },
   });
 
   if (!res.ok) {

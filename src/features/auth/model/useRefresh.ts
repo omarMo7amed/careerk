@@ -1,16 +1,19 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { refreshToken } from "../api/refreshToken";
-import { useAuthStore } from "./useAuthStore";
+import { useAuthStore, refreshToken } from "@/shared";
 
 export function useRefresh() {
   const setAuth = useAuthStore((s) => s.setAuth);
 
   const mutation = useMutation({
     mutationFn: refreshToken,
-    onSuccess: ({ accessToken, user }) => {
-      setAuth(accessToken, user);
+    onSuccess: (res) => {
+      const token = res?.data?.accessToken || res?.accessToken;
+      const role = res?.data?.role || res?.role || res?.user?.role;
+      if (token && role) {
+        setAuth(token, role);
+      }
     },
   });
 
