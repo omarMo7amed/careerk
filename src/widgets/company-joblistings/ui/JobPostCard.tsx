@@ -1,10 +1,10 @@
 "use client";
 import {
-  deleteJob,
   jobTypeLabels,
+  useDeleteCompanyJob,
+  useUpdateCompanyJob,
   workPreferenceLabels,
 } from "@/entities/company-job";
-import { toggleJobStatus } from "@/entities/company-job";
 import { CompanyJob } from "@/entities/company-job";
 import { JobStatusLabels } from "@/entities/company-job/lib/labelMap";
 import { Badge, Button, ConfirmationModal } from "@/shared";
@@ -17,24 +17,32 @@ import { useState } from "react";
 type JobPostCardProps = {
   job: CompanyJob;
 
-  onDelete?: (id: string) => void;
+  // onDelete?: (id: string) => void;
 };
 
-export function JobPostCard({ job, onDelete }: JobPostCardProps) {
-  const [cardStatus, setCardStatus] = useState(job.status);
+export function JobPostCard({ job }: JobPostCardProps) {
+  const token = "123";
+  const { mutateAsync: deleteJob, isPending: isDeleting } =
+    useDeleteCompanyJob();
 
-  function handleToggleStatus() {
-    const newStatus = toggleJobStatus(job.id);
-    setCardStatus(newStatus);
-  }
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const { id, title, skills, location, workPreference, jobType, status } = job;
+  const { mutateAsync: updateJob } = useUpdateCompanyJob();
 
-  function handleConfirmDelete() {
-    deleteJob(id);
+  async function handleToggleStatus() {
+    const newStatus = status === "PUBLISHED" ? "PAUSED" : "PUBLISHED";
+    const dd = await updateJob({
+      jobId: job.id,
+      data: { status: newStatus },
+      token,
+    });
+    console.log("status update", dd);
+  }
+
+  async function handleConfirmDelete() {
+    await deleteJob({ id, token });
     setShowDeleteModal(false);
-    onDelete?.(id);
   }
 
   return (
@@ -77,7 +85,9 @@ export function JobPostCard({ job, onDelete }: JobPostCardProps) {
           </Link>
 
           <div className="flex flex-wrap gap-2 pt-2 border-t border-border/50">
-            <Link href={`./job-listings/applications?jobId=${id}`}>
+            <Link
+              href={`/dashboard/company/job-listings/applications?jobId=${id}`}
+            >
               <Button
                 size="sm"
                 variant="ghost"
@@ -88,7 +98,7 @@ export function JobPostCard({ job, onDelete }: JobPostCardProps) {
               </Button>
             </Link>
 
-            {cardStatus === "PUBLISHED" ? (
+            {status === "PUBLISHED" ? (
               <Button
                 size="sm"
                 variant="ghost"
@@ -128,7 +138,7 @@ export function JobPostCard({ job, onDelete }: JobPostCardProps) {
         onConfirm={handleConfirmDelete}
         title="Delete Job Post"
         message={`Are you sure you want to delete "${title}"? This action cannot be undone.`}
-        confirmText="Delete"
+        confirmText={isDeleting ? "Deleting..." : "Delete"}
         cancelText="Cancel"
       />
     </>

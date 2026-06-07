@@ -1,31 +1,37 @@
 "use client";
-import { getJob } from "@/entities/company-job";
 import { BackButton, DashboardHeader, Pagination } from "@/shared";
 import { Star } from "lucide-react";
 
 import {
   ApplicationCard,
-  useApplicationsByJobId,
+  useJobApplications,
+  useUpdateApplicationStatus,
 } from "@/entities/company-applications";
 import { useState } from "react";
+import { ApplicationStatus } from "@/entities/application";
 
-const PAGE_SIZE = 6;
-export function JobApplicationsLayout({ jobId }: { jobId?: string }) {
-  const {
-    data: applicationsResponse,
-    isLoading,
-    error,
-  } = useApplicationsByJobId(jobId);
-  const applications = applicationsResponse?.data ?? [];
+export function JobApplicationsLayout({ jobId }: { jobId: string }) {
   const [page, setPage] = useState(1);
+  const token = "123"; // will change
 
-  const totalPages = Math.ceil(applications.length / PAGE_SIZE);
-  const start = (page - 1) * PAGE_SIZE;
-  const paginatedApplication = applications.slice(start, start + PAGE_SIZE);
+  const { data, isLoading, error } = useJobApplications({
+    jobId,
+    page,
+    limit: 10,
+    token,
+  });
 
-  const job = getJob(jobId!);
+  const { mutate: updateStatus } = useUpdateApplicationStatus();
+
+  if (isLoading) return <p>Loading applications...</p>;
+  if (error)
+    return <p className="text-destructive">Failed to load applications.</p>;
+  if (!data?.applications.length) return <p>No applications yet.</p>;
+
+  const { applications, totalPages } = data;
+
   return (
-    <div className="flex-1 overflow-y-auto px-8 py-8">
+    <div>
       <div className="mb-8">
         <BackButton />
       </div>
@@ -33,7 +39,7 @@ export function JobApplicationsLayout({ jobId }: { jobId?: string }) {
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-2">
             <h1 className="text-2xl font-bold ">
-              Applications for {job.title}
+              Applications for {applications[0]?.directJob.title}
             </h1>
           </div>
           <p className="text-sm text-text-secondary">
@@ -44,8 +50,15 @@ export function JobApplicationsLayout({ jobId }: { jobId?: string }) {
 
         <DashboardHeader header="Top 5 Candidates" Icon={Star} />
         <div className="grid lg:grid-cols-2 gap-6">
-          {paginatedApplication.map((a) => (
-            <ApplicationCard key={a.id} application={a} />
+          {applications.map((a) => (
+            <ApplicationCard
+              key={a.id}
+              application={a}
+              initialStatus={a.status as ApplicationStatus}
+              onStatusChange={(status) =>
+                updateStatus({ id: a.id, status, token })
+              }
+            />
           ))}
         </div>
         <Pagination

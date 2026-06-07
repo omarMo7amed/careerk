@@ -1,6 +1,5 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-// import { allJobSeekers } from "../mock-data/allJobSeekers";
 import { getCandidates } from "../api/getCandidates";
 import { GetCandidatesOptions } from "../types/candidate";
 

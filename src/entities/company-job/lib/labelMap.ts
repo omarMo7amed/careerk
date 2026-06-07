@@ -30,8 +30,6 @@ export const experienceLevelLabels: Record<ExperienceLevel, string> = {
 };
 
 export const JobStatusLabels: Record<JobStatus, string> = {
-  DRAFT: "Draft",
   PUBLISHED: "Published",
   PAUSED: "Paused",
-  CLOSED: "Closed",
 };

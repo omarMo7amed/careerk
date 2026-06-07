@@ -1,9 +1,11 @@
 "use client";
 import {
-  CompanyJob,
   JobType,
   ExperienceLevel,
   WorkPreference,
+  useCompanyJob,
+  useDeleteCompanyJob,
+  useUpdateCompanyJob,
 } from "@/entities/company-job";
 import { Badge, Button, ConfirmationModal } from "@/shared";
 import { Card } from "@/shared";
@@ -11,59 +13,60 @@ import { useState } from "react";
 import { JobSidebar } from "../../direct-job-content/ui/JobSidebar";
 
 import { JobPostFormData } from "@/features/post-job-form";
-import { updateJob } from "@/entities/company-job";
 import { BackButton } from "@/shared/ui/BackButton";
-import { deleteJob } from "@/entities/company-job";
 import { JobPostForm } from "@/features/post-job-form";
 import {
   DirectJobContentCard,
   JobStatistics,
 } from "@/widgets/direct-job-content";
-import { MapPin, Sparkles } from "lucide-react";
-import { useCandidatesQuery } from "@/entities/job-seeker";
-import { getScoreColor } from "../lib/getScoreColor";
 import { JobStatus } from "@/entities/company-job/types/companyJob";
+import { RecommendedCandidates } from "./RecommendedCandidates";
 
-interface ViewJobPostLayoutProps {
-  jobPost: CompanyJob;
-}
+export function ViewJobPostLayout({ jobId }: { jobId: string }) {
+  const token = "123";
+  const { data: jobPost, isLoading } = useCompanyJob(jobId, token);
+  const { mutateAsync: deleteJob, isPending: isDeleting } =
+    useDeleteCompanyJob();
+  const { mutateAsync: updateJob } = useUpdateCompanyJob();
 
-export function ViewJobPostLayout({ jobPost }: ViewJobPostLayoutProps) {
-  const { title, deadline, status } = jobPost;
   const [isEditingJob, setIsEditingJob] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  function handleEditSubmit(data: JobPostFormData) {
-    const updated: CompanyJob = {
-      ...jobPost,
-      ...data,
+  if (isLoading) return <p>Loading...</p>;
+  if (!jobPost) return null;
+
+  const job = jobPost;
+  const { title, deadline, status } = job;
+
+  async function handleEditSubmit(data: JobPostFormData) {
+    const updatedJob = {
+      title: data.title,
+      description: data.description,
+      requirements: data.requirements,
       jobType: data.jobType as JobType,
       workPreference: data.workPreference as WorkPreference,
       experienceLevel: data.experienceLevel as ExperienceLevel,
       status: data.status as JobStatus,
       salaryMin: data.salaryMin ? Number(data.salaryMin) : null,
       salaryMax: data.salaryMax ? Number(data.salaryMax) : null,
-      skills: data.skills.map((name, i) => ({
-        skillId: String(i),
-        name,
-      })),
+      location: data.location,
+      deadline: data.deadline,
+      skillNames: data.skillNames,
       publishedAt: new Date().toISOString(),
     };
-    console.log("edit", updated);
-    updateJob(jobPost.id, updated);
+    const dd = await updateJob({
+      jobId: job.id,
+      data: updatedJob,
+      token,
+    });
+    console.log("response", dd);
     setIsEditingJob(false);
   }
 
-  function handleConfirmDelete() {
-    deleteJob(jobPost.id);
+  async function handleConfirmDelete() {
+    await deleteJob({ id: job.id, token });
     setShowDeleteModal(false);
   }
-
-  const { candidates } = useCandidatesQuery({});
-  const topCandidates = candidates
-    ?.slice()
-    .sort((a, b) => (b.cvMatchPercentage ?? 0) - (a.cvMatchPercentage ?? 0))
-    .slice(0, 5);
 
   return (
     <div>
@@ -97,57 +100,7 @@ export function ViewJobPostLayout({ jobPost }: ViewJobPostLayoutProps) {
 
             <JobStatistics status={status} />
 
-            {topCandidates && topCandidates.length > 0 && (
-              <Card>
-                <div className="flex items-center gap-2 mb-4">
-                  <Sparkles className="w-4 h-4 text-primary" />
-                  <h3 className="text-lg font-semibold">
-                    Recommended Candidates
-                  </h3>
-                </div>
-
-                <div className="space-y-3">
-                  {topCandidates.map((candidate, index) => (
-                    <div
-                      key={index}
-                      className="p-3 rounded-lg bg-bg-muted/30 hover:bg-muted/50 transition-colors cursor-pointer border border-border/30 shadow-sm hover:shadow-md"
-                    >
-                      <div className="flex items-start justify-between gap-2 mb-2">
-                        <div className="flex-1 min-w-0">
-                          <p className="font-semibold text-foreground text-sm truncate">
-                            {`${candidate.firstName} ${candidate.lastName}`}
-                          </p>
-                          <p className="text-xs text-muted-foreground truncate">
-                            {candidate.title}
-                          </p>
-                        </div>
-                        <Badge
-                          className={`${getScoreColor(candidate.cvMatchPercentage)} border text-xs font-semibold`}
-                        >
-                          {candidate.cvMatchPercentage != null
-                            ? `${candidate.cvMatchPercentage}%`
-                            : "N/A"}
-                        </Badge>
-                      </div>
-                      {candidate.location && (
-                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                          <MapPin className="w-4 h-4 shrink-0" />
-                          <span className="truncate">{candidate.location}</span>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-
-                <Button
-                  variant="outline"
-                  className="w-full mt-4 border-primary/30 text-primary hover:bg-primary/5 bg-transparent"
-                  onClick={() => {}}
-                >
-                  View All Candidates
-                </Button>
-              </Card>
-            )}
+            <RecommendedCandidates jobId={jobId} />
           </div>
         </div>
       </div>
@@ -158,7 +111,7 @@ export function ViewJobPostLayout({ jobPost }: ViewJobPostLayoutProps) {
         onConfirm={handleConfirmDelete}
         title="Delete Job Post"
         message={`Are you sure you want to delete "${title}"? This action cannot be undone.`}
-        confirmText="Delete"
+        confirmText={isDeleting ? "Deleting..." : "Delete"}
         cancelText="Cancel"
       />
     </div>

@@ -4,8 +4,7 @@ import { useForm } from "react-hook-form";
 import { Button, Input, Label } from "@/shared";
 import { FieldError } from "@/shared/ui/FieldError";
 import { JobPostFormData, jobPostSchema } from "../lib/jobPostSchema";
-import { CompanyJob } from "@/entities/company-job";
-import { buildNewJob } from "../lib/buildNewJob";
+import { CompanyJob, useCreateCompanyJob } from "@/entities/company-job";
 import { FormFields } from "./FormFields";
 import { SkillsInput } from "./SkillsInput";
 
@@ -13,14 +12,19 @@ type JobPostFormProps = {
   initialData?: CompanyJob;
   onSubmit?: (data: JobPostFormData) => void;
   onCancel?: () => void;
+  onSuccess?: () => void;
 };
 
 export function JobPostForm({
   initialData,
   onSubmit: onSubmitProp,
   onCancel,
+  onSuccess,
 }: JobPostFormProps) {
+  const token = "123";
   const isEditMode = !!initialData;
+  const { mutateAsync: createJob, isPending: isCreating } =
+    useCreateCompanyJob();
 
   const {
     register,
@@ -40,32 +44,39 @@ export function JobPostForm({
           jobType: initialData.jobType,
           workPreference: initialData.workPreference,
           experienceLevel: initialData.experienceLevel,
+          status: initialData.status,
           salaryMin: initialData.salaryMin?.toString() ?? "",
           salaryMax: initialData.salaryMax?.toString() ?? "",
           location: initialData.location ?? "",
           deadline: initialData.deadline ?? "",
-          skills: initialData.skills.map((s) => s.name),
+          skillNames:
+            initialData.skills?.map((s) =>
+              typeof s === "string" ? s : s.name,
+            ) ?? [],
         }
       : {
           jobType: "FULL_TIME",
           workPreference: "REMOTE",
           experienceLevel: "ENTRY",
-          skills: [],
+          skillNames: [],
         },
   });
 
-  const skills = watch("skills") ?? [];
+  const skillNames = watch("skillNames") ?? [];
+  const isLoading = isSubmitting || isCreating;
 
-  function onSubmit(data: JobPostFormData) {
+  async function onSubmit(data: JobPostFormData) {
     if (onSubmitProp) {
       onSubmitProp(data);
-    } else {
-      console.log(
-        "Job posted:",
-        buildNewJob(data, { id: "2", logoUrl: "/", name: "ss" }),
-      );
-      reset();
+      console.log("Job edit:", data);
+      return;
     }
+
+    await createJob({ payload: data, token });
+    console.log("Job posted:", data);
+
+    reset();
+    onSuccess?.();
   }
 
   return (
@@ -87,8 +98,8 @@ export function JobPostForm({
         <SkillsInput
           register={register}
           setValue={setValue}
-          skills={skills}
-          error={errors.skills?.message}
+          skillNames={skillNames}
+          error={errors.skillNames?.message}
         />
       </div>
 
@@ -97,13 +108,13 @@ export function JobPostForm({
           Cancel
         </Button>
         <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting
+          {isLoading
             ? isEditMode
               ? "Saving..."
-              : "Publishing..."
+              : "Creating..."
             : isEditMode
               ? "Save Changes"
-              : "Publish Job"}
+              : "Create Job"}
         </Button>
       </div>
     </form>

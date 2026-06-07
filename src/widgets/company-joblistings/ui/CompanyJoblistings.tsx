@@ -3,15 +3,15 @@ import { Button } from "@/shared";
 import { Briefcase, Plus } from "lucide-react";
 import { JobPostCard } from "./JobPostCard";
 import Link from "next/link";
-import { mockJobs } from "@/entities/company-job";
-import { useState } from "react";
+import { useCompanyJobs } from "@/entities/company-job";
 
 export function CompanyJoblistings() {
-  const [jobs, setJobs] = useState(mockJobs);
+  const token = "123";
+  const { data: jobs = [], isLoading } = useCompanyJobs(token);
 
-  function handleDelete(id: string) {
-    setJobs((prev) => prev.filter((j) => j.id !== id));
-  }
+  if (isLoading) return <p>Loading...</p>;
+  if (!jobs) return null;
+
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
@@ -37,7 +37,7 @@ export function CompanyJoblistings() {
 
       <div className="grid grid-cols-1 md:grid-cols-2  gap-4">
         {jobs.map((job) => (
-          <JobPostCard key={job.id} job={job} onDelete={handleDelete} />
+          <JobPostCard key={job.id} job={job} />
         ))}
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { Badge } from "@/shared";
 import { Card } from "@/shared";
-import { Plus, BarChart3, Search, Sparkles, MessageSquare } from "lucide-react";
+import { Plus, Search, Sparkles, Briefcase, Pencil } from "lucide-react";
 import Link from "next/link";
 
 const actions = [
@@ -11,10 +11,10 @@ const actions = [
     icon: Plus,
   },
   {
-    label: "Review Applications",
-    description: "Check new candidate applications",
+    label: "Manage Jobs",
+    description: "Edit, update, or manage posted jobs",
     href: "./",
-    icon: MessageSquare,
+    icon: Briefcase,
   },
   {
     label: "Search Candidates",
@@ -23,10 +23,10 @@ const actions = [
     icon: Search,
   },
   {
-    label: "View Analytics",
-    description: "Track hiring metrics and insights",
+    label: "Edit Company Profile",
+    description: "Update company information and details",
     href: "./",
-    icon: BarChart3,
+    icon: Pencil,
   },
 ];
 function QuickActions() {

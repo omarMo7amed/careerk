@@ -24,7 +24,7 @@ export const companyNavItems = [
     href: "/dashboard/company/job-listings",
   },
   { name: "Candidates", icon: Users, href: "/dashboard/company/candidates" },
-  { name: "Analytics", icon: BarChart3, href: "/dashboard/company/analytics" },
+
   { name: "Profile", icon: Building2, href: "/dashboard/company/profile" },
   { name: "Settings", icon: Building2, href: "/dashboard/company/settings" },
 ];

@@ -7,35 +7,41 @@ import { X } from "lucide-react";
 type SkillsInputProps = {
   register: UseFormRegister<JobPostFormData>;
   setValue: UseFormSetValue<JobPostFormData>;
-  skills: string[];
+  skillNames: string[];
   error?: string;
 };
 
 export function SkillsInput({
   register,
   setValue,
-  skills,
+  skillNames,
   error,
 }: SkillsInputProps) {
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Enter" || e.key === ",") {
       e.preventDefault();
+
       const input = e.currentTarget;
-      const skill = input.value.trim();
-      if (skill && !skills.includes(skill)) {
-        setValue("skills", [...skills, skill], {
-          shouldValidate: true,
-          shouldDirty: true,
-        });
-        input.value = "";
-      }
+      const skillName = input.value.trim();
+
+      if (!skillName) return;
+
+      const exists = skillNames.includes(skillName);
+      if (exists) return;
+
+      setValue("skillNames", [...skillNames, skillName], {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+
+      input.value = "";
     }
   }
 
-  function removeSkill(skill: string) {
+  function removeSkill(skillName: string) {
     setValue(
-      "skills",
-      skills.filter((s) => s !== skill),
+      "skillNames",
+      skillNames.filter((s) => s !== skillName),
       { shouldValidate: true, shouldDirty: true },
     );
   }
@@ -52,11 +58,11 @@ export function SkillsInput({
         className="bg-background"
         onKeyDown={handleKeyDown}
       />
-      <input type="hidden" {...register("skills")} />
+      <input type="hidden" {...register("skillNames")} />
       <FieldError message={error} />
-      {skills.length > 0 && (
+      {skillNames.length > 0 && (
         <div className="mt-2 flex flex-wrap gap-2">
-          {skills.map((skill) => (
+          {skillNames.map((skill) => (
             <div key={skill}>
               <Badge variant="skill" className="cursor-pointer">
                 {skill}

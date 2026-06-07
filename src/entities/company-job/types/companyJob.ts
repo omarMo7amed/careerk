@@ -27,7 +27,7 @@ export type ExperienceLevel =
   | "LEAD"
   | "MANAGER";
 
-export type JobStatus = "DRAFT" | "PUBLISHED" | "PAUSED" | "CLOSED";
+export type JobStatus = "PUBLISHED" | "PAUSED";
 
 export interface CompanyJob {
   id: string;
@@ -49,8 +49,56 @@ export interface CompanyJob {
   applicants?: number; // missed
 }
 
-/**
- * souad , write a readme file called Souad_MISSED.md
- * put the same object but with the missed properties only and add a comment "missed" next to each of them
- * write the endpoints that are use this structure in amr's Docs
- *  */
+// Meta
+export interface ApiMeta {
+  timestamp: string;
+  path: string;
+  method: string;
+}
+
+// Response
+export interface GetCompanyJobsResponse {
+  success: boolean;
+  data: CompanyJob[];
+  message: string;
+  meta: ApiMeta;
+}
+
+export interface GetCompanyJobResponse<T> {
+  success: boolean;
+  data: T;
+  message: string;
+  meta: ApiMeta;
+}
+export interface DeleteJobResponse {
+  success: boolean;
+  data: Record<string, never>; // {}
+  message: string;
+  meta: ApiMeta;
+}
+
+//////////////////////////////////
+
+export type AvailabilityStatus =
+  | "OPEN_TO_WORK"
+  | "NOT_LOOKING"
+  | "PASSIVELY_LOOKING";
+
+export interface JobMatch {
+  id: string;
+  jobSeekerId: string;
+  jobSeekerName: string;
+  jobSeekerTitle: string;
+  availabilityStatus: AvailabilityStatus;
+  location: string;
+  matchScore: number;
+  createdAt: string;
+}
+
+export interface JobMatchesData {
+  matches: JobMatch[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}

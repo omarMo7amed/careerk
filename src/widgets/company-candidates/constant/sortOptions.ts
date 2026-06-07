@@ -1,6 +1,5 @@
 export const sortOptions = [
   { value: "best_match", label: "Best Match" },
-  { value: "newest", label: "Newest First" },
   { value: "cv_score_high", label: "Highest CV Score" },
   { value: "cv_match_high", label: "Best CV Match" },
   { value: "salary_low", label: "Lowest Expected Salary" },

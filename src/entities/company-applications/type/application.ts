@@ -1,21 +1,27 @@
-import { ApplicationStatus, WorkPreference } from "@/entities/application";
+import {
+  ApplicationStatus,
+  WorkPreference,
+  JobType,
+} from "@/entities/application";
 import { AvailabilityStatus } from "@/shared";
 
 export interface JobSeekerProfile {
   title: string;
-  summary: string;
   location: string;
   yearsOfExperience: number;
-  availabilityStatus: AvailabilityStatus | null;
-  workPreference: WorkPreference | null;
-  expectedSalary: number | null;
-  linkedinUrl: string | null;
-  githubUrl: string | null;
-  email: string | null;
-  phone: string | null;
-  cvMatchPercentage: number | null;
-  cvScore: number | null;
-  cvUrl: string | null;
+
+  // Optional (not returned in this endpoint but kept for reuse)
+  summary?: string;
+  availabilityStatus?: AvailabilityStatus | null;
+  workPreference?: WorkPreference | null;
+  expectedSalary?: number | null;
+  linkedinUrl?: string | null;
+  githubUrl?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  cvMatchPercentage?: number | null;
+  cvScore?: number | null;
+  cvUrl?: string | null;
 }
 
 export interface JobSeekerSkill {
@@ -29,14 +35,18 @@ export interface JobSeeker {
   firstName: string;
   lastName: string;
   profileImageUrl: string | null;
-  email: string;
   profile: JobSeekerProfile;
+
+  // To be added
   skills: JobSeekerSkill[];
+  email: string;
 }
 
 export interface DirectJob {
   id: string;
   title: string;
+  location: string;
+  jobType: JobType | null;
 }
 
 export interface JobApplication {
@@ -50,6 +60,12 @@ export interface JobApplication {
 
 export interface GetApplicationResponse {
   success: boolean;
-  data: JobApplication;
+  data: {
+    applications: JobApplication[];
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
   message: string;
 }
