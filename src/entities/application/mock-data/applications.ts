@@ -7,8 +7,8 @@ export const mockApplicationsResponse: ApplicationsListResponse = {
       {
         id: "550e8400-e29b-41d4-a716-446655440000",
         status: "INTERVIEW_SCHEDULED",
-        appliedAt: "2025-10-12T00:00:00Z",
-        updatedAt: "2025-10-15T00:00:00Z",
+        appliedAt: "2026-05-12T00:00:00Z",
+        updatedAt: "2026-05-12T00:00:00Z",
         directJob: {
           id: "job1",
           title: "Frontend Developer",

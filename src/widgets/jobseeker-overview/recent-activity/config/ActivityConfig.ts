@@ -1,51 +1,52 @@
-import {
-  Bell,
-  Calendar,
-  LucideIcon,
-  MapPin,
-  Send,
-  Sparkles,
-} from "lucide-react";
+import { LucideIcon, Send, Calendar, X, Check, RefreshCw } from "lucide-react";
 
 export const IconMap: Record<string, LucideIcon> = {
-  application: Send,
-  interview: Calendar,
-  job: MapPin,
-  recommendation: Sparkles,
-  default: Bell,
+  APPLICATION_SUBMITTED: Send,
+  INTERVIEW_SCHEDULED: Calendar,
+  APPLICATION_WITHDRAWN: X,
+  APPLICATION_REJECTED: X,
+  APPLICATION_ACCEPTED: Check,
+  STATUS_CHANGED: RefreshCw,
+  default: Send,
 };
 
 export const activityColorMap: Record<
   string,
-  {
-    bg: string;
-    text: string;
-    border: string;
-  }
+  { bg: string; text: string; border: string }
 > = {
-  application: {
+  APPLICATION_SUBMITTED: {
     bg: "bg-blue-50",
     text: "text-blue-600",
     border: "border-blue-200",
   },
-  interview: {
+  INTERVIEW_SCHEDULED: {
     bg: "bg-green-50",
     text: "text-green-600",
     border: "border-green-200",
   },
-  job: {
-    bg: "bg-purple-50",
-    text: "text-purple-600",
-    border: "border-purple-200",
-  },
-  recommendation: {
-    bg: "bg-orange-50",
-    text: "text-orange-600",
-    border: "border-orange-200",
-  },
-  default: {
+  APPLICATION_WITHDRAWN: {
     bg: "bg-gray-50",
     text: "text-gray-600",
     border: "border-gray-200",
+  },
+  APPLICATION_REJECTED: {
+    bg: "bg-red-50",
+    text: "text-red-600",
+    border: "border-red-200",
+  },
+  APPLICATION_ACCEPTED: {
+    bg: "bg-green-50",
+    text: "text-green-600",
+    border: "border-green-200",
+  },
+  STATUS_CHANGED: {
+    bg: "bg-yellow-50",
+    text: "text-yellow-600",
+    border: "border-yellow-200",
+  },
+  default: {
+    bg: "bg-blue-50",
+    text: "text-blue-600",
+    border: "border-blue-200",
   },
 };
