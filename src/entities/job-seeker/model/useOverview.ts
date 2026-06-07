@@ -18,7 +18,11 @@ export function useOverview({ token }: { token: string | null }) {
     if (data?.data) {
       queryClient.setQueryData(
         jobSeekerKeys.me.all,
-        (oldData: { data: JobSeeker }) => {
+        (oldData: { data?: JobSeeker } = {}) => {
+          //if oldData or oldData.data is undefined, just return the new data (kant btgeb error ya omaaar)
+          if (!oldData || !oldData.data) {
+            return { data: { ...data.data } };
+          }
           return {
             ...oldData,
             data: {

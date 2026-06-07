@@ -61,6 +61,11 @@ export { AnimatedSidebar } from "./ui/AnimatedSidebar";
 export { Toggle } from "./ui/Toggle";
 export { Modal } from "./ui/Modal";
 
+export {
+  parsePositiveInt,
+  normalizeValue,
+  normalizeMultiValues,
+} from "./lib/NormalizeValues";
 export { getChangedFields } from "./lib/getChangedFields";
 
 // API

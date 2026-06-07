@@ -1,18 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { jobListings } from "@/entities/job";
-
-function parsePositiveInt(value: string | null, fallback: number) {
-  const num = Number(value);
-  return Number.isInteger(num) && num > 0 ? num : fallback;
-}
-
-function normalizeValue(value: string | null) {
-  return (value ?? "").trim().toLowerCase();
-}
-
-function normalizeMultiValues(values: string[]) {
-  return values.map((value) => value.trim().toLowerCase()).filter(Boolean);
-}
+import {
+  normalizeMultiValues,
+  normalizeValue,
+  parsePositiveInt,
+} from "@/shared";
 
 function getCompanyName(job: (typeof jobListings)[number]) {
   return (job.company?.name ?? job.companyName ?? "").toLowerCase();

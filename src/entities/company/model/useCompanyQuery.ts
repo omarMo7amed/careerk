@@ -2,16 +2,16 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { getCompanyProfile } from "../api/getCompanyProfile";
-import { CompanyProfile } from "../types/CompanyProfile";
+import { CompanyProfileResponse } from "../types/CompanyProfile";
 
 export function useCompanyProfileQuery() {
-  const { isPending, data, error } = useQuery<CompanyProfile, Error>({
+  const { isPending, data, error } = useQuery<CompanyProfileResponse, Error>({
     queryKey: ["companyProfile"],
     queryFn: getCompanyProfile,
   });
 
   return {
-    company: data,
+    company: data?.data || null,
     isLoading: isPending,
     error,
   };

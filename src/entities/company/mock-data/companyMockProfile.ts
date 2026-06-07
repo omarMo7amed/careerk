@@ -18,3 +18,14 @@ export const companyProfile: CompanyProfile = {
   facebook: "https://facebook.com/technova",
   twitter: "https://twitter.com/technova",
 };
+
+export const companyProfileResponse = {
+  success: true,
+  data: companyProfile,
+  message: "Company profile retrieved successfully",
+  meta: {
+    timestamp: new Date().toISOString(),
+    path: "/api/v1/companies/me",
+    method: "GET",
+  },
+};

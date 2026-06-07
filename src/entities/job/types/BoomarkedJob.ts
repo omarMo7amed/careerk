@@ -25,4 +25,9 @@ export interface BookmarksResponse {
   success: boolean;
   data: BookmarkedJob[];
   message: string;
+  meta: {
+    timestamp: string;
+    path: string;
+    method: string;
+  };
 }

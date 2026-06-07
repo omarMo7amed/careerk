@@ -12,6 +12,7 @@ export function SavedJobCard({ job }: SavedJobCardProps) {
     title,
     companyName,
     id,
+    bookmarkId,
     isBookmarked,
     location,
     jobType,
@@ -30,7 +31,11 @@ export function SavedJobCard({ job }: SavedJobCardProps) {
           </div>
         </div>
 
-        <BookmarkButton jobId={id} isBookmarked={isBookmarked} />
+        <BookmarkButton
+          jobId={id}
+          bookmarkId={bookmarkId}
+          isBookmarked={isBookmarked}
+        />
       </div>
 
       <div className="space-y-2 mb-4 min-h-12">

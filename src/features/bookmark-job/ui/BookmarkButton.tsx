@@ -1,24 +1,35 @@
 "use client";
 import { Button } from "@/shared";
 import { Bookmark } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useBookmarkJob } from "../model/useBookmarkJob";
 
 interface BookmarkButtonProps {
   jobId: string;
-  isBookmarked: boolean;
+  bookmarkId?: string;
+  isBookmarked?: boolean;
 }
 
 function BookmarkButton({
   jobId,
-  isBookmarked: initialBookmarked,
+  bookmarkId,
+
+  isBookmarked: initialBookmarked = false,
 }: BookmarkButtonProps) {
   const [isBookmarked, setIsBookmarked] = useState(initialBookmarked);
-  const { mutate: toggleBookmark, isPending } = useBookmarkJob();
+  const { mutateAsync: toggleBookmark, isPending } = useBookmarkJob();
 
-  function handleClick() {
-    toggleBookmark({ jobId, isCurrentlyBookmarked: !isBookmarked });
-    setIsBookmarked(!isBookmarked);
+  useEffect(() => {
+    setIsBookmarked(initialBookmarked);
+  }, [initialBookmarked]);
+
+  async function handleClick() {
+    await toggleBookmark({
+      jobId,
+      bookmarkId,
+      isCurrentlyBookmarked: isBookmarked,
+    });
+    setIsBookmarked((currentValue) => !currentValue);
   }
 
   return (

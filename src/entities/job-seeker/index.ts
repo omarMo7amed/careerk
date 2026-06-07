@@ -13,8 +13,12 @@ export { getMe } from "./api/getMe";
 export { getCandidateById } from "./api/getCandidateById";
 export { uploadProfilePhoto } from "./api/uploadProfilePhoto";
 export { getOverview } from "./api/getOverview";
-export type { JobSeekerOverview } from "./api/getOverview";
-
+export type {
+  OverviewData,
+  OverviewSuccessResponse,
+  OverviewErrorResponse,
+  OverviewResponse,
+} from "./types/overview";
 //  Query hooks
 export { useMyProfileQuery } from "./model/useProfile";
 export {

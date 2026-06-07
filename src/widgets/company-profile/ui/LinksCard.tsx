@@ -36,11 +36,15 @@ export function LinksCard({
         twitter: form.twitter ?? "",
       },
       {
-        onSuccess: () => {
-          toast.success("Links updated!");
-          setEditing(false);
+        onSuccess: (response) => {
+          if (response.success) {
+            toast.success(response.message);
+            setEditing(false);
+          }
         },
-        onError: () => toast.error("Failed to update links."),
+        onError: (error) => {
+          toast.error(error?.message || "Failed to update links.");
+        },
       },
     );
   }

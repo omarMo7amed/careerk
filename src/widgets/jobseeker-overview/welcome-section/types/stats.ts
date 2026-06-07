@@ -7,3 +7,9 @@ export interface StatsCard {
   icon: "send" | "star" | "bookmark" | "calendar";
   color: "blue" | "purple" | "orange" | "green";
 }
+export interface StatsCardsData {
+  activeApplicationsCount: number;
+  recommendedJobsCount: number;
+  savedJobsCount: number;
+  upcomingInterviewsCount: number;
+}

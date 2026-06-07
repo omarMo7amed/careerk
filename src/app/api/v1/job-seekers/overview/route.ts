@@ -1,14 +1,43 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+//check if user is authenticated
+async function checkAuth(request: NextRequest) {
+  const token = request.headers.get("authorization")?.replace("Bearer ", "");
+  if (!token || token === "null" || token === "undefined") {
+    return NextResponse.json(
+      {
+        success: false,
+        error: {
+          message: "Unauthorized",
+          statusCode: 401,
+          timestamp: new Date().toISOString(),
+          path: "/api/v1/job-seekers/me/overview",
+          method: request.method,
+        },
+      },
+      { status: 401 },
+    );
+  }
+
+  return null;
+}
+
+export async function GET(request: NextRequest) {
+  const authResponse = await checkAuth(request);
+  if (authResponse) {
+    return authResponse;
+  }
+
   try {
-    // Mock data for overview
     const overviewData = {
+      firstName: "Shahd",
+      lastName: "Raafat",
       hasProfile: true,
-      linkedIn: "https://linkedin.com/in/alexjohnson",
-      github: "https://github.com/alexjohnson",
-      totalRecommendedJobs: 5,
-      lastLoginAt: new Date().toISOString(),
+      profileImageUrl: "",
+      linkedIn: "https://linkedin.com/in/shahdraafat",
+      github: "https://github.com/shahdraafat",
+      recommendedJobsCount: 5,
+      savedJobsCount: 7,
     };
 
     return NextResponse.json({
@@ -18,9 +47,15 @@ export async function GET() {
     });
   } catch (error) {
     console.error("Overview fetch error:", error);
-    return NextResponse.json(
-      { message: "Internal server error" },
-      { status: 500 },
-    );
+    return NextResponse.json({
+      success: false,
+      error: {
+        message: "Internal server error",
+        statusCode: 500,
+        timestamp: new Date().toISOString(),
+        path: "/api/v1/job-seekers/me/overview",
+        method: "GET",
+      },
+    });
   }
 }

@@ -1,23 +1,51 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { ApplicationStatus } from "..";
 import { getApplications } from "../api/getApplications";
 
 interface UseApplicationsOptions {
-  status?: ApplicationStatus;
+  search?: string;
+  location?: string;
+  status?: string[];
+  dateApplied?: string[];
+  workPreference?: string[];
   page?: number;
   limit?: number;
 }
 
 export function useApplications({
+  search,
+  location,
   status,
+  dateApplied,
+  workPreference,
   page = 1,
   limit = 12,
 }: UseApplicationsOptions = {}) {
   const { isPending, data, error } = useQuery({
-    queryKey: ["applications", { status, page, limit }],
-    queryFn: ({ signal }) => getApplications({ signal, status, page, limit }),
+    queryKey: [
+      "applications",
+      {
+        search,
+        location,
+        status,
+        dateApplied,
+        workPreference,
+        page,
+        limit,
+      },
+    ],
+    queryFn: ({ signal }) =>
+      getApplications({
+        signal,
+        search,
+        location,
+        status,
+        dateApplied,
+        workPreference,
+        page,
+        limit,
+      }),
     staleTime: 1000 * 60 * 5,
   });
 

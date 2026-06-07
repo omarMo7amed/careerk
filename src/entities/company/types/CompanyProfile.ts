@@ -29,3 +29,30 @@ export type CompanyProfile = {
   facebook: string;
   twitter: string;
 };
+
+export type CompanyProfileResponse = {
+  success: boolean;
+  data: CompanyProfile;
+  message: string;
+  meta: {
+    timestamp: string;
+    path: string;
+    method: string;
+  };
+};
+// Error Response
+export interface UpdateCompanyProfileErrorResponse {
+  success: false;
+  error: {
+    message: string | string[];
+    statusCode: number;
+    timestamp: string;
+    path: string;
+    method: string;
+    details: string;
+  };
+}
+
+export type UpdateCompanyProfileResponse =
+  | CompanyProfileResponse
+  | UpdateCompanyProfileErrorResponse;

@@ -20,6 +20,7 @@ export function ApplicationDetails({
   onClose,
 }: ApplicationDetailsProps) {
   const { details, isLoading, error } = useApplication(applicationId);
+  console.log("Application Details:", details, isLoading, error);
 
   if (isLoading) {
     return <Loader />;

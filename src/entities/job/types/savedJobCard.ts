@@ -1,5 +1,6 @@
 export interface SavedJobCardType {
   id: string;
+  bookmarkId: string;
   title: string;
   companyName: string;
   location: string | null;

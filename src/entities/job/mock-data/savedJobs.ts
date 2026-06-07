@@ -140,4 +140,9 @@ export const mockBookmarksResponse: BookmarksResponse = {
       },
     },
   ],
+  meta: {
+    timestamp: new Date().toISOString(),
+    path: "/jobs/bookmark",
+    method: "GET",
+  },
 };

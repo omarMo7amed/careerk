@@ -14,9 +14,8 @@ import Link from "next/link";
 export function SavedJobsSection() {
   const { jobs, isLoading, error } = useSavedJobs({
     page: 1,
-    pageSize: 3,
+    limit: 3,
   });
-
   const savedJobCards: SavedJobCardType[] = jobsToJobCards(jobs);
 
   return (

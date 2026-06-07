@@ -21,11 +21,15 @@ export function BenefitsCard({
     updateProfile(
       { benefits: value },
       {
-        onSuccess: () => {
-          toast.success("Benefits updated!");
-          setEditing(false);
+        onSuccess: (response) => {
+          if (response.success) {
+            toast.success(response.message);
+            setEditing(false);
+          }
         },
-        onError: () => toast.error("Failed to update benefits."),
+        onError: (error) => {
+          toast.error(error?.message || "Failed to update benefits.");
+        },
       },
     );
   }
