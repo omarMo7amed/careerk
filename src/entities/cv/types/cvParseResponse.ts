@@ -37,6 +37,6 @@ export interface CVConfirmPayload {
     availabilityStatus: string;
     education?: Education[];
     workExperience?: WorkExperience[];
-    skills?: JobSeekerSkill[];
+    skills?: string[];
   };
 }

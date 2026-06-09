@@ -1,4 +1,5 @@
 import { GetJobsOptions, JobsResponse } from "../types/job";
+import { authInterceptor } from "@/shared";
 
 export default async function getJobs(options: GetJobsOptions = {}) {
   const params = new URLSearchParams();
@@ -32,8 +33,8 @@ export default async function getJobs(options: GetJobsOptions = {}) {
     }
   }
 
-  const url = `${process.env.NEXT_PUBLIC_BASE_API_URL}/jobs${params.toString() ? `?${params.toString()}` : ""}`;
-  const res = await fetch(url, {
+  const url = `/jobs${params.toString() ? `?${params.toString()}` : ""}`;
+  const res = await authInterceptor(url, {
     signal: options.signal,
     cache: "no-store",
   });

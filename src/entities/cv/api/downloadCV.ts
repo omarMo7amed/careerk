@@ -1,3 +1,5 @@
+import { authInterceptor } from "@/shared";
+
 interface DownloadCVError {
   success: boolean;
   error: {
@@ -7,9 +9,9 @@ interface DownloadCVError {
   };
 }
 
-export async function downloadCV(token: string) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/cv/me/download-url`,
+export async function downloadCV() {
+  const response = await authInterceptor(
+    `/cv/me/download-url`,
     {
       method: "GET",
       headers: {

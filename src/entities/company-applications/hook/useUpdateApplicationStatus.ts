@@ -15,7 +15,7 @@ export function useUpdateApplicationStatus() {
       id: string;
       status: ApplicationStatus;
       token: string;
-    }) => updateApplicationStatus(id, status, token),
+    }) => updateApplicationStatus(id, status),
 
     onSuccess: (_, { id, status }) => {
       queryClient

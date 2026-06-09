@@ -1,21 +1,20 @@
 import type { CVConfirmPayload } from "../types/cvParseResponse";
+import { authInterceptor } from "@/shared";
 
-export async function confirmCVParse(payload: CVConfirmPayload, token: string) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/cv-parse/confirm`,
-    {
+export async function confirmCVParse(payload: CVConfirmPayload) {
+  console.log("Confirming CV parse with payload:", payload);
+  try {
+    const res = await authInterceptor(`/cv-parse/confirm`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(payload),
-    },
-  );
+    });
 
-  if (!res.ok) {
-    throw new Error("Failed to confirm CV parse");
+    return res.json();
+  } catch (error) {
+    console.error("Error confirming CV parse:", error);
+    throw error; // Re-throw the error after logging it
   }
-
-  return await res.json();
 }

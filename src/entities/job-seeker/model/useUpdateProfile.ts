@@ -5,13 +5,7 @@ import { updateProfile } from "../api/updateProfile";
 import { jobSeekerKeys } from "../lib/queryKeys";
 import { usePathname } from "next/navigation";
 
-export function useUpdateProfile({
-  token,
-  hasCVInfo,
-}: {
-  token: string;
-  hasCVInfo: boolean;
-}) {
+export function useUpdateProfile({ hasCVInfo }: { hasCVInfo: boolean }) {
   const queryClient = useQueryClient();
   const isProfilePage = Boolean(usePathname().match("profile"));
 
@@ -24,7 +18,7 @@ export function useUpdateProfile({
         payload.lastName ||
         isProfilePage
       ) {
-        return updateProfile(token, payload);
+        return updateProfile(payload);
       }
       return Promise.resolve({ data: payload });
     },

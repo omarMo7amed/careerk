@@ -1,16 +1,13 @@
 import { DeleteJobResponse } from "../types/companyJob";
+import { authInterceptor } from "@/shared";
 
 export async function deleteCompanyJob(
-  id: string,
-  token: string,
+  id: string
 ): Promise<string> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/companies/me/jobs/${id}`,
+  const res = await authInterceptor(
+    `/companies/me/jobs/${id}`,
     {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      method: "DELETE"
     },
   );
 
@@ -20,5 +17,7 @@ export async function deleteCompanyJob(
     throw new Error(json?.message || "Failed to delete job");
   }
 
+  // console.log("Delete job response:", json.data);
+  //return undefined
   return json.data.id;
 }

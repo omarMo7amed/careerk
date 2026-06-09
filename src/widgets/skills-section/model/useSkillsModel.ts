@@ -2,16 +2,14 @@
 import { useReducer } from "react";
 import { toast } from "react-hot-toast";
 import { useAddSkills, useDeleteSkill } from "@/entities/skill";
-import { useProfileDetails, useSkills } from "@/entities/job-seeker";
+import { useSkills } from "@/entities/job-seeker";
 import { skillsReducer, INITIAL_SKILLS_STATE } from "../lib/skillsReducer";
+import { useCVInfo } from "@/entities/cv";
 // import {useAuth} from "@/features/auth";
 
 export function useSkillsModel({ isOwner }: { isOwner: boolean }) {
-  const { hasProfile } = useProfileDetails({ token: "" });
-  const { skills: fetchedSkills = [] } = useSkills({
-    hasProfile,
-    token: "",
-  });
+  const { hasProfile, isUpdatePending } = useCVInfo();
+  const { skills: fetchedSkills = [] } = useSkills();
   const { addSkills, isPending } = useAddSkills({
     hasProfile,
     token: "",

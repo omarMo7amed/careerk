@@ -1,6 +1,6 @@
 import { authInterceptor } from "@/shared";
 
-export async function deleteEducation(token: string, educationId: string) {
+export async function deleteEducation(educationId: string) {
   const res = await authInterceptor(
     `/job-seekers/me/educations/${educationId}`,
     {

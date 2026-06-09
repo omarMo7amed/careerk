@@ -3,14 +3,14 @@ import { useQuery } from "@tanstack/react-query";
 import { getMe } from "../api/getMe";
 import { jobSeekerKeys } from "../lib/queryKeys";
 import { selectBase } from "../lib/selectBase";
-import { getMyCVInfo } from "@/entities/cv";
+import { getMyCVInfo, useCVInfo } from "@/entities/cv";
+import { usePathname } from "next/navigation";
 
-export function useMyProfileQuery({ token }: { token: string }) {
+export function useMyProfileQuery() {
   const { data, isLoading, error } = useQuery({
     queryKey: jobSeekerKeys.me.all,
-    queryFn: () => getMe(token),
+    queryFn: () => getMe(),
     staleTime: 1000 * 60 * 60,
-    // placeholderData: mockJobSeeker, //this for test ya zmeeely
   });
 
   return {
@@ -20,10 +20,10 @@ export function useMyProfileQuery({ token }: { token: string }) {
   };
 }
 
-export function useBaseProfile({ token }: { token: string | null }) {
+export function useBaseProfile() {
   const { data, isLoading, error } = useQuery({
     queryKey: jobSeekerKeys.me.all,
-    queryFn: () => getMe(token),
+    queryFn: () => getMe(),
     select: selectBase,
     staleTime: 1000 * 60 * 5,
     enabled: false,
@@ -31,10 +31,10 @@ export function useBaseProfile({ token }: { token: string | null }) {
   return { jobSeekerBase: data, isLoading, error };
 }
 
-export function useProfileDetails({ token }: { token: string }) {
+export function useProfileDetails() {
   const { data, isLoading, error } = useQuery({
     queryKey: jobSeekerKeys.me.all,
-    queryFn: () => getMe(token),
+    queryFn: () => getMe(),
     staleTime: 1000 * 60 * 5,
     select: (d) => d?.data?.profile,
   });
@@ -43,20 +43,19 @@ export function useProfileDetails({ token }: { token: string }) {
   return { jobSeekerDetails: data, isLoading, error, hasProfile };
 }
 
-export function useEducations({
-  token,
-  hasProfile,
-}: {
-  hasProfile: boolean;
-  token: string;
-}) {
+export function useEducations() {
+  const pathname = usePathname();
+  const isCvPage = pathname.includes("/dashboard/jobseeker/cv-management");
+  console.log("Current Pathname:omar", pathname, "isCvPage:", isCvPage);
+  const { isUpdatePending } = useCVInfo();
+
   const { data, isLoading, error } = useQuery({
-    queryKey: hasProfile ? jobSeekerKeys.me.all : ["cv-info"],
+    queryKey: isCvPage && isUpdatePending ? ["cv-info"] : jobSeekerKeys.me.all,
     queryFn: () => {
-      if (hasProfile) {
-        return getMe(token);
+      if (isCvPage && isUpdatePending) {
+        return getMyCVInfo();
       }
-      return getMyCVInfo(token);
+      return getMe();
     },
     select: (d) => d.data?.educations,
     staleTime: 1000 * 60 * 5,
@@ -65,30 +64,31 @@ export function useEducations({
   return { educations: data, isLoading, error };
 }
 
-export function useWorkExperiences({ token }: { token: string }) {
+export function useWorkExperiences() {
   const { data, isLoading, error } = useQuery({
     queryKey: jobSeekerKeys.me.all,
-    queryFn: () => getMe(token),
+    queryFn: () => getMe(),
     select: (d) => d.data?.workExperiences,
     staleTime: 1000 * 60 * 5,
   });
   return { workExperiences: data, isLoading, error };
 }
 
-export function useSkills({
-  token,
-  hasProfile,
-}: {
-  token: string;
-  hasProfile: boolean;
-}) {
+export function useSkills() {
+  const pathname = usePathname();
+  const isCvPage = pathname.includes("/dashboard/jobseeker/cv-management");
+
+  const { isUpdatePending, isFirstUpload } = useCVInfo();
   const { data, isLoading, error } = useQuery({
-    queryKey: hasProfile ? jobSeekerKeys.me.all : ["cv-info"],
+    queryKey:
+      (isCvPage && isUpdatePending) || isFirstUpload
+        ? ["cv-info"]
+        : jobSeekerKeys.me.all,
     queryFn: () => {
-      if (hasProfile) {
-        return getMe(token);
+      if ((isCvPage && isUpdatePending) || isFirstUpload) {
+        return getMyCVInfo();
       }
-      return getMyCVInfo(token);
+      return getMe();
     },
     select: (d) => d.data?.skills,
     staleTime: 1000 * 60 * 5,

@@ -4,26 +4,30 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteSkill } from "../api/deleteSkill";
 import { jobSeekerKeys, type JobSeeker } from "@/entities/job-seeker";
 import type { JobSeekerSkill } from "../types/skill";
+import { useCVInfo } from "@/entities/cv";
+import { usePathname } from "next/navigation";
 
 export function useDeleteSkill({
-  token,
   hasProfile,
 }: {
   token: string;
   hasProfile: boolean;
 }) {
   const queryClient = useQueryClient();
+  const pathname = usePathname();
+  const isCvPage = pathname.includes("/dashboard/jobseeker/cv-management");
+  const { isUpdatePending, isFirstUpload } = useCVInfo();
 
   const { mutate, isPending, isError } = useMutation({
     mutationFn: (skillIds: string[]) => {
-      if (hasProfile) {
-        return deleteSkill(token, skillIds);
+      if ((isCvPage && isUpdatePending) || isFirstUpload) {
+        return Promise.resolve(undefined as any);
       }
       // If no profile, don't call API, just return void
-      return Promise.resolve(undefined as any);
+      return deleteSkill(skillIds);
     },
     onSuccess: (_res, skillIds: string[]) => {
-      if (hasProfile) {
+      if (!((isCvPage && isUpdatePending) || isFirstUpload)) {
         // Update jobSeeker cache
         queryClient.setQueryData(
           jobSeekerKeys.me.all,

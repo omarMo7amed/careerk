@@ -39,19 +39,19 @@ export function DirectJobContentCard({ job }: DirectJobContentCardProps) {
 
       {description && (
         <JobSection title="About the Job">
-          <p className="text-text-secondary">{description}</p>
+          <p className="text-text-secondary break-all">{description}</p>
         </JobSection>
       )}
 
       {responsibilities && (
         <JobSection title="Responsibilities">
-          <p className="text-text-secondary">{responsibilities}</p>
+          <p className="text-text-secondary break-all">{responsibilities}</p>
         </JobSection>
       )}
 
       {requirements && (
         <JobSection title="Requirements">
-          <p className="text-text-secondary">{requirements}</p>
+          <p className="text-text-secondary break-all">{requirements}</p>
         </JobSection>
       )}
 

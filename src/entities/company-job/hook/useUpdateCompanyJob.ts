@@ -14,7 +14,7 @@ export function useUpdateCompanyJob() {
       jobId: string;
       data: Partial<CompanyJob>;
       token: string;
-    }) => updateCompanyJob(jobId, data, token),
+    }) => updateCompanyJob(jobId, data),
 
     onSuccess: (updatedJob, variables) => {
       const { jobId } = variables;

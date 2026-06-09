@@ -1,5 +1,6 @@
 import { JobType } from "@/entities/company-job";
 import { AvailabilityStatus } from "../types/availabilityStatus";
+import { authInterceptor } from "@/shared";
 
 interface GetCandidatesOptions {
   signal?: AbortSignal;
@@ -37,8 +38,8 @@ export async function getCandidates(options?: GetCandidatesOptions) {
     }
   }
 
-  const url = `${process.env.NEXT_PUBLIC_BASE_API_URL}/job-seekers${params.toString() ? `?${params.toString()}` : ""}`;
-  const res = await fetch(url, {
+  const url = `/job-seekers${params.toString() ? `?${params.toString()}` : ""}`;
+  const res = await authInterceptor(url, {
     signal: options?.signal,
     cache: "no-store",
   });

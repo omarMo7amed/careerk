@@ -11,29 +11,18 @@ import { educationReducer } from "../lib/educationReducer";
 import { EducationForm, EMPTY_EDUCATION_FORM } from "../types/educationTypes";
 import { useEducations, useProfileDetails } from "@/entities/job-seeker";
 import { getChangedFields } from "@/shared";
-// import { useAuth } from "@/features/auth";
 
 export function useEducationModel({ isOwner }: { isOwner: boolean }) {
-  // const {token}= useAuth();
-  const { hasProfile } = useProfileDetails({ token: "" });
-  const { educations = [] } = useEducations({ hasProfile, token: "" });
-  const { createEducation, isPending: isCreatePending } = useCreateEducation({
-    hasProfile,
-    token: "",
-  });
+  const { hasProfile } = useProfileDetails();
+  const { educations = [] } = useEducations();
+  const { createEducation, isPending: isCreatePending } = useCreateEducation();
 
   const {
     updateEducation: updateEducationRequest,
     isPending: isUpdatePending,
-  } = useUpdateEducation({
-    hasProfile,
-    token: "",
-  });
+  } = useUpdateEducation();
 
-  const { deleteEducation, isPending: isDeletePending } = useDeleteEducation({
-    hasProfile,
-    token: "",
-  });
+  const { deleteEducation, isPending: isDeletePending } = useDeleteEducation();
 
   const [state, dispatch] = useReducer(educationReducer, {
     form: EMPTY_EDUCATION_FORM,
@@ -81,9 +70,15 @@ export function useEducationModel({ isOwner }: { isOwner: boolean }) {
   function updateEducation() {
     console.log(
       "Attempting to update education with form values:",
-      state.updatingId,
+      typeof state.updatingId,
     );
-    if (!state.updatingId) return;
+
+    if (typeof state.updatingId === "number" && state.updatingId === 0) {
+      // skip
+    } else {
+      if (!state.updatingId) return;
+    }
+
     const updatingIndex = parseInt(state.updatingId);
 
     const original = educations.find(

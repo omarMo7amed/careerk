@@ -17,7 +17,7 @@ export const CONTACT_INFO_FIELDS: ContactInfoFieldConfig[] = [
     Icon: Phone,
     type: "tel",
     placeholder: "+1 (555) 000-0000",
-    disabled: false,
+    disabled: true,
   },
   {
     key: "email",

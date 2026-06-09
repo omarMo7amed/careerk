@@ -8,7 +8,7 @@ export function useImprovementsQuery({ token }: { token: string }) {
   // Step 1: Query to fetch existing improvement report on mount
   const reportQuery = useQuery({
     queryKey: ["improvements", "latest"],
-    queryFn: () => getImprovements(token),
+    queryFn: () => getImprovements(),
     staleTime: 60 * 60 * 1000, // 60 minutes
     refetchOnWindowFocus: false,
   });

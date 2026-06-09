@@ -1,16 +1,15 @@
 import { ApplicationStatus } from "@/entities/application";
+import { authInterceptor } from "@/shared";
 
 export async function updateApplicationStatus(
   id: string,
-  status: ApplicationStatus,
-  token: string,
+  status: ApplicationStatus
 ): Promise<void> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/companies/me/applications/${id}`,
+  const res = await authInterceptor(
+    `/companies/me/applications/${id}`,
     {
       method: "PATCH",
       headers: {
-        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ status }),

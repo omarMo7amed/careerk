@@ -1,21 +1,20 @@
 import { CompanyJob, GetCompanyJobResponse } from "../types/companyJob";
 import { JobPostFormData } from "@/features/post-job-form";
+import { authInterceptor } from "@/shared";
 
 export type CreateJobPayload = Omit<JobPostFormData, "skills"> & {
   skillNames: string[];
 };
 
 export async function createCompanyJob(
-  payload: CreateJobPayload,
-  token: string,
+  payload: CreateJobPayload
 ): Promise<CompanyJob> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/companies/me/jobs`,
+  const res = await authInterceptor(
+    `/companies/me/jobs`,
     {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(payload),
     },

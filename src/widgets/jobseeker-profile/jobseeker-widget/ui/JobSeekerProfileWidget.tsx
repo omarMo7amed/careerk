@@ -13,8 +13,6 @@ import { ExperienceSection } from "@/widgets/experience-section";
 import { EducationSection } from "@/widgets/education-section";
 import { SkillsSection } from "@/widgets/skills-section";
 
-// import {useAuth} from "@/hooks/useAuth";
-
 import { ProfileStatus } from "@/widgets/jobseeker-profile/profile-status";
 import { Loader } from "@/shared";
 import { WorkPreference } from "@/entities/company-job";
@@ -28,14 +26,10 @@ export function JobSeekerProfileWidget({
   jobSeeker: jobSeekerProp,
   isOwner = false,
 }: JobSeekerProfileWidgetProps) {
-  // const {token} = useAuth();
-  const {
-    jobSeeker: ownData,
-    isLoading,
-    error,
-  } = useMyProfileQuery({ token: "" });
+  const { jobSeeker: ownData, isLoading, error } = useMyProfileQuery();
 
   const jobSeeker = jobSeekerProp ?? ownData;
+  const profile = jobSeeker?.profile;
   const loading = !jobSeekerProp && isLoading;
 
   if (loading) {
@@ -49,15 +43,23 @@ export function JobSeekerProfileWidget({
       </div>
     );
   }
+  // if (!profile) {
+  //   return (
+  //     <div className="flex items-center justify-center h-40 bg-bg-surface rounded-xl border border-border text-text-secondary text-sm">
+  //       Profile data is unavailable.
+  //     </div>
+  //   );
+  // }
+
   const profileInfo = {
-    jobSeekerId: jobSeeker?.profile.jobSeekerId || "",
-    location: jobSeeker?.profile.location || "",
+    jobSeekerId: profile?.jobSeekerId || "",
+    location: profile?.location || "",
     firstName: jobSeeker?.firstName || "",
     lastName: jobSeeker?.lastName || "",
-    yearsOfExperience: jobSeeker?.profile.yearsOfExperience || 0,
-    title: jobSeeker?.profile.title || "",
+    yearsOfExperience: profile?.yearsOfExperience || 0,
+    title: profile?.title || "",
     profileImageUrl: jobSeeker?.profileImageUrl || null,
-    cvEmail: jobSeeker?.profile.cvEmail || "",
+    cvEmail: profile?.cvEmail || "",
   };
 
   return (
@@ -66,7 +68,7 @@ export function JobSeekerProfileWidget({
 
       <div className="flex flex-col lg:flex-row gap-4 my-4 justify-between">
         <div className="flex flex-col gap-4">
-          <Summary summary={jobSeeker.profile.summary} isOwner={isOwner} />
+          <Summary summary={profile?.summary} isOwner={isOwner} />
           <ExperienceSection
             workExperiences={jobSeeker.workExperiences || []}
           />
@@ -82,27 +84,26 @@ export function JobSeekerProfileWidget({
             profileStatus={{
               availabilityStatus: jobSeeker?.profile
                 ?.availabilityStatus as AvailabilityStatus,
-              workPreference: jobSeeker?.profile
-                ?.workPreference as WorkPreference,
-              preferredJobTypes: jobSeeker?.profile?.preferredJobTypes || [],
-              expectedSalary: jobSeeker?.profile?.expectedSalary || null,
-              noticePeriod: jobSeeker?.profile?.noticePeriod as string,
+              workPreference: profile?.workPreference as WorkPreference,
+              preferredJobTypes: profile?.preferredJobTypes || [],
+              expectedSalary: profile?.expectedSalary || null,
+              noticePeriod: (profile?.noticePeriod as number) || 1,
             }}
             isOwner={isOwner}
           />
           <LinksPortfolio
             socialContacts={{
-              githubUrl: jobSeeker?.profile?.githubUrl || "",
-              linkedinUrl: jobSeeker?.profile?.linkedinUrl || "",
-              portfolioUrl: jobSeeker?.profile?.portfolioUrl || "",
+              githubUrl: profile?.githubUrl || "",
+              linkedinUrl: profile?.linkedinUrl || "",
+              portfolioUrl: profile?.portfolioUrl || "",
             }}
             isOwner={isOwner}
           />
           <ContactInfo
             contactInfo={{
-              phone: jobSeeker?.profile.phone || "",
-              cvEmail: jobSeeker?.profile.cvEmail || "",
-              location: jobSeeker?.profile.location || "",
+              phone: profile?.phone || "",
+              cvEmail: profile?.cvEmail || "",
+              location: profile?.location || "",
             }}
             isOwner={isOwner}
           />

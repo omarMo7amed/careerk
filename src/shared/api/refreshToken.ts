@@ -1,10 +1,11 @@
 import { handleApiError } from "../lib/handleError";
 
-const BASE_URL =
-  process.env.NEXT_PUBLIC_BASE_API_URL ?? "http://localhost:3000/api/v1";
-
+/**
+ * Calls the local Next.js proxy route, which forwards the request
+ * to the real backend server-side (avoids cross-origin cookie issues).
+ */
 export async function refreshToken() {
-  const res = await fetch(`${BASE_URL}/auth/refresh-token`, {
+  const res = await fetch("/api/v1/auth/refresh-token", {
     method: "POST",
     credentials: "include",
   });

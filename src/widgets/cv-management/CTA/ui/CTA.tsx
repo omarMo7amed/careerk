@@ -22,10 +22,8 @@ export function CTA({
   isFirstUpload: boolean;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { confirmCVParse, isLoading, error } = useConfirmCVParse({ token: "" });
-  const { restoreCVParse, isLoading: isRestoreLoading } = useRestoreCVParse({
-    token: "",
-  });
+  const { confirmCVParse, isLoading, error } = useConfirmCVParse();
+  const { restoreCVParse, isLoading: isRestoreLoading } = useRestoreCVParse();
 
   const handleConfirmClick = () => {
     setIsModalOpen(true);

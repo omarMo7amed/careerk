@@ -1,20 +1,13 @@
 import { JobSeeker, JobSeekerProfile } from "../types/jobSeeker";
+import { authInterceptor } from "@/shared";
 
 export async function updateProfile(
-  token: string | null,
   patch: Partial<JobSeekerProfile & JobSeeker>,
 ) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/job-seekers/me`,
-    {
-      method: "PATCH",
-      body: JSON.stringify(patch),
-      headers: {
-        "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }),
-      },
-    },
-  );
+  const res = await authInterceptor(`/job-seekers/me`, {
+    method: "PATCH",
+    body: JSON.stringify(patch),
+  });
 
   if (!res.ok) throw new Error("Failed to update profile");
 

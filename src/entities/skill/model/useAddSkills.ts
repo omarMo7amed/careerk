@@ -4,6 +4,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addSkill } from "../api/addSkill";
 import { jobSeekerKeys, type JobSeeker } from "@/entities/job-seeker";
 import type { JobSeekerSkill } from "../types/skill";
+import { useCVInfo } from "@/entities/cv/model/useCv";
+import { usePathname } from "next/dist/client/components/navigation";
 
 type AddSkillResponse = {
   data: JobSeekerSkill[];
@@ -16,16 +18,21 @@ export function useAddSkills({
   hasProfile: boolean;
   token: string;
 }) {
+  const pathname = usePathname();
+  const isCvPage = pathname.includes("/dashboard/jobseeker/cv-management");
+  console.log("Current Pathname:", pathname, "isCvPage:", isCvPage);
+
+  const { isUpdatePending } = useCVInfo();
   const queryClient = useQueryClient();
   const { mutate, isPending, isError } = useMutation({
     mutationFn: async (skills: string[]) => {
-      if (hasProfile) {
-        return addSkill(token, skills);
+      if (isCvPage && isUpdatePending) {
+        return Promise.resolve({ data: skills });
       }
-      return Promise.resolve({ data: skills });
+      return addSkill(skills);
     },
     onSuccess: (data: AddSkillResponse) => {
-      if (hasProfile) {
+      if (!(isCvPage && isUpdatePending)) {
         // Update jobSeeker cache
         queryClient.setQueryData(
           jobSeekerKeys.me.all,

@@ -20,10 +20,8 @@ export function useCV({ token }: { token: string }) {
   return { uploadCVToServer: mutate, isError, error, isPending };
 }
 
-export function useCVInfo({ token }: { token: string }) {
-  const { jobSeeker, isLoading: isProfileLoading } = useMyProfileQuery({
-    token,
-  });
+export function useCVInfo() {
+  const { jobSeeker, isLoading: isProfileLoading } = useMyProfileQuery();
 
   console.log("Job Seeker Profile Data:", jobSeeker);
 
@@ -35,26 +33,29 @@ export function useCVInfo({ token }: { token: string }) {
     isLoading,
   } = useQuery({
     queryKey: ["cv-info"],
-    queryFn: () => getMyCVInfo(token),
-    enabled: !hasJobSeekerProfile,
+    queryFn: () => getMyCVInfo(),
+    // enabled: !hasJobSeekerProfile,
     staleTime: 5 * 60 * 1000,
   });
-  const hasCVData = !!cvData?.data; // PRIMARY CHECK
 
+  console.log("CV Data:", cvData);
+
+  // if(){
+  //   console.error("Error fetching CV info:", error);
+  // }
   // State Detection Logic:
   // Case 1: Both cvData AND profile → Pending update (shows "New CV Data Available" CTA with modal)
   // Case 2: Profile only (no cvData) → Confirmed (shows "Data confirmed and locked" CTA)
   // Case 3: cvData only (no profile) → First upload (shows "Ready to confirm?" CTA)
   // case 4: Neither cvData nor profile → Empty state (shows only drop zone)
 
+  const hasCVData = !!cvData?.data; // PRIMARY CHECK
   // Case 1
   const isUpdatePending = hasCVData && hasJobSeekerProfile;
   // Case 2
   const isConfirmed = hasJobSeekerProfile && !hasCVData;
   // Case 3
   const isFirstUpload = hasCVData && !hasJobSeekerProfile;
-  // Case 4
-  const isEmptyState = !hasCVData && !hasJobSeekerProfile;
 
   if (isUpdatePending) {
     return {
@@ -96,7 +97,7 @@ export function useCVInfo({ token }: { token: string }) {
 
   // Empty state (neither exists)
   return {
-    data: cvData?.data,
+    data: cvData?.data || null,
     error,
     isLoading,
     hasProfile: false,
@@ -106,7 +107,7 @@ export function useCVInfo({ token }: { token: string }) {
   };
 }
 
-export function useConfirmCVParse({ token }: { token: string }) {
+export function useConfirmCVParse() {
   const queryClient = useQueryClient();
 
   const { mutateAsync, error, isPending } = useMutation({
@@ -119,7 +120,7 @@ export function useConfirmCVParse({ token }: { token: string }) {
       }
 
       const payload: CVConfirmPayload = {
-        parseResultId: cachedData?.parseResultId,
+        parseResultId: cachedData?.data?.parseResultId,
         data: {
           firstName: cachedData?.data?.firstName || "",
           lastName: cachedData?.data?.lastName || "",
@@ -131,16 +132,21 @@ export function useConfirmCVParse({ token }: { token: string }) {
           portfolioUrl: cachedData?.data?.profile?.portfolioUrl || "",
           title: cachedData?.data?.profile?.title || "",
           summary: cachedData?.data?.profile?.summary || "",
-          noticePeriod: cachedData?.data?.profile?.noticePeriod || "",
-          workPreference: cachedData?.data?.profile?.workPreference || "",
+          noticePeriod: cachedData?.data?.profile?.noticePeriod || 1,
+          workPreference: "ONSITE",
           availabilityStatus:
-            cachedData?.data?.profile?.availabilityStatus || "",
+            cachedData?.data?.profile?.availabilityStatus || "OPEN_TO_WORK",
           education: cachedData?.data?.educations || [],
-          skills: cachedData?.data?.skills || [],
+          skills:
+            cachedData?.data?.skills?.map(
+              (skill: { name: string }) => skill.name,
+            ) || [],
         },
       };
 
-      const response = await confirmCVParse(payload, token);
+      console.log("Confirming CV parse with payload:", payload);
+
+      const response = await confirmCVParse(payload);
       return { payload, response, cachedData };
     },
     onSuccess: (result) => {
@@ -157,7 +163,7 @@ export function useConfirmCVParse({ token }: { token: string }) {
             firstName: payload?.data?.firstName,
             lastName: payload?.data?.lastName,
             educations: payload?.data?.education,
-            skills: payload?.data?.skills,
+            skills: cachedData?.data?.skills,
             workExperiences: cachedData?.data?.workExperiences,
             profile: {
               ...old.data.profile,
@@ -186,12 +192,12 @@ export function useConfirmCVParse({ token }: { token: string }) {
   };
 }
 
-export function useRestoreCVParse({ token }: { token: string }) {
+export function useRestoreCVParse() {
   const queryClient = useQueryClient();
 
   const { mutateAsync, error, isPending } = useMutation({
     mutationKey: ["restore-cv"],
-    mutationFn: () => deleteCVParse(token),
+    mutationFn: () => deleteCVParse(),
     onSuccess: () => {
       queryClient.setQueryData(["cv-info"], (old: any) => {
         if (!old) return old;

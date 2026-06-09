@@ -1,17 +1,16 @@
 import { CompanyJob } from "../types/companyJob";
+import { authInterceptor } from "@/shared";
 
 export async function updateCompanyJob(
   jobId: string,
-  data: Partial<CompanyJob>,
-  token: string,
+  data: Partial<CompanyJob>
 ): Promise<CompanyJob> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/companies/me/jobs/${jobId}`,
+  const res = await authInterceptor(
+    `/companies/me/jobs/${jobId}`,
     {
       method: "PATCH",
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(data),
     },

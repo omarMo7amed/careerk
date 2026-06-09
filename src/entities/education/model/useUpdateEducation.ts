@@ -4,30 +4,29 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateEducation } from "../api/updateEducation";
 import { jobSeekerKeys, type JobSeeker } from "@/entities/job-seeker";
 import type { Education } from "../types/types";
+import { useCVInfo } from "@/entities/cv/model/useCv";
+import { usePathname } from "next/navigation";
 
 type JobSeekerCache = {
   data?: JobSeeker;
 };
 
-export function useUpdateEducation({
-  token,
-  hasProfile,
-}: {
-  token: string;
-  hasProfile: boolean;
-}) {
+export function useUpdateEducation() {
   const queryClient = useQueryClient();
+  const pathname = usePathname();
+  const isCvPage = pathname.includes("/dashboard/jobseeker/cv-management");
+  const { isUpdatePending, isFirstUpload } = useCVInfo();
 
   const { mutate, mutateAsync, isPending, isError } = useMutation({
     mutationFn: ({ id, patch }: { id: string; patch: Partial<Education> }) => {
-      if (hasProfile) {
-        return updateEducation(token, id, patch);
+      if ((isCvPage && isUpdatePending) || isFirstUpload) {
+        return Promise.resolve({ id, ...patch } as Education);
       }
       // If no profile, don't call API, just return the patch
-      return Promise.resolve({ id, ...patch } as Education);
+      return updateEducation(id, patch);
     },
     onSuccess: (updated: Education) => {
-      if (hasProfile) {
+      if (!((isCvPage && isUpdatePending) || isFirstUpload)) {
         // Update jobSeeker cache
         queryClient.setQueryData(
           jobSeekerKeys.me.all,

@@ -29,7 +29,7 @@ export function useDownloadCV({ token }: { token: string }) {
       }
 
       // Fetch new URL
-      const data = await downloadCV(token);
+      const data = await downloadCV();
 
       // Cache the result
       downloadUrlCache.data = data;

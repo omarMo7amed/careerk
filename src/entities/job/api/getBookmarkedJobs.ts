@@ -1,3 +1,5 @@
+import { authInterceptor } from "@/shared";
+
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_BASE_API_URL || "http://localhost:3000/api/v1";
 interface GetBookmarkedJobsOptions {
@@ -32,16 +34,9 @@ export async function getBookmarkedJobs(options?: GetBookmarkedJobsOptions) {
       params.append("jobSource", source);
     }
   }
-  const res = await fetch(
-    `${API_BASE_URL}/jobs/bookmark?${params.toString()}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer gvjsagjijoigjaowigjoi`,
-      },
-    },
-  );
+  const res = await authInterceptor(`/jobs/bookmark?${params.toString()}`, {
+    signal: options?.signal,
+  });
   if (!res.ok) {
     throw new Error("Failed to fetch bookmarked jobs");
   }

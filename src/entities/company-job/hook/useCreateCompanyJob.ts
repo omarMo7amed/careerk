@@ -12,7 +12,7 @@ export function useCreateCompanyJob() {
     }: {
       payload: CreateJobPayload;
       token: string;
-    }) => createCompanyJob(payload, token),
+    }) => createCompanyJob(payload),
     onSuccess: (newJob) => {
       queryClient.setQueryData(["company-jobs"], (old: CompanyJob[]) => [
         newJob,

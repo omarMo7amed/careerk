@@ -4,10 +4,10 @@ import { AvailabilityStatus } from "@/entities/job-seeker";
 export interface EditingState {
   status: "editing";
   availabilityStatus: AvailabilityStatus;
-  workPreference: WorkPreference | "";
+  workPreference: WorkPreference;
   preferredJobTypes: JobType[];
   expectedSalary: number | null;
-  noticePeriod: string | "";
+  noticePeriod: number;
 }
 
 export type State = { status: "idle" } | EditingState;

@@ -3,29 +3,21 @@ import { ExtractedCVInfo } from "../../extracted-info";
 import { CTA } from "../../CTA/ui/CTA";
 
 import { CVDropZone } from "@/features/upload-cv";
-// import { useAuth } from "@/features/auth";
 import { useCVInfo } from "@/entities/cv";
 
 import { Error, Loader } from "@/shared";
 
 export function CVManagementContent() {
-  // const {token}=useAuth();
-  const {
-    data,
-    isLoading,
-    error,
-    isConfirmed,
-    isUpdatePending,
-    isFirstUpload,
-  } = useCVInfo({ token: "" });
+  const { data, isLoading, isConfirmed, isUpdatePending, isFirstUpload } =
+    useCVInfo();
 
   if (isLoading) {
     return <Loader />;
   }
-
-  if (error) {
-    return <Error />;
-  }
+  // console.log("dasioghjfoiushdgivasohgdboiusaioubgdois", error);
+  // if (error) {
+  //   return <Error />;
+  // }
 
   const hasData = isUpdatePending || isConfirmed || isFirstUpload;
 
@@ -51,7 +43,7 @@ export function CVManagementContent() {
         hasCVInfo={isUpdatePending || isFirstUpload}
       />
 
-      {isConfirmed && <RecommendationInsights />}
+      {/* {isConfirmed && <RecommendationInsights />} */}
       <CVDropZone />
     </section>
   );

@@ -25,8 +25,6 @@ export function ContactInfoProvider({
     isOwner,
   });
 
-  console.log("ContactInfoProvider model:", model.contactInfo); // Debug log
-
   return (
     <ContactInfoContext.Provider value={model}>
       <section className="bg-bg-surface rounded-xl border border-border p-6 shadow-sm">

@@ -2,6 +2,7 @@ import {
   CompanyProfile,
   UpdateCompanyProfileResponse,
 } from "../types/CompanyProfile";
+import { authInterceptor } from "@/shared";
 
 const BASE_API_URL =
   process.env.NEXT_PUBLIC_BASE_API_URL || "http://localhost:3000/api/v1";
@@ -9,11 +10,10 @@ export async function updateCompanyProfile(
   id: string,
   data: Partial<CompanyProfile>,
 ): Promise<UpdateCompanyProfileResponse> {
-  const response = await fetch(`${BASE_API_URL}/companies/me`, {
+  const response = await authInterceptor(`/companies/me`, {
     method: "PATCH",
     headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json"
     },
     body: JSON.stringify(data),
   });

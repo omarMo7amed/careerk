@@ -1,16 +1,13 @@
 import { CompanyJob, GetCompanyJobResponse } from "../types/companyJob";
+import { authInterceptor } from "@/shared";
 
 export async function getCompanyJob(
-  jobId: string,
-  token: string,
+  jobId: string
 ): Promise<CompanyJob> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/companies/me/jobs/${jobId}`,
+  const res = await authInterceptor(
+    `/companies/me/jobs/${jobId}`,
     {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      method: "GET"
     },
   );
 

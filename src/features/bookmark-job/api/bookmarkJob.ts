@@ -1,4 +1,5 @@
 import type { Job } from "@/entities/job";
+import { authInterceptor } from "@/shared";
 
 interface BookmarkJobResponse {
   success: boolean;
@@ -19,12 +20,8 @@ const API_BASE_URL =
 export async function bookmarkJob(
   jobId: string,
 ): Promise<BookmarkJobResponse> {
-  const res = await fetch(`${API_BASE_URL}/jobs/bookmarks/${jobId}`, {
+  const res = await authInterceptor(`/jobs/bookmarks/${jobId}`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
   });
 
   if (!res.ok) {
@@ -38,12 +35,8 @@ export async function bookmarkJob(
 export async function removeBookmarkJob(
   bookmarkId: string,
 ): Promise<BookmarkJobResponse> {
-  const res = await fetch(`${API_BASE_URL}/jobs/bookmarks/${bookmarkId}`, {
+  const res = await authInterceptor(`/jobs/bookmarks/${bookmarkId}`, {
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
   });
 
   if (!res.ok) {

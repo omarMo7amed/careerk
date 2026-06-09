@@ -61,6 +61,7 @@ export function EditEducationForm() {
 
         <div className="flex flex-col gap-1">
           <label className="text-xs text-text-muted">GPA</label>
+
           <input
             type="number"
             min={0}
@@ -78,7 +79,7 @@ export function EditEducationForm() {
           <input
             type="date"
             className="rounded-lg border border-border bg-bg-surface px-3 py-1.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-            value={updateForm.startDate}
+            value={updateForm?.startDate || ""}
             onChange={(e) => setUpdateFormField("startDate", e.target.value)}
           />
         </div>
@@ -89,7 +90,7 @@ export function EditEducationForm() {
             type="date"
             disabled={updateForm.isCurrent}
             className="rounded-lg border border-border bg-bg-surface px-3 py-1.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
-            value={updateForm.endDate}
+            value={updateForm?.endDate || ""}
             onChange={(e) => setUpdateFormField("endDate", e.target.value)}
           />
           <label className="flex items-center gap-2 text-xs text-text-muted mt-1 cursor-pointer">
@@ -110,7 +111,7 @@ export function EditEducationForm() {
         <textarea
           rows={2}
           className="rounded-lg border border-border bg-bg-surface px-3 py-1.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none"
-          value={updateForm.description}
+          value={updateForm?.description || ""}
           onChange={(e) => setUpdateFormField("description", e.target.value)}
           placeholder="Brief description…"
         />

@@ -15,7 +15,8 @@ export async function uploadProfilePhoto(token: string, file: File) {
   );
 
   if (!presignedRes.ok) throw new Error("Failed to get presigned URL");
-  const { uploadUrl, key } = await presignedRes.json();
+  const data = await presignedRes.json();
+  const { uploadUrl, key } = data.data; // uploadUrl for R2, key to confirm upload
 
   // Step 2: Upload file to R2 storage
   const uploadRes = await fetch(uploadUrl, {
@@ -41,7 +42,7 @@ export async function uploadProfilePhoto(token: string, file: File) {
   const { fileUrl } = await confirmRes.json();
 
   // Step 4: Update profile with new image URL
-  const updateRes = await updateProfile(token, { profileImageUrl: fileUrl });
+  const updateRes = await updateProfile({ profileImageUrl: fileUrl });
 
   return updateRes;
 }

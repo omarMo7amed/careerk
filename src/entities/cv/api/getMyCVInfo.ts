@@ -1,16 +1,18 @@
 import { authInterceptor } from "@/shared";
 
-export async function getMyCVInfo(token: string) {
+export async function getMyCVInfo() {
   try {
     const res = await authInterceptor("/cv-parse/preview", {});
     if (!res.ok) {
       throw new Error("Failed to fetch CV info");
     }
     return res.json();
-  } catch (error) {
-    throw new Error(
-      "Failed to fetch CV info: " +
-        (error instanceof Error ? error.message : String(error)),
-    );
+  } catch (error: unknown) {
+    if (
+      error instanceof Error &&
+      error.message === "No CV parse result found. Please upload a CV first."
+    ) {
+      return { data: null };
+    }
   }
 }

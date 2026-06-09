@@ -22,7 +22,7 @@ export function DisplayMode() {
             status={
               AVAILABILITY_STATUS_LABELS[
                 profileStatus.availabilityStatus
-              ] as string
+              ] as keyof typeof AVAILABILITY_STATUS_LABELS
             }
           />
         </Row>
@@ -57,7 +57,9 @@ export function DisplayMode() {
       {profileStatus.noticePeriod && (
         <Row icon={<Clock className="w-4 h-4" />} label="Notice Period">
           <span className="text-sm text-foreground">
-            {profileStatus.noticePeriod}
+            {profileStatus.noticePeriod > 1
+              ? `${profileStatus.noticePeriod} weeks`
+              : `${profileStatus.noticePeriod} week`}
           </span>
         </Row>
       )}

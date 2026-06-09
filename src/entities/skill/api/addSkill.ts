@@ -1,6 +1,6 @@
 import { authInterceptor } from "@/shared";
 
-export async function addSkill(token: string, skills: string[]) {
+export async function addSkill(skills: string[]) {
   if (skills.length === 0) return { data: [] };
   const res = await authInterceptor(
     "/job-seekers/me/skills",

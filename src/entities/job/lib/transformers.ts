@@ -15,6 +15,18 @@ export function jobToJobCard(bookmark: BookmarkedJob): SavedJobCardType {
   };
 }
 
-export function jobsToJobCards(bookmarks: BookmarkedJob[]): SavedJobCardType[] {
-  return bookmarks.map(jobToJobCard);
+type BookmarkedJobsInput =
+  | BookmarkedJob[]
+  | { data?: BookmarkedJob[] }
+  | null
+  | undefined;
+
+export function jobsToJobCards(
+  bookmarks: BookmarkedJobsInput,
+): SavedJobCardType[] {
+  const bookmarkedJobs = Array.isArray(bookmarks)
+    ? bookmarks
+    : (bookmarks?.data ?? []);
+
+  return bookmarkedJobs.map(jobToJobCard);
 }

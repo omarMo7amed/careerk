@@ -1,4 +1,6 @@
 import { ApplicationDetailsResponse } from "..";
+import { authInterceptor } from "@/shared";
+
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_BASE_API_URL || "http://localhost:3000/api/v1";
 interface GetApplicationsOptions {
@@ -53,8 +55,8 @@ export async function getApplications({
     }
   }
 
-  const response = await fetch(
-    `${API_BASE_URL}/applications?${params.toString()}`,
+  const response = await authInterceptor(
+    `/job-seekers/me/applications?${params.toString()}`,
     {
       method: "GET",
       signal,
@@ -76,7 +78,7 @@ export async function getApplications({
 export async function getApplicationDetails(
   id: string,
 ): Promise<ApplicationDetailsResponse> {
-  const response = await fetch(`${API_BASE_URL}/applications/${id}`, {
+  const response = await authInterceptor(`${API_BASE_URL}/applications/${id}`, {
     method: "GET",
     cache: "no-store",
     headers: {

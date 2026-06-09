@@ -1,5 +1,6 @@
 import { GetCompanyJobResponse } from "../types/companyJob";
 import { AvailabilityStatus, JobMatchesData } from "../types/companyJob";
+import { authInterceptor } from "@/shared";
 
 export interface GetMatchesParams {
   jobId: string;
@@ -7,7 +8,6 @@ export interface GetMatchesParams {
   limit?: number;
   minScore?: number;
   availabilityStatus?: AvailabilityStatus;
-  token: string;
 }
 
 export async function getCompanyJobMatches({
@@ -16,7 +16,6 @@ export async function getCompanyJobMatches({
   limit = 10,
   minScore,
   availabilityStatus,
-  token,
 }: GetMatchesParams): Promise<JobMatchesData> {
   const params = new URLSearchParams();
   params.set("page", String(page));
@@ -25,13 +24,10 @@ export async function getCompanyJobMatches({
   if (minScore !== undefined) params.set("minScore", String(minScore));
   if (availabilityStatus) params.set("availabilityStatus", availabilityStatus);
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/companies/me/jobs/${jobId}/matches?${params.toString()}`,
+  const res = await authInterceptor(
+    `/companies/me/jobs/${jobId}/matches?${params.toString()}`,
     {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      method: "GET"
     },
   );
 

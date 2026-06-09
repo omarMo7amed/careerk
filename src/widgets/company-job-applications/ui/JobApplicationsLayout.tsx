@@ -48,7 +48,7 @@ export function JobApplicationsLayout({ jobId }: { jobId: string }) {
           </p>
         </div>
 
-        <DashboardHeader header="Top 5 Candidates" Icon={Star} />
+        <DashboardHeader title="Top 5 Candidates" />
         <div className="grid lg:grid-cols-2 gap-6">
           {applications.map((a) => (
             <ApplicationCard

@@ -1,6 +1,6 @@
 import { authInterceptor } from "@/shared";
 
-export async function deleteCVParse(token: string): Promise<void> {
+export async function deleteCVParse(): Promise<void> {
   const res = await authInterceptor("/cv-parse", {
     method: "DELETE",
   });

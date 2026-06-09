@@ -24,15 +24,15 @@ export function useProfileStatusModel({
   isOwner,
 }: UseProfileStatusModelParams) {
   const [state, dispatch] = useReducer(profileStatusReducer, INITIAL_STATE);
-  const { updateProfile, isPending } = useUpdateProfile({ token: "" });
+  const { updateProfile, isPending } = useUpdateProfile({ hasCVInfo: false });
 
   const viewProfileStatus: ProfileStatusData = useMemo(
     () => ({
-      availabilityStatus: profileStatus?.availabilityStatus ?? "",
-      workPreference: profileStatus?.workPreference ?? "",
+      availabilityStatus: profileStatus?.availabilityStatus ?? "OPEN_TO_WORK",
+      workPreference: profileStatus?.workPreference ?? "ANY",
       preferredJobTypes: profileStatus?.preferredJobTypes ?? [],
       expectedSalary: profileStatus?.expectedSalary ?? null,
-      noticePeriod: profileStatus?.noticePeriod ?? "",
+      noticePeriod: profileStatus?.noticePeriod ?? 1,
     }),
     [profileStatus],
   );
@@ -66,7 +66,7 @@ export function useProfileStatusModel({
     if (state.status !== "editing") return;
     const patch = getChangedFields(viewProfileStatus, {
       availabilityStatus: state.availabilityStatus,
-      workPreference: state.workPreference as WorkPreference | "",
+      workPreference: state.workPreference as WorkPreference,
       preferredJobTypes: state.preferredJobTypes,
       expectedSalary: state.expectedSalary,
       noticePeriod: state.noticePeriod,

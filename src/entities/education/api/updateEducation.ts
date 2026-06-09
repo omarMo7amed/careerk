@@ -1,17 +1,16 @@
 import type { Education } from "../types/types";
+import { authInterceptor } from "@/shared";
 
 export async function updateEducation(
-  token: string,
   id: string,
   patch: Partial<Education>,
 ): Promise<Education> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/job-seekers/me/educations/${id}`,
+  const res = await authInterceptor(
+    `/job-seekers/me/educations/${id}`,
     {
       method: "PATCH",
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(patch),
     },

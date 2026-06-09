@@ -1,6 +1,6 @@
 import { authInterceptor } from "@/shared";
 
-export async function getImprovements(token: string) {
+export async function getImprovements() {
   const res = await authInterceptor("/job-seekers/me/skill-analysis/latest", {
     method: "GET",
   });

@@ -40,7 +40,7 @@ export { useClickOutside } from "./lib/useClickOutside";
 export { InterFont, spaceGrotesk } from "./lib/fonts";
 // Providers
 export { QueryProvider } from "./providers/QueryProvider";
-export { useAuthStore } from "./providers/useAuthStore";
+export { useAuthStore, getPersistedRole } from "./providers/useAuthStore";
 
 // Constants (all grouped by domain — add new files to constant/index.ts)
 export * from "./constant";
