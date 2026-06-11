@@ -1,5 +1,5 @@
 import type { JobSeeker } from "../types/jobSeeker";
-import { authInterceptor } from "@/shared";
+import { authInterceptor, handleApiError } from "@/shared";
 
 export async function getCandidateById(
   jobSeekerId: string,
@@ -7,10 +7,7 @@ export async function getCandidateById(
   const res = await authInterceptor(`/job-seekers/${jobSeekerId}`, {});
 
   if (!res.ok) {
-    if (res.status === 404) {
-      throw new Error(`Candidate not found`);
-    }
-    throw new Error("Failed to fetch candidate");
+    await handleApiError(res, "Failed to fetch candidate details");
   }
 
   const { data } = await res.json();

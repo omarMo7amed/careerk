@@ -55,6 +55,7 @@ export interface JobApplication {
   appliedAt: string; // ISO
   updatedAt: string; // ISO
   jobSeeker: JobSeeker;
+  matchScore?: number | null;
   directJob: DirectJob;
 }
 

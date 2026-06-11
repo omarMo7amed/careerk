@@ -54,10 +54,12 @@ export function ApplicationCard({
         githubUrl,
         cvUrl,
         cvScore,
-        cvMatchPercentage,
       },
     },
+    matchScore,
   } = application;
+
+  console.log("ApplicationCard render", application);
 
   function handleStatusChange(s: ApplicationStatus) {
     setStatus(s);
@@ -74,7 +76,7 @@ export function ApplicationCard({
           title={title}
           profileImageUrl={profileImageUrl}
           availabilityStatus={availabilityStatus ?? "OPEN_TO_WORK"}
-          rank={cvMatchPercentage ?? cvScore ?? 0}
+          rank={matchScore ?? cvScore ?? 0}
         />
       </div>
 
@@ -101,7 +103,7 @@ export function ApplicationCard({
         githubUrl={githubUrl}
         cvUrl={cvUrl}
         email={email}
-        id={id}
+        id={candidateID}
       />
     </div>
   );

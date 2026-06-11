@@ -22,7 +22,7 @@ export function SavedJobCard({ job }: SavedJobCardProps) {
   } = job;
 
   return (
-    <div className="group  flex flex-col h-full  bg-bg-surface rounded-xl border border-gray-200 p-6 hover:shadow-lg hover:border-primary-hover transition-all">
+    <div className="group  flex flex-col h-full  bg-bg-surface rounded-xl border border-border p-6 hover:shadow-lg hover:border-primary-hover transition-all">
       <div className="flex items-start justify-between mb-4 min-h-14 ">
         <div className="flex-1 pr-2 min-w-0">
           <h4 className="font-bold mb-1 line-clamp-1">{title}</h4>
@@ -73,7 +73,7 @@ export function SavedJobCard({ job }: SavedJobCardProps) {
       )}
 
       {/* Salary */}
-      <div className="mt-auto pt-4 border-t border-gray-100">
+      <div className="mt-auto pt-4 border-t border-border">
         <p className="text-sm font-semibold">{salary || "Competitive"}</p>
       </div>
     </div>

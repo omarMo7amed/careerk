@@ -21,7 +21,6 @@ import {
 } from "@/widgets/jobseeker-overview/welcome-section";
 
 export function JobSeekerOverviewWidget() {
-  const token = "1234";
   const {
     applications,
     isLoading: applicationsLoading,
@@ -30,11 +29,11 @@ export function JobSeekerOverviewWidget() {
   const {
     overview,
     isLoading: overviewLoading,
-    error: overviewError,
-  } = useOverview(token ? { token } : { token: null });
+    // error: overviewError,
+  } = useOverview();
 
   const isLoading = applicationsLoading || overviewLoading;
-  const error = applicationsError || overviewError;
+  // const error = applicationsError || overviewError;
 
   //Stats Cards Data
   const statsData: StatsCardsData | null = useMemo(() => {

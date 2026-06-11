@@ -10,7 +10,7 @@ export function StatCard({ card }: StatCardProps) {
   const colors = colorMap[card.color];
 
   return (
-    <div className="bg-bg-surface rounded-xl border border-gray-200 p-6 hover:shadow-lg hover:border-primary/30 transition-all duration-300 group">
+    <div className="bg-bg-surface rounded-xl border border-border p-6 hover:shadow-lg hover:border-primary/30 transition-all duration-300 group">
       <div className="flex justify-between mb-4">
         <div>
           <h3 className="text-3xl font-bold text-primary mb-1">{card.value}</h3>

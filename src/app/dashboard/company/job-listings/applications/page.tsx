@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { JobApplicationsLayout } from "@/widgets/company-job-applications";
 
 interface Props {
-  searchParams: { jobId?: string };
+  searchParams: Promise<{ jobId?: string }>;
 }
 
 // export async function generateMetadata({

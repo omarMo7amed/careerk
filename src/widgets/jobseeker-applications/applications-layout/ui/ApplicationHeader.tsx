@@ -17,7 +17,6 @@ export function ApplicationsHeader({ stats }: ApplicationsHeaderProps) {
         Track all the jobs you have applied for and stay updated on their
         status.
       </p>
-
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <StatCard
           label="ACTIVE"
