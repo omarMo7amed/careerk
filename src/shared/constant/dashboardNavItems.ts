@@ -5,6 +5,8 @@ import {
   LayoutDashboard,
   BarChart3,
   Building2,
+  BookOpen,
+  Github,
 } from "lucide-react";
 
 export type NavItem = {
@@ -45,6 +47,16 @@ export const jobseekerNavItems: NavItem[] = [
     name: "Recommended Jobs",
     icon: Briefcase,
     href: "/dashboard/jobseeker/recommended-jobs",
+  },
+  {
+    name: "Interview Prep",
+    icon: BookOpen,
+    href: "/dashboard/jobseeker/interview-preparation",
+  },
+  {
+    name: "GitHub Projects",
+    icon: Github,
+    href: "/dashboard/jobseeker/github-projects",
   },
   { name: "Find Jobs", icon: Users, href: "/dashboard/jobseeker/find-jobs" },
   {

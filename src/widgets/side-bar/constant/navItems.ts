@@ -4,6 +4,7 @@ import {
   LayoutDashboard,
   BarChart3,
   Building2,
+  BriefcaseBusiness,
 } from "lucide-react";
 import { LucideIcon } from "lucide-react";
 
@@ -51,6 +52,17 @@ export const jobseekerNavItems = [
     icon: BarChart3,
     href: "/dashboard/jobseeker/applications",
   },
+
   { name: "Profile", icon: Building2, href: "/dashboard/jobseeker/profile" },
+  {
+    name: "Interview Preparation",
+    icon: BriefcaseBusiness,
+    href: "/dashboard/jobseeker/interview-preparation",
+  },
+  {
+    name: "GitHub Projects",
+    icon: BriefcaseBusiness,
+    href: "/dashboard/jobseeker/github-projects",
+  },
   { name: "Settings", icon: Building2, href: "/dashboard/jobseeker/settings" },
 ];
