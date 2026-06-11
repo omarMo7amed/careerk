@@ -3,12 +3,10 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
 import { useDownloadCV } from "../model/useDownloadCV";
-// import {useAuth} from "@/features/auth";
 
-export function DownloadButton() {
-  const { download, isLoading, error, downloadUrl } = useDownloadCV({
-    token: "",
-  });
+export function DownloadButton({ id }: { id: string }) {
+  const { download, isLoading, error, downloadUrl, isSuccess } =
+    useDownloadCV();
 
   // Show error toast when error occurs
   useEffect(() => {
@@ -20,16 +18,10 @@ export function DownloadButton() {
   }, [error]);
 
   // Auto-open download when URL is available
-  useEffect(() => {
-    if (downloadUrl) {
-      window.open(downloadUrl, "_blank");
-      toast.success("CV download started");
-    }
-  }, [downloadUrl]);
 
   const handleDownload = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    download();
+    download(id);
   };
 
   return (

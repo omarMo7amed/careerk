@@ -1,6 +1,12 @@
 import { BarChart3, ChevronRight, TrendingUp } from "lucide-react";
 
-export function IdleStatus({ getReport }: { getReport: () => void }) {
+export function IdleStatus({
+  getReport,
+  errorMessage,
+}: {
+  getReport: () => void;
+  errorMessage?: string | null;
+}) {
   return (
     <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-primary via-[#0466c8] to-[#4895ef] p-10 flex flex-col items-center text-center gap-6">
       <span className="absolute -top-12 -right-12 w-56 h-56 rounded-full bg-white/10" />
@@ -26,6 +32,12 @@ export function IdleStatus({ getReport }: { getReport: () => void }) {
         Get Skill Gaps &amp; Recommendations
         <ChevronRight className="w-4 h-4" />
       </button>
+
+      {errorMessage ? (
+        <p className="relative max-w-md rounded-xl border border-white/20 bg-black/15 px-4 py-3 text-sm text-white/90">
+          {errorMessage}
+        </p>
+      ) : null}
     </div>
   );
 }

@@ -7,15 +7,8 @@ export function useUpdateApplicationStatus() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      id,
-      status,
-      token,
-    }: {
-      id: string;
-      status: ApplicationStatus;
-      token: string;
-    }) => updateApplicationStatus(id, status),
+    mutationFn: ({ id, status }: { id: string; status: ApplicationStatus }) =>
+      updateApplicationStatus(id, status),
 
     onSuccess: (_, { id, status }) => {
       queryClient

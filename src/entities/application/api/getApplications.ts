@@ -60,7 +60,6 @@ export async function getApplications({
     {
       method: "GET",
       signal,
-      cache: "no-store",
       headers: {
         "Content-Type": "application/json",
       },
@@ -78,9 +77,8 @@ export async function getApplications({
 export async function getApplicationDetails(
   id: string,
 ): Promise<ApplicationDetailsResponse> {
-  const response = await authInterceptor(`${API_BASE_URL}/applications/${id}`, {
+  const response = await authInterceptor(`/job-seekers/me/applications/${id}`, {
     method: "GET",
-    cache: "no-store",
     headers: {
       "Content-Type": "application/json",
     },
@@ -91,5 +89,7 @@ export async function getApplicationDetails(
   }
 
   const data = await response.json();
+
+  console.log("Application Details omar:", data); // Debug log
   return data;
 }

@@ -12,7 +12,7 @@ export function useMatchedJobsQuery({
   jobType,
   experienceLevel,
   workPreference,
-  jobSource,
+  source,
   enabled = false,
 }: GetJobsOptions & { enabled?: boolean } = {}) {
   const queryKey = [
@@ -24,7 +24,7 @@ export function useMatchedJobsQuery({
     (jobType ?? []).join(","),
     (experienceLevel ?? []).join(","),
     (workPreference ?? []).join(","),
-    (jobSource ?? []).join(","),
+    (source ?? []).join(","),
   ] as const;
 
   const { data, isLoading, isFetching, error } = useQuery<JobsResponse, Error>({
@@ -37,17 +37,18 @@ export function useMatchedJobsQuery({
         search,
         location,
         jobType,
-        token: "", // we will handle auth later
         experienceLevel,
         workPreference,
-        jobSource,
+        source,
       }),
     enabled,
     staleTime: 1000 * 60 * 5,
   });
 
+  const jobs = Array.isArray(data?.data?.matches) ? data.data.matches : [];
+
   return {
-    jobs: data?.data.jobs ?? null,
+    jobs,
     total: data?.data.total ?? 0,
     page: data?.data.page ?? 1,
     limit: data?.data.limit ?? limit,

@@ -7,7 +7,7 @@ type JobSidebarProps = {
   setIsEditingJob?: (value: boolean) => void;
   deadline: string | null;
   onDeleteClick?: () => void;
-  apply?: () => void;
+  Apply?: () => React.ReactNode;
 };
 
 export function JobSidebar({
@@ -15,7 +15,7 @@ export function JobSidebar({
   setIsEditingJob,
   deadline,
   onDeleteClick,
-  apply,
+  Apply,
 }: JobSidebarProps) {
   const deadlineValue = deadline
     ? `Closes on ${new Date(deadline).toLocaleDateString("en-US", { dateStyle: "medium" })}`
@@ -30,7 +30,7 @@ export function JobSidebar({
           <DeleteButton onClick={onDeleteClick}>Delete Post</DeleteButton>
         </>
       ) : (
-        <Button onClick={() => apply?.()}>Apply</Button>
+        Apply && <Apply />
       )}
 
       {deadlineValue && (

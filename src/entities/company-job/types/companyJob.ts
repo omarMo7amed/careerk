@@ -36,8 +36,8 @@ export interface CompanyJob {
   requirements: string | null;
   responsibilities: string | null;
   location: string | null;
-  salaryMin: number | null;
-  salaryMax: number | null;
+  salaryMin: string | number | undefined;
+  salaryMax: string | number | undefined;
   jobType: JobType;
   workPreference: WorkPreference;
   experienceLevel: ExperienceLevel;

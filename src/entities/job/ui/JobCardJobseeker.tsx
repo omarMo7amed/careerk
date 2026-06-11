@@ -31,6 +31,7 @@ export function JobCardJobseeker({ job }: JobCardProps) {
     (job.salaryMin != null && job.salaryMax != null
       ? `$${job.salaryMin.toLocaleString()}-$${job.salaryMax.toLocaleString()}`
       : undefined);
+  const type = job.type;
   const employmentType = job.jobType?.toLowerCase().replace(/_/g, "-");
   const workPreference = job.workPreference?.toLowerCase().replace(/_/g, "-");
   const experienceLevel = job.experienceLevel?.toLowerCase().replace(/_/g, "-");
@@ -92,15 +93,12 @@ export function JobCardJobseeker({ job }: JobCardProps) {
 
       <JobFooter
         postedDate={postedDate}
+        type={type}
         id={id}
         bookmarkId={bookmarkId}
         isBookmarked={isBookmarked}
+        jobPostUrl={type === "scraped" ? job.sourceUrl : undefined}
       />
     </motion.div>
   );
 }
-
-//  <div className="absolute top-0 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1 bg-amber-400 text-amber-900 text-xs font-bold px-3 py-1 rounded-full shadow-md whitespace-nowrap">
-//           <Crown size={12} className="fill-amber-900" />
-//           Recommended
-//         </div>

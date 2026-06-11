@@ -94,7 +94,7 @@ export function CandidateCard({
       />
 
       <div className="w-full flex flex-wrap text-nowrap justify-between gap-2 mt-4">
-        <DownloadButton />
+        <DownloadButton id={jobSeekerId} />
 
         <ContactButton email={cvEmail || ""} />
       </div>

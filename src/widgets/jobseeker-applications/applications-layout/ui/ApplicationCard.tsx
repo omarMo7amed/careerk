@@ -21,7 +21,7 @@ export function ApplicationCard({
 
   return (
     <div
-      className={`bg-bg-surface rounded-xl border-l-4 ${config.borderColor} border border-gray-200 p-6 hover:shadow-lg transition-all`}
+      className={`bg-bg-surface rounded-xl border-l-4 ${config.borderColor} border border-border p-6 hover:shadow-lg transition-all`}
     >
       <ApplicationCardHeader application={application} config={config} />
       <ApplicationCardInfo application={application} />

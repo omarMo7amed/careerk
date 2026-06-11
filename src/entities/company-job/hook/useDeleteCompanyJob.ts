@@ -1,20 +1,20 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteCompanyJob } from "../api/deleteCompanyJob";
-import { CompanyJob } from "../types/companyJob";
+import { toast } from "react-hot-toast";
 
 export function useDeleteCompanyJob() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, token }: { id: string; token: string }) =>
-      deleteCompanyJob(id),
+    mutationFn: ({ id }: { id: string }) => deleteCompanyJob(id),
 
-    onSuccess: (jobId) => {
-      //jobId is undefined
-      console.log("Deleted job with ID:", jobId);
-      queryClient.setQueryData(["company-jobs"], (old: CompanyJob[]) =>
-        old?.filter((job) => job.id !== jobId),
-      );
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["company-jobs"] });
+      toast.success("Company job deleted successfully!");
+    },
+
+    onError: (error) => {
+      toast.error("Error deleting company job: " + error.message);
     },
   });
 }

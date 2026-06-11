@@ -46,7 +46,6 @@ export function useProfileDetails() {
 export function useEducations() {
   const pathname = usePathname();
   const isCvPage = pathname.includes("/dashboard/jobseeker/cv-management");
-  console.log("Current Pathname:omar", pathname, "isCvPage:", isCvPage);
   const { isUpdatePending } = useCVInfo();
 
   const { data, isLoading, error } = useQuery({

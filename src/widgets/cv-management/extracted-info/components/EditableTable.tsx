@@ -6,7 +6,6 @@ import { EditableMobileCard } from "./EditableMobileCard";
 import { useTableHook } from "../model/useTableHook";
 import { JobSeekerProfile, useUpdateProfile } from "@/entities/job-seeker";
 
-// import { useAuth } from "@/features/auth";
 interface EditableTableProps {
   confirmed: boolean;
   personalInfo: JobSeekerProfile & "firstName" & "lastName";
@@ -19,10 +18,8 @@ export function EditableTable({
   personalInfo,
   hasCVInfo,
 }: EditableTableProps) {
-  // const {token}=useAuth()
   const { handleChange } = useTableHook(personalInfo);
   const { updateProfile } = useUpdateProfile({
-    token: "",
     hasCVInfo,
   });
   const handleFieldBlur = (fieldKey: string, value: string) => {

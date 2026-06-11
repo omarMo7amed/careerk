@@ -1,9 +1,8 @@
-import { DirectJobLayout } from "@/widgets/direct-job-layout";
 import { ViewJobPostLayout } from "@/widgets/view-job-post";
 import type { Metadata } from "next";
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 // export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -21,7 +20,7 @@ async function page({ params }: Props) {
   const { id } = await params;
 
   return (
-    <div>
+    <div className="py-8">
       <ViewJobPostLayout jobId={id} />
       {/* <DirectJobLayout job={jobPost} /> */}
     </div>

@@ -1,7 +1,9 @@
 import { authInterceptor } from "@/shared";
 
-export async function uploadCVToServer(token: string, file: File) {
+export async function uploadCVToServer(file: File) {
   // Step 1: Get presigned URL from CareerK API
+
+  console.log("Requesting presigned URL for file:", file);
   const presignedRes = await authInterceptor("/cv/presigned-url", {
     method: "POST",
     body: JSON.stringify({
@@ -12,7 +14,6 @@ export async function uploadCVToServer(token: string, file: File) {
 
   if (!presignedRes.ok) throw new Error("Failed to get presigned URL");
   const data = await presignedRes.json();
-  console.log("Presigned URL response:", data);
 
   const { uploadUrl, key } = data.data;
   // Step 2: Upload file to R2 storage

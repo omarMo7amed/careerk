@@ -11,16 +11,9 @@ type AddSkillResponse = {
   data: JobSeekerSkill[];
 };
 
-export function useAddSkills({
-  hasProfile,
-  token,
-}: {
-  hasProfile: boolean;
-  token: string;
-}) {
+export function useAddSkills() {
   const pathname = usePathname();
   const isCvPage = pathname.includes("/dashboard/jobseeker/cv-management");
-  console.log("Current Pathname:", pathname, "isCvPage:", isCvPage);
 
   const { isUpdatePending } = useCVInfo();
   const queryClient = useQueryClient();

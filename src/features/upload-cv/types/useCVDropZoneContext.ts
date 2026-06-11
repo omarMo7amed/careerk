@@ -10,9 +10,12 @@ export type CVDropZoneContextType = {
   handleFileDrop: (e: React.DragEvent<HTMLDivElement>) => void;
   handleFileSelect: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleCloseModal: () => void;
+
   pendingCV: StoredCV | null;
   isPendingUploading: boolean;
+  isUploadingToServer: boolean;
   pendingUploadError: string | null;
+
   discard: () => void;
   uploadToServer: (onSuccess?: () => void) => Promise<void>;
   openPreviewPendingCV: () => void;

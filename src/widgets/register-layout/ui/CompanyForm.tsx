@@ -44,16 +44,17 @@ function CompanyForm() {
 
     try {
       console.log("Submitting company registration with data:", formData);
-      await registerCompany(formData);
+      const res = await registerCompany(formData);
 
       toast.success(
         "Registration successful , you will be redirected to verify your email",
       );
-    } catch (error) {
       setTimeout(() => {
-        router.push(`/auth/verify-email?email=${formData.email}&role=company`);
+        router.push(
+          `/auth/verify-email?email=${formData.email}&role=${res.data.role}`,
+        );
       }, 1000);
-
+    } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Registration failed",
       );

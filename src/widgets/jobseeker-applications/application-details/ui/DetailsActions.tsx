@@ -21,7 +21,7 @@ export function DetailsActions({
     <div className="pt-6 border-t flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
       <Button className="flex-1">
         <Link
-          href={`/dashboard/find-jobs/${jobId}`}
+          href={`/dashboard/jobseeker/find-jobs/${jobId}`}
           target="_blank"
           rel="noopener noreferrer"
           className="text-white flex items-center justify-center gap-2 w-full"

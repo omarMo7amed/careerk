@@ -88,12 +88,13 @@ export function ApplicationsList({ onViewDetails }: ApplicationsListProps) {
           <TableOfOperation
             title="Application Status"
             options={[
-              "Pending",
-              "Reviewed",
-              "Shortlisted",
-              "Interview Scheduled",
-              "Rejected",
-              "Hired",
+              { label: "Pending", value: "PENDING" },
+              { label: "Reviewed", value: "REVIEWED" },
+              { label: "Shortlisted", value: "SHORTLISTED" },
+              { label: "Interview Scheduled", value: "INTERVIEW_SCHEDULED" },
+              { label: "Rejected", value: "REJECTED" },
+              { label: "Hired", value: "HIRED" },
+              { label: "Withdrawn", value: "WITHDRAWN" },
             ]}
             asDropdown={false}
             selected={status}
@@ -117,18 +118,6 @@ export function ApplicationsList({ onViewDetails }: ApplicationsListProps) {
             onChange={(data) => {
               const params = new URLSearchParams(searchParams.toString());
               setMultiParam(params, "dateApplied", data);
-              params.set("page", "1");
-              router.push(`?${params.toString()}`);
-            }}
-          />
-          <TableOfOperation
-            title="Work Preference"
-            options={["Remote", "On-site", "Hybrid"]}
-            asDropdown={false}
-            selected={workPreference}
-            onChange={(data) => {
-              const params = new URLSearchParams(searchParams.toString());
-              setMultiParam(params, "workPreference", data);
               params.set("page", "1");
               router.push(`?${params.toString()}`);
             }}

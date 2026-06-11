@@ -1,24 +1,21 @@
 "use client";
-import { BackButton, DashboardHeader, Pagination } from "@/shared";
-import { Star } from "lucide-react";
+import { DashboardHeader, Pagination } from "@/shared";
 
+import { ApplicationStatus } from "@/entities/application";
 import {
   ApplicationCard,
   useJobApplications,
   useUpdateApplicationStatus,
 } from "@/entities/company-applications";
 import { useState } from "react";
-import { ApplicationStatus } from "@/entities/application";
 
 export function JobApplicationsLayout({ jobId }: { jobId: string }) {
   const [page, setPage] = useState(1);
-  const token = "123"; // will change
 
   const { data, isLoading, error } = useJobApplications({
     jobId,
     page,
     limit: 10,
-    token,
   });
 
   const { mutate: updateStatus } = useUpdateApplicationStatus();
@@ -32,32 +29,31 @@ export function JobApplicationsLayout({ jobId }: { jobId: string }) {
 
   return (
     <div>
-      <div className="mb-8">
-        <BackButton />
-      </div>
       <div className="flex flex-col mb-6">
-        <div className="mb-6">
-          <div className="flex items-center gap-2 mb-2">
-            <h1 className="text-2xl font-bold ">
-              Applications for {applications[0]?.directJob.title}
-            </h1>
-          </div>
-          <p className="text-sm text-text-secondary">
-            Total applicants of {applications.length} • Showing candidates
-            sorted by match score
-          </p>
+        <div className="py-8">
+          <DashboardHeader
+            breadcrumbs={[
+              { label: "Dashboard", href: "/dashboard/company/overview" },
+              {
+                label: "Job Listings",
+                href: "/dashboard/company/job-listings",
+              },
+
+              { label: "Applications" },
+            ]}
+            title={`Applications for ${applications[0]?.directJob.title}`}
+            subtitle={`Total applicants of ${applications.length} • Showing candidates
+            sorted by match score`}
+          />
         </div>
 
-        <DashboardHeader title="Top 5 Candidates" />
         <div className="grid lg:grid-cols-2 gap-6">
           {applications.map((a) => (
             <ApplicationCard
               key={a.id}
-              application={a}
+              id={a.id}
               initialStatus={a.status as ApplicationStatus}
-              onStatusChange={(status) =>
-                updateStatus({ id: a.id, status, token })
-              }
+              onStatusChange={(status) => updateStatus({ id: a.id, status })}
             />
           ))}
         </div>

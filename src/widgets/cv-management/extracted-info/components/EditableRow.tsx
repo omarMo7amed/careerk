@@ -35,7 +35,7 @@ export function EditableRow({
           value ? (
             isLink ? (
               <Link
-                href={value as string}
+                href={`https://${value}`}
                 target="_blank"
                 rel="noreferrer"
                 className="text-primary hover:underline truncate block"

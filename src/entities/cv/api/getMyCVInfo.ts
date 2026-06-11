@@ -12,7 +12,9 @@ export async function getMyCVInfo() {
       error instanceof Error &&
       error.message === "No CV parse result found. Please upload a CV first."
     ) {
-      return { data: null };
+      return { data: undefined };
     }
+
+    throw error;
   }
 }

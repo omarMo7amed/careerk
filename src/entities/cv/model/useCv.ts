@@ -7,23 +7,23 @@ import { confirmCVParse } from "../api/confirmCVParse";
 import { deleteCVParse } from "../api/deleteCVParse";
 import { CVConfirmPayload } from "../types/cvParseResponse";
 
-export function useCV({ token }: { token: string }) {
+export function useCV() {
   const queryClient = useQueryClient();
-  const { mutate, error, isError, isPending } = useMutation({
+  const { mutateAsync, error, isError, isPending } = useMutation({
     mutationKey: ["cv-info"],
-    mutationFn: (file: File) => uploadCVToServer(token, file),
+    mutationFn: (file: File) => uploadCVToServer(file),
     onSuccess: (data) => {
-      queryClient.setQueryData(["cv-info"], data.data);
-      return data.data;
+      queryClient.setQueryData(["cv-info"], data);
+      return data;
     },
   });
-  return { uploadCVToServer: mutate, isError, error, isPending };
+  return { uploadCVToServer: mutateAsync, isError, error, isPending };
 }
 
 export function useCVInfo() {
   const { jobSeeker, isLoading: isProfileLoading } = useMyProfileQuery();
 
-  console.log("Job Seeker Profile Data:", jobSeeker);
+  // console.log("Job Seeker Profile Data:", jobSeeker);
 
   const hasJobSeekerProfile = !!jobSeeker?.profile;
 
@@ -49,10 +49,17 @@ export function useCVInfo() {
   // Case 3: cvData only (no profile) → First upload (shows "Ready to confirm?" CTA)
   // case 4: Neither cvData nor profile → Empty state (shows only drop zone)
 
-  const hasCVData = !!cvData?.data; // PRIMARY CHECK
+  const hasCVData = !!cvData?.data || !!cvData?.parseResultId; // PRIMARY CHECK
   // Case 1
   const isUpdatePending = hasCVData && hasJobSeekerProfile;
   // Case 2
+
+  console.log("isUpdatePending:", isUpdatePending);
+  console.log(
+    "hasCVData, hasJobSeekerProfile:",
+    hasCVData,
+    hasJobSeekerProfile,
+  );
   const isConfirmed = hasJobSeekerProfile && !hasCVData;
   // Case 3
   const isFirstUpload = hasCVData && !hasJobSeekerProfile;
@@ -144,9 +151,8 @@ export function useConfirmCVParse() {
         },
       };
 
-      console.log("Confirming CV parse with payload:", payload);
-
       const response = await confirmCVParse(payload);
+      console.log("CV parse confirmed successfully:", response);
       return { payload, response, cachedData };
     },
     onSuccess: (result) => {

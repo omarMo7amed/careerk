@@ -40,7 +40,7 @@ export function JobsList() {
     searchParams,
     "workPreference",
   ) as WorkPreference[];
-  const jobSource = parseMultiParam(searchParams, "jobSource") as string[];
+  const source = parseMultiParam(searchParams, "source") as string[];
   const [filterOpen, setFilterOpen] = useState(false);
   // const {token}=useAuth();
 
@@ -52,8 +52,7 @@ export function JobsList() {
     jobType,
     experienceLevel,
     workPreference,
-    jobSource,
-    token: "", // we will handle auth later
+    source,
     enabled: true,
   });
 
@@ -126,10 +125,10 @@ export function JobsList() {
               "Bayt",
               "Wuzzuf",
             ]}
-            selected={jobSource}
+            selected={source}
             onChange={(data) => {
               const params = new URLSearchParams(searchParams.toString());
-              setMultiParam(params, "jobSource", data);
+              setMultiParam(params, "source", data);
               params.set("page", "1");
               router.push(
                 `/dashboard/jobseeker/find-jobs?${params.toString()}`,
@@ -166,6 +165,7 @@ export function JobsList() {
               const params = new URLSearchParams(searchParams.toString());
               setMultiParam(params, "experienceLevel", data);
               params.set("page", "1");
+              params.set("type", "direct");
               router.push(
                 `/dashboard/jobseeker/find-jobs?${params.toString()}`,
               );
@@ -183,6 +183,7 @@ export function JobsList() {
               const params = new URLSearchParams(searchParams.toString());
               setMultiParam(params, "workPreference", data);
               params.set("page", "1");
+              params.set("type", "direct");
               router.push(
                 `/dashboard/jobseeker/find-jobs?${params.toString()}`,
               );

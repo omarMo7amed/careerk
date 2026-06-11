@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ViewProfileProps } from "../types/viewProfile";
 
 export function ViewProfile({ id }: ViewProfileProps) {
-  const profileHref = `/candidates/${id}`;
+  const profileHref = `/dashboard/company/job-listings/candidates/${id}`;
   return (
     <div className="px-3 py-1.5 my-4 rounded-md bg-primary text-white hover:opacity-90 ">
       <Link

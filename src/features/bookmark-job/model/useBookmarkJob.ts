@@ -6,6 +6,7 @@ interface BookmarkJobParams {
   jobId: string;
   bookmarkId?: string;
   isCurrentlyBookmarked: boolean;
+  jobSource: "DIRECT" | "SCRAPED";
   job?: Job;
 }
 
@@ -17,11 +18,12 @@ export function useBookmarkJob() {
       jobId,
       bookmarkId,
       isCurrentlyBookmarked,
+      jobSource,
     }: BookmarkJobParams) => {
       if (isCurrentlyBookmarked) {
         await removeBookmarkJob(bookmarkId ?? jobId);
       } else {
-        await bookmarkJob(jobId);
+        await bookmarkJob(jobId, jobSource);
       }
     },
     onSuccess: () => {

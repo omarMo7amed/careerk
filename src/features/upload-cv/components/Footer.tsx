@@ -1,5 +1,4 @@
 import { Button } from "@/shared";
-import { Circle } from "lucide-react";
 
 export default function Footer({
   isUploading,
@@ -16,11 +15,7 @@ export default function Footer({
         Cancel
       </Button>
       <Button variant="primary" onClick={onConfirm} disabled={isUploading}>
-        {isUploading ? (
-          <Circle size={20} className="animate-spin text-white" />
-        ) : (
-          "Upload CV"
-        )}
+        {isUploading ? "Uploading..." : "Upload & Analyze"}
       </Button>
     </div>
   );

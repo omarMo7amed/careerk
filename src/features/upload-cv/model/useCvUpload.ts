@@ -12,10 +12,11 @@ import { cvUploadReducer } from "../lib/uploadCVReducer";
 import type { CVUploadState } from "../types/uploadCVReducer";
 import { initialCVUploadState } from "../config/config";
 import { useCV } from "@/entities/cv/model/useCv";
+import { toast } from "react-hot-toast";
 
 export function useCVUpload() {
   const [state, dispatch] = useReducer(cvUploadReducer, initialCVUploadState);
-  const { uploadCVToServer } = useCV({ token: "" });
+  const { uploadCVToServer, isPending } = useCV();
 
   useEffect(() => {
     dispatch({
@@ -85,19 +86,28 @@ export function useCVUpload() {
   }
 
   async function uploadToServer(onSuccess?: () => void) {
-    if (!state.pendingCV) return;
+    // We can upload either the active state file or the pendingCV file
+    const fileToUpload =
+      state.file || (state.pendingCV ? storedCVToFile(state.pendingCV) : null);
+    if (!fileToUpload) return toast.error("No CV file to upload.");
+
     dispatch({ type: "PENDING_UPLOAD_START" });
     try {
-      const file = storedCVToFile(state.pendingCV);
-      uploadCVToServer(file);
+      await uploadCVToServer(fileToUpload);
       clearCVFromLocalStorage();
       dispatch({ type: "PENDING_UPLOAD_SUCCESS" });
+
+      toast.success("CV uploaded and analyzed successfully!");
+
+      // Close the modal upon success
+      handleCloseModal();
       onSuccess?.();
     } catch {
       dispatch({
         type: "PENDING_UPLOAD_FAILURE",
         payload: { error: "Upload failed. Please try again." },
       });
+      toast.error("Failed to upload CV. Please try again.");
     }
   }
 
@@ -122,6 +132,7 @@ export function useCVUpload() {
     pendingUploadError: state.pendingUploadError,
     discard,
     uploadToServer,
+    isUploadingToServer: isPending,
     openPreviewPendingCV,
   };
 }

@@ -2,18 +2,16 @@
 
 import {
   ErrorStatus,
+  Gaps,
+  Hero,
   IdleStatus,
   LoadingStatus,
   ProcessingStatus,
-  Gaps,
-  Hero,
-  Strengths,
   Recommendations,
+  Strengths,
 } from "@/entities/improvement";
 import { useImprovementsQuery } from "@/features/suggest-improvements";
-// import { useAuth } from "@/features/auth";
 export function RecommendationInsights() {
-  // const {token }=useAuth()
   const {
     report,
     isPending,
@@ -21,12 +19,11 @@ export function RecommendationInsights() {
     isProcessing,
     isError,
     error,
+    requestErrorMessage,
     reset,
     reportExists,
     regenerateReport,
-  } = useImprovementsQuery({
-    token: "",
-  });
+  } = useImprovementsQuery();
 
   if (isError) {
     return (
@@ -37,26 +34,42 @@ export function RecommendationInsights() {
     );
   }
 
-  if (isPending) {
-    return <LoadingStatus />;
-  }
+  console.log("Report data: is  pending and is", isPending, isProcessing);
 
-  if (isProcessing) {
+  // if (isPending) {
+  //   return <LoadingStatus />;
+  // }
+
+  if (isPending) {
     return <ProcessingStatus />;
   }
 
   if (!reportExists) {
-    return <IdleStatus getReport={requestImprovement} />;
+    return (
+      <IdleStatus
+        getReport={requestImprovement}
+        errorMessage={requestErrorMessage}
+      />
+    );
   }
 
   return (
     <div className="space-y-6">
+      {requestErrorMessage ? (
+        <div
+          role="alert"
+          className="rounded-2xl border border-error/30 bg-error/5 px-4 py-3 text-sm text-error"
+        >
+          {requestErrorMessage}
+        </div>
+      ) : null}
+
       <div className="flex justify-between items-center">
         <h2 className="text-foreground">Suggestions for Improvements</h2>
         <button
           onClick={regenerateReport}
           disabled={isPending}
-          className="px-4 py-2 rounded bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
+          className="px-4 py-2 rounded bg-primary text-white hover:bg-primary/90 disabled:opacity-50"
         >
           {isPending ? "Regenerating..." : "Regenerate"}
         </button>

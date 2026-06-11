@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 function PostJobPage() {
   return (
-    <div>
+    <div className="py-8">
       <JobPostLayout />
     </div>
   );

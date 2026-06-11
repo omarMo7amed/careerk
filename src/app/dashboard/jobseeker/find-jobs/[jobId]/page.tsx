@@ -1,3 +1,6 @@
+import { DirectJobLayout } from "@/widgets/direct-job-layout/ui/DirectJobLayout";
+import { ViewJobPostLayout } from "@/widgets/view-job-post/ui/ViewJobPostLayout";
+
 export default async function JobDetailsPage({
   params,
 }: {
@@ -7,7 +10,8 @@ export default async function JobDetailsPage({
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold">Job Details for Job ID: {jobId}</h1>
+      {/* <ViewJobPostLayout jobId={jobId} /> */}
+      <DirectJobLayout jobId={jobId} />
       {/* Here you would fetch and display the job details based on the jobId */}
     </div>
   );

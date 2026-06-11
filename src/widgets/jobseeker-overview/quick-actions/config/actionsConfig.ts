@@ -14,7 +14,7 @@ export const quickActions: QuickAction[] = [
     id: "1",
     label: "Update Resume",
     icon: FileText,
-    href: "dashboard/jobseeker/cv",
+    href: "dashboard/jobseeker/cv-management",
     color: "text-red-500",
   },
   {

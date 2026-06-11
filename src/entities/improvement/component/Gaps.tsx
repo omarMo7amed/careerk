@@ -8,7 +8,7 @@ export function Gaps({ gaps }: { gaps: Gap[] }) {
     <div className="h-full rounded-2xl border border-border bg-bg-surface p-6">
       <InsightHeader icon={<Target className="w-6 h-6" />} title="Skill Gaps" />
       <div className="mt-4 flex flex-col gap-3">
-        {gaps.map((gap, i) => {
+        {gaps?.map((gap, i) => {
           const { label, className: cls } = importanceStyle[gap.importance];
           return (
             <div

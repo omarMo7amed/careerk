@@ -5,7 +5,7 @@ import { Props } from "../types/types";
 
 export function LocalFilterBar({ tabs, active, onChange }: Props) {
   return (
-    <div className="w-full overflow-x-auto border-b border-border my-10">
+    <div className="w-full overflow-x-auto border-b border-border mb-10">
       <div role="tablist" aria-label="Filter jobs" className="flex   px-5 pt-2">
         {tabs.map(({ key, label, count }) => (
           <button

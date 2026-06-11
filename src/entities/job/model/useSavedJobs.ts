@@ -47,7 +47,7 @@ export function useSavedJobs({
   });
 
   return {
-    jobs: data?.data || [],
+    jobs: data?.data.jobs || [],
     isLoading: isPending,
     error: error ?? null,
   };

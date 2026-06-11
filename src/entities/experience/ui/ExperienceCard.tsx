@@ -21,6 +21,7 @@ export function ExperienceCard({
     isCurrent,
   } = experience;
 
+  console.log(formatDate(startDate));
   return (
     <div className="flex gap-4">
       {/* Timeline dot */}

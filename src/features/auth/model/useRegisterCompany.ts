@@ -2,7 +2,7 @@
 
 import { useMutation } from "@tanstack/react-query";
 import { registerCompany } from "../api/registerCompany";
-import type { RegisterCompanyRequest } from "../api/types";
+import { RegisterCompanyRequest } from "../types";
 
 export function useRegisterCompany() {
   const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({

@@ -1,30 +1,28 @@
 "use client";
 import {
-  JobType,
   ExperienceLevel,
+  JobType,
   WorkPreference,
   useCompanyJob,
   useDeleteCompanyJob,
   useUpdateCompanyJob,
 } from "@/entities/company-job";
-import { Badge, Button, ConfirmationModal } from "@/shared";
-import { Card } from "@/shared";
+import { Card, ConfirmationModal } from "@/shared";
 import { useState } from "react";
 import { JobSidebar } from "../../direct-job-content/ui/JobSidebar";
 
-import { JobPostFormData } from "@/features/post-job-form";
+import { JobStatus } from "@/entities/company-job/types/companyJob";
+import { JobPostForm, JobPostFormData } from "@/features/post-job-form";
 import { BackButton } from "@/shared/ui/BackButton";
-import { JobPostForm } from "@/features/post-job-form";
 import {
   DirectJobContentCard,
   JobStatistics,
 } from "@/widgets/direct-job-content";
-import { JobStatus } from "@/entities/company-job/types/companyJob";
 import { RecommendedCandidates } from "./RecommendedCandidates";
+import { useRouter } from "next/navigation";
 
 export function ViewJobPostLayout({ jobId }: { jobId: string }) {
-  const token = "123";
-  const { data: jobPost, isLoading } = useCompanyJob(jobId, token);
+  const { data: jobPost, isLoading } = useCompanyJob(jobId);
   const { mutateAsync: deleteJob, isPending: isDeleting } =
     useDeleteCompanyJob();
   const { mutateAsync: updateJob } = useUpdateCompanyJob();
@@ -32,11 +30,13 @@ export function ViewJobPostLayout({ jobId }: { jobId: string }) {
   const [isEditingJob, setIsEditingJob] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+  const router = useRouter();
+
   if (isLoading) return <p>Loading...</p>;
   if (!jobPost) return null;
 
   const job = jobPost;
-  const { title, deadline, status } = job;
+  const { title, deadline, status, applicants } = job;
 
   async function handleEditSubmit(data: JobPostFormData) {
     const updatedJob = {
@@ -47,8 +47,8 @@ export function ViewJobPostLayout({ jobId }: { jobId: string }) {
       workPreference: data.workPreference as WorkPreference,
       experienceLevel: data.experienceLevel as ExperienceLevel,
       status: data.status as JobStatus,
-      salaryMin: data.salaryMin ? Number(data.salaryMin) : null,
-      salaryMax: data.salaryMax ? Number(data.salaryMax) : null,
+      salaryMin: data.salaryMin ? data.salaryMin : undefined,
+      salaryMax: data.salaryMax ? data.salaryMax : undefined,
       location: data.location,
       deadline: data.deadline,
       skillNames: data.skillNames,
@@ -57,15 +57,15 @@ export function ViewJobPostLayout({ jobId }: { jobId: string }) {
     const dd = await updateJob({
       jobId: job.id,
       data: updatedJob,
-      token,
     });
     console.log("response", dd);
     setIsEditingJob(false);
   }
 
   async function handleConfirmDelete() {
-    await deleteJob({ id: job.id, token });
+    await deleteJob({ id: job.id });
     setShowDeleteModal(false);
+    setTimeout(() => router.push("/dashboard/company/job-listings"), 1000);
   }
 
   return (
@@ -98,7 +98,11 @@ export function ViewJobPostLayout({ jobId }: { jobId: string }) {
               onDeleteClick={() => setShowDeleteModal(true)}
             />
 
-            <JobStatistics status={status} />
+            <JobStatistics
+              jobId={jobId}
+              status={status}
+              applicationsCount={applicants || 0}
+            />
 
             <RecommendedCandidates jobId={jobId} />
           </div>

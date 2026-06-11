@@ -1,4 +1,4 @@
-import { authInterceptor } from "@/shared";
+import { authInterceptor, handleApiError } from "@/shared";
 
 interface DownloadCVError {
   success: boolean;
@@ -9,30 +9,17 @@ interface DownloadCVError {
   };
 }
 
-export async function downloadCV() {
-  const response = await authInterceptor(
-    `/cv/me/download-url`,
-    {
-      method: "GET",
-      headers: {
-        // Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    },
-  );
+export async function downloadCV(id: string) {
+  if (!id) {
+    throw new Error("CV ID is required");
+  }
+
+  const response = await authInterceptor(`/cv/download-url/${id}`, {
+    method: "GET",
+  });
 
   if (!response.ok) {
-    const errorData = (await response
-      .json()
-      .catch(() => ({}))) as DownloadCVError;
-
-    const errorMessage = errorData.error?.message || "Failed to download CV";
-
-    if (response.status === 401) {
-      throw new Error(errorMessage);
-    }
-
-    throw new Error(errorMessage);
+    await handleApiError(response, "Failed to get CV download URL");
   }
 
   const { data } = await response.json();

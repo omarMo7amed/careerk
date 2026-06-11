@@ -28,8 +28,8 @@ export function buildNewJob(
 
     location: data.location ?? null,
 
-    salaryMin: data.salaryMin ? Number(data.salaryMin) : null,
-    salaryMax: data.salaryMax ? Number(data.salaryMax) : null,
+    salaryMin: data.salaryMin ? data.salaryMin : undefined,
+    salaryMax: data.salaryMax ? data.salaryMax : undefined,
 
     jobType: data.jobType as JobType,
     workPreference: data.workPreference as WorkPreference,

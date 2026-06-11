@@ -22,10 +22,7 @@ export function DashboardHeader({
 }: DashboardHeaderProps) {
   return (
     <header
-      className={cn(
-        "relative overflow-hidden bg-gradient-to-br  px-6 py-7 sm:px-9 sm:py-9 ",
-        className,
-      )}
+      className={cn("relative overflow-hidden bg-linear-to-br ", className)}
     >
       <div className="relative">
         {breadcrumbs.length > 0 && (

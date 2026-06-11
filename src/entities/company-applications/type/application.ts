@@ -3,7 +3,7 @@ import {
   WorkPreference,
   JobType,
 } from "@/entities/application";
-import { AvailabilityStatus } from "@/shared";
+import { AvailabilityStatus } from "@/entities/job-seeker";
 
 export interface JobSeekerProfile {
   title: string;
@@ -67,5 +67,11 @@ export interface GetApplicationResponse {
     limit: number;
     totalPages: number;
   };
+  message: string;
+}
+
+export interface GetJobApplicationResponse {
+  success: boolean;
+  data: JobApplication;
   message: string;
 }

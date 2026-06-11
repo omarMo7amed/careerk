@@ -56,7 +56,7 @@ export function FormFields({ register, control, errors }: FormFieldsProps) {
         <FieldError message={errors.requirements?.message} />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Controller
           name="jobType"
           control={control}
@@ -94,7 +94,7 @@ export function FormFields({ register, control, errors }: FormFieldsProps) {
           )}
         />
 
-        <Controller
+        {/* <Controller
           name="status"
           control={control}
           render={({ field }) => (
@@ -105,7 +105,7 @@ export function FormFields({ register, control, errors }: FormFieldsProps) {
               {...field}
             />
           )}
-        />
+        /> */}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

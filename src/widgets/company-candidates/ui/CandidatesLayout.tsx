@@ -1,11 +1,19 @@
 "use client";
 import {
+  JobType,
+  jobTypeLabels,
+  WorkPreference,
+  workPreferenceLabels,
+} from "@/entities/company-job";
+import {
   AVAILABILITY_STATUS_LABELS,
   AvailabilityStatus,
   CandidateCard,
   JobSeeker,
   useCandidatesQuery,
 } from "@/entities/job-seeker";
+import { TableOfOperation } from "@/features/filter";
+import { NotFound, SearchBar } from "@/features/search";
 import {
   AnimatedSidebar,
   Button,
@@ -16,19 +24,10 @@ import {
   parseMultiParam,
   setMultiParam,
 } from "@/shared";
-import { Briefcase, SlidersHorizontal } from "lucide-react";
-import { SortSelect } from "./SortSelect";
-import { useState } from "react";
 import { List } from "@/widgets/list";
-import { NotFound, SearchBar } from "@/features/search";
-import { TableOfOperation } from "@/features/filter";
+import { SlidersHorizontal } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import {
-  JobType,
-  jobTypeLabels,
-  WorkPreference,
-  workPreferenceLabels,
-} from "@/entities/company-job";
+import { useState } from "react";
 
 export function CandidatesLayout() {
   const [filterOpen, setFilterOpen] = useState(false);
@@ -78,11 +77,16 @@ export function CandidatesLayout() {
   return (
     <div>
       {/* Header */}
-      <DashboardHeader
-        header="Candidate Search & Filtering"
-        description="Find and compare qualified candidates using AI powered matching"
-        Icon={Briefcase}
-      />
+      <div className="py-8">
+        <DashboardHeader
+          breadcrumbs={[
+            { label: "Dashboard", href: "/dashboard/company/overview" },
+            { label: "Candidates" },
+          ]}
+          title="Find Candidates"
+          subtitle="Find and compare qualified candidates using AI powered matching"
+        />
+      </div>
       {/* Search */}
       <div className="mb-6">
         <SearchBar
@@ -139,7 +143,7 @@ export function CandidatesLayout() {
 
       {error && (
         <p className="m-auto text-sm text-error">
-          Failed to load jobs search results. please try again later.
+          Failed to load candidates. please try again later.
         </p>
       )}
 

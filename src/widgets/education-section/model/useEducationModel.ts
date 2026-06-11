@@ -1,19 +1,18 @@
 "use client";
+import {
+  Education,
+  useCreateEducation,
+  useDeleteEducation,
+  useUpdateEducation,
+} from "@/entities/education";
+import { useEducations } from "@/entities/job-seeker";
+import { getChangedFields } from "@/shared";
 import { useReducer } from "react";
 import { toast } from "react-hot-toast";
-import {
-  useCreateEducation,
-  useUpdateEducation,
-  useDeleteEducation,
-  Education,
-} from "@/entities/education";
 import { educationReducer } from "../lib/educationReducer";
 import { EducationForm, EMPTY_EDUCATION_FORM } from "../types/educationTypes";
-import { useEducations, useProfileDetails } from "@/entities/job-seeker";
-import { getChangedFields } from "@/shared";
 
 export function useEducationModel({ isOwner }: { isOwner: boolean }) {
-  const { hasProfile } = useProfileDetails();
   const { educations = [] } = useEducations();
   const { createEducation, isPending: isCreatePending } = useCreateEducation();
 
@@ -73,10 +72,11 @@ export function useEducationModel({ isOwner }: { isOwner: boolean }) {
       typeof state.updatingId,
     );
 
-    if (typeof state.updatingId === "number" && state.updatingId === 0) {
-      // skip
-    } else {
-      if (!state.updatingId) return;
+    if (
+      !(typeof state.updatingId === "number" && state.updatingId === 0) &&
+      !state.updatingId
+    ) {
+      return;
     }
 
     const updatingIndex = parseInt(state.updatingId);

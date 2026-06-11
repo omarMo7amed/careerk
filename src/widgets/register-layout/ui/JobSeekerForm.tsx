@@ -39,12 +39,14 @@ function JobSeekerForm() {
     if (!result.success) return;
 
     try {
-      await registerJobSeeker(formData);
+      const res = await registerJobSeeker(formData);
 
       toast.success("Registration successful");
+      const normalizedRole =
+        res.data.role === "job-seeker" ? "jobseeker" : res.data.role;
       setTimeout(() => {
         router.push(
-          `/auth/verify-email?email=${formData.email}&role=jobseeker`,
+          `/auth/verify-email?email=${formData.email}&role=${normalizedRole}`,
         );
       }, 1000);
     } catch (error) {

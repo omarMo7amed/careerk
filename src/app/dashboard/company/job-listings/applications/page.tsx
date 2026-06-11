@@ -24,11 +24,7 @@ async function ApplicationsPage({ searchParams }: Props) {
 
   if (!jobId) throw new Error("jobId is missing");
 
-  return (
-    <div>
-      <JobApplicationsLayout jobId={jobId} />
-    </div>
-  );
+  return <JobApplicationsLayout jobId={jobId} />;
 }
 
 export default ApplicationsPage;

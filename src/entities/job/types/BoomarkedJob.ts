@@ -23,7 +23,7 @@ export interface BookmarkedJob {
 }
 export interface BookmarksResponse {
   success: boolean;
-  data: BookmarkedJob[];
+  data: { jobs: BookmarkedJob[] };
   message: string;
   meta: {
     timestamp: string;

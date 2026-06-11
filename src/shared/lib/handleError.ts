@@ -1,7 +1,4 @@
-export async function handleApiError(
-  res: Response,
-  fallbackMessage: string,
-): Promise<never> {
+export async function handleApiError(res: Response, fallbackMessage: string) {
   let errorMessage = fallbackMessage;
   try {
     const data = await res.json();

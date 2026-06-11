@@ -1,23 +1,19 @@
 import { DeleteJobResponse } from "../types/companyJob";
-import { authInterceptor } from "@/shared";
+import { authInterceptor, handleApiError } from "@/shared";
 
-export async function deleteCompanyJob(
-  id: string
-): Promise<string> {
-  const res = await authInterceptor(
-    `/companies/me/jobs/${id}`,
-    {
-      method: "DELETE"
-    },
-  );
+export async function deleteCompanyJob(id: string): Promise<string> {
+  console.log("Deleting job with ID:", id);
+  const res = await authInterceptor(`/companies/me/jobs/${id}`, {
+    method: "DELETE",
+  });
 
-  const json: DeleteJobResponse = await res.json();
+  const data: DeleteJobResponse = await res.json();
 
   if (!res.ok) {
-    throw new Error(json?.message || "Failed to delete job");
+    await handleApiError(res, "Failed to delete company job");
   }
 
   // console.log("Delete job response:", json.data);
   //return undefined
-  return json.data.id;
+  return data?.data?.id;
 }

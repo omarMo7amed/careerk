@@ -27,9 +27,18 @@ export interface RegisterCompanyRequest {
 }
 
 export interface RegisterResponse {
+  success: boolean;
+  data: {
+    email: string;
+    role: "job-seeker" | "company";
+  };
   message: string;
+  meta: {
+    timestamp: string;
+    path: string;
+    method: string;
+  };
 }
-
 // ─── Email Verification ───────────────────────────────────────────────────────
 
 // ─── Token ────────────────────────────────────────────────────────────────────

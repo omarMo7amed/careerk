@@ -8,11 +8,13 @@ interface BookmarkButtonProps {
   jobId: string;
   bookmarkId?: string;
   isBookmarked?: boolean;
+  jobSource: "DIRECT" | "SCRAPED";
 }
 
 function BookmarkButton({
   jobId,
   bookmarkId,
+  jobSource,
 
   isBookmarked: initialBookmarked = false,
 }: BookmarkButtonProps) {
@@ -27,6 +29,7 @@ function BookmarkButton({
     await toggleBookmark({
       jobId,
       bookmarkId,
+      jobSource,
       isCurrentlyBookmarked: isBookmarked,
     });
     setIsBookmarked((currentValue) => !currentValue);

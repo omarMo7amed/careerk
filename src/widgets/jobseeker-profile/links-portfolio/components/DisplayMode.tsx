@@ -10,19 +10,19 @@ export function DisplayMode() {
       <LinkRow
         icon={<Linkedin className="w-5 h-5" />}
         label="LinkedIn"
-        url={socialContacts.linkedinUrl}
+        url={`https://${socialContacts.linkedinUrl}`}
         iconColor="text-[#0077B5]"
       />
       <LinkRow
         icon={<Github className="w-5 h-5" />}
         label="GitHub"
-        url={socialContacts.githubUrl}
+        url={`https://${socialContacts.githubUrl}`}
         iconColor="text-foreground"
       />
       <LinkRow
         icon={<Globe className="w-5 h-5" />}
         label="Portfolio"
-        url={socialContacts.portfolioUrl}
+        url={`https://${socialContacts.portfolioUrl}`}
       />
     </div>
   );

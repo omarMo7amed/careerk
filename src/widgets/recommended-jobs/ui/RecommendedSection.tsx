@@ -6,16 +6,15 @@ import { List } from "@/widgets/list";
 import { LocalFilterBar } from "./LocalFilterBar";
 import { matchesTab } from "../lib/matchesTab";
 import { buildTabs } from "../lib/buildTabs";
-// import { useAuth } from "@/features/auth";
 export function RecommendedSection() {
-  // const { token } = useAuth();
   const { jobs, isLoading, error } = useMatchedJobsQuery({
     page: 1,
     limit: 12,
     enabled: true,
-    // token: token || "", // we will handle auth later
   });
   const [activeTab, setActiveTab] = useState("all");
+
+  console.log("Recommended jobs:", jobs);
 
   const tabs = useMemo(() => buildTabs(jobs ?? []), [jobs]);
 

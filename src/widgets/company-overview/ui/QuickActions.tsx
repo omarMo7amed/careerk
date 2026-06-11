@@ -7,25 +7,25 @@ const actions = [
   {
     label: "Post New Job",
     description: "Create and publish a new job listing",
-    href: "./",
+    href: "/dashboard/company/job-listings/post-new-job",
     icon: Plus,
   },
   {
     label: "Manage Jobs",
     description: "Edit, update, or manage posted jobs",
-    href: "./",
+    href: "/dashboard/company/job-listings",
     icon: Briefcase,
   },
   {
     label: "Search Candidates",
     description: "Find qualified candidates for roles",
-    href: "./",
+    href: "/dashboard/company/candidates",
     icon: Search,
   },
   {
     label: "Edit Company Profile",
     description: "Update company information and details",
-    href: "./",
+    href: "/dashboard/company/profile",
     icon: Pencil,
   },
 ];

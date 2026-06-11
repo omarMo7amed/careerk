@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { JobApplication } from "@/entities/company-applications";
 import { CandidateHeader } from "@/entities/job-seeker";
 import Skills from "@/entities/job-seeker/components/Skills";
+import { useState } from "react";
 import { ApplicationActions } from "./ApplicationActions";
 import { ApplicationMeta } from "./ApplicationMeta";
 import { ApplicationStatusDropdown } from "./ApplicationStatusDropdown";
+import { useJobApplication } from "../hook/useJobApplication";
 
 export type ApplicationStatus =
   | "PENDING"
@@ -18,23 +18,26 @@ export type ApplicationStatus =
   | "WITHDRAWN";
 
 interface ApplicationCardProps {
-  application: JobApplication;
+  id: string;
   initialStatus?: ApplicationStatus;
   includeSkills?: boolean;
   onStatusChange?: (status: ApplicationStatus) => void;
 }
 
 export function ApplicationCard({
-  application,
+  id,
   initialStatus = "PENDING",
   includeSkills = true,
   onStatusChange,
 }: ApplicationCardProps) {
   const [status, setStatus] = useState<ApplicationStatus>(initialStatus);
+  const { data: application, isLoading, error } = useJobApplication(id);
+
+  if (!application) return null;
 
   const {
     jobSeeker: {
-      id,
+      id: candidateID,
       firstName,
       lastName,
       profileImageUrl,
@@ -65,12 +68,12 @@ export function ApplicationCard({
     <div className="bg-bg-surface rounded-lg border border-border shadow-sm p-3 flex flex-col gap-4">
       <div className="min-w-0 flex-1">
         <CandidateHeader
-          id={id}
+          id={candidateID}
           firstName={firstName}
           lastName={lastName}
           title={title}
           profileImageUrl={profileImageUrl}
-          availabilityStatus={availabilityStatus ?? "Not Available"}
+          availabilityStatus={availabilityStatus ?? "OPEN_TO_WORK"}
           rank={cvMatchPercentage ?? cvScore ?? 0}
         />
       </div>

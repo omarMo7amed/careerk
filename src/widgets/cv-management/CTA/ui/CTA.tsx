@@ -4,11 +4,7 @@ import { useState } from "react";
 import { Modal, Button } from "@/shared";
 import { Lock, ShieldCheck, RotateCcw } from "lucide-react";
 import toast from "react-hot-toast";
-import {
-  deleteCVParse,
-  useConfirmCVParse,
-  useRestoreCVParse,
-} from "@/entities/cv";
+import { useConfirmCVParse, useRestoreCVParse } from "@/entities/cv";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -25,6 +21,8 @@ export function CTA({
   const { confirmCVParse, isLoading, error } = useConfirmCVParse();
   const { restoreCVParse, isLoading: isRestoreLoading } = useRestoreCVParse();
 
+  console.log("error", error);
+
   const handleConfirmClick = () => {
     setIsModalOpen(true);
   };
@@ -37,6 +35,8 @@ export function CTA({
       const errorMessage =
         error instanceof Error ? error.message : "Failed to confirm CV";
       toast.error(errorMessage);
+    } finally {
+      setIsModalOpen(false);
     }
   };
 
@@ -51,6 +51,8 @@ export function CTA({
           ? error.message
           : "Failed to restore previous profile";
       toast.error(errorMessage);
+    } finally {
+      setIsModalOpen(false);
     }
   };
 
@@ -131,7 +133,7 @@ export function CTA({
       </Modal>
 
       {/* State 1: Not confirmed (only cv-info or no data) */}
-      {!(isConfirmed && isUpdatePending) && isFirstUpload ? (
+      {isFirstUpload ? (
         <div className="rounded-2xl border border-border bg-bg-surface p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
             <p className="font-semibold text-foreground">Ready to confirm?</p>

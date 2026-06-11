@@ -7,6 +7,7 @@ import { JobPostFormData, jobPostSchema } from "../lib/jobPostSchema";
 import { CompanyJob, useCreateCompanyJob } from "@/entities/company-job";
 import { FormFields } from "./FormFields";
 import { SkillsInput } from "./SkillsInput";
+import { useRouter } from "next/navigation";
 
 type JobPostFormProps = {
   initialData?: CompanyJob;
@@ -21,10 +22,10 @@ export function JobPostForm({
   onCancel,
   onSuccess,
 }: JobPostFormProps) {
-  const token = "123";
   const isEditMode = !!initialData;
   const { mutateAsync: createJob, isPending: isCreating } =
     useCreateCompanyJob();
+  const router = useRouter();
 
   const {
     register,
@@ -45,8 +46,8 @@ export function JobPostForm({
           workPreference: initialData.workPreference,
           experienceLevel: initialData.experienceLevel,
           status: initialData.status,
-          salaryMin: initialData.salaryMin?.toString() ?? "",
-          salaryMax: initialData.salaryMax?.toString() ?? "",
+          salaryMin: initialData.salaryMin ?? undefined,
+          salaryMax: initialData.salaryMax ?? undefined,
           location: initialData.location ?? "",
           deadline: initialData.deadline ?? "",
           skillNames:
@@ -68,15 +69,14 @@ export function JobPostForm({
   async function onSubmit(data: JobPostFormData) {
     if (onSubmitProp) {
       onSubmitProp(data);
-      console.log("Job edit:", data);
       return;
     }
-
-    await createJob({ payload: data, token });
-    console.log("Job posted:", data);
-
+    await createJob({ payload: data });
     reset();
     onSuccess?.();
+    setTimeout(() => {
+      router.push("/dashboard/company/job-listings");
+    }, 1000);
   }
 
   return (

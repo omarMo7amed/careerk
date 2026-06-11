@@ -20,24 +20,27 @@ export default async function getMatchedJobs(options: GetJobsOptions = {}) {
     for (const level of options.experienceLevel) {
       params.append("experienceLevel", level);
     }
+    params.append("type", "direct");
   }
 
   if (options.workPreference?.length) {
     for (const preference of options.workPreference) {
       params.append("workPreference", preference);
     }
+    params.append("type", "direct");
   }
 
-  if (options.jobSource?.length) {
-    for (const source of options.jobSource) {
-      params.append("jobSource", source);
+  if (options.source?.length) {
+    for (const source of options.source) {
+      params.append("source", source);
     }
   }
 
   const urlParams = params.toString() ? `?${params.toString()}` : "";
   const endpoint = `/job-seekers/me/matches${urlParams}`;
+  console.log("Fetching matched jobs with options:", endpoint);
   const res = await authInterceptor(endpoint, {
-    signal: options.signal,
+    // signal: options.signal,
     cache: "no-store",
   });
 
@@ -46,5 +49,9 @@ export default async function getMatchedJobs(options: GetJobsOptions = {}) {
     throw new Error(`Failed to fetch matched jobs (${res.status}) ${body}`);
   }
 
-  return (await res.json()) as JobsResponse;
+  const data = await res.json();
+
+  // console.log("Raw matched jobs response:", data);
+
+  return data as JobsResponse;
 }

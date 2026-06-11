@@ -1,13 +1,28 @@
 "use client";
-import { CompanyJob } from "@/entities/company-job";
-import { BackButton } from "@/shared";
+import { useGetDirectJobByID } from "@/entities/company-job/hook/useGetDirectJobByID";
+import { ApplyNow, useApplyNow } from "@/features/apply-now";
+import { NotFound } from "@/features/search";
+import { BackButton, Loader } from "@/shared";
 import {
   DirectJobContentCard,
   JobSidebar,
   JobStatistics,
 } from "@/widgets/direct-job-content";
 
-export function DirectJobLayout({ job }: { job: CompanyJob }) {
+export function DirectJobLayout({ jobId }: { jobId: string }) {
+  const { job, isLoading } = useGetDirectJobByID(jobId);
+  const { applyNow, isPending, isSuccess } = useApplyNow();
+
+  if (isLoading) return <Loader />;
+
+  if (!job)
+    return (
+      <>
+        <BackButton />
+        <NotFound message="Job not found" />
+      </>
+    );
+
   return (
     <div>
       <div className="mb-8 ">
@@ -18,11 +33,21 @@ export function DirectJobLayout({ job }: { job: CompanyJob }) {
         <div className="space-y-6">
           <JobSidebar
             deadline={job.deadline}
-            apply={() => {
-              console.log("kk");
-            }}
+            Apply={() => (
+              <ApplyNow
+                onClick={() => {
+                  console.log("Applying for job:", job.id);
+                  applyNow(job.id);
+                }}
+                isLoading={isPending}
+                isSuccess={isSuccess}
+              />
+            )}
           />
-          <JobStatistics status={job.status} />
+          <JobStatistics
+            applicationsCount={job?.applicants}
+            status={job?.status}
+          />
         </div>
       </div>
     </div>

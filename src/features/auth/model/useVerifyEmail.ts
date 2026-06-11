@@ -27,7 +27,13 @@ export function useVerifyEmail() {
     onSuccess: (res) => {
       toast.success(res.message + " You will be redirected to your dashboard");
 
-      setAuth(res.data.accessToken, res.data.role);
+      // Prefer the role the user came here with (query param). Some backend
+      // responses may include a role that doesn't match the requested role
+      // which causes AuthGuard to immediately redirect to the other dashboard.
+      // Use the URL role to avoid that reflection.
+      const normalizedRole = isJobSeeker ? "jobseeker" : "company";
+
+      setAuth(res.data.accessToken, normalizedRole);
 
       const dashboardUrl = isJobSeeker
         ? "/dashboard/jobseeker/overview"

@@ -1,14 +1,13 @@
-export async function requestImprovement(token: string) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/job-seekers/me/skill-analysis`,
-    {
-      method: "POST",
-      headers: {
-        // Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    },
-  );
-  if (!res.ok) throw new Error("Failed to request improvement");
+import { authInterceptor, handleApiError } from "@/shared";
+
+export async function requestImprovement() {
+  const res = await authInterceptor(`/job-seekers/me/skill-analysis`, {
+    method: "POST",
+  });
+
+  if (!res.ok) {
+    return handleApiError(res, "Failed to request improvement");
+  }
+
   return await res.json();
 }

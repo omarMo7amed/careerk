@@ -62,6 +62,8 @@ export function CandidateList() {
     router.push(`/candidates?${params.toString()}`);
   };
 
+  console.log("candidates", candidates);
+
   return (
     <div className="max-w-screen-2xl mx-auto flex flex-col sm:flex-row gap-4 ">
       <div className="sm:w-1/3 lg:w-1/4 pt-4">
@@ -134,17 +136,18 @@ export function CandidateList() {
           ) : (
             <>
               <List
-                items={candidates as JobSeeker[]}
+                items={candidates || ([] as JobSeeker[])}
                 renderItem={(candidate) => (
                   <CandidateCard
-                    candidate={candidate}
-                    key={candidate.profile.jobSeekerId}
+                    candidate={candidate as JobSeeker}
+                    key={candidate.profile.jobSeekerId as string}
                   />
                 )}
                 columnsInLarge={2}
                 columnsInMedium={1}
                 columnsInSmall={1}
               />
+
               {candidates?.length > 0 && (
                 <Pagination
                   page={page}

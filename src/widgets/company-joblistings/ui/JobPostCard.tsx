@@ -1,15 +1,20 @@
 "use client";
 import {
+  CompanyJob,
   jobTypeLabels,
   useDeleteCompanyJob,
-  useUpdateCompanyJob,
+  usePauseStatus,
+  usePublishJob,
   workPreferenceLabels,
 } from "@/entities/company-job";
-import { CompanyJob } from "@/entities/company-job";
 import { JobStatusLabels } from "@/entities/company-job/lib/labelMap";
-import { Badge, Button, ConfirmationModal } from "@/shared";
-import { capitalizeFirstLetter } from "@/shared";
-import { Card } from "@/shared";
+import {
+  Badge,
+  Button,
+  capitalizeFirstLetter,
+  Card,
+  ConfirmationModal,
+} from "@/shared";
 import { Pause, PlayIcon, Trash2, Users } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -21,27 +26,28 @@ type JobPostCardProps = {
 };
 
 export function JobPostCard({ job }: JobPostCardProps) {
-  const token = "123";
   const { mutateAsync: deleteJob, isPending: isDeleting } =
     useDeleteCompanyJob();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const { id, title, skills, location, workPreference, jobType, status } = job;
-  const { mutateAsync: updateJob } = useUpdateCompanyJob();
+  const { mutateAsync: publishJob } = usePublishJob();
+  const { mutateAsync: pauseJob } = usePauseStatus();
 
   async function handleToggleStatus() {
     const newStatus = status === "PUBLISHED" ? "PAUSED" : "PUBLISHED";
-    const dd = await updateJob({
-      jobId: job.id,
-      data: { status: newStatus },
-      token,
-    });
-    console.log("status update", dd);
+    if (newStatus === "PUBLISHED") {
+      await publishJob(id);
+    }
+
+    if (newStatus === "PAUSED") {
+      await pauseJob(id);
+    }
   }
 
   async function handleConfirmDelete() {
-    await deleteJob({ id, token });
+    await deleteJob({ id });
     setShowDeleteModal(false);
   }
 

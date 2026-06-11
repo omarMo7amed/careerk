@@ -24,8 +24,10 @@ export function useUpdateProfile({ hasCVInfo }: { hasCVInfo: boolean }) {
     },
     onSuccess: (data: any) => {
       if (!hasCVInfo || isProfilePage) {
+        //update job seeker data cache
         queryClient.setQueryData(jobSeekerKeys.me.all, (old: any) => {
           if (!old) return old;
+
           if (
             data.data.firstName ||
             data.data.lastName ||
@@ -33,6 +35,7 @@ export function useUpdateProfile({ hasCVInfo }: { hasCVInfo: boolean }) {
           ) {
             return { ...old, data: { ...(old.data || {}), ...data.data } };
           }
+
           return {
             ...old,
             data: {
@@ -41,6 +44,22 @@ export function useUpdateProfile({ hasCVInfo }: { hasCVInfo: boolean }) {
             },
           };
         });
+
+        //update overview data cache if exist
+        queryClient.setQueryData(
+          [...jobSeekerKeys.me.all, "overview"],
+          (old: any) => {
+            if (!old) return old;
+
+            if (
+              data.data.firstName ||
+              data.data.lastName ||
+              data.data.profileImageUrl
+            ) {
+              return { ...old, data: { ...(old.data || {}), ...data.data } };
+            }
+          },
+        );
       } else {
         queryClient.setQueryData(["cv-info"], (old: any) => {
           if (!old) return old;

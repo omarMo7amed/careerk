@@ -1,5 +1,6 @@
-"use client";
+// "use client";
 
+import type { QueryClient } from "@tanstack/react-query";
 import { create } from "zustand";
 
 type AuthRole = "jobseeker" | "company";
@@ -14,6 +15,8 @@ interface AuthState {
   isLoading: boolean;
   /** true once the initial refresh-token attempt has completed (success or failure) */
   isInitialized: boolean;
+  queryClient: QueryClient | null;
+  setQueryClient: (qc: QueryClient | null) => void;
 
   setAuth: (token: string, role: BackendRole) => void;
   clearAuth: () => void;
@@ -37,6 +40,9 @@ export const useAuthStore = create<AuthState>((set) => ({
   isAuthenticated: false,
   isLoading: true,
   isInitialized: false,
+  queryClient: null,
+
+  setQueryClient: (qc: QueryClient | null) => set({ queryClient: qc }),
 
   setAuth: (token, role) => {
     const normalizedRole = normalizeRole(role);
@@ -57,7 +63,17 @@ export const useAuthStore = create<AuthState>((set) => ({
     if (typeof window !== "undefined") {
       localStorage.removeItem(ROLE_STORAGE_KEY);
     }
-    set({ token: null, role: null, isAuthenticated: false, isLoading: false, isInitialized: true });
+    // Clear react-query cache if a QueryClient has been set
+    const qc = useAuthStore.getState().queryClient;
+    if (qc) qc.clear();
+
+    set({
+      token: null,
+      role: null,
+      isAuthenticated: false,
+      isLoading: false,
+      isInitialized: true,
+    });
   },
 
   setLoading: (isLoading) => set({ isLoading }),

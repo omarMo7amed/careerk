@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateEducation } from "../api/updateEducation";
 import { jobSeekerKeys, type JobSeeker } from "@/entities/job-seeker";
 import type { Education } from "../types/types";
-import { useCVInfo } from "@/entities/cv/model/useCv";
+import { useCVInfo } from "@/entities/cv";
 import { usePathname } from "next/navigation";
 
 type JobSeekerCache = {
@@ -20,12 +20,15 @@ export function useUpdateEducation() {
   const { mutate, mutateAsync, isPending, isError } = useMutation({
     mutationFn: ({ id, patch }: { id: string; patch: Partial<Education> }) => {
       if ((isCvPage && isUpdatePending) || isFirstUpload) {
-        return Promise.resolve({ id, ...patch } as Education);
+        return Promise.resolve({ data: { id, ...patch } } as {
+          data: Education;
+        });
       }
       // If no profile, don't call API, just return the patch
       return updateEducation(id, patch);
     },
-    onSuccess: (updated: Education) => {
+    onSuccess: (updated: { data: Education }) => {
+      console.log("Updated education:", updated);
       if (!((isCvPage && isUpdatePending) || isFirstUpload)) {
         // Update jobSeeker cache
         queryClient.setQueryData(
@@ -33,8 +36,8 @@ export function useUpdateEducation() {
           (old: JobSeekerCache | undefined) => {
             if (!old) return old;
             const educations = (old.data?.educations || []).map((education) =>
-              education.id === updated.id
-                ? { ...education, ...updated }
+              education.id === updated.data.id
+                ? { ...education, ...updated.data }
                 : education,
             );
             return { ...old, data: { ...(old.data || {}), educations } };
@@ -44,10 +47,10 @@ export function useUpdateEducation() {
         // Update cv-info cache
         queryClient.setQueryData(["cv-info"], (old: any | undefined) => {
           if (!old) return old;
-          const index = parseInt(updated.id!);
+          const index = parseInt(updated.data.id!);
           const educations = (old.data?.educations || []).map(
             (education: any, i: number) =>
-              i === index ? { ...education, ...updated } : education,
+              i === index ? { ...education, ...updated.data } : education,
           );
           return { ...old, data: { ...(old.data || {}), educations } };
         });

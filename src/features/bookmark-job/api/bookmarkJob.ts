@@ -1,4 +1,3 @@
-import type { Job } from "@/entities/job";
 import { authInterceptor } from "@/shared";
 
 interface BookmarkJobResponse {
@@ -14,14 +13,13 @@ interface BookmarkJobResponse {
   };
 }
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_BASE_API_URL || "http://localhost:3000/api/v1";
-
 export async function bookmarkJob(
   jobId: string,
+  jobSource: "DIRECT" | "SCRAPED",
 ): Promise<BookmarkJobResponse> {
-  const res = await authInterceptor(`/jobs/bookmarks/${jobId}`, {
+  const res = await authInterceptor(`/jobs/bookmark`, {
     method: "POST",
+    body: JSON.stringify({ jobId, jobSource }),
   });
 
   if (!res.ok) {

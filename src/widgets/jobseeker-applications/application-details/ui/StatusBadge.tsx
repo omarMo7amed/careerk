@@ -10,7 +10,7 @@ export function StatusBadge({ status }: StatusBadgeProps) {
   const StatusIcon = config.icon;
 
   return (
-    <div>
+    <div className="flex justify-between items-center flex-wrap">
       <p className="text-sm text-text-secondary mb-2">STATUS</p>
       <Badge
         size="sm"

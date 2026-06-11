@@ -18,6 +18,7 @@ export function SavedJobCard({ job }: SavedJobCardProps) {
     jobType,
     skills,
     salary,
+    type,
   } = job;
 
   return (
@@ -33,6 +34,7 @@ export function SavedJobCard({ job }: SavedJobCardProps) {
 
         <BookmarkButton
           jobId={id}
+          jobSource={type === "direct" ? "DIRECT" : "SCRAPED"}
           bookmarkId={bookmarkId}
           isBookmarked={isBookmarked}
         />

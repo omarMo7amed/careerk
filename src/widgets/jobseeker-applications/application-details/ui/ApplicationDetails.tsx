@@ -41,7 +41,7 @@ export function ApplicationDetails({
         <AppliedDate date={application.appliedAt} />
         <ApplicationCardInfo application={application} />
         <JobDescription description={application.directJob.description} />
-        <SkillsList skills={application.directJob.skills} />
+        <SkillsList skills={application.directJob?.skills || []} />
       </div>
 
       <DetailsActions

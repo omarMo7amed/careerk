@@ -1,6 +1,6 @@
 import { JobType } from "@/entities/company-job";
 import { AvailabilityStatus } from "../types/availabilityStatus";
-import { authInterceptor } from "@/shared";
+import { authInterceptor, handleApiError } from "@/shared";
 
 interface GetCandidatesOptions {
   signal?: AbortSignal;
@@ -43,6 +43,10 @@ export async function getCandidates(options?: GetCandidatesOptions) {
     signal: options?.signal,
     cache: "no-store",
   });
+
+  if (!res.ok) {
+    await handleApiError(res, "Failed to fetch candidates");
+  }
 
   return res.json();
 }

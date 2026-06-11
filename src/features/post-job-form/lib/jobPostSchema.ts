@@ -1,10 +1,14 @@
 import z from "zod";
 
 const salaryField = z
-  .string()
+  .union([
+    z.string().transform((val) => (val === "" ? undefined : Number(val))),
+    z.number(),
+  ])
   .optional()
   .refine(
-    (val) => !val || (!isNaN(Number(val)) && Number(val) >= 0),
+    (val) =>
+      val === undefined || (!isNaN(val as number) && (val as number) >= 0),
     "Must be a valid positive number",
   );
 
@@ -62,9 +66,9 @@ export const jobPostSchema = z
   })
   .refine(
     (data) => {
-      const min = data.salaryMin?.trim();
-      const max = data.salaryMax?.trim();
-      if (min && max) return Number(min) <= Number(max);
+      const min = data.salaryMin;
+      const max = data.salaryMax;
+      if (min && max) return min <= max;
       return true;
     },
     { message: "Minimum salary cannot exceed maximum", path: ["salaryMax"] },

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function CompanyOverviewPage() {
   return (
-    <div>
+    <div className="py-8">
       <CompanyOverview />
     </div>
   );

@@ -4,9 +4,7 @@ import { authInterceptor } from "@/shared";
 export async function getCandidateById(
   jobSeekerId: string,
 ): Promise<JobSeeker> {
-  const res = await authInterceptor(
-    `/job-seekers/${jobSeekerId}`,
-  );
+  const res = await authInterceptor(`/job-seekers/${jobSeekerId}`, {});
 
   if (!res.ok) {
     if (res.status === 404) {
