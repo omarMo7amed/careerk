@@ -3,12 +3,9 @@ import { GetCompanyJobsResponse } from "@/entities/company-job";
 import { authInterceptor } from "@/shared";
 
 export async function getCompanyJobs(): Promise<CompanyJob[]> {
-  const res = await authInterceptor(
-    `/companies/me/jobs`,
-    {
-      method: "GET"
-    },
-  );
+  const res = await authInterceptor(`/companies/me/jobs`, {
+    method: "GET",
+  });
 
   const json: GetCompanyJobsResponse = await res.json();
 

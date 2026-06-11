@@ -7,7 +7,7 @@ import {
   useDeleteCompanyJob,
   useUpdateCompanyJob,
 } from "@/entities/company-job";
-import { Card, ConfirmationModal } from "@/shared";
+import { Card, ConfirmationModal, Loader } from "@/shared";
 import { useState } from "react";
 import { JobSidebar } from "../../direct-job-content/ui/JobSidebar";
 
@@ -20,9 +20,13 @@ import {
 } from "@/widgets/direct-job-content";
 import { RecommendedCandidates } from "./RecommendedCandidates";
 import { useRouter } from "next/navigation";
+import { NotFound } from "@/features/search";
 
 export function ViewJobPostLayout({ jobId }: { jobId: string }) {
-  const { data: jobPost, isLoading } = useCompanyJob(jobId);
+  const router = useRouter();
+
+  const { data: jobPost, isLoading, error, isError } = useCompanyJob(jobId);
+
   const { mutateAsync: deleteJob, isPending: isDeleting } =
     useDeleteCompanyJob();
   const { mutateAsync: updateJob } = useUpdateCompanyJob();
@@ -30,10 +34,34 @@ export function ViewJobPostLayout({ jobId }: { jobId: string }) {
   const [isEditingJob, setIsEditingJob] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const router = useRouter();
+  if (isLoading) {
+    return (
+      <div className="flex min-h-[80vh] items-center justify-center">
+        <Loader />
+      </div>
+    );
+  }
 
-  if (isLoading) return <p>Loading...</p>;
-  if (!jobPost) return null;
+  if (!jobPost) {
+    return (
+      <div className="flex min-h-[80vh] items-center justify-center">
+        <NotFound message="No job post found yet." />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex min-h-[80vh] items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-semibold">Something went wrong</h2>
+          <p className="text-text-secondary mt-2">
+            {error instanceof Error ? error.message : "Failed to load data"}
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   const job = jobPost;
   const { title, deadline, status, applicants } = job;

@@ -22,7 +22,6 @@ import { useState } from "react";
 type JobPostCardProps = {
   job: CompanyJob;
 
-  // onDelete?: (id: string) => void;
 };
 
 export function JobPostCard({ job }: JobPostCardProps) {

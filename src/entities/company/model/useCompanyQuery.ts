@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getCompanyProfile } from "../api/getCompanyProfile";
 import { CompanyProfileResponse } from "../types/CompanyProfile";
 
@@ -8,6 +8,7 @@ export function useCompanyProfileQuery() {
   const { isPending, data, error } = useQuery<CompanyProfileResponse, Error>({
     queryKey: ["companyProfile"],
     queryFn: getCompanyProfile,
+    placeholderData: keepPreviousData,
   });
 
   return {

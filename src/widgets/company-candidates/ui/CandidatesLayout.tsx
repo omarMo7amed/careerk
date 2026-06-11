@@ -142,7 +142,7 @@ export function CandidatesLayout() {
       </div>
 
       {error && (
-        <p className="m-auto text-sm text-error">
+        <p className=" text-sm text-error">
           Failed to load candidates. please try again later.
         </p>
       )}
