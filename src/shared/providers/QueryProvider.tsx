@@ -29,7 +29,7 @@ export function QueryProvider({ children }: { children: ReactNode }) {
     <QueryClientProvider client={queryClient}>
       {/* Sync QueryClient to auth store so we can clear cache on logout */}
       <SyncQueryClient queryClient={queryClient} />
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       <AuthBootstrap />
       {children}
     </QueryClientProvider>

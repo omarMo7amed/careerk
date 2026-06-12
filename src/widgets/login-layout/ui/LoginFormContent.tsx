@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Input } from "@/shared";
+import { Button, Input, useAuthStore } from "@/shared";
 import { useState } from "react";
 import { LoginState } from "../types/loginFormTypes";
 import Link from "next/link";
@@ -46,8 +46,9 @@ export function LoginFormContent({ role }: { role: string }) {
 
       toast.success("Login successful");
 
+      const storeRole = useAuthStore.getState().role;
       const dashboardUrl =
-        role === "jobseeker"
+        storeRole === "jobseeker"
           ? "/dashboard/jobseeker/overview"
           : "/dashboard/company/overview";
 
@@ -55,7 +56,7 @@ export function LoginFormContent({ role }: { role: string }) {
         router.push(dashboardUrl);
       }, 1000);
     } catch (err) {
-      toast.error(error?.message || "Login failed. Please try again.");
+      toast.error(err instanceof Error ? err.message : "Login failed. Please try again.");
     }
   }
 
