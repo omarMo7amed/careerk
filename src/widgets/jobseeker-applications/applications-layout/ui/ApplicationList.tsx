@@ -60,25 +60,36 @@ export function ApplicationsList({ onViewDetails }: ApplicationsListProps) {
           Filters
         </Button>
       </div>
-      {isLoading ? <Loader /> : error ? <Error /> : null}
-      {applications.length == 0 && (
+      {isLoading ? (
+        <Loader />
+      ) : error ? (
+        <Error
+          message={
+            error instanceof Error
+              ? error.message
+              : "Failed to load applications"
+          }
+        />
+      ) : applications.length === 0 ? (
         <Empty
           message="No applications yet"
           linkText="Browse Jobs"
           linkHref="/dashboard/jobseeker/find-jobs"
         />
-      )}
-      <List
-        items={applications}
-        renderItem={(application: ApplicationListItem) => (
-          <ApplicationCard
-            key={application.id}
-            application={application}
-            onViewDetails={() => onViewDetails(application.id)}
-          />
-        )}
-        columnsInLarge={2}
-      />{" "}
+      ) : (
+        <List
+          items={applications}
+          renderItem={(application: ApplicationListItem) => (
+            <ApplicationCard
+              key={application.id}
+              application={application}
+              onViewDetails={() => onViewDetails(application.id)}
+              matchScore={application.matchScore}
+            />
+          )}
+          columnsInLarge={2}
+        />
+      )}{" "}
       <AnimatedSidebar
         title="Filter"
         isOpen={filterOpen}

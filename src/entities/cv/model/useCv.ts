@@ -6,6 +6,7 @@ import { jobSeekerKeys, useMyProfileQuery } from "@/entities/job-seeker";
 import { confirmCVParse } from "../api/confirmCVParse";
 import { deleteCVParse } from "../api/deleteCVParse";
 import { CVConfirmPayload } from "../types/cvParseResponse";
+import { jobseekerNavItems } from "@/shared";
 
 export function useCV() {
   const queryClient = useQueryClient();
@@ -188,6 +189,21 @@ export function useConfirmCVParse() {
           },
         };
       });
+      queryClient.setQueryData(
+        [...jobSeekerKeys.me.all, "overview"],
+        (old: any) => {
+          if (!old) return old;
+
+          return {
+            ...old,
+            data: {
+              ...old.data,
+              firstName: payload?.data?.firstName,
+              lastName: payload?.data?.lastName,
+            },
+          };
+        },
+      );
     },
   });
 

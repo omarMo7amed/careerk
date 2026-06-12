@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import type { RoleSlug, LevelSlug } from "@/entities/interview";
-import type { RecommendedProject } from "@/entities/github-project";
+import type { GitHubIssue, RecommendedProject } from "@/entities/github-project";
 import { searchRepos } from "../api/searchRepos";
 import { getRepoIssues } from "../api/getRepoIssues";
 import { ROLE_QUERIES, LEVEL_LABELS } from "../lib/projectMapping";
@@ -19,7 +19,12 @@ async function fetchRecommendedProjects(
     repos.map(async (repo) => {
       const owner = repo.owner.login;
       const name = repo.full_name.split("/")[1];
-      const issues = await getRepoIssues(owner, name, labels);
+      let issues: GitHubIssue[] = [];
+      try {
+        issues = await getRepoIssues(owner, name, labels);
+      } catch {
+        // issue fetch failed silently — show repo without issue
+      }
       const reasons: string[] = [`Repository for ${role.replace("_", " ").toLowerCase()} roles`];
 
       if (level === "JUNIOR") {

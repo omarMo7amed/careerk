@@ -15,17 +15,17 @@ export function useAddSkills() {
   const pathname = usePathname();
   const isCvPage = pathname.includes("/dashboard/jobseeker/cv-management");
 
-  const { isUpdatePending } = useCVInfo();
+  const { isUpdatePending, isFirstUpload } = useCVInfo();
   const queryClient = useQueryClient();
   const { mutate, isPending, isError } = useMutation({
     mutationFn: async (skills: string[]) => {
-      if (isCvPage && isUpdatePending) {
+      if ((isCvPage && isUpdatePending) || isFirstUpload) {
         return Promise.resolve({ data: skills });
       }
       return addSkill(skills);
     },
     onSuccess: (data: AddSkillResponse) => {
-      if (!(isCvPage && isUpdatePending)) {
+      if (!((isCvPage && isUpdatePending) || isFirstUpload)) {
         // Update jobSeeker cache
         queryClient.setQueryData(
           jobSeekerKeys.me.all,
@@ -48,7 +48,7 @@ export function useAddSkills() {
 
           const skills = data.data.map((name) => ({
             name,
-            verified: true,
+            verified: false,
           }));
 
           const previousSkills = old.data?.skills || [];

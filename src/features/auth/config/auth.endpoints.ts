@@ -14,5 +14,4 @@ export const AUTH_ENDPOINTS = {
   LOGOUT: "/api/v1/auth/logout",
   FORGOT_PASSWORD: "/auth/forgot-password",
   RESET_PASSWORD: "/auth/reset-password",
-  CHANGE_PASSWORD: "/auth/change-password",
 } as const;

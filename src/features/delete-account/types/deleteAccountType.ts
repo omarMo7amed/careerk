@@ -1,5 +1,5 @@
-export interface DeleteAccountSuccessResponse {
-  success: true;
+export interface DeleteAccountResponse {
+  success: boolean;
   data: {
     id: string;
   };
@@ -10,18 +10,3 @@ export interface DeleteAccountSuccessResponse {
     method: string;
   };
 }
-
-export interface DeleteAccountErrorResponse {
-  success: false;
-  error: {
-    message: string;
-    statusCode: number;
-    timestamp: string;
-    path: string;
-    method: string;
-  };
-}
-
-export type DeleteAccountResponse =
-  | DeleteAccountSuccessResponse
-  | DeleteAccountErrorResponse;

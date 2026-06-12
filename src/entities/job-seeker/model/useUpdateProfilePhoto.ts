@@ -19,6 +19,7 @@ export function useUpdateProfilePhoto({ token }: { token: string }) {
   } = useMutation({
     mutationFn: (file: File) => uploadProfilePhoto(token, file),
     onSuccess: (data) => {
+      console.log("Profile photo updated successfully:", data);
       queryClient.setQueryData(
         jobSeekerKeys.me.all,
         (old: { data: JobSeeker }) => {
@@ -27,7 +28,7 @@ export function useUpdateProfilePhoto({ token }: { token: string }) {
             ...old,
             data: {
               ...old.data,
-              ...data.data,
+              profileImageUrl: data.fileUrl,
             },
           };
         },

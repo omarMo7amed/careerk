@@ -33,7 +33,7 @@ export function SettingsSection({ role }: SettingsSectionProps) {
       {/* Content */}
       <div className="mt-8">
         {activeTab === "notifications" && <NotificationsTab role={role} />}
-        {activeTab === "danger-zone" && <DangerZoneTab />}
+        {activeTab === "danger-zone" && <DangerZoneTab role={role} />}
         {activeTab === "security" && <SecurityTab />}
       </div>
     </div>

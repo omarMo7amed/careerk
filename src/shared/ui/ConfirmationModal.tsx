@@ -8,6 +8,7 @@ interface ConfirmationModalProps {
   message: string;
   confirmText?: string;
   cancelText?: string;
+  isProcessing?: boolean;
 }
 
 export function ConfirmationModal({
@@ -18,6 +19,7 @@ export function ConfirmationModal({
   message,
   confirmText = "Confirm",
   cancelText = "Cancel",
+  isProcessing = false,
 }: ConfirmationModalProps) {
   if (!isOpen) return null;
 
@@ -28,11 +30,11 @@ export function ConfirmationModal({
         <h2 className="text-xl font-semibold mb-2">{title}</h2>
         <p className="text-text-secondary mb-6">{message}</p>
         <div className="flex gap-3 justify-end">
-          <Button variant="ghost" onClick={onClose}>
+          <Button variant="ghost" onClick={onClose} disabled={isProcessing}>
             {cancelText}
           </Button>
-          <Button variant="primary" onClick={onConfirm}>
-            {confirmText}
+          <Button variant="primary" onClick={onConfirm} disabled={isProcessing}>
+            {isProcessing ? "Processing..." : confirmText}
           </Button>
         </div>
       </div>

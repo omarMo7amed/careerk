@@ -39,6 +39,7 @@ export function WithdrawButton({ applicationId }: WithdrawButtonProps) {
         message="Are you sure you want to withdraw this application? This action cannot be undone."
         confirmText="Withdraw"
         cancelText="Cancel"
+        isProcessing={isPending}
       />
     </>
   );

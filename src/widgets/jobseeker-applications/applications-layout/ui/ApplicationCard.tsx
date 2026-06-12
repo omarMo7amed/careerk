@@ -9,13 +9,13 @@ import { ApplicationCardInfo } from "./ApplicationCardInfo";
 interface ApplicationCardProps {
   application: ApplicationListItem;
   onViewDetails: () => void;
-  matchScore?: string;
+  matchScore?: number;
 }
 
 export function ApplicationCard({
   application,
   onViewDetails,
-  matchScore = "85%",
+  matchScore,
 }: ApplicationCardProps) {
   const config = statusConfig[application.status];
 
@@ -26,7 +26,9 @@ export function ApplicationCard({
       <ApplicationCardHeader application={application} config={config} />
       <ApplicationCardInfo application={application} />
 
-      <MatchScore matchScore={parseInt(matchScore)} />
+      <MatchScore
+        matchScore={matchScore ? Math.round(matchScore) : undefined}
+      />
 
       <div className="flex items-center justify-between gap-4">
         <Button

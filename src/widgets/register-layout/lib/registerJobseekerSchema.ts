@@ -8,7 +8,7 @@ export const registerJobSeekerSchema = z.object({
   password: z
     .string()
     .min(1, "Password is required")
-    .min(8, { message: "Password must be at least 8 characters" })
+    .min(6, { message: "Password must be at least 6 characters" })
     .trim(),
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),

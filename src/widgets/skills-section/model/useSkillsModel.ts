@@ -10,11 +10,8 @@ import { useCVInfo } from "@/entities/cv";
 export function useSkillsModel({ isOwner }: { isOwner: boolean }) {
   const { hasProfile, isUpdatePending } = useCVInfo();
   const { skills: fetchedSkills = [] } = useSkills();
-  const { addSkills, isPending } = useAddSkills({
-    hasProfile,
-    token: "",
-  });
-  const { deleteSkill } = useDeleteSkill({ hasProfile, token: "" });
+  const { addSkills, isPending } = useAddSkills();
+  const { deleteSkill } = useDeleteSkill();
   const [state, dispatch] = useReducer(skillsReducer, INITIAL_SKILLS_STATE);
 
   const skills =

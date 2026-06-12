@@ -32,7 +32,7 @@ export function EditableRow({
       </td>
       <td className="px-4 py-2">
         {confirmed ? (
-          value ? (
+          value || value === 0 ? (
             isLink ? (
               <Link
                 href={`https://${value}`}

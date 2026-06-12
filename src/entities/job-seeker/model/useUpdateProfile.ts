@@ -12,10 +12,8 @@ export function useUpdateProfile({ hasCVInfo }: { hasCVInfo: boolean }) {
   const { mutate, isPending, isError } = useMutation({
     mutationFn: (payload: any) => {
       if (
-        !hasCVInfo ||
-        payload.profileImageUrl ||
-        payload.firstName ||
-        payload.lastName ||
+        !hasCVInfo &&
+        (payload.profileImageUrl || payload.firstName || payload.lastName) &&
         isProfilePage
       ) {
         return updateProfile(payload);
@@ -23,54 +21,55 @@ export function useUpdateProfile({ hasCVInfo }: { hasCVInfo: boolean }) {
       return Promise.resolve({ data: payload });
     },
     onSuccess: (data: any) => {
+      const payload = data?.data;
+      if (!payload) return;
+
       if (!hasCVInfo || isProfilePage) {
-        //update job seeker data cache
         queryClient.setQueryData(jobSeekerKeys.me.all, (old: any) => {
           if (!old) return old;
 
           if (
-            data.data.firstName ||
-            data.data.lastName ||
-            data.data.profileImageUrl
+            payload.firstName ||
+            payload.lastName ||
+            payload.profileImageUrl
           ) {
-            return { ...old, data: { ...(old.data || {}), ...data.data } };
+            return { ...old, data: { ...(old.data || {}), ...payload } };
           }
 
           return {
             ...old,
             data: {
               ...old.data,
-              profile: { ...old.data.profile, ...data.data },
+              profile: { ...old.data.profile, ...payload },
             },
           };
         });
 
-        //update overview data cache if exist
         queryClient.setQueryData(
           [...jobSeekerKeys.me.all, "overview"],
           (old: any) => {
             if (!old) return old;
-
             if (
-              data.data.firstName ||
-              data.data.lastName ||
-              data.data.profileImageUrl
+              payload.firstName ||
+              payload.lastName ||
+              payload.profileImageUrl
             ) {
-              return { ...old, data: { ...(old.data || {}), ...data.data } };
+              return { ...old, data: { ...(old.data || {}), ...payload } };
             }
+            return old;
           },
         );
       } else {
         queryClient.setQueryData(["cv-info"], (old: any) => {
           if (!old) return old;
-          if (data.data.firstName || data.data.lastName) {
-            return { ...old, data: { ...(old.data || {}), ...data.data } };
+          if (payload.firstName || payload.lastName) {
+            return { ...old, data: { ...(old.data || {}), ...payload } };
           }
           return {
             ...old,
             data: {
               ...old.data,
-              profile: { ...old.data.profile, ...data.data },
+              profile: { ...old.data.profile, ...payload },
             },
           };
         });

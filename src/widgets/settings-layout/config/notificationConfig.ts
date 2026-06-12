@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { Mail, Briefcase, Calendar, FileText, Users } from "lucide-react";
+import { Briefcase, FileText, Users, Bell } from "lucide-react";
 
 export interface NotificationConfig {
   id: string;
@@ -7,6 +7,7 @@ export interface NotificationConfig {
   description: string;
   icon?: LucideIcon;
   defaultEnabled: boolean;
+  preferenceKey: string;
 }
 
 // ✅ Job Seeker notifications
@@ -17,6 +18,7 @@ export const jobSeekerNotifications: NotificationConfig[] = [
     description: "Get notified when new jobs match your profile",
     icon: Briefcase,
     defaultEnabled: true,
+    preferenceKey: "jobMatchNotificationsEnabled",
   },
   {
     id: "application-status",
@@ -24,37 +26,43 @@ export const jobSeekerNotifications: NotificationConfig[] = [
     description: "Receive updates on your job applications",
     icon: FileText,
     defaultEnabled: true,
-  },
-  {
-    id: "interview-scheduled",
-    label: "Interview Reminders",
-    description: "Get reminded about upcoming interviews",
-    icon: Calendar,
-    defaultEnabled: true,
+    preferenceKey: "applicationStatusNotificationsEnabled",
   },
 ];
 
+// ✅ Company notifications (mock data — no external API)
 export const companyNotifications: NotificationConfig[] = [
   {
-    id: "new-application",
-    label: "Email on New Application",
-    description: "Receive notifications when candidates apply to your jobs",
-    icon: Mail,
-    defaultEnabled: true,
-  },
-  {
-    id: "candidate-match",
-    label: "Email on Candidate Match",
-    description: "Get notified when high-matching candidates are found",
+    id: "new-applications",
+    label: "New Applications",
+    description: "Get notified when someone applies to your job listing",
     icon: Users,
     defaultEnabled: true,
+    preferenceKey: "newApplicationsNotificationsEnabled",
   },
   {
-    id: "job-expiring",
-    label: "Email on Job Expiring",
-    description: "Reminder when your job postings are about to expire",
+    id: "candidate-matches",
+    label: "Candidate Matches",
+    description: "Receive alerts when candidates match your job requirements",
     icon: Briefcase,
     defaultEnabled: true,
+    preferenceKey: "candidateMatchNotificationsEnabled",
+  },
+  {
+    id: "application-updates",
+    label: "Application Updates",
+    description: "Get notified when an application status changes",
+    icon: FileText,
+    defaultEnabled: false,
+    preferenceKey: "applicationUpdateNotificationsEnabled",
+  },
+  {
+    id: "general-updates",
+    label: "General Announcements",
+    description: "Receive platform updates and announcements",
+    icon: Bell,
+    defaultEnabled: true,
+    preferenceKey: "generalAnnouncementsEnabled",
   },
 ];
 

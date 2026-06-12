@@ -1,4 +1,3 @@
-import { updateProfile } from "./updateProfile";
 import { authInterceptor } from "@/shared";
 
 export async function uploadProfilePhoto(token: string, file: File) {
@@ -39,10 +38,8 @@ export async function uploadProfilePhoto(token: string, file: File) {
   );
 
   if (!confirmRes.ok) throw new Error("Failed to confirm image upload");
-  const { fileUrl } = await confirmRes.json();
+  const data2 = await confirmRes.json();
+  const { fileUrl } = data2.data;
 
-  // Step 4: Update profile with new image URL
-  const updateRes = await updateProfile({ profileImageUrl: fileUrl });
-
-  return updateRes;
+  return { fileUrl };
 }

@@ -25,7 +25,7 @@ export async function uploadCVToServer(file: File) {
     body: file,
   });
 
-  if (!uploadRes.ok) throw new Error("Failed to upload image to storage");
+  if (!uploadRes.ok) throw new Error("Failed to upload CV to storage");
 
   // Step 3: Confirm upload and get file URL
   const confirmRes = await authInterceptor("/cv/confirm", {
@@ -33,7 +33,7 @@ export async function uploadCVToServer(file: File) {
     body: JSON.stringify({ key, fileName: file.name, mimeType: file.type }),
   });
 
-  if (!confirmRes.ok) throw new Error("Failed to confirm image upload");
+  if (!confirmRes.ok) throw new Error("Failed to confirm CV upload");
 
   return await confirmRes.json();
 }

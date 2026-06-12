@@ -13,7 +13,7 @@ export async function confirmCVParse(payload: CVConfirmPayload) {
   });
 
   if (!res.ok) {
-    return handleApiError(res, "Failed to confirm CV parse");
+    return await handleApiError(res, "Failed to confirm CV parse");
   }
 
   return res.json();

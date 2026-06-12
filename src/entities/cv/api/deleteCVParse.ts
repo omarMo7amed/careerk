@@ -6,6 +6,7 @@ export async function deleteCVParse(): Promise<void> {
   });
 
   if (!res.ok) {
-    throw new Error("cv/api/deleteCVParse.ts تعالي شوف خيبتك يابيه");
+    const body = await res.json().catch(() => null);
+    throw new Error(body?.error?.message || `Failed to delete CV parse (${res.status})`);
   }
 }

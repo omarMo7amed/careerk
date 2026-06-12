@@ -12,8 +12,15 @@ import { toast } from "react-hot-toast";
 import { educationReducer } from "../lib/educationReducer";
 import { EducationForm, EMPTY_EDUCATION_FORM } from "../types/educationTypes";
 
-export function useEducationModel({ isOwner }: { isOwner: boolean }) {
-  const { educations = [] } = useEducations();
+export function useEducationModel({
+  isOwner,
+  educations: propEducations,
+}: {
+  isOwner: boolean;
+  educations?: Education[];
+}) {
+  const { educations: hookEducations = [] } = useEducations();
+  const educations = propEducations ?? hookEducations;
   const { createEducation, isPending: isCreatePending } = useCreateEducation();
 
   const {
@@ -69,15 +76,10 @@ export function useEducationModel({ isOwner }: { isOwner: boolean }) {
   function updateEducation() {
     console.log(
       "Attempting to update education with form values:",
-      typeof state.updatingId,
+      state.updatingId,
     );
 
-    if (
-      !(typeof state.updatingId === "number" && state.updatingId === 0) &&
-      !state.updatingId
-    ) {
-      return;
-    }
+    if (!state.updatingId) return;
 
     const updatingIndex = parseInt(state.updatingId);
 

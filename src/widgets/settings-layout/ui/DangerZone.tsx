@@ -1,7 +1,16 @@
 import { DeleteAccountButton } from "@/features/delete-account";
 import { AlertTriangle } from "lucide-react";
 
-export function DangerZoneTab() {
+interface DangerZoneTabProps {
+  role: "jobseeker" | "company";
+}
+
+export function DangerZoneTab({ role }: DangerZoneTabProps) {
+  const description =
+    role === "jobseeker"
+      ? "Your account will be deactivated and your profile hidden from searches. All your data is preserved and you can contact support to reactivate."
+      : "Your company account will be deactivated and all associated jobs and data will be hidden. Contact support to reactivate.";
+
   return (
     <div className="bg-error/5 rounded-xl border-2 border-error/30 p-6">
       <div className="flex items-center gap-3 mb-6">
@@ -13,12 +22,8 @@ export function DangerZoneTab() {
 
       <div className="space-y-6">
         <div className="bg-bg-surface rounded-xl border border-error/30 p-6">
-          <h3 className="font-bold text-lg mb-2">Delete Account</h3>
-          <p className="text-sm text-text-secondary mb-4">
-            Once you delete your account, there is no going back. This will
-            permanently delete your profile, all job applications, and
-            associated data.
-          </p>
+          <h3 className="font-bold text-lg mb-2">Deactivate Account</h3>
+          <p className="text-sm text-text-secondary mb-4">{description}</p>
           <DeleteAccountButton />
         </div>
       </div>

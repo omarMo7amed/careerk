@@ -1,6 +1,11 @@
+export interface NotificationPreferences {
+  applicationStatusNotificationsEnabled: boolean;
+  jobMatchNotificationsEnabled: boolean;
+}
+
 export interface UserNotificationSettings {
-  userId: string;
-  preferences: Record<string, boolean>;
+  applicationStatusNotificationsEnabled: boolean;
+  jobMatchNotificationsEnabled: boolean;
   updatedAt: string;
 }
 
@@ -8,4 +13,9 @@ export interface UserSettingsResponse {
   success: boolean;
   data: UserNotificationSettings;
   message: string;
+  meta: {
+    timestamp: string;
+    path: string;
+    method: string;
+  };
 }

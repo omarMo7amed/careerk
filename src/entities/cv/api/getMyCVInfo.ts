@@ -4,6 +4,9 @@ export async function getMyCVInfo() {
   try {
     const res = await authInterceptor("/cv-parse/preview", {});
     if (!res.ok) {
+      if (res.status === 404) {
+        return { data: undefined };
+      }
       throw new Error("Failed to fetch CV info");
     }
     return res.json();

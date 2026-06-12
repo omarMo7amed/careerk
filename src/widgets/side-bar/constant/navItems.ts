@@ -5,6 +5,9 @@ import {
   BarChart3,
   Building2,
   BriefcaseBusiness,
+  SquareArrowOutUpRight,
+  FileUser,
+  User,
 } from "lucide-react";
 import { LucideIcon } from "lucide-react";
 
@@ -38,7 +41,7 @@ export const jobseekerNavItems = [
   },
   {
     name: "CV Management",
-    icon: LayoutDashboard,
+    icon: FileUser,
     href: "/dashboard/jobseeker/cv-management",
   },
   {
@@ -53,7 +56,11 @@ export const jobseekerNavItems = [
     href: "/dashboard/jobseeker/applications",
   },
 
-  { name: "Profile", icon: Building2, href: "/dashboard/jobseeker/profile" },
+  {
+    name: "Profile",
+    icon: User,
+    href: "/dashboard/jobseeker/profile",
+  },
   {
     name: "Interview Preparation",
     icon: BriefcaseBusiness,
@@ -61,7 +68,7 @@ export const jobseekerNavItems = [
   },
   {
     name: "GitHub Projects",
-    icon: BriefcaseBusiness,
+    icon: SquareArrowOutUpRight,
     href: "/dashboard/jobseeker/github-projects",
   },
   { name: "Settings", icon: Building2, href: "/dashboard/jobseeker/settings" },

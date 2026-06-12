@@ -4,22 +4,22 @@ import { WithdrawApplicationResponse } from "../types/WithdrawResponse";
 export async function withdrawApplication(
   applicationId: string,
 ): Promise<WithdrawApplicationResponse> {
-  try {
-    const response = await authInterceptor(
-      `/job-seekers/me/applications/${applicationId}`,
-      {
-        method: "PATCH",
-      },
-    );
-    const data = await response.json();
+  const response = await authInterceptor(
+    `/job-seekers/me/applications/${applicationId}`,
+    {
+      method: "PATCH",
+    },
+  );
 
-    if (!response.ok) {
-      return data;
-    }
+  const data = await response.json().catch(() => ({}));
 
-    return data;
-  } catch (error) {
-    console.error("Error withdrawing application:", error);
-    throw new Error("Failed to withdraw application. Please try again later.");
+  if (!response.ok) {
+    throw new Error(data?.error?.message || `Failed to withdraw application (${response.status})`);
   }
+
+  if (!data || typeof data.success === "undefined") {
+    throw new Error("Invalid response from server");
+  }
+
+  return data as WithdrawApplicationResponse;
 }

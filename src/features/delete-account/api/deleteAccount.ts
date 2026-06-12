@@ -1,17 +1,17 @@
+import { authInterceptor, useAuthStore } from "@/shared";
 import { DeleteAccountResponse } from "..";
 
 export async function deleteAccount(): Promise<DeleteAccountResponse> {
-  console.log("Account deleted successfully");
-  return {
-    success: true,
-    data: {
-      id: "example-id",
-    },
-    message: "Account deleted successfully",
-    meta: {
-      timestamp: new Date().toISOString(),
-      path: "/delete-account",
-      method: "DELETE",
-    },
-  };
+  const role = useAuthStore.getState().role;
+  const endpoint =
+    role === "company" ? "/companies/me" : "/job-seekers/me";
+
+  const res = await authInterceptor(endpoint, { method: "DELETE" });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err?.error?.message || "Failed to delete account");
+  }
+
+  return res.json();
 }

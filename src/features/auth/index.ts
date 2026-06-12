@@ -17,5 +17,4 @@ export type {
   RegisterCompanyRequest,
   ForgotPasswordRequest,
   ResetPasswordRequest,
-  ChangePasswordRequest,
 } from "./types";

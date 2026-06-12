@@ -37,7 +37,13 @@ export function ApplicationDetails({
       <div className="space-y-6 ">
         <ApplicationHeader job={application.directJob} />
         <StatusBadge status={application.status} />
-        <MatchScore />
+        <MatchScore
+          matchScore={
+            application.matchScore
+              ? Math.round(application.matchScore)
+              : undefined
+          }
+        />
         <AppliedDate date={application.appliedAt} />
         <ApplicationCardInfo application={application} />
         <JobDescription description={application.directJob.description} />

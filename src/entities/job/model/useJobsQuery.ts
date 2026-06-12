@@ -44,14 +44,7 @@ export function useJobsQuery({
       }),
     enabled,
     staleTime: 1000 * 60 * 5,
-    //
-    // placeholderData: {
-    //   jobs: jobListings,
-    //   total: jobListings.length,
-    //   page,
-    //   limit,
-    //   totalPages: Math.max(1, Math.ceil(jobListings.length / limit)),
-    // },
+    placeholderData: (previousData) => previousData,
   });
 
   return {

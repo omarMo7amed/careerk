@@ -9,7 +9,7 @@ export const registerCompanySchema = z.object({
   password: z
     .string()
     .min(1, "Password is required")
-    .min(8, { message: "Password must be at least 8 characters" })
+    .min(6, { message: "Password must be at least 6 characters" })
     .trim(),
   name: z.string().min(1, "Company name is required"),
   industry: z.string().min(1, "Industry is required"),

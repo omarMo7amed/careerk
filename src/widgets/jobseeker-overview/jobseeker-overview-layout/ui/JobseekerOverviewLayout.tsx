@@ -29,11 +29,11 @@ export function JobSeekerOverviewWidget() {
   const {
     overview,
     isLoading: overviewLoading,
-    // error: overviewError,
+    error: overviewError,
   } = useOverview();
 
   const isLoading = applicationsLoading || overviewLoading;
-  // const error = applicationsError || overviewError;
+  const error = applicationsError || overviewError;
 
   //Stats Cards Data
   const statsData: StatsCardsData | null = useMemo(() => {
@@ -124,6 +124,16 @@ export function JobSeekerOverviewWidget() {
       };
     });
   }, [applications]);
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-between p-4 rounded-lg border border-error/20 bg-error/5 m-6">
+        <p className="text-sm text-error">
+          {error instanceof Error ? error.message : "Something went wrong loading your overview"}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8 p-6">

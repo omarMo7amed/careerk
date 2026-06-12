@@ -71,11 +71,4 @@ export interface ResetPasswordResponse {
   message: string;
 }
 
-export interface ChangePasswordRequest {
-  currentPassword: string;
-  newPassword: string;
-}
 
-export interface ChangePasswordResponse {
-  message: string;
-}

@@ -1,27 +1,15 @@
-import type { UserNotificationSettings, UserSettingsResponse } from "..";
-
-const mockUserSettings: UserNotificationSettings = {
-  userId: "user-123",
-  preferences: {
-    // Job Seeker preferences
-    "job-match": true,
-    "application-status": true,
-    "interview-scheduled": false,
-
-    // Company preferences
-    "new-application": false,
-    "candidate-match": true,
-    "job-expiring": true,
-  },
-  updatedAt: new Date().toISOString(),
-};
+import { authInterceptor } from "@/shared";
+import type { UserSettingsResponse } from "..";
 
 export async function getUserSettings(): Promise<UserSettingsResponse> {
-  console.log("Fetching user settings from API...");
+  const res = await authInterceptor("/job-seekers/me/notification-preference", {});
 
-  return {
-    success: true,
-    data: mockUserSettings,
-    message: "Settings retrieved successfully",
-  };
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(
+      err?.error?.message || "Failed to fetch notification preferences",
+    );
+  }
+
+  return res.json();
 }

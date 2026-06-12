@@ -5,19 +5,19 @@ import { RecommendationInsights } from "../../recommendation-insights";
 import { useCVInfo } from "@/entities/cv";
 import { CVDropZone } from "@/features/upload-cv";
 
-import { Loader } from "@/shared";
+import { Error, Loader } from "@/shared";
 
 export function CVManagementContent() {
-  const { data, isLoading, isConfirmed, isUpdatePending, isFirstUpload } =
+  const { data, isLoading, error, isConfirmed, isUpdatePending, isFirstUpload } =
     useCVInfo();
 
   if (isLoading) {
     return <Loader />;
   }
-  // console.log("dasioghjfoiushdgivasohgdboiusaioubgdois", error);
-  // if (error) {
-  //   return <Error />;
-  // }
+
+  if (error) {
+    return <Error message={error instanceof Error ? error.message : "Failed to load CV information"} />;
+  }
 
   const hasData = isUpdatePending || isConfirmed || isFirstUpload;
 

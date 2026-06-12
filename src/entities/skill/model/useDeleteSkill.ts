@@ -7,12 +7,7 @@ import type { JobSeekerSkill } from "../types/skill";
 import { useCVInfo } from "@/entities/cv";
 import { usePathname } from "next/navigation";
 
-export function useDeleteSkill({
-  hasProfile,
-}: {
-  token: string;
-  hasProfile: boolean;
-}) {
+export function useDeleteSkill() {
   const queryClient = useQueryClient();
   const pathname = usePathname();
   const isCvPage = pathname.includes("/dashboard/jobseeker/cv-management");

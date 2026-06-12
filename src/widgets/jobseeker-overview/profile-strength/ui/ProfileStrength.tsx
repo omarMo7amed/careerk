@@ -59,17 +59,21 @@ export function ProfileStrength({ data, isLoading }: ProfileStrengthProps) {
 
         <TaskList tasks={profileTasks} />
 
-        <Button className="w-full group">
-          <span>Complete Profile</span>
-          <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-        </Button>
+        {percentage < 100 && (
+          <>
+            <Button className="w-full group">
+              <span>Complete Profile</span>
+              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
 
-        <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-100">
-          <p className="text-xs text-blue-700">
-            <span className="font-bold">Pro Tip:</span> Profiles with LinkedIn
-            connections get 3x more views
-          </p>
-        </div>
+            <div className="mt-4 p-3 bg-bg-surface rounded-lg border border-border">
+              <p className="text-xs text-text-secondary">
+                <span className="font-bold">Pro Tip:</span> Profiles with
+                LinkedIn connections get 3x more views
+              </p>
+            </div>
+          </>
+        )}
       </div>
     </section>
   );

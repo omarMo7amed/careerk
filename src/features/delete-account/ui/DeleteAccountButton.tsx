@@ -11,24 +11,19 @@ export function DeleteAccountButton() {
 
   const handleConfirm = () => {
     mutate(undefined, {
-      onSuccess: (data) => {
-        if (data.success) {
-          toast.success(data.message || "Account deleted successfully");
-          window.location.href = "/";
-        } else {
-          toast.error(data.error.message);
-        }
+      onSuccess: () => {
+        toast.success("Account deactivated successfully");
+        window.location.href = "/";
       },
       onError: (error) => {
-        console.error("Delete account error:", error);
-        toast.error("Failed to delete account. Please try again.");
+        toast.error(error.message || "Failed to deactivate account. Please try again.");
       },
     });
   };
 
   return (
     <>
-      <Button onClick={() => setIsModalOpen(true)}>Delete Account</Button>
+      <Button onClick={() => setIsModalOpen(true)} disabled={isPending}>Delete Account</Button>
 
       <ConfirmationModal
         isOpen={isModalOpen}

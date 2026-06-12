@@ -35,6 +35,7 @@ export interface ApplicationDetails {
       };
     }>;
   };
+  matchScore?: number;
 }
 
 export interface ApplicationDetailsResponse {

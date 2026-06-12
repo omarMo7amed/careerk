@@ -12,8 +12,14 @@ export async function getRepoIssues(
     headers: getGithubHeaders(),
   });
 
-  if (!response.ok) return [];
+  if (!response.ok) {
+    const remaining = response.headers.get("X-RateLimit-Remaining");
+    if (remaining === "0") {
+      throw new Error("GitHub API rate limit reached. Please try again later.");
+    }
+    return [];
+  }
 
-  const json = await response.json();
+  const json = await response.json().catch(() => []);
   return (json as GitHubIssue[]).filter((i) => !("pull_request" in i));
 }

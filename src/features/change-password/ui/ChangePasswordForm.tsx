@@ -37,7 +37,9 @@ export function ChangePasswordForm({
   });
 
   const onSubmit = (data: ChangePasswordFormData) => {
-    mutate(data, {
+    mutate(
+      { currentPassword: data.currentPassword, newPassword: data.newPassword },
+      {
       onSuccess: (response) => {
         onSuccess();
         toast.success(response.message || "Password changed successfully");

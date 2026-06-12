@@ -17,7 +17,7 @@ export function QuestionCard({ question }: QuestionCardProps) {
   return (
     <>
       <Card className="p-4 space-y-3">
-        <p className="text-sm font-semibold text-foreground leading-relaxed">
+        <p className="text-sm font-semibold text-text-secondary leading-relaxed">
           {question.question}
         </p>
 
@@ -25,7 +25,9 @@ export function QuestionCard({ question }: QuestionCardProps) {
           <Badge variant={badge.variant} size="sm">
             {badge.label}
           </Badge>
-          <span className="text-xs text-text-muted">{question.estimatedTime}</span>
+          <span className="text-xs text-text-muted">
+            {question.estimatedTime}
+          </span>
         </div>
 
         <div className="flex flex-wrap gap-1.5">

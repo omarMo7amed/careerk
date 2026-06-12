@@ -18,12 +18,10 @@ export function EducationProvider({
   children: React.ReactNode;
   educations?: Education[];
 }) {
-  const model = useEducationModel({ isOwner });
+  const model = useEducationModel({ isOwner, educations });
 
   return (
-    <EducationContext.Provider
-      value={{ ...model, educations: educations ?? model.educations }}
-    >
+    <EducationContext.Provider value={{ ...model }}>
       <section className="bg-bg-surface rounded-xl border border-border p-6 shadow-sm">
         {children}
       </section>

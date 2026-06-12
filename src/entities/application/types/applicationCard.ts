@@ -28,6 +28,7 @@ export interface ApplicationListItem {
       logoUrl: string | null;
     };
   };
+  matchScore?: number;
 }
 
 export interface ApplicationsListResponse {
