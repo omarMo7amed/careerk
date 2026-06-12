@@ -23,7 +23,7 @@ export function AboutUsDisplayMode({
         )}
       </div>
 
-      <p className="text-sm text-text-muted">
+      <p className="text-sm text-text-muted break-all">
         {description || (
           <span className="text-text-muted italic">No description yet.</span>
         )}

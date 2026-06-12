@@ -5,6 +5,7 @@ import { Job } from "@/entities/job";
 export type SearchType = "candidates" | "jobs" | "companies";
 
 export interface SearchBarProps {
+  type?: SearchType;
   searchPlaceholder: string;
   isLoading?: boolean;
 

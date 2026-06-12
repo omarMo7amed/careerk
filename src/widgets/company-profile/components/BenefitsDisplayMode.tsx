@@ -23,7 +23,7 @@ export function BenefitsDisplayMode({
         )}
       </div>
 
-      <p className="text-sm text-text-muted">
+      <p className="text-sm text-text-muted break-all">
         {benefits || (
           <span className="text-text-muted italic">No benefits yet.</span>
         )}

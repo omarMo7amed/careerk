@@ -56,8 +56,6 @@ export function KeyInformationCard({
       },
     );
   }
-  if (!form && !isOwner) return null;
-
   return (
     <SectionCard>
       {editing ? (

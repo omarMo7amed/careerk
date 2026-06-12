@@ -63,7 +63,7 @@ export function JobApplicationsLayout({ jobId }: { jobId: string }) {
 
             { label: "Applications" },
           ]}
-          title={`Applications for ${applications[0]?.directJob.title}`}
+          title={`Applications for ${applications[0]?.directJob.title ?? "this job"}`}
           subtitle={
             applications.length > 0
               ? `Total applicants of ${applications.length} • Showing candidates

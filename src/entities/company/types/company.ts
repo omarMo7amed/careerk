@@ -1,14 +1,18 @@
-export interface Company {
+export interface CompanyCard {
   id: string;
   name: string;
-  logo?: string;
-  website?: string;
-  size?: string;
+  description: string;
+  logoUrl?: string;
+  websiteUrl?: string;
   industry: string;
-  location: string;
+  size?: string;
+  type?: string;
+  headquartersLocation: string;
+  foundedYear: number;
+  benefits?: string;
+  linkedIn?: string;
+  facebook?: string;
+  twitter?: string;
 }
 
-export interface CompanyCard extends Company {
-  description: string;
-  founded_year: number;
-}
+export type Company = CompanyCard;

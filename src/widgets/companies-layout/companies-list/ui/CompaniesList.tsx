@@ -1,10 +1,6 @@
 "use client";
-import {
-  useCompaniesQuery,
-  CompanyCard,
-  CompaniesListing,
-} from "@/entities/company";
-import { Pagination } from "@/shared";
+import { useCompaniesQuery, CompanyCard } from "@/entities/company";
+import { Error, Loader, Pagination } from "@/shared";
 import { List } from "@/widgets/list";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
@@ -18,12 +14,10 @@ export function CompaniesList() {
 
   const page = Number(searchParams.get("page") || "1");
 
-  const { companies, isLoading, error } = useCompaniesQuery({
+  const { companies, isLoading, error, totalPages } = useCompaniesQuery({
     page,
     pageSize: 12,
   });
-
-  const totalPages = Math.ceil(CompaniesListing.length / 12);
 
   function handlePageChange(newPage: number) {
     hasNavigated.current = true;
@@ -39,8 +33,17 @@ export function CompaniesList() {
   }, [page]);
 
   if (isLoading) {
-    return <div>Loading companies...</div>;
+    return (
+      <div className="flex min-h-[40vh] items-center justify-center">
+        <Loader />
+      </div>
+    );
   }
+
+  if (error) {
+    return <Error message="Failed to load companies" />;
+  }
+
   return (
     <div ref={listRef} className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 ">
       <List
@@ -48,7 +51,7 @@ export function CompaniesList() {
         renderItem={(company) => (
           <CompanyCard company={company} key={company.id} />
         )}
-        columnsInLarge={3}
+        columnsInLarge={2}
         columnsInMedium={2}
         columnsInSmall={1}
       />

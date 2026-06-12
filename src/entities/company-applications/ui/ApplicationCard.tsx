@@ -7,6 +7,7 @@ import { ApplicationActions } from "./ApplicationActions";
 import { ApplicationMeta } from "./ApplicationMeta";
 import { ApplicationStatusDropdown } from "./ApplicationStatusDropdown";
 import { useJobApplication } from "../hook/useJobApplication";
+import { Loader, Error } from "@/shared";
 
 export type ApplicationStatus =
   | "PENDING"
@@ -32,6 +33,22 @@ export function ApplicationCard({
 }: ApplicationCardProps) {
   const [status, setStatus] = useState<ApplicationStatus>(initialStatus);
   const { data: application, isLoading, error } = useJobApplication(id);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-40 bg-bg-surface rounded-lg border border-border">
+        <Loader />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-40 bg-bg-surface rounded-lg border border-border">
+        <Error message="Failed to load application details" />
+      </div>
+    );
+  }
 
   if (!application) return null;
 

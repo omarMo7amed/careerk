@@ -31,8 +31,10 @@ export function JobPostCard({ job }: JobPostCardProps) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const { id, title, skills, location, workPreference, jobType, status } = job;
-  const { mutateAsync: publishJob } = usePublishJob();
-  const { mutateAsync: pauseJob } = usePauseStatus();
+  const { mutateAsync: publishJob, isPending: isPublishing } = usePublishJob();
+  const { mutateAsync: pauseJob, isPending: isPausing } = usePauseStatus();
+
+  const isToggling = isPublishing || isPausing;
 
   async function handleToggleStatus() {
     const newStatus = status === "PUBLISHED" ? "PAUSED" : "PUBLISHED";
@@ -109,9 +111,10 @@ export function JobPostCard({ job }: JobPostCardProps) {
                 variant="ghost"
                 className="gap-2"
                 onClick={handleToggleStatus}
+                disabled={isToggling}
               >
                 <Pause className="w-4 h-4" />
-                Pause
+                {isPausing ? "Pausing..." : "Pause"}
               </Button>
             ) : (
               <Button
@@ -119,9 +122,10 @@ export function JobPostCard({ job }: JobPostCardProps) {
                 variant="ghost"
                 className="gap-2 text-success hover:bg-success/10"
                 onClick={handleToggleStatus}
+                disabled={isToggling}
               >
                 <PlayIcon className="w-4 h-4" />
-                Activate
+                {isPublishing ? "Activating..." : "Activate"}
               </Button>
             )}
             <Button

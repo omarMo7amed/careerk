@@ -1,37 +1,35 @@
 // Shared UI Components
-export { Button } from "./ui/Button";
+export { AuthGuard } from "./ui/AuthGuard";
 export { BackButton } from "./ui/BackButton";
-export { DeleteButton } from "./ui/DeleteButton";
 export { Badge } from "./ui/Badge";
+export { Banner } from "./ui/Banner";
+export { Button } from "./ui/Button";
 export { Card } from "./ui/Card";
 export { CardHeader } from "./ui/CardHeader";
+export { ConfirmationModal } from "./ui/ConfirmationModal";
 export { DashboardHeader } from "./ui/DashboardHeader";
+export { DeleteButton } from "./ui/DeleteButton";
 export { Divider } from "./ui/Divider";
 export { FieldError } from "./ui/FieldError";
-export { Label } from "./ui/Label";
+export { FloatingShapes } from "./ui/FloatingShapes";
 export { Input } from "./ui/Input";
+export { Label } from "./ui/Label";
+export { Pagination } from "./ui/Pagination";
+export { RankingBadge } from "./ui/RankingBadge";
 export { Select } from "./ui/Select";
 export { Tabs } from "./ui/Tabs";
-export { ConfirmationModal } from "./ui/ConfirmationModal";
 export { UserAvatar } from "./ui/UserAvatar";
-export { RankingBadge } from "./ui/RankingBadge";
-export { Pagination } from "./ui/Pagination";
-export { Banner } from "./ui/Banner";
-export {FloatingShapes} from "./ui/FloatingShapes";
-export { AuthGuard } from "./ui/AuthGuard";
 
 // Shared lib functions
-export { useUserRole, useHasRole, getUserRole } from "./lib/useUserRole";
-export type { UserRole } from "./lib/useUserRole";
-export { cn } from "./lib/cn";
-export { getProfileColor } from "./lib/getProfileColor";
-export { getInitialsFromFullName } from "./lib/getInitialsFromFullName";
-export { getDuration, formatDate, formatYear } from "./lib/date";
-export { capitalizeFirstLetter } from "./lib/capitalizeFirstLetter";
-export { parseMultiParam, setMultiParam } from "./lib/multiParams";
-export { getFilterKeyFromValue } from "./lib/getFilterKeyFromValue";
-export { handleApiError } from "./lib/handleError";
 export { authInterceptor } from "./lib/authInterceptor";
+export { capitalizeFirstLetter } from "./lib/capitalizeFirstLetter";
+export { cn } from "./lib/cn";
+export { formatDate, formatYear, getDuration } from "./lib/date";
+export { getFilterKeyFromValue } from "./lib/getFilterKeyFromValue";
+export { getInitialsFromFullName } from "./lib/getInitialsFromFullName";
+export { getProfileColor } from "./lib/getProfileColor";
+export { handleApiError } from "./lib/handleError";
+export { parseMultiParam, setMultiParam } from "./lib/multiParams";
 
 // Hooks
 export { useClickOutside } from "./lib/useClickOutside";
@@ -40,33 +38,32 @@ export { useClickOutside } from "./lib/useClickOutside";
 export { InterFont, spaceGrotesk } from "./lib/fonts";
 // Providers
 export { QueryProvider } from "./providers/QueryProvider";
-export { useAuthStore, getPersistedRole } from "./providers/useAuthStore";
+export { getPersistedRole, useAuthStore } from "./providers/useAuthStore";
 
 // Constants (all grouped by domain — add new files to constant/index.ts)
 export * from "./constant";
 
 // Nav constants
-export type { NavItem } from "./constant/dashboardNavItems";
 export {
   companyNavItems,
-  jobseekerNavItems,
+  jobseekerNavItems
 } from "./constant/dashboardNavItems";
+export type { NavItem } from "./constant/dashboardNavItems";
 
 export { Error } from "./ui/Error";
+export { ErrorBoundary } from "./ui/ErrorBoundary";
 
-export { iconMap, colorMap } from "./config/CardConfig";
-export { Loader } from "./ui/Loader";
-export { Empty } from "./ui/Empty";
+export { colorMap, iconMap } from "./config/CardConfig";
 export { AnimatedSidebar } from "./ui/AnimatedSidebar";
-export { Toggle } from "./ui/Toggle";
+export { Empty } from "./ui/Empty";
+export { Loader } from "./ui/Loader";
 export { Modal } from "./ui/Modal";
+export { Toggle } from "./ui/Toggle";
 
-export {
-  parsePositiveInt,
-  normalizeValue,
-  normalizeMultiValues,
-} from "./lib/NormalizeValues";
 export { getChangedFields } from "./lib/getChangedFields";
+export {
+  normalizeMultiValues, normalizeValue, parsePositiveInt
+} from "./lib/NormalizeValues";
 
 // API
 export { refreshToken } from "./api/refreshToken";

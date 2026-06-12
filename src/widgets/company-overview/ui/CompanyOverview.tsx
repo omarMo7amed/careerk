@@ -23,7 +23,7 @@ export function CompanyOverview() {
     isError: appsIsError,
   } = useJobApplications({
     page: 1,
-    limit: 1000, // fetch all
+    limit: 12, // fetch all
   });
 
   const applications = applicationsData?.applications ?? [];
@@ -38,29 +38,24 @@ export function CompanyOverview() {
     );
   }
 
-  const hasData = jobs.length > 0 || applications.length > 0;
-
-  if (!hasData) {
-    return (
-      <div className="flex min-h-[80vh] items-center justify-center">
-        <NotFound message="No jobs or applications found yet." />
-      </div>
-    );
-  }
-
-  const error = jobsError || appsError;
+  const errors = [jobsError, appsError].filter(Boolean);
   if (isError) {
     return (
       <div className="flex min-h-[80vh] items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-semibold">Something went wrong</h2>
           <p className="text-text-secondary mt-2">
-            {error instanceof Error ? error.message : "Failed to load data"}
+            {errors
+              .map((e) => (e instanceof Error ? e.message : null))
+              .filter(Boolean)
+              .join(", ") || "Failed to load data"}
           </p>
         </div>
       </div>
     );
   }
+
+  const hasData = jobs.length > 0 || applications.length > 0;
 
   return (
     <div>

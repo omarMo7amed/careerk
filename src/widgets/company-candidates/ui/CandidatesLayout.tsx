@@ -18,6 +18,7 @@ import {
   AnimatedSidebar,
   Button,
   DashboardHeader,
+  Error,
   getFilterKeyFromValue,
   Loader,
   Pagination,
@@ -141,17 +142,19 @@ export function CandidatesLayout() {
         </div>
       </div>
 
-      {error && (
-        <p className=" text-sm text-error">
-          Failed to load candidates. please try again later.
-        </p>
+      {error && !isLoading && (
+        <div className="flex items-center justify-center min-h-[40vh]">
+          <Error message="Failed to load candidates. Please try again later." />
+        </div>
       )}
 
       {!isLoading && !error && candidates?.length === 0 && <NotFound />}
 
       {isLoading ? (
-        <Loader />
-      ) : (
+        <div className="flex items-center justify-center min-h-[40vh]">
+          <Loader />
+        </div>
+      ) : error ? null : (
         <>
           <List
             items={candidates as JobSeeker[]}

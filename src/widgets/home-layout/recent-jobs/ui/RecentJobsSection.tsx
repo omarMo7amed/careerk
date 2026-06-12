@@ -14,7 +14,7 @@ export default function RecentJobsSection() {
   });
 
   const { jobs } = useJobsQuery({ enabled: isJobsInView });
-  const sliderJobs = (jobs ?? []).slice(8, 16);
+  const sliderJobs = (jobs ?? []).slice(0, 12);
 
   return (
     <section className="py-24 relative overflow-hidden bg-background">

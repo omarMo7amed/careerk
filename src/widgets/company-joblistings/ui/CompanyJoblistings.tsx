@@ -1,6 +1,6 @@
 "use client";
 import { useCompanyJobs } from "@/entities/company-job";
-import { Button, DashboardHeader, Loader } from "@/shared";
+import { Button, DashboardHeader, Loader, Empty } from "@/shared";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import { JobPostCard } from "./JobPostCard";
@@ -54,7 +54,6 @@ export function CompanyJoblistings() {
           </Button>
         </Link>
       </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {jobs.length > 0 ? (
           jobs.map((job) => <JobPostCard key={job.id} job={job} />)

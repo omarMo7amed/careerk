@@ -11,12 +11,10 @@ interface CompanyHeaderProps {
 export function CompanyHeader({ logo, name, website }: CompanyHeaderProps) {
   return (
     <div className="flex items-center gap-4 mb-4">
-      {/* Logo */}
       <CompanyLogo logo={logo} name={name} />
 
-      {/* Name & Website */}
       <div className="flex-1 min-w-0">
-        <h3 className="text-lg font-bold text-gray-900 group-hover:text-primary transition-colors truncate">
+        <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors truncate">
           {name}
         </h3>
         {website && (
@@ -24,7 +22,7 @@ export function CompanyHeader({ logo, name, website }: CompanyHeaderProps) {
             href={website}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-gray-500 hover:text-primary flex items-center gap-1 mt-1 transition-colors"
+            className="text-xs text-text-muted hover:text-primary flex items-center gap-1 mt-1 transition-colors"
           >
             <ExternalLink className="w-3 h-3" />
             <span>Visit website</span>

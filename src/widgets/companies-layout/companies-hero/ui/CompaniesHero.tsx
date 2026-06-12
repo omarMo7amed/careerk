@@ -23,7 +23,7 @@ export function CompaniesHero() {
 
         <CompaniesHeading />
 
-        <SearchBar type="company" searchPlaceholder="Company name" />
+        <SearchBar type="companies" searchPlaceholder="Company name" />
       </div>
     </section>
   );
