@@ -10,11 +10,12 @@ export function JobDetailsGrid({
   deadline,
 }: {
   location?: string | null;
-  minSalary?: number | null;
-  maxSalary?: number | null;
+  minSalary?: string | number | undefined;
+  maxSalary?: string | number | undefined;
   experienceLevel: string;
   deadline: string | null;
 }) {
+  const locationValue = location?.trim() || "-";
   const salaryValue =
     minSalary != null && maxSalary != null
       ? `$${minSalary.toLocaleString()} – $${maxSalary.toLocaleString()}`
@@ -22,11 +23,11 @@ export function JobDetailsGrid({
         ? `From $${minSalary.toLocaleString()}`
         : maxSalary != null
           ? `Up to $${maxSalary.toLocaleString()}`
-          : null;
+          : "-";
 
   const deadlineValue = deadline
     ? `Closes on ${new Date(deadline).toLocaleDateString("en-US", { dateStyle: "medium" })}`
-    : null;
+    : "-";
 
   return (
     <div className="pt-6 border-t border-border/50">
@@ -35,7 +36,7 @@ export function JobDetailsGrid({
           <DetailItem
             icon={<MapPin className="w-4 h-4" />}
             label="Location"
-            value={location ?? null}
+            value={locationValue}
           />
           <DetailItem
             icon={<DollarSign className="w-4 h-4" />}

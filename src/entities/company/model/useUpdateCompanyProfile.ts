@@ -12,7 +12,7 @@ export function useUpdateCompanyProfile() {
       updateCompanyProfile(data.id!, data),
     onSuccess: (response) => {
       if (response.success) {
-        queryClient.setQueryData(["companyProfile"], response.data);
+        queryClient.setQueryData(["companyProfile"], response);
       }
     },
     onError: (error) => {
