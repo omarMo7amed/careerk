@@ -90,58 +90,59 @@ Key features include a dual dashboard system, CV management with state machine, 
 
 ## Team Members
 
-<div align="center" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 520px; margin: 0 auto; padding: 20px 0;">
+<table>
+<tr>
+<td align="center">
+<a href="https://github.com/omarMo7amed">
+<img src="https://github.com/omarMo7amed.png" width="200px;" />
+<br />
+<b>Omar Mohamed</b>
+</a>
+</td>
 
-<div style="padding: 24px; border: 1px solid #e0e0e0; border-radius: 12px; text-align: center; background: #f9f9f9;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-  <a href="https://github.com/omarMo7amed">
-    <img src="https://github.com/omarMo7amed.png" alt="Omar Mohamed" width="100" height="100" style="border-radius: 50%; border: 2px solid #e0e0e0;">
-  </a>
-  <h3 style="margin: 12px 0 6px; font-size: 18px;">Omar Mohamed</h3>
-  <a href="https://github.com/omarMo7amed" style="font-size: 14px; color: #0366d6; text-decoration: none;">@omarMo7amed</a>
-</div>
+<td align="center">
+<a href="https://github.com/ShahdRaafat">
+<img src="https://github.com/ShahdRaafat.png" width="200px;" />
+<br />
+<b>Shahd Raafat</b>
+</a>
+</td>
 
-<div style="padding: 24px; border: 1px solid #e0e0e0; border-radius: 12px; text-align: center; background: #f9f9f9;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-  <a href="https://github.com/ShahdRaafat">
-    <img src="https://github.com/ShahdRaafat.png" alt="Shahd Raafat" width="100" height="100" style="border-radius: 50%; border: 2px solid #e0e0e0;">
-  </a>
-  <h3 style="margin: 12px 0 6px; font-size: 18px;">Shahd Raafat</h3>
-  <a href="https://github.com/ShahdRaafat" style="font-size: 14px; color: #0366d6; text-decoration: none;">@ShahdRaafat</a>
-</div>
+<td align="center">
+<a href="https://github.com/amrrdev">
+<img src="https://github.com/amrrdev.png" width="200px;" />
+<br />
+<b>Amr Mubarak</b>
+</a>
+</td>
+</tr>
 
-<div style="padding: 24px; border: 1px solid #e0e0e0; border-radius: 12px; text-align: center; background: #f9f9f9;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-  <a href="https://github.com/amrrdev">
-    <img src="https://github.com/amrrdev.png" alt="Amr Mubarak" width="100" height="100" style="border-radius: 50%; border: 2px solid #e0e0e0;">
-  </a>
-  <h3 style="margin: 12px 0 6px; font-size: 18px;">Amr Mubarak</h3>
-  <a href="https://github.com/amrrdev" style="font-size: 14px; color: #0366d6; text-decoration: none;">@amrrdev</a>
-</div>
+<tr>
+<td align="center">
+<a href="https://github.com/MazenEsmail">
+<img src="https://github.com/MazenEsmail.png" width="200px;" />
+<br />
+<b>Mazen Ismail</b>
+</a>
+</td>
 
-<div style="padding: 24px; border: 1px solid #e0e0e0; border-radius: 12px; text-align: center; background: #f9f9f9;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-  <a href="https://github.com/MazenEsmail">
-    <img src="https://github.com/MazenEsmail.png" alt="Mazen Ismail" width="100" height="100" style="border-radius: 50%; border: 2px solid #e0e0e0;">
-  </a>
-  <h3 style="margin: 12px 0 6px; font-size: 18px;">Mazen Ismail</h3>
-  <a href="https://github.com/MazenEsmail" style="font-size: 14px; color: #0366d6; text-decoration: none;">@MazenEsmail</a>
-</div>
+<td align="center">
+<a href="https://github.com/SouadAlsayed">
+<img src="https://github.com/SouadAlsayed.png" width="200px;" />
+<br />
+<b>Souad Alsayed</b>
+</a>
+</td>
 
-<div style="padding: 24px; border: 1px solid #e0e0e0; border-radius: 12px; text-align: center; background: #f9f9f9;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-  <a href="https://github.com/SouadAlsayed">
-    <img src="https://github.com/SouadAlsayed.png" alt="Souad Alsayed" width="100" height="100" style="border-radius: 50%; border: 2px solid #e0e0e0;">
-  </a>
-  <h3 style="margin: 12px 0 6px; font-size: 18px;">Souad Alsayed</h3>
-  <a href="https://github.com/SouadAlsayed" style="font-size: 14px; color: #0366d6; text-decoration: none;">@SouadAlsayed</a>
-</div>
-
-<div style="padding: 24px; border: 1px solid #e0e0e0; border-radius: 12px; text-align: center; background: #f9f9f9;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-  <a href="https://github.com/aya-MohamedAsfourr202">
-    <img src="https://github.com/aya-MohamedAsfourr202.png" alt="Aya Mohamed" width="100" height="100" style="border-radius: 50%; border: 2px solid #e0e0e0;">
-  </a>
-  <h3 style="margin: 12px 0 6px; font-size: 18px;">Aya Mohamed</h3>
-  <a href="https://github.com/aya-MohamedAsfourr202" style="font-size: 14px; color: #0366d6; text-decoration: none;">@aya-MohamedAsfourr202</a>
-</div>
-
-</div>
-
+<td align="center">
+<a href="https://github.com/aya-MohamedAsfourr202">
+<img src="https://github.com/aya-MohamedAsfourr202.png" width="200px;" />
+<br />
+<b>Aya Mohamed</b>
+</a>
+</td>
+</tr>
+</table>
 <div align="center">
   <img src="result/team.jpeg" alt="Team Photo" width="600" style="border-radius: 12px; border: 1px solid #e0e0e0;">
   <p><em>CareerK Team</em></p>
