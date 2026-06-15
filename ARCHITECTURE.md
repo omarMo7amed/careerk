@@ -1,383 +1,379 @@
-# CareerK Architecture Documentation
+# CareerK Architecture
 
 ## Overview
 
-CareerK is built using **Feature-Sliced Design (FSD)**, a modern architectural methodology that promotes scalability, maintainability, and clear separation of concerns.
+CareerK is built using **Feature-Sliced Design (FSD)**, a modern architectural methodology that promotes scalability, maintainability, and clear separation of concerns through a strict 5-layer hierarchy with unidirectional dependencies.
+
+---
+
+## FSD Layer Diagram
+
+```mermaid
+graph TD
+    subgraph "App Layer (Pages)"
+        APP["app/ - Routes, Layouts, Pages"]
+    end
+
+    subgraph "Widgets Layer"
+        WIDGETS["widgets/ - Compositional UI Blocks<br/>Header, Sidebar, Overview, etc."]
+    end
+
+    subgraph "Features Layer"
+        FEATURES["features/ - Business Features<br/>Auth, Search, Apply, Filter, etc."]
+    end
+
+    subgraph "Entities Layer"
+        ENTITIES["entities/ - Domain Models<br/>Job, Company, JobSeeker, CV, etc."]
+    end
+
+    subgraph "Shared Layer"
+        SHARED["shared/ - Reusable Foundation<br/>UI Components, Utils, Types, Config"]
+    end
+
+    APP --> WIDGETS
+    APP --> FEATURES
+    APP --> ENTITIES
+    APP --> SHARED
+
+    WIDGETS --> FEATURES
+    WIDGETS --> ENTITIES
+    WIDGETS --> SHARED
+
+    FEATURES --> ENTITIES
+    FEATURES --> SHARED
+
+    ENTITIES --> SHARED
+```
+
+---
+
+## Import Rules
+
+```mermaid
+graph LR
+    subgraph "Allowed Imports"
+        A["app"] --> B["widgets"]
+        A --> C["features"]
+        A --> D["entities"]
+        A --> E["shared"]
+        B --> C
+        B --> D
+        B --> E
+        C --> D
+        C --> E
+        D --> E
+    end
+
+    subgraph "Forbidden Imports"
+        E -.->|"NO"| D
+        E -.->|"NO"| C
+        E -.->|"NO"| B
+        E -.->|"NO"| A
+        D -.->|"NO"| C
+        D -.->|"NO"| B
+        D -.->|"NO"| A
+        C -.->|"NO"| B
+        C -.->|"NO"| A
+        B -.->|"NO"| A
+    end
+```
+
+---
 
 ## Project Structure
 
 ```
 src/
-├── app/                              # Next.js App Router
-│   ├── favicon.ico
-│   ├── globals.css
-│   ├── layout.tsx                   # Root layout
-│   ├── page.tsx                     # Landing page
-│   ├── api/                         # API routes
-│   │   └── .gitkeep
-│   ├── auth/                        # Authentication pages
-│   │   └── .gitkeep
-│   ├── candidates/                  # Candidates listing
-│   │   └── .gitkeep
-│   ├── companies/                   # Companies listing
-│   │   └── .gitkeep
+├── app/                              # Next.js App Router (Pages Layer)
+│   ├── (public)/                     # Public route group
+│   ├── api/v1/                       # Mock/proxy API routes
+│   │   ├── applications/
+│   │   ├── auth/
+│   │   ├── companies/
+│   │   ├── cv/
+│   │   ├── cv-parse/
+│   │   ├── job-seekers/
+│   │   └── jobs/
+│   ├── auth/                         # Auth pages
+│   │   ├── forgot-password/
+│   │   ├── login/
+│   │   ├── register/
+│   │   ├── reset-password/
+│   │   └── verify-email/
 │   ├── dashboard/
-│   │   ├── layout.tsx
-│   │   ├── company/                 # Company dashboard
-│   │   │   ├── layout.tsx
-│   │   │   ├── analytics/
-│   │   │   │   └── page.tsx
+│   │   ├── company/                  # Company dashboard
 │   │   │   ├── overview/
-│   │   │   │   └── page.tsx
 │   │   │   ├── profile/
-│   │   │   │   └── page.tsx
+│   │   │   ├── job-listings/
+│   │   │   ├── candidates/
 │   │   │   └── settings/
-│   │   │       └── page.tsx
-│   │   └── jobseeker/              # Jobseeker dashboard
-│   │       ├── layout.tsx
+│   │   └── jobseeker/                # Jobseeker dashboard
 │   │       ├── overview/
-│   │       │   └── page.tsx
 │   │       ├── profile/
-│   │       │   └── page.tsx
+│   │       ├── cv-management/
+│   │       ├── find-jobs/
+│   │       ├── applications/
+│   │       ├── recommended-jobs/
+│   │       ├── saved-jobs/
+│   │       ├── github-projects/
+│   │       ├── interview-preparation/
 │   │       └── settings/
-│   │           └── page.tsx
-│   └── jobs/                        # Jobs listing
-│       └── .gitkeep
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── not-found.tsx
 │
-├── entities/                        # Domain entities
-│   ├── job-seeker/
-│   ├── company/
-│   ├── job/
-│   │   └── ui/
-│   │       ├── JobCardCompany.tsx
-│   │       └── JobCardJobseeker.tsx
+├── entities/                         # Domain entities (Layer 2)
 │   ├── application/
-│   │   └── ui/
-│   │       └── ApplicationCard.tsx
-│   └── candidate/
-│       └── ui/
-│           └── CandidateCard.tsx
+│   ├── company/
+│   ├── company-applications/
+│   ├── company-job/
+│   ├── cv/
+│   ├── education/
+│   ├── experience/
+│   ├── github-project/
+│   ├── improvement/
+│   ├── interview/
+│   ├── job/
+│   ├── job-seeker/
+│   └── skill/
 │
-├── features/                        # Business features
-│   └── post-job/
+├── features/                         # Business features (Layer 3)
+│   ├── apply-now/
+│   ├── auth/
+│   ├── bookmark-job/
+│   ├── change-password/
+│   ├── delete-account/
+│   ├── filter/
+│   ├── github-projects/
+│   ├── interview-preparation/
+│   ├── post-job-form/
+│   ├── search/
+│   ├── suggest-improvements/
+│   ├── toggle-notification/
+│   ├── toggle-theme/
+│   ├── upload-cv/
+│   └── withdraw-application/
 │
-├── shared/                          # Shared utilities & UI
-│   ├── index.ts
-│   ├── lib/
-│   │   └── useUserRole.ts
-│   └── ui/
-│       ├── Badge.tsx
-│       ├── Button.tsx
-│       ├── ConfirmationModal.tsx
-│       ├── IconX.tsx
-│       ├── Input.tsx
-│       ├── RoleSwitcher.tsx
-│       ├── SearchBar.tsx
-│       └── StaticsCard.tsx
+├── widgets/                          # Compositional UI blocks (Layer 4)
+│   ├── header/
+│   ├── footer/
+│   ├── side-bar/
+│   ├── home-layout/
+│   ├── company-overview/
+│   ├── company-joblistings/
+│   ├── company-post-job/
+│   ├── company-candidates/
+│   ├── company-profile/
+│   ├── jobseeker-overview/
+│   ├── jobseeker-profile/
+│   ├── jobseeker-applications/
+│   ├── cv-management/
+│   ├── find-jobs-layout/
+│   ├── recommended-jobs/
+│   ├── saved-jobs-layout/
+│   ├── interview-preparation/
+│   ├── github-projects/
+│   ├── login-layout/
+│   ├── register-layout/
+│   └── ... and more
 │
-└── widgets/                         # Compositional UI blocks
-    ├── about-section/
-    ├── display-list/
-    ├── footer/
-    ├── footer-section/
-    ├── objectives-section/
-    ├── side-bar/
-    ├── top-section/
-    ├── header/
-    │   └── ui/
-    │       ├── Header.tsx
-    │       └── NavigationItems.tsx
-    ├── hero-section/
-    │   └── ui/
-    │       └── HeroSection.tsx
-    ├── recent-jobs-section/
-    │   └── ui/
-    │       └── Card.tsx
-    ├── job-listings-widget/
-    ├── job-details/
-    ├── job-pannel/
-    ├── profile-heading/
-    ├── profile-key-info/
-    ├── profile-about/
-    ├── candidates-list/
-    ├── job-application/
-    ├── filter-sidebar/
-    ├── operations-table/
-    ├── jobseeker-overview/
-    ├── company-overview/
-    │   └── ui/
-    ├── recommendation-insights/
-    ├── application-details/
-    ├── security-settings/
-    ├── notifications-settings/
-    └── danger-zone-settings/
+└── shared/                           # Reusable foundation (Layer 1)
+    ├── api/
+    ├── config/
+    ├── constant/
+    ├── lib/
+    ├── providers/
+    ├── types/
+    └── ui/                           # 28 reusable components
+        ├── Button.tsx
+        ├── Input.tsx
+        ├── Select.tsx
+        ├── Badge.tsx
+        ├── Card.tsx
+        ├── Modal.tsx
+        ├── Pagination.tsx
+        ├── Tabs.tsx
+        └── ... and more
 ```
 
-## FSD Layers (Bottom to Top)
+---
 
-### 1. **Shared Layer** (`src/shared/`)
+## Layers Explained
 
-**Purpose**: Foundation layer with reusable code
+### 1. Shared Layer (`src/shared/`)
+
+**Purpose**: Foundation layer with reusable code.
 
 **Contains**:
-
-- UI components (Button, Input, Badge, etc.)
-- Utilities and helpers
-- Constants and types
-- API client configuration
+- UI primitives (Button, Input, Badge, Modal, etc.)
+- Utility functions and helpers
+- Constants and configuration
+- Types and interfaces
+- Providers (QueryProvider, auth store)
 
 **Rules**:
-
 - Cannot import from any other layer
-- Should be completely reusable
 - No business logic
+- Completely reusable
 
-### 2. **Entities Layer** (`src/entities/`)
+### 2. Entities Layer (`src/entities/`)
 
-**Purpose**: Business entities and domain models
+**Purpose**: Business entities and domain models.
 
 **Contains**:
-
-- Domain models (Job, Company, Candidate, User)
-- Entity-specific UI components
-- CRUD operations
+- Domain models (Job, Company, JobSeeker, CV, Application)
+- Entity-specific API calls
+- CRUD operations and hooks
 - Type definitions
+- Entity-specific UI components
 
 **Rules**:
-
 - Can only import from `shared`
 - Represents core business concepts
-- Should be framework-agnostic
+- Framework-agnostic business logic
 
-**Example Structure**:
+### 3. Features Layer (`src/features/`)
 
-```
-entities/
-├── job/
-│   ├── model/
-│   │   ├── types.ts
-│   │   └── schemas.ts
-│   ├── ui/
-│   │   └── JobCard.tsx
-│   └── api/
-│       └── jobApi.ts
-└── company/
-    └── ...
-```
-
-### 3. **Features Layer** (`src/features/`)
-
-**Purpose**: User-facing functionality and business logic
+**Purpose**: User-facing functionality and business logic.
 
 **Contains**:
-
-- Feature-specific components
+- Feature-specific components and forms
 - Business logic and state management
 - Feature-specific API calls
-- User interactions
+- User interaction handlers
 
 **Rules**:
-
 - Can import from `shared` and `entities`
 - Should be isolated and independent
 - Implements specific user scenarios
 
-**Example Structure**:
+### 4. Widgets Layer (`src/widgets/`)
 
-```
-features/
-├── auth/
-│   ├── ui/
-│   │   ├── LoginForm.tsx
-│   │   └── RegisterForm.tsx
-│   ├── model/
-│   │   └── useAuth.ts
-│   └── api/
-│       └── authApi.ts
-└── job-application/
-    └── ...
-```
-
-### 4. **Widgets Layer** (`src/widgets/`)
-
-**Purpose**: Compositional UI blocks
+**Purpose**: Compositional UI blocks that compose features and entities.
 
 **Contains**:
-
 - Complex UI compositions
-- Page sections
-- Reusable layouts
+- Page sections and layouts
 - Navigation components
+- Dashboard blocks
 
 **Rules**:
-
 - Can import from `shared`, `entities`, and `features`
 - Should be page-agnostic
 - Focuses on UI composition
 
-**Example Structure**:
+### 5. App Layer (Pages - `src/app/`)
 
-```
-widgets/
-├── header/
-│   ├── ui/
-│   │   ├── Header.tsx
-│   │   └── NavigationItems.tsx
-│   └── lib/
-│       └── helpers.ts
-└── job-listing-card/
-    └── ...
-```
-
-### 5. **Pages Layer** (`src/app/`)
-
-**Purpose**: Application routes and pages (Next.js App Router)
+**Purpose**: Application routes and page composition.
 
 **Contains**:
-
-- Route definitions
+- Route definitions (Next.js App Router)
 - Page layouts
-- Route-specific logic
 - SEO metadata
+- Route-specific data fetching
 
 **Rules**:
-
 - Can import from all layers
 - Should be thin - mostly composition
 - Handles routing and data fetching
 
-## Import Rules
+---
 
-### ✅ Allowed Imports
+## Import Rules Summary
 
-```
-app       → widgets, features, entities, shared
-widgets   → features, entities, shared
-features  → entities, shared
-entities  → shared
-shared    → nothing (external libs only)
-```
-
-### ❌ Forbidden Imports
+### Allowed
 
 ```
-shared    → any layer
-entities  → features, widgets, app
-features  → widgets, app
-widgets   → app
+app       -> widgets, features, entities, shared
+widgets   -> features, entities, shared
+features  -> entities, shared
+entities  -> shared
+shared    -> (nothing, external libs only)
 ```
 
-## Key Principles
+### Forbidden
 
-### 1. **Unidirectional Dependencies**
-
-- Higher layers can import from lower layers
-- Lower layers cannot import from higher layers
-- Prevents circular dependencies
-
-### 2. **Public API**
-
-Each module should expose a clear public API through `index.ts`:
-
-```typescript
-// features/auth/index.ts
-export { LoginForm, RegisterForm } from "./ui";
-export { useAuth } from "./model";
+```
+shared    -> any other layer
+entities  -> features, widgets, app
+features  -> widgets, app
+widgets   -> app
 ```
 
-### 3. **Isolation**
-
-- Features should be independent
-- Changes in one feature shouldn't affect others
-- Easy to add, remove, or modify features
-
-### 4. **Reusability**
-
-- Shared components are truly reusable
-- Entities represent business domain
-- Widgets can be used across multiple pages
+---
 
 ## Naming Conventions
 
 ### Files
 
-- Components: `PascalCase.tsx` (e.g., `Button.tsx`)
-- Hooks: `camelCase.ts` with `use` prefix (e.g., `useAuth.ts`)
-- Types: `PascalCase.ts` or `types.ts`
-- Utils: `camelCase.ts` (e.g., `formatDate.ts`)
+| Type | Convention | Example |
+|---|---|---|
+| Components | PascalCase.tsx | `Button.tsx`, `JobCard.tsx` |
+| Hooks | useCamelCase.ts | `useAuth.ts`, `useJobsQuery.ts` |
+| Types | PascalCase.ts or types.ts | `Job.ts`, `auth.ts` |
+| Utils | camelCase.ts | `formatDate.ts`, `cn.ts` |
 
 ### Directories
 
-- `kebab-case` for all directories (e.g., `job-listing`)
-- Standard segments: `ui/`, `model/`, `api/`, `lib/`
+- `kebab-case` for all directories (`job-listing`, `find-jobs`)
+- Standard segments: `ui/`, `model/`, `api/`, `lib/`, `types/`, `config/`
 
-## Benefits of This Architecture
+---
 
-### ✅ Scalability
+## Key Architectural Principles
 
-- Easy to add new features without affecting existing code
-- Clear boundaries prevent complexity growth
+### Unidirectional Dependencies
 
-### ✅ Maintainability
+Higher layers can import from lower layers, but never the reverse. This prevents circular dependencies and enforces clear boundaries.
 
-- Easy to find and modify code
-- Clear responsibility for each layer
+### Public API (Barrel Exports)
 
-### ✅ Team Collaboration
+Each module exposes a clear public API through `index.ts`:
 
-- Multiple developers can work on different features independently
-- Reduced merge conflicts
+```typescript
+// entities/job/index.ts
+export { JobCardJobseeker, JobCardCompany } from "./ui";
+export { useJobsQuery, useMatchedJobsQuery } from "./model";
+export type { Job, ScrapedJob, DirectJob } from "./types";
+```
 
-### ✅ Testing
+### Isolation
 
-- Isolated layers are easier to test
-- Mock dependencies are straightforward
+- Features are independent and self-contained
+- Changes in one feature do not affect others
+- Easy to add, remove, or modify features
 
-### ✅ Code Reuse
+### Reusability
 
-- Shared components and utilities
-- Consistent patterns across the app
+- Shared components are truly reusable primitives
+- Entities represent core domain concepts
+- Widgets compose features and entities into page sections
+
+---
 
 ## Development Workflow
 
 ### Adding a New Feature
 
-1. Create feature directory in `features/`
+1. Create feature directory in `src/features/[feature-name]/`
 2. Add UI components in `ui/`
 3. Add business logic in `model/`
 4. Add API calls in `api/`
 5. Export public API in `index.ts`
-6. Use in pages or widgets
+6. Use in widgets or pages
 
 ### Adding a New Entity
 
-1. Create entity directory in `entities/`
-2. Define types in `model/types.ts`
-3. Create entity card/display in `ui/`
-4. Add CRUD operations in `api/`
-5. Export public API
+1. Create entity directory in `src/entities/[entity-name]/`
+2. Define types in `types/`
+3. Create model hooks in `model/`
+4. Add API functions in `api/`
+5. Create UI components in `ui/`
+6. Export public API in `index.ts`
 
-### Creating a Shared Component
+### Adding a Shared Component
 
-1. Create component in `shared/ui/`
+1. Create component in `src/shared/ui/`
 2. Make it configuration-based (props)
-3. Add to `shared/index.ts`
+3. Add to `src/shared/index.ts`
 4. Document usage
-
-## Technology Stack
-
-- **Framework**: Next.js 14+ (App Router)
-- **Language**: TypeScript
-- **Styling**: CSS Modules / Tailwind CSS
-- **State Management**: React Hooks / Context
-- **Architecture**: Feature-Sliced Design (FSD)
-
-## Resources
-
-- [Feature-Sliced Design Documentation](https://feature-sliced.design/)
-- [Next.js Documentation](https://nextjs.org/docs)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
-
----
-
-**Last Updated**: December 2, 2025
